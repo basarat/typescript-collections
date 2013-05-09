@@ -6,6 +6,7 @@ use default parameter arguments
 use generics 
 remove extra semicolons at end of functions / classes / modules 
 function arguments types 
+search for all "private"s to make sure they are marked as such 
 
 Already done: 
 use module 
