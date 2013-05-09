@@ -1478,7 +1478,7 @@ var collections;
         * or greater than the second.
         */
         function PriorityQueue(compareFunction) {
-            this.heap = new collections.Heap(buckets.reverseCompareFunction(compareFunction));
+            this.heap = new Heap(collections.reverseCompareFunction(compareFunction));
         }
         PriorityQueue.prototype.enqueue = /**
         * Inserts the specified element into this priority queue.
@@ -1559,4 +1559,735 @@ var collections;
         return PriorityQueue;
     })();    // end of priority queue
     
+    var Set = (function () {
+        /**
+        * Creates an empty set.
+        * @class <p>A set is a data structure that contains no duplicate items.</p>
+        * <p>If the inserted elements are custom objects a function
+        * which converts elements to strings must be provided. Example:</p>
+        *
+        * <pre>
+        * function petToString(pet) {
+        *  return pet.name;
+        * }
+        * </pre>
+        *
+        * @constructor
+        * @param {function(Object):string=} toStringFunction optional function used
+        * to convert elements to strings. If the elements aren't strings or if toString()
+        * is not appropriate, a custom function which receives a onject and returns a
+        * unique string must be provided.
+        */
+        function Set(toStringFunction) {
+            this.dictionary = new Dictionary(toStringFunction);
+        }
+        Set.prototype.contains = /**
+        * Returns true if this set contains the specified element.
+        * @param {Object} element element to search for.
+        * @return {boolean} true if this set contains the specified element,
+        * false otherwise.
+        */
+        function (element) {
+            return this.dictionary.containsKey(element);
+        };
+        Set.prototype.add = /**
+        * Adds the specified element to this set if it is not already present.
+        * @param {Object} element the element to insert.
+        * @return {boolean} true if this set did not already contain the specified element.
+        */
+        function (element) {
+            if(this.contains(element) || collections.isUndefined(element)) {
+                return false;
+            } else {
+                this.dictionary.setValue(element, element);
+                return true;
+            }
+        };
+        Set.prototype.intersection = /**
+        * Performs an intersecion between this an another set.
+        * Removes all values that are not present this set and the given set.
+        * @param {buckets.Set} otherSet other set.
+        */
+        function (otherSet) {
+            var set = this;
+            this.forEach(function (element) {
+                if(!otherSet.contains(element)) {
+                    set.remove(element);
+                }
+            });
+        };
+        Set.prototype.union = /**
+        * Performs a union between this an another set.
+        * Adds all values from the given set to this set.
+        * @param {buckets.Set} otherSet other set.
+        */
+        function (otherSet) {
+            var set = this;
+            otherSet.forEach(function (element) {
+                set.add(element);
+            });
+        };
+        Set.prototype.difference = /**
+        * Performs a difference between this an another set.
+        * Removes from this set all the values that are present in the given set.
+        * @param {buckets.Set} otherSet other set.
+        */
+        function (otherSet) {
+            var set = this;
+            otherSet.forEach(function (element) {
+                set.remove(element);
+            });
+        };
+        Set.prototype.isSubsetOf = /**
+        * Checks whether the given set contains all the elements in this set.
+        * @param {buckets.Set} otherSet other set.
+        * @return {boolean} true if this set is a subset of the given set.
+        */
+        function (otherSet) {
+            if(this.size() > otherSet.size()) {
+                return false;
+            }
+            var isSub = true;
+            this.forEach(function (element) {
+                if(!otherSet.contains(element)) {
+                    isSub = false;
+                    return false;
+                }
+            });
+            return isSub;
+        };
+        Set.prototype.remove = /**
+        * Removes the specified element from this set if it is present.
+        * @return {boolean} true if this set contained the specified element.
+        */
+        function (element) {
+            if(!this.contains(element)) {
+                return false;
+            } else {
+                this.dictionary.remove(element);
+                return true;
+            }
+        };
+        Set.prototype.forEach = /**
+        * Executes the provided function once for each element
+        * present in this set.
+        * @param {function(Object):*} callback function to execute, it is
+        * invoked with one arguments: the element. To break the iteration you can
+        * optionally return false.
+        */
+        function (callback) {
+            this.dictionary.forEach(function (k, v) {
+                return callback(v);
+            });
+        };
+        Set.prototype.toArray = /**
+        * Returns an array containing all of the elements in this set in arbitrary order.
+        * @return {Array} an array containing all of the elements in this set.
+        */
+        function () {
+            return this.dictionary.values();
+        };
+        Set.prototype.isEmpty = /**
+        * Returns true if this set contains no elements.
+        * @return {boolean} true if this set contains no elements.
+        */
+        function () {
+            return this.dictionary.isEmpty();
+        };
+        Set.prototype.size = /**
+        * Returns the number of elements in this set.
+        * @return {number} the number of elements in this set.
+        */
+        function () {
+            return this.dictionary.size();
+        };
+        Set.prototype.clear = /**
+        * Removes all of the elements from this set.
+        */
+        function () {
+            this.dictionary.clear();
+        };
+        return Set;
+    })();    // end of Set
+    
+    var Bag = (function () {
+        /**
+        * Creates an empty bag.
+        * @class <p>A bag is a special kind of set in which members are
+        * allowed to appear more than once.</p>
+        * <p>If the inserted elements are custom objects a function
+        * which converts elements to unique strings must be provided. Example:</p>
+        *
+        * <pre>
+        * function petToString(pet) {
+        *  return pet.name;
+        * }
+        * </pre>
+        *
+        * @constructor
+        * @param {function(Object):string=} toStrFunction optional function used
+        * to convert elements to strings. If the elements aren't strings or if toString()
+        * is not appropriate, a custom function which receives an object and returns a
+        * unique string must be provided.
+        */
+        function Bag(toStrFunction) {
+            this.toStrF = toStrFunction || collections.defaultToString;
+            this.dictionary = new Dictionary(this.toStrF);
+            this.nElements = 0;
+        }
+        Bag.prototype.add = /**
+        * Adds nCopies of the specified object to this bag.
+        * @param {Object} element element to add.
+        * @param {number=} nCopies the number of copies to add, if this argument is
+        * undefined 1 copy is added.
+        * @return {boolean} true unless element is undefined.
+        */
+        function (element, nCopies) {
+            if(isNaN(nCopies) || collections.isUndefined(nCopies)) {
+                nCopies = 1;
+            }
+            if(collections.isUndefined(element) || nCopies <= 0) {
+                return false;
+            }
+            if(!this.contains(element)) {
+                var node = {
+                    value: element,
+                    copies: nCopies
+                };
+                this.dictionary.setValue(element, node);
+            } else {
+                this.dictionary.getValue(element).copies += nCopies;
+            }
+            this.nElements += nCopies;
+            return true;
+        };
+        Bag.prototype.count = /**
+        * Counts the number of copies of the specified object in this bag.
+        * @param {Object} element the object to search for..
+        * @return {number} the number of copies of the object, 0 if not found
+        */
+        function (element) {
+            if(!this.contains(element)) {
+                return 0;
+            } else {
+                return this.dictionary.getValue(element).copies;
+            }
+        };
+        Bag.prototype.contains = /**
+        * Returns true if this bag contains the specified element.
+        * @param {Object} element element to search for.
+        * @return {boolean} true if this bag contains the specified element,
+        * false otherwise.
+        */
+        function (element) {
+            return this.dictionary.containsKey(element);
+        };
+        Bag.prototype.remove = /**
+        * Removes nCopies of the specified object to this bag.
+        * If the number of copies to remove is greater than the actual number
+        * of copies in the Bag, all copies are removed.
+        * @param {Object} element element to remove.
+        * @param {number=} nCopies the number of copies to remove, if this argument is
+        * undefined 1 copy is removed.
+        * @return {boolean} true if at least 1 element was removed.
+        */
+        function (element, nCopies) {
+            if(isNaN(nCopies) || collections.isUndefined(nCopies)) {
+                nCopies = 1;
+            }
+            if(collections.isUndefined(element) || nCopies <= 0) {
+                return false;
+            }
+            if(!this.contains(element)) {
+                return false;
+            } else {
+                var node = this.dictionary.getValue(element);
+                if(nCopies > node.copies) {
+                    this.nElements -= node.copies;
+                } else {
+                    this.nElements -= nCopies;
+                }
+                node.copies -= nCopies;
+                if(node.copies <= 0) {
+                    this.dictionary.remove(element);
+                }
+                return true;
+            }
+        };
+        Bag.prototype.toArray = /**
+        * Returns an array containing all of the elements in this big in arbitrary order,
+        * including multiple copies.
+        * @return {Array} an array containing all of the elements in this bag.
+        */
+        function () {
+            var a = [];
+            var values = this.dictionary.values();
+            var vl = values.length;
+            for(var i = 0; i < vl; i++) {
+                var node = values[i];
+                var element = node.value;
+                var copies = node.copies;
+                for(var j = 0; j < copies; j++) {
+                    a.push(element);
+                }
+            }
+            return a;
+        };
+        Bag.prototype.toSet = /**
+        * Returns a set of unique elements in this bag.
+        * @return {buckets.Set} a set of unique elements in this bag.
+        */
+        function () {
+            var set = new Set(this.toStrF);
+            var elements = this.dictionary.values();
+            var l = elements.length;
+            for(var i = 0; i < l; i++) {
+                var value = elements[i].value;
+                set.add(value);
+            }
+            return set;
+        };
+        Bag.prototype.forEach = /**
+        * Executes the provided function once for each element
+        * present in this bag, including multiple copies.
+        * @param {function(Object):*} callback function to execute, it is
+        * invoked with one argument: the element. To break the iteration you can
+        * optionally return false.
+        */
+        function (callback) {
+            this.dictionary.forEach(function (k, v) {
+                var value = v.value;
+                var copies = v.copies;
+                for(var i = 0; i < copies; i++) {
+                    if(callback(value) === false) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+        };
+        Bag.prototype.size = /**
+        * Returns the number of elements in this bag.
+        * @return {number} the number of elements in this bag.
+        */
+        function () {
+            return this.nElements;
+        };
+        Bag.prototype.isEmpty = /**
+        * Returns true if this bag contains no elements.
+        * @return {boolean} true if this bag contains no elements.
+        */
+        function () {
+            return this.nElements === 0;
+        };
+        Bag.prototype.clear = /**
+        * Removes all of the elements from this bag.
+        */
+        function () {
+            this.nElements = 0;
+            this.dictionary.clear();
+        };
+        return Bag;
+    })();    // End of bag
+    
+    var BSTree = (function () {
+        /**
+        * Creates an empty binary search tree.
+        * @class <p>A binary search tree is a binary tree in which each
+        * internal node stores an element such that the elements stored in the
+        * left subtree are less than it and the elements
+        * stored in the right subtree are greater.</p>
+        * <p>Formally, a binary search tree is a node-based binary tree data structure which
+        * has the following properties:</p>
+        * <ul>
+        * <li>The left subtree of a node contains only nodes with elements less
+        * than the node's element</li>
+        * <li>The right subtree of a node contains only nodes with elements greater
+        * than the node's element</li>
+        * <li>Both the left and right subtrees must also be binary search trees.</li>
+        * </ul>
+        * <p>If the inserted elements are custom objects a compare function must
+        * be provided at construction time, otherwise the <=, === and >= operators are
+        * used to compare elements. Example:</p>
+        * <pre>
+        * function compare(a, b) {
+        *  if (a is less than b by some ordering criterion) {
+        *     return -1;
+        *  } if (a is greater than b by the ordering criterion) {
+        *     return 1;
+        *  }
+        *  // a must be equal to b
+        *  return 0;
+        * }
+        * </pre>
+        * @constructor
+        * @param {function(Object,Object):number=} compareFunction optional
+        * function used to compare two elements. Must return a negative integer,
+        * zero, or a positive integer as the first argument is less than, equal to,
+        * or greater than the second.
+        */
+        function BSTree(compareFunction) {
+            this.root = null;
+            this.compare = compareFunction || collections.defaultCompare;
+            this.nElements = 0;
+        }
+        BSTree.prototype.add = /**
+        * Adds the specified element to this tree if it is not already present.
+        * @param {Object} element the element to insert.
+        * @return {boolean} true if this tree did not already contain the specified element.
+        */
+        function (element) {
+            if(buckets.isUndefined(element)) {
+                return false;
+            }
+            if(this.insertNode(this.createNode(element)) !== null) {
+                this.nElements++;
+                return true;
+            }
+            return false;
+        };
+        BSTree.prototype.clear = /**
+        * Removes all of the elements from this tree.
+        */
+        function () {
+            this.root = null;
+            this.nElements = 0;
+        };
+        BSTree.prototype.isEmpty = /**
+        * Returns true if this tree contains no elements.
+        * @return {boolean} true if this tree contains no elements.
+        */
+        function () {
+            return this.nElements === 0;
+        };
+        BSTree.prototype.size = /**
+        * Returns the number of elements in this tree.
+        * @return {number} the number of elements in this tree.
+        */
+        function () {
+            return this.nElements;
+        };
+        BSTree.prototype.contains = /**
+        * Returns true if this tree contains the specified element.
+        * @param {Object} element element to search for.
+        * @return {boolean} true if this tree contains the specified element,
+        * false otherwise.
+        */
+        function (element) {
+            if(buckets.isUndefined(element)) {
+                return false;
+            }
+            return this.searchNode(this.root, element) !== null;
+        };
+        BSTree.prototype.remove = /**
+        * Removes the specified element from this tree if it is present.
+        * @return {boolean} true if this tree contained the specified element.
+        */
+        function (element) {
+            var node = this.searchNode(this.root, element);
+            if(node === null) {
+                return false;
+            }
+            this.removeNode(node);
+            this.nElements--;
+            return true;
+        };
+        BSTree.prototype.inorderTraversal = /**
+        * Executes the provided function once for each element present in this tree in
+        * in-order.
+        * @param {function(Object):*} callback function to execute, it is invoked with one
+        * argument: the element value, to break the iteration you can optionally return false.
+        */
+        function (callback) {
+            this.inorderTraversalAux(this.root, callback, {
+                stop: false
+            });
+        };
+        BSTree.prototype.preorderTraversal = /**
+        * Executes the provided function once for each element present in this tree in pre-order.
+        * @param {function(Object):*} callback function to execute, it is invoked with one
+        * argument: the element value, to break the iteration you can optionally return false.
+        */
+        function (callback) {
+            this.preorderTraversalAux(this.root, callback, {
+                stop: false
+            });
+        };
+        BSTree.prototype.postorderTraversal = /**
+        * Executes the provided function once for each element present in this tree in post-order.
+        * @param {function(Object):*} callback function to execute, it is invoked with one
+        * argument: the element value, to break the iteration you can optionally return false.
+        */
+        function (callback) {
+            this.postorderTraversalAux(this.root, callback, {
+                stop: false
+            });
+        };
+        BSTree.prototype.levelTraversal = /**
+        * Executes the provided function once for each element present in this tree in
+        * level-order.
+        * @param {function(Object):*} callback function to execute, it is invoked with one
+        * argument: the element value, to break the iteration you can optionally return false.
+        */
+        function (callback) {
+            this.levelTraversalAux(this.root, callback);
+        };
+        BSTree.prototype.minimum = /**
+        * Returns the minimum element of this tree.
+        * @return {*} the minimum element of this tree or undefined if this tree is
+        * is empty.
+        */
+        function () {
+            if(this.isEmpty()) {
+                return undefined;
+            }
+            return this.minimumAux(this.root).element;
+        };
+        BSTree.prototype.maximum = /**
+        * Returns the maximum element of this tree.
+        * @return {*} the maximum element of this tree or undefined if this tree is
+        * is empty.
+        */
+        function () {
+            if(this.isEmpty()) {
+                return undefined;
+            }
+            return this.maximumAux(this.root).element;
+        };
+        BSTree.prototype.forEach = /**
+        * Executes the provided function once for each element present in this tree in inorder.
+        * Equivalent to inorderTraversal.
+        * @param {function(Object):*} callback function to execute, it is
+        * invoked with one argument: the element value, to break the iteration you can
+        * optionally return false.
+        */
+        function (callback) {
+            this.inorderTraversal(callback);
+        };
+        BSTree.prototype.toArray = /**
+        * Returns an array containing all of the elements in this tree in in-order.
+        * @return {Array} an array containing all of the elements in this tree in in-order.
+        */
+        function () {
+            var array = [];
+            this.inorderTraversal(function (element) {
+                array.push(element);
+            });
+            return array;
+        };
+        BSTree.prototype.height = /**
+        * Returns the height of this tree.
+        * @return {number} the height of this tree or -1 if is empty.
+        */
+        function () {
+            return this.heightAux(this.root);
+        };
+        BSTree.prototype.searchNode = /**
+        * @private
+        */
+        function (node, element) {
+            var cmp = null;
+            while(node !== null && cmp !== 0) {
+                cmp = this.compare(element, node.element);
+                if(cmp < 0) {
+                    node = node.leftCh;
+                } else if(cmp > 0) {
+                    node = node.rightCh;
+                }
+            }
+            return node;
+        };
+        BSTree.prototype.transplant = /**
+        * @private
+        */
+        function (n1, n2) {
+            if(n1.parent === null) {
+                this.root = n2;
+            } else if(n1 === n1.parent.leftCh) {
+                n1.parent.leftCh = n2;
+            } else {
+                n1.parent.rightCh = n2;
+            }
+            if(n2 !== null) {
+                n2.parent = n1.parent;
+            }
+        };
+        BSTree.prototype.removeNode = /**
+        * @private
+        */
+        function (node) {
+            if(node.leftCh === null) {
+                this.transplant(node, node.rightCh);
+            } else if(node.rightCh === null) {
+                this.transplant(node, node.leftCh);
+            } else {
+                var y = this.minimumAux(node.rightCh);
+                if(y.parent !== node) {
+                    this.transplant(y, y.rightCh);
+                    y.rightCh = node.rightCh;
+                    y.rightCh.parent = y;
+                }
+                this.transplant(node, y);
+                y.leftCh = node.leftCh;
+                y.leftCh.parent = y;
+            }
+        };
+        BSTree.prototype.inorderTraversalAux = /**
+        * @private
+        */
+        function (node, callback, signal) {
+            if(node === null || signal.stop) {
+                return;
+            }
+            this.inorderTraversalAux(node.leftCh, callback, signal);
+            if(signal.stop) {
+                return;
+            }
+            signal.stop = callback(node.element) === false;
+            if(signal.stop) {
+                return;
+            }
+            this.inorderTraversalAux(node.rightCh, callback, signal);
+        };
+        BSTree.prototype.levelTraversalAux = /**
+        * @private
+        */
+        function (node, callback) {
+            var queue = new buckets.Queue();
+            if(node !== null) {
+                queue.enqueue(node);
+            }
+            while(!queue.isEmpty()) {
+                node = queue.dequeue();
+                if(callback(node.element) === false) {
+                    return;
+                }
+                if(node.leftCh !== null) {
+                    queue.enqueue(node.leftCh);
+                }
+                if(node.rightCh !== null) {
+                    queue.enqueue(node.rightCh);
+                }
+            }
+        };
+        BSTree.prototype.preorderTraversalAux = /**
+        * @private
+        */
+        function (node, callback, signal) {
+            if(node === null || signal.stop) {
+                return;
+            }
+            signal.stop = callback(node.element) === false;
+            if(signal.stop) {
+                return;
+            }
+            this.preorderTraversalAux(node.leftCh, callback, signal);
+            if(signal.stop) {
+                return;
+            }
+            this.preorderTraversalAux(node.rightCh, callback, signal);
+        };
+        BSTree.prototype.postorderTraversalAux = /**
+        * @private
+        */
+        function (node, callback, signal) {
+            if(node === null || signal.stop) {
+                return;
+            }
+            this.postorderTraversalAux(node.leftCh, callback, signal);
+            if(signal.stop) {
+                return;
+            }
+            this.postorderTraversalAux(node.rightCh, callback, signal);
+            if(signal.stop) {
+                return;
+            }
+            signal.stop = callback(node.element) === false;
+        };
+        BSTree.prototype.minimumAux = /**
+        * @private
+        */
+        function (node) {
+            while(node.leftCh !== null) {
+                node = node.leftCh;
+            }
+            return node;
+        };
+        BSTree.prototype.maximumAux = /**
+        * @private
+        */
+        function (node) {
+            while(node.rightCh !== null) {
+                node = node.rightCh;
+            }
+            return node;
+        };
+        BSTree.prototype.successorNode = /**
+        * @private
+        */
+        function (node) {
+            if(node.rightCh !== null) {
+                return this.minimumAux(node.rightCh);
+            }
+            var successor = node.parent;
+            while(successor !== null && node === successor.rightCh) {
+                node = successor;
+                successor = node.parent;
+            }
+            return successor;
+        };
+        BSTree.prototype.heightAux = /**
+        * @private
+        */
+        function (node) {
+            if(node === null) {
+                return -1;
+            }
+            return Math.max(this.heightAux(node.leftCh), this.heightAux(node.rightCh)) + 1;
+        };
+        BSTree.prototype.insertNode = /*
+        * @private
+        */
+        function (node) {
+            var parent = null;
+            var position = this.root;
+            var cmp = null;
+            while(position !== null) {
+                cmp = this.compare(node.element, position.element);
+                if(cmp === 0) {
+                    return null;
+                } else if(cmp < 0) {
+                    parent = position;
+                    position = position.leftCh;
+                } else {
+                    parent = position;
+                    position = position.rightCh;
+                }
+            }
+            node.parent = parent;
+            if(parent === null) {
+                // tree is empty
+                this.root = node;
+            } else if(this.compare(node.element, parent.element) < 0) {
+                parent.leftCh = node;
+            } else {
+                parent.rightCh = node;
+            }
+            return node;
+        };
+        BSTree.prototype.createNode = /**
+        * @private
+        */
+        function (element) {
+            return {
+                element: element,
+                leftCh: null,
+                rightCh: null,
+                parent: null
+            };
+        };
+        return BSTree;
+    })();    // end of BSTree
+    
 })(collections || (collections = {}));
+// End of module

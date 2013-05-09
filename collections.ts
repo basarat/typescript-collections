@@ -1835,10 +1835,11 @@ module collections {
 
     class Bag{
 
-    }// End of bag 
-    
+        private toStrF;
+        private dictionary: Dictionary;
+        private nElements;
 
-    /**
+            /**
      * Creates an empty bag.
      * @class <p>A bag is a special kind of set in which members are 
      * allowed to appear more than once.</p>
@@ -1857,11 +1858,12 @@ module collections {
      * is not appropriate, a custom function which receives an object and returns a
      * unique string must be provided.
      */
-    buckets.Bag(toStrFunction) {
-        this.toStrF = toStrFunction || buckets.defaultToString;
-        this.dictionary = new buckets.Dictionary(this.toStrF);
-        this.nElements = 0;
-    };
+        constructor(toStrFunction) {
+            this.toStrF = toStrFunction || collections.defaultToString;
+            this.dictionary = new Dictionary(this.toStrF);
+            this.nElements = 0;
+        }
+
 
     /**
     * Adds nCopies of the specified object to this bag.
@@ -1870,168 +1872,174 @@ module collections {
     * undefined 1 copy is added.
     * @return {boolean} true unless element is undefined.
     */
-    buckets.Bag.prototype.add(element, nCopies) {
+        add(element, nCopies) {
 
-        if (isNaN(nCopies) || buckets.isUndefined(nCopies)) {
-            nCopies = 1;
-        }
-        if (buckets.isUndefined(element) || nCopies <= 0) {
-            return false;
-        }
+            if (isNaN(nCopies) || collections.isUndefined(nCopies)) {
+                nCopies = 1;
+            }
+            if (collections.isUndefined(element) || nCopies <= 0) {
+                return false;
+            }
 
-        if (!this.contains(element)) {
-            var node = {
-                value: element,
-                copies: nCopies
-            };
-            this.dictionary.set(element, node);
-        } else {
-            this.dictionary.get(element).copies += nCopies;
-        }
-        this.nElements += nCopies;
-        return true;
-    };
-
-    /**
-    * Counts the number of copies of the specified object in this bag.
-    * @param {Object} element the object to search for..
-    * @return {number} the number of copies of the object, 0 if not found
-    */
-    buckets.Bag.prototype.count(element) {
-
-        if (!this.contains(element)) {
-            return 0;
-        } else {
-            return this.dictionary.get(element).copies;
-        }
-    };
-
-    /**
-     * Returns true if this bag contains the specified element.
-     * @param {Object} element element to search for.
-     * @return {boolean} true if this bag contains the specified element,
-     * false otherwise.
-     */
-    buckets.Bag.prototype.contains(element) {
-        return this.dictionary.containsKey(element);
-    };
-
-    /**
-    * Removes nCopies of the specified object to this bag.
-    * If the number of copies to remove is greater than the actual number 
-    * of copies in the Bag, all copies are removed. 
-    * @param {Object} element element to remove.
-    * @param {number=} nCopies the number of copies to remove, if this argument is
-    * undefined 1 copy is removed.
-    * @return {boolean} true if at least 1 element was removed.
-    */
-    buckets.Bag.prototype.remove(element, nCopies) {
-
-        if (isNaN(nCopies) || buckets.isUndefined(nCopies)) {
-            nCopies = 1;
-        }
-        if (buckets.isUndefined(element) || nCopies <= 0) {
-            return false;
-        }
-
-        if (!this.contains(element)) {
-            return false;
-        } else {
-            var node = this.dictionary.get(element);
-            if (nCopies > node.copies) {
-                this.nElements -= node.copies;
+            if (!this.contains(element)) {
+                var node = {
+                    value: element,
+                    copies: nCopies
+                };
+                this.dictionary.setValue(element, node);
             } else {
-                this.nElements -= nCopies;
+                this.dictionary.getValue(element).copies += nCopies;
             }
-            node.copies -= nCopies;
-            if (node.copies <= 0) {
-                this.dictionary.remove(element);
-            }
+            this.nElements += nCopies;
             return true;
-        }
-    };
+        };
 
-    /**
-     * Returns an array containing all of the elements in this big in arbitrary order, 
-     * including multiple copies.
-     * @return {Array} an array containing all of the elements in this bag.
-     */
-    buckets.Bag.prototype.toArray() {
-        var a = [];
-        var values = this.dictionary.values();
-        var vl = values.length;
-        for (var i = 0; i < vl; i++) {
-            var node = values[i];
-            var element = node.value;
-            var copies = node.copies;
-            for (var j = 0; j < copies; j++) {
-                a.push(element);
+        /**
+        * Counts the number of copies of the specified object in this bag.
+        * @param {Object} element the object to search for..
+        * @return {number} the number of copies of the object, 0 if not found
+        */
+        count(element) {
+
+            if (!this.contains(element)) {
+                return 0;
+            } else {
+                return this.dictionary.getValue(element).copies;
             }
-        }
-        return a;
-    };
+        };
 
-    /**
-     * Returns a set of unique elements in this bag. 
-     * @return {buckets.Set} a set of unique elements in this bag.
-     */
-    buckets.Bag.prototype.toSet() {
-        var set = new buckets.Set(this.toStrF);
-        var elements = this.dictionary.values();
-        var l = elements.length;
-        for (var i = 0; i < l; i++) {
-            var value = elements[i].value;
-            set.add(value);
-        }
-        return set;
-    };
+        /**
+         * Returns true if this bag contains the specified element.
+         * @param {Object} element element to search for.
+         * @return {boolean} true if this bag contains the specified element,
+         * false otherwise.
+         */
+        contains(element) {
+            return this.dictionary.containsKey(element);
+        };
 
-    /**
-     * Executes the provided function once for each element 
-     * present in this bag, including multiple copies.
-     * @param {function(Object):*} callback function to execute, it is
-     * invoked with one argument: the element. To break the iteration you can 
-     * optionally return false.
-     */
-    buckets.Bag.prototype.forEach(callback) {
-        this.dictionary.forEach(function (k, v) {
-            var value = v.value;
-            var copies = v.copies;
-            for (var i = 0; i < copies; i++) {
-                if (callback(value) === false) {
-                    return false;
+        /**
+        * Removes nCopies of the specified object to this bag.
+        * If the number of copies to remove is greater than the actual number 
+        * of copies in the Bag, all copies are removed. 
+        * @param {Object} element element to remove.
+        * @param {number=} nCopies the number of copies to remove, if this argument is
+        * undefined 1 copy is removed.
+        * @return {boolean} true if at least 1 element was removed.
+        */
+        remove(element, nCopies) {
+
+            if (isNaN(nCopies) || collections.isUndefined(nCopies)) {
+                nCopies = 1;
+            }
+            if (collections.isUndefined(element) || nCopies <= 0) {
+                return false;
+            }
+
+            if (!this.contains(element)) {
+                return false;
+            } else {
+                var node = this.dictionary.getValue(element);
+                if (nCopies > node.copies) {
+                    this.nElements -= node.copies;
+                } else {
+                    this.nElements -= nCopies;
+                }
+                node.copies -= nCopies;
+                if (node.copies <= 0) {
+                    this.dictionary.remove(element);
+                }
+                return true;
+            }
+        };
+
+            /**
+             * Returns an array containing all of the elements in this big in arbitrary order, 
+             * including multiple copies.
+             * @return {Array} an array containing all of the elements in this bag.
+             */
+        toArray() {
+            var a = [];
+            var values = this.dictionary.values();
+            var vl = values.length;
+            for (var i = 0; i < vl; i++) {
+                var node = values[i];
+                var element = node.value;
+                var copies = node.copies;
+                for (var j = 0; j < copies; j++) {
+                    a.push(element);
                 }
             }
-            return true;
-        });
-    };
-    /**
-     * Returns the number of elements in this bag.
-     * @return {number} the number of elements in this bag.
-     */
-    buckets.Bag.prototype.size() {
-        return this.nElements;
-    };
+            return a;
+        };
 
-    /**
-     * Returns true if this bag contains no elements.
-     * @return {boolean} true if this bag contains no elements.
-     */
-    buckets.Bag.prototype.isEmpty() {
-        return this.nElements === 0;
-    };
+            /**
+             * Returns a set of unique elements in this bag. 
+             * @return {buckets.Set} a set of unique elements in this bag.
+             */
+        toSet() {
+            var set = new Set(this.toStrF);
+            var elements = this.dictionary.values();
+            var l = elements.length;
+            for (var i = 0; i < l; i++) {
+                var value = elements[i].value;
+                set.add(value);
+            }
+            return set;
+        };
 
-    /**
-     * Removes all of the elements from this bag.
-     */
-    buckets.Bag.prototype.clear() {
-        this.nElements = 0;
-        this.dictionary.clear();
-    };
+        /**
+         * Executes the provided function once for each element 
+         * present in this bag, including multiple copies.
+         * @param {function(Object):*} callback function to execute, it is
+         * invoked with one argument: the element. To break the iteration you can 
+         * optionally return false.
+         */
+        forEach(callback) {
+            this.dictionary.forEach(function (k, v) {
+                var value = v.value;
+                var copies = v.copies;
+                for (var i = 0; i < copies; i++) {
+                    if (callback(value) === false) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+        };
+            /**
+             * Returns the number of elements in this bag.
+             * @return {number} the number of elements in this bag.
+             */
+        size() {
+            return this.nElements;
+        };
 
+            /**
+             * Returns true if this bag contains no elements.
+             * @return {boolean} true if this bag contains no elements.
+             */
+        isEmpty() {
+            return this.nElements === 0;
+        };
 
+            /**
+             * Removes all of the elements from this bag.
+             */
+        clear() {
+            this.nElements = 0;
+            this.dictionary.clear();
+        };
 
-    /**
+    }// End of bag 
+    
+
+    class BSTree{
+
+        private root;
+        private compare;
+        private nElements: number;  
+            /**
      * Creates an empty binary search tree.
      * @class <p>A binary search tree is a binary tree in which each 
      * internal node stores an element such that the elements stored in the 
@@ -2066,397 +2074,399 @@ module collections {
      * zero, or a positive integer as the first argument is less than, equal to,
      * or greater than the second.
      */
-    buckets.BSTree(compareFunction) {
-        this.root = null;
-        this.compare = compareFunction || buckets.defaultCompare;
-        this.nElements = 0;
-    };
 
+        constructor(compareFunction) {
+            this.root = null;
+            this.compare = compareFunction || collections.defaultCompare;
+            this.nElements = 0;
+        }
 
-    /**
+        /**
      * Adds the specified element to this tree if it is not already present.
      * @param {Object} element the element to insert.
      * @return {boolean} true if this tree did not already contain the specified element.
      */
-    buckets.BSTree.prototype.add(element) {
-        if (buckets.isUndefined(element)) {
-            return false;
-        }
+        add(element) {
+            if (buckets.isUndefined(element)) {
+                return false;
+            }
 
-        if (this.insertNode(this.createNode(element)) !== null) {
-            this.nElements++;
+            if (this.insertNode(this.createNode(element)) !== null) {
+                this.nElements++;
+                return true;
+            }
+            return false;
+        };
+
+            /**
+             * Removes all of the elements from this tree.
+             */
+        clear() {
+            this.root = null;
+            this.nElements = 0;
+        };
+
+            /**
+             * Returns true if this tree contains no elements.
+             * @return {boolean} true if this tree contains no elements.
+             */
+        isEmpty() {
+            return this.nElements === 0;
+        };
+
+            /**
+             * Returns the number of elements in this tree.
+             * @return {number} the number of elements in this tree.
+             */
+        size() {
+            return this.nElements;
+        };
+
+        /**
+         * Returns true if this tree contains the specified element.
+         * @param {Object} element element to search for.
+         * @return {boolean} true if this tree contains the specified element,
+         * false otherwise.
+         */
+        contains(element) {
+            if (buckets.isUndefined(element)) {
+                return false;
+            }
+            return this.searchNode(this.root, element) !== null;
+        };
+
+        /**
+         * Removes the specified element from this tree if it is present.
+         * @return {boolean} true if this tree contained the specified element.
+         */
+        remove(element) {
+            var node = this.searchNode(this.root, element);
+            if (node === null) {
+                return false;
+            }
+            this.removeNode(node);
+            this.nElements--;
             return true;
-        }
-        return false;
-    };
+        };
 
-    /**
-     * Removes all of the elements from this tree.
-     */
-    buckets.BSTree.prototype.clear() {
-        this.root = null;
-        this.nElements = 0;
-    };
+        /**
+         * Executes the provided function once for each element present in this tree in 
+         * in-order.
+         * @param {function(Object):*} callback function to execute, it is invoked with one 
+         * argument: the element value, to break the iteration you can optionally return false.
+         */
+        inorderTraversal(callback) {
+            this.inorderTraversalAux(this.root, callback, {
+                stop: false
+            });
+        };
 
-    /**
-     * Returns true if this tree contains no elements.
-     * @return {boolean} true if this tree contains no elements.
-     */
-    buckets.BSTree.prototype.isEmpty() {
-        return this.nElements === 0;
-    };
+        /**
+         * Executes the provided function once for each element present in this tree in pre-order.
+         * @param {function(Object):*} callback function to execute, it is invoked with one 
+         * argument: the element value, to break the iteration you can optionally return false.
+         */
+        preorderTraversal(callback) {
+            this.preorderTraversalAux(this.root, callback, {
+                stop: false
+            });
+        };
 
-    /**
-     * Returns the number of elements in this tree.
-     * @return {number} the number of elements in this tree.
-     */
-    buckets.BSTree.prototype.size() {
-        return this.nElements;
-    };
+        /**
+         * Executes the provided function once for each element present in this tree in post-order.
+         * @param {function(Object):*} callback function to execute, it is invoked with one 
+         * argument: the element value, to break the iteration you can optionally return false.
+         */
+        postorderTraversal(callback) {
+            this.postorderTraversalAux(this.root, callback, {
+                stop: false
+            });
+        };
 
-    /**
-     * Returns true if this tree contains the specified element.
-     * @param {Object} element element to search for.
-     * @return {boolean} true if this tree contains the specified element,
-     * false otherwise.
-     */
-    buckets.BSTree.prototype.contains(element) {
-        if (buckets.isUndefined(element)) {
-            return false;
-        }
-        return this.searchNode(this.root, element) !== null;
-    };
+        /**
+         * Executes the provided function once for each element present in this tree in 
+         * level-order.
+         * @param {function(Object):*} callback function to execute, it is invoked with one 
+         * argument: the element value, to break the iteration you can optionally return false.
+         */
+        levelTraversal(callback) {
+            this.levelTraversalAux(this.root, callback);
+        };
 
-    /**
-     * Removes the specified element from this tree if it is present.
-     * @return {boolean} true if this tree contained the specified element.
-     */
-    buckets.BSTree.prototype.remove(element) {
-        var node = this.searchNode(this.root, element);
-        if (node === null) {
-            return false;
-        }
-        this.removeNode(node);
-        this.nElements--;
-        return true;
-    };
-
-    /**
-     * Executes the provided function once for each element present in this tree in 
-     * in-order.
-     * @param {function(Object):*} callback function to execute, it is invoked with one 
-     * argument: the element value, to break the iteration you can optionally return false.
-     */
-    buckets.BSTree.prototype.inorderTraversal(callback) {
-        this.inorderTraversalAux(this.root, callback, {
-            stop: false
-        });
-    };
-
-    /**
-     * Executes the provided function once for each element present in this tree in pre-order.
-     * @param {function(Object):*} callback function to execute, it is invoked with one 
-     * argument: the element value, to break the iteration you can optionally return false.
-     */
-    buckets.BSTree.prototype.preorderTraversal(callback) {
-        this.preorderTraversalAux(this.root, callback, {
-            stop: false
-        });
-    };
-
-    /**
-     * Executes the provided function once for each element present in this tree in post-order.
-     * @param {function(Object):*} callback function to execute, it is invoked with one 
-     * argument: the element value, to break the iteration you can optionally return false.
-     */
-    buckets.BSTree.prototype.postorderTraversal(callback) {
-        this.postorderTraversalAux(this.root, callback, {
-            stop: false
-        });
-    };
-
-    /**
-     * Executes the provided function once for each element present in this tree in 
-     * level-order.
-     * @param {function(Object):*} callback function to execute, it is invoked with one 
-     * argument: the element value, to break the iteration you can optionally return false.
-     */
-    buckets.BSTree.prototype.levelTraversal(callback) {
-        this.levelTraversalAux(this.root, callback);
-    };
-
-    /**
-     * Returns the minimum element of this tree.
-     * @return {*} the minimum element of this tree or undefined if this tree is
-     * is empty.
-     */
-    buckets.BSTree.prototype.minimum() {
-        if (this.isEmpty()) {
-            return undefined;
-        }
-        return this.minimumAux(this.root).element;
-    };
-
-    /**
-     * Returns the maximum element of this tree.
-     * @return {*} the maximum element of this tree or undefined if this tree is
-     * is empty.
-     */
-    buckets.BSTree.prototype.maximum() {
-        if (this.isEmpty()) {
-            return undefined;
-        }
-        return this.maximumAux(this.root).element;
-    };
-
-    /**
-     * Executes the provided function once for each element present in this tree in inorder.
-     * Equivalent to inorderTraversal.
-     * @param {function(Object):*} callback function to execute, it is
-     * invoked with one argument: the element value, to break the iteration you can 
-     * optionally return false.
-     */
-    buckets.BSTree.prototype.forEach(callback) {
-        this.inorderTraversal(callback);
-    };
-
-    /**
-     * Returns an array containing all of the elements in this tree in in-order.
-     * @return {Array} an array containing all of the elements in this tree in in-order.
-     */
-    buckets.BSTree.prototype.toArray() {
-        var array = [];
-        this.inorderTraversal(function (element) {
-            array.push(element);
-        });
-        return array;
-    };
-
-    /**
-     * Returns the height of this tree.
-     * @return {number} the height of this tree or -1 if is empty.
-     */
-    buckets.BSTree.prototype.height() {
-        return this.heightAux(this.root);
-    };
-
-    /**
-    * @private
-    */
-    buckets.BSTree.prototype.searchNode(node, element) {
-        var cmp = null;
-        while (node !== null && cmp !== 0) {
-            cmp = this.compare(element, node.element);
-            if (cmp < 0) {
-                node = node.leftCh;
-            } else if (cmp > 0) {
-                node = node.rightCh;
+            /**
+             * Returns the minimum element of this tree.
+             * @return {*} the minimum element of this tree or undefined if this tree is
+             * is empty.
+             */
+        minimum() {
+            if (this.isEmpty()) {
+                return undefined;
             }
-        }
-        return node;
-    };
+            return this.minimumAux(this.root).element;
+        };
 
-
-    /**
-    * @private
-    */
-    buckets.BSTree.prototype.transplant(n1, n2) {
-        if (n1.parent === null) {
-            this.root = n2;
-        } else if (n1 === n1.parent.leftCh) {
-            n1.parent.leftCh = n2;
-        } else {
-            n1.parent.rightCh = n2;
-        }
-        if (n2 !== null) {
-            n2.parent = n1.parent;
-        }
-    };
-
-
-    /**
-    * @private
-    */
-    buckets.BSTree.prototype.removeNode(node) {
-        if (node.leftCh === null) {
-            this.transplant(node, node.rightCh);
-        } else if (node.rightCh === null) {
-            this.transplant(node, node.leftCh);
-        } else {
-            var y = this.minimumAux(node.rightCh);
-            if (y.parent !== node) {
-                this.transplant(y, y.rightCh);
-                y.rightCh = node.rightCh;
-                y.rightCh.parent = y;
+            /**
+             * Returns the maximum element of this tree.
+             * @return {*} the maximum element of this tree or undefined if this tree is
+             * is empty.
+             */
+        maximum() {
+            if (this.isEmpty()) {
+                return undefined;
             }
-            this.transplant(node, y);
-            y.leftCh = node.leftCh;
-            y.leftCh.parent = y;
-        }
-    };
-    /**
-    * @private
-    */
-    buckets.BSTree.prototype.inorderTraversalAux(node, callback, signal) {
-        if (node === null || signal.stop) {
-            return;
-        }
-        this.inorderTraversalAux(node.leftCh, callback, signal);
-        if (signal.stop) {
-            return;
-        }
-        signal.stop = callback(node.element) === false;
-        if (signal.stop) {
-            return;
-        }
-        this.inorderTraversalAux(node.rightCh, callback, signal);
-    };
+            return this.maximumAux(this.root).element;
+        };
 
-    /**
-    * @private
-    */
-    buckets.BSTree.prototype.levelTraversalAux(node, callback) {
-        var queue = new buckets.Queue();
-        if (node !== null) {
-            queue.enqueue(node);
-        }
-        while (!queue.isEmpty()) {
-            node = queue.dequeue();
-            if (callback(node.element) === false) {
+        /**
+         * Executes the provided function once for each element present in this tree in inorder.
+         * Equivalent to inorderTraversal.
+         * @param {function(Object):*} callback function to execute, it is
+         * invoked with one argument: the element value, to break the iteration you can 
+         * optionally return false.
+         */
+        forEach(callback) {
+            this.inorderTraversal(callback);
+        };
+
+            /**
+             * Returns an array containing all of the elements in this tree in in-order.
+             * @return {Array} an array containing all of the elements in this tree in in-order.
+             */
+        toArray() {
+            var array = [];
+            this.inorderTraversal(function (element) {
+                array.push(element);
+            });
+            return array;
+        };
+
+            /**
+             * Returns the height of this tree.
+             * @return {number} the height of this tree or -1 if is empty.
+             */
+        height() {
+            return this.heightAux(this.root);
+        };
+
+        /**
+        * @private
+        */
+        searchNode(node, element) {
+            var cmp = null;
+            while (node !== null && cmp !== 0) {
+                cmp = this.compare(element, node.element);
+                if (cmp < 0) {
+                    node = node.leftCh;
+                } else if (cmp > 0) {
+                    node = node.rightCh;
+                }
+            }
+            return node;
+        };
+
+
+        /**
+        * @private
+        */
+        transplant(n1, n2) {
+            if (n1.parent === null) {
+                this.root = n2;
+            } else if (n1 === n1.parent.leftCh) {
+                n1.parent.leftCh = n2;
+            } else {
+                n1.parent.rightCh = n2;
+            }
+            if (n2 !== null) {
+                n2.parent = n1.parent;
+            }
+        };
+
+
+        /**
+        * @private
+        */
+        removeNode(node) {
+            if (node.leftCh === null) {
+                this.transplant(node, node.rightCh);
+            } else if (node.rightCh === null) {
+                this.transplant(node, node.leftCh);
+            } else {
+                var y = this.minimumAux(node.rightCh);
+                if (y.parent !== node) {
+                    this.transplant(y, y.rightCh);
+                    y.rightCh = node.rightCh;
+                    y.rightCh.parent = y;
+                }
+                this.transplant(node, y);
+                y.leftCh = node.leftCh;
+                y.leftCh.parent = y;
+            }
+        };
+        /**
+        * @private
+        */
+        inorderTraversalAux(node, callback, signal) {
+            if (node === null || signal.stop) {
                 return;
             }
-            if (node.leftCh !== null) {
-                queue.enqueue(node.leftCh);
+            this.inorderTraversalAux(node.leftCh, callback, signal);
+            if (signal.stop) {
+                return;
             }
-            if (node.rightCh !== null) {
-                queue.enqueue(node.rightCh);
+            signal.stop = callback(node.element) === false;
+            if (signal.stop) {
+                return;
             }
-        }
-    };
-
-    /**
-    * @private
-    */
-    buckets.BSTree.prototype.preorderTraversalAux(node, callback, signal) {
-        if (node === null || signal.stop) {
-            return;
-        }
-        signal.stop = callback(node.element) === false;
-        if (signal.stop) {
-            return;
-        }
-        this.preorderTraversalAux(node.leftCh, callback, signal);
-        if (signal.stop) {
-            return;
-        }
-        this.preorderTraversalAux(node.rightCh, callback, signal);
-    };
-    /**
-    * @private
-    */
-    buckets.BSTree.prototype.postorderTraversalAux(node, callback, signal) {
-        if (node === null || signal.stop) {
-            return;
-        }
-        this.postorderTraversalAux(node.leftCh, callback, signal);
-        if (signal.stop) {
-            return;
-        }
-        this.postorderTraversalAux(node.rightCh, callback, signal);
-        if (signal.stop) {
-            return;
-        }
-        signal.stop = callback(node.element) === false;
-    };
-
-    /**
-    * @private
-    */
-    buckets.BSTree.prototype.minimumAux(node) {
-        while (node.leftCh !== null) {
-            node = node.leftCh;
-        }
-        return node;
-    };
-
-    /**
-    * @private
-    */
-    buckets.BSTree.prototype.maximumAux(node) {
-        while (node.rightCh !== null) {
-            node = node.rightCh;
-        }
-        return node;
-    };
-
-    /**
-    * @private
-    */
-    buckets.BSTree.prototype.successorNode(node) {
-        if (node.rightCh !== null) {
-            return this.minimumAux(node.rightCh);
-        }
-        var successor = node.parent;
-        while (successor !== null && node === successor.rightCh) {
-            node = successor;
-            successor = node.parent;
-        }
-        return successor;
-    };
-
-    /**
-    * @private
-    */
-    buckets.BSTree.prototype.heightAux(node) {
-        if (node === null) {
-            return -1;
-        }
-        return Math.max(this.heightAux(node.leftCh), this.heightAux(node.rightCh)) + 1;
-    };
-
-    /*
-    * @private
-    */
-    buckets.BSTree.prototype.insertNode(node) {
-
-        var parent = null;
-        var position = this.root;
-        var cmp = null;
-        while (position !== null) {
-            cmp = this.compare(node.element, position.element);
-            if (cmp === 0) {
-                return null;
-            } else if (cmp < 0) {
-                parent = position;
-                position = position.leftCh;
-            } else {
-                parent = position;
-                position = position.rightCh;
-            }
-        }
-        node.parent = parent;
-        if (parent === null) {
-            // tree is empty
-            this.root = node;
-        } else if (this.compare(node.element, parent.element) < 0) {
-            parent.leftCh = node;
-        } else {
-            parent.rightCh = node;
-        }
-        return node;
-    };
-
-    /**
-    * @private
-    */
-    buckets.BSTree.prototype.createNode(element) {
-        return {
-            element: element,
-            leftCh: null,
-            rightCh: null,
-            parent: null
+            this.inorderTraversalAux(node.rightCh, callback, signal);
         };
-    };
+
+        /**
+        * @private
+        */
+        levelTraversalAux(node, callback) {
+            var queue = new buckets.Queue();
+            if (node !== null) {
+                queue.enqueue(node);
+            }
+            while (!queue.isEmpty()) {
+                node = queue.dequeue();
+                if (callback(node.element) === false) {
+                    return;
+                }
+                if (node.leftCh !== null) {
+                    queue.enqueue(node.leftCh);
+                }
+                if (node.rightCh !== null) {
+                    queue.enqueue(node.rightCh);
+                }
+            }
+        };
+
+        /**
+        * @private
+        */
+        preorderTraversalAux(node, callback, signal) {
+            if (node === null || signal.stop) {
+                return;
+            }
+            signal.stop = callback(node.element) === false;
+            if (signal.stop) {
+                return;
+            }
+            this.preorderTraversalAux(node.leftCh, callback, signal);
+            if (signal.stop) {
+                return;
+            }
+            this.preorderTraversalAux(node.rightCh, callback, signal);
+        };
+        /**
+        * @private
+        */
+        postorderTraversalAux(node, callback, signal) {
+            if (node === null || signal.stop) {
+                return;
+            }
+            this.postorderTraversalAux(node.leftCh, callback, signal);
+            if (signal.stop) {
+                return;
+            }
+            this.postorderTraversalAux(node.rightCh, callback, signal);
+            if (signal.stop) {
+                return;
+            }
+            signal.stop = callback(node.element) === false;
+        };
+
+        /**
+        * @private
+        */
+        minimumAux(node) {
+            while (node.leftCh !== null) {
+                node = node.leftCh;
+            }
+            return node;
+        };
+
+        /**
+        * @private
+        */
+        maximumAux(node) {
+            while (node.rightCh !== null) {
+                node = node.rightCh;
+            }
+            return node;
+        };
+
+        /**
+        * @private
+        */
+        successorNode(node) {
+            if (node.rightCh !== null) {
+                return this.minimumAux(node.rightCh);
+            }
+            var successor = node.parent;
+            while (successor !== null && node === successor.rightCh) {
+                node = successor;
+                successor = node.parent;
+            }
+            return successor;
+        };
+
+        /**
+        * @private
+        */
+        heightAux(node) {
+            if (node === null) {
+                return -1;
+            }
+            return Math.max(this.heightAux(node.leftCh), this.heightAux(node.rightCh)) + 1;
+        };
+
+        /*
+        * @private
+        */
+        insertNode(node) {
+
+            var parent = null;
+            var position = this.root;
+            var cmp = null;
+            while (position !== null) {
+                cmp = this.compare(node.element, position.element);
+                if (cmp === 0) {
+                    return null;
+                } else if (cmp < 0) {
+                    parent = position;
+                    position = position.leftCh;
+                } else {
+                    parent = position;
+                    position = position.rightCh;
+                }
+            }
+            node.parent = parent;
+            if (parent === null) {
+                // tree is empty
+                this.root = node;
+            } else if (this.compare(node.element, parent.element) < 0) {
+                parent.leftCh = node;
+            } else {
+                parent.rightCh = node;
+            }
+            return node;
+        };
+
+        /**
+        * @private
+        */
+        createNode(element) {
+            return {
+                element: element,
+                leftCh: null,
+                rightCh: null,
+                parent: null
+            };
+        };
+
+    } // end of BSTree
 
 
 }// End of module 
