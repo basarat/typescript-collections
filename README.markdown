@@ -1,4 +1,4 @@
-[Buckets](github.com/mauriciosantos/buckets/)
+[TypeScript Collections](github.com/basarat/typescript-collections/)
 ====================
 Things need to be done: 
 use generics 
@@ -17,9 +17,9 @@ move all initialization to constructors : Decided its better inside (more perfor
 
 
 
-**A JavaScript Data Structure Library**
+**A TypeScript Data Structure Library**
 
-Buckets is a complete, fully tested and documented data structure library written in pure JavaScript.
+It is a complete, fully tested and documented data structure library written in TypeScript, based on the excellent original javascript version called [buckets](https://github.com/mauriciosantos/buckets)
 
 Included data structures
 ---------------------
@@ -35,7 +35,7 @@ Included data structures
 - [Binary Heap](http://mauriciosantos.github.com/buckets/symbols/buckets.Heap.html)
 - [Priority Queue](http://mauriciosantos.github.com/buckets/symbols/buckets.PriorityQueue.html)
 
-Buckets also includes several functions for manipulating [arrays](http://mauriciosantos.github.com/buckets/symbols/buckets.arrays.html).
+It also includes several functions for manipulating [arrays](http://mauriciosantos.github.com/buckets/symbols/buckets.arrays.html).
 
 Supported platforms
 --------------------
