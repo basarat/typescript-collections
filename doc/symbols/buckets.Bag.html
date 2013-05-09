@@ -1,0 +1,843 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="generator" content="JsDoc Toolkit" />
+		
+		<title>JsDoc Reference - buckets.Bag</title>
+
+		<style type="text/css">
+			/* default.css */
+body
+{
+	font: 12px "Lucida Grande", Tahoma, Arial, Helvetica, sans-serif;
+	width: 800px;
+}
+
+.header
+{
+	clear: both;
+	background-color: #ccc;
+	padding: 8px;
+}
+
+h1
+{
+	font-size: 150%;
+	font-weight: bold;
+	padding: 0;
+	margin: 1em 0 0 .3em;
+}
+
+hr
+{
+	border: none 0;
+	border-top: 1px solid #7F8FB1;
+	height: 1px;
+}
+
+pre.code
+{
+	display: block;
+	padding: 8px;
+	border: 1px dashed #ccc;
+}
+
+#index
+{
+	margin-top: 24px;
+	float: left;
+	width: 160px;
+	position: absolute;
+	left: 8px;
+	background-color: #F3F3F3;
+	padding: 8px;
+}
+
+#content
+{
+	margin-left: 190px;
+	width: 600px;
+}
+
+.classList
+{
+	list-style-type: none;
+	padding: 0;
+	margin: 0 0 0 8px;
+	font-family: arial, sans-serif;
+	font-size: 1em;
+	overflow: auto;
+}
+
+.classList li
+{
+	padding: 0;
+	margin: 0 0 8px 0;
+}
+
+.summaryTable { width: 100%; }
+
+h1.classTitle
+{
+	font-size:170%;
+	line-height:130%;
+}
+
+h2 { font-size: 110%; }
+caption, div.sectionTitle
+{
+	background-color: #7F8FB1;
+	color: #fff;
+	font-size:130%;
+	text-align: left;
+	padding: 2px 6px 2px 6px;
+	border: 1px #7F8FB1 solid;
+}
+
+div.sectionTitle { margin-bottom: 8px; }
+.summaryTable thead { display: none; }
+
+.summaryTable td
+{
+	vertical-align: top;
+	padding: 4px;
+	border-bottom: 1px #7F8FB1 solid;
+	border-right: 1px #7F8FB1 solid;
+}
+
+/*col#summaryAttributes {}*/
+.summaryTable td.attributes
+{
+	border-left: 1px #7F8FB1 solid;
+	width: 140px;
+	text-align: right;
+}
+
+td.attributes, .fixedFont
+{
+	line-height: 15px;
+	color: #002EBE;
+	font-family: "Courier New",Courier,monospace;
+	font-size: 13px;
+}
+
+.summaryTable td.nameDescription
+{
+	text-align: left;
+	font-size: 13px;
+	line-height: 15px;
+}
+
+.summaryTable td.nameDescription, .description
+{
+	line-height: 15px;
+	padding: 4px;
+	padding-left: 4px;
+}
+
+.summaryTable { margin-bottom: 8px; }
+
+ul.inheritsList
+{
+	list-style: square;
+	margin-left: 20px;
+	padding-left: 0;
+}
+
+.detailList {
+	margin-left: 20px; 
+	line-height: 15px;
+}
+.detailList dt { margin-left: 20px; }
+
+.detailList .heading
+{
+	font-weight: bold;
+	padding-bottom: 6px;
+	margin-left: 0;
+}
+
+.light, td.attributes, .light a:link, .light a:visited
+{
+	color: #777;
+	font-style: italic;
+}
+
+.fineprint
+{
+	text-align: right;
+	font-size: 10px;
+}
+		</style>
+	</head>
+
+	<body>
+<!-- ============================== header ================================= -->	
+		<!-- begin static/header.html -->
+		<div id="header">
+</div>
+		<!-- end static/header.html -->
+
+<!-- ============================== classes index ============================ -->
+		<div id="index">
+			<!-- begin publish.classesIndex -->
+			<div align="center"><a href="../index.html">Class Index</a>
+| <a href="../files.html">File Index</a></div>
+<hr />
+<h2>Classes</h2>
+<ul class="classList">
+	
+	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
+	
+	<li><a href="../symbols/buckets.html">buckets</a></li>
+	
+	<li><a href="../symbols/buckets.arrays.html">buckets.arrays</a></li>
+	
+	<li><a href="../symbols/buckets.Bag.html">buckets.Bag</a></li>
+	
+	<li><a href="../symbols/buckets.BSTree.html">buckets.BSTree</a></li>
+	
+	<li><a href="../symbols/buckets.Dictionary.html">buckets.Dictionary</a></li>
+	
+	<li><a href="../symbols/buckets.Heap.html">buckets.Heap</a></li>
+	
+	<li><a href="../symbols/buckets.LinkedList.html">buckets.LinkedList</a></li>
+	
+	<li><a href="../symbols/buckets.MultiDictionary.html">buckets.MultiDictionary</a></li>
+	
+	<li><a href="../symbols/buckets.PriorityQueue.html">buckets.PriorityQueue</a></li>
+	
+	<li><a href="../symbols/buckets.Queue.html">buckets.Queue</a></li>
+	
+	<li><a href="../symbols/buckets.Set.html">buckets.Set</a></li>
+	
+	<li><a href="../symbols/buckets.Stack.html">buckets.Stack</a></li>
+	
+</ul>
+<hr />
+			<!-- end publish.classesIndex -->
+		</div>
+		
+		<div id="content">
+<!-- ============================== class title ============================ -->
+			<h1 class="classTitle">
+				
+				Class buckets.Bag
+			</h1>
+
+<!-- ============================== class summary ========================== -->			
+			<p class="description">
+				
+				
+			
+				<p>A bag is a special kind of set in which members are 
+allowed to appear more than once.</p>
+<p>If the inserted elements are custom objects a function 
+which converts elements to unique strings must be provided. Example:</p>
+
+<pre>
+function petToString(pet) {
+ return pet.name;
+}
+</pre>
+				
+				
+					<br /><i>Defined in: </i> &lt;../buckets.js&gt;.
+				
+			</p>
+
+<!-- ============================== constructor summary ==================== -->			
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class buckets.Bag.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/buckets.Bag.html#constructor">buckets.Bag</a></b>(toStrFunction)
+							</div>
+							<div class="description">Creates an empty bag.</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+
+<!-- ============================== properties summary ===================== -->
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class buckets.Bag.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/buckets.Bag.html#add">add</a></b>(element, nCopies)
+								</div>
+								<div class="description">Adds nCopies of the specified object to this bag.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/buckets.Bag.html#clear">clear</a></b>()
+								</div>
+								<div class="description">Removes all of the elements from this bag.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/buckets.Bag.html#contains">contains</a></b>(element)
+								</div>
+								<div class="description">Returns true if this bag contains the specified element.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/buckets.Bag.html#count">count</a></b>(element)
+								</div>
+								<div class="description">Counts the number of copies of the specified object in this bag.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/buckets.Bag.html#forEach">forEach</a></b>(callback)
+								</div>
+								<div class="description">Executes the provided function once for each element 
+present in this bag, including multiple copies.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/buckets.Bag.html#isEmpty">isEmpty</a></b>()
+								</div>
+								<div class="description">Returns true if this bag contains no elements.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/buckets.Bag.html#remove">remove</a></b>(element, nCopies)
+								</div>
+								<div class="description">Removes nCopies of the specified object to this bag.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/buckets.Bag.html#size">size</a></b>()
+								</div>
+								<div class="description">Returns the number of elements in this bag.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/buckets.Bag.html#toArray">toArray</a></b>()
+								</div>
+								<div class="description">Returns an array containing all of the elements in this big in arbitrary order, 
+including multiple copies.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/buckets.Bag.html#toSet">toSet</a></b>()
+								</div>
+								<div class="description">Returns a set of unique elements in this bag.</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== constructor details ==================== -->		
+			
+			<div class="details"><a name="constructor"> </a>
+				<div class="sectionTitle">
+					Class Detail
+				</div>
+				
+				<div class="fixedFont">
+						<b>buckets.Bag</b>(toStrFunction)
+				</div>
+				
+				<div class="description">
+					Creates an empty bag.
+					
+				</div>
+				
+				
+				
+				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								<span class="light fixedFont">{function(Object):string=}</span>  <b>toStrFunction</b>
+								
+							</dt>
+								<dd>optional function used
+to convert elements to strings. If the elements aren't strings or if toString()
+is not appropriate, a custom function which receives an object and returns a
+unique string must be provided.</dd>
+						
+						</dl>
+					
+					
+					
+					
+					
+					
+					
+
+			</div>
+			
+
+<!-- ============================== field details ========================== -->		
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name="add"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{boolean}</span>
+					<b>add</b>(element, nCopies)
+					
+					</div>
+					<div class="description">
+						Adds nCopies of the specified object to this bag.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>element</b>
+									
+								</dt>
+								<dd>element to add.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{number=}</span> <b>nCopies</b>
+									
+								</dt>
+								<dd>the number of copies to add, if this argument is
+undefined 1 copy is added.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{boolean}</span> true unless element is undefined.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="clear"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>clear</b>()
+					
+					</div>
+					<div class="description">
+						Removes all of the elements from this bag.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="contains"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{boolean}</span>
+					<b>contains</b>(element)
+					
+					</div>
+					<div class="description">
+						Returns true if this bag contains the specified element.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>element</b>
+									
+								</dt>
+								<dd>element to search for.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{boolean}</span> true if this bag contains the specified element,
+false otherwise.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="count"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{number}</span>
+					<b>count</b>(element)
+					
+					</div>
+					<div class="description">
+						Counts the number of copies of the specified object in this bag.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>element</b>
+									
+								</dt>
+								<dd>the object to search for..</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{number}</span> the number of copies of the object, 0 if not found</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="forEach"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>forEach</b>(callback)
+					
+					</div>
+					<div class="description">
+						Executes the provided function once for each element 
+present in this bag, including multiple copies.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{function(Object):*}</span> <b>callback</b>
+									
+								</dt>
+								<dd>function to execute, it is
+invoked with one argument: the element. To break the iteration you can 
+optionally return false.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="isEmpty"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{boolean}</span>
+					<b>isEmpty</b>()
+					
+					</div>
+					<div class="description">
+						Returns true if this bag contains no elements.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{boolean}</span> true if this bag contains no elements.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="remove"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{boolean}</span>
+					<b>remove</b>(element, nCopies)
+					
+					</div>
+					<div class="description">
+						Removes nCopies of the specified object to this bag.
+If the number of copies to remove is greater than the actual number 
+of copies in the Bag, all copies are removed.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>element</b>
+									
+								</dt>
+								<dd>element to remove.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{number=}</span> <b>nCopies</b>
+									
+								</dt>
+								<dd>the number of copies to remove, if this argument is
+undefined 1 copy is removed.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{boolean}</span> true if at least 1 element was removed.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="size"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{number}</span>
+					<b>size</b>()
+					
+					</div>
+					<div class="description">
+						Returns the number of elements in this bag.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{number}</span> the number of elements in this bag.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="toArray"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Array}</span>
+					<b>toArray</b>()
+					
+					</div>
+					<div class="description">
+						Returns an array containing all of the elements in this big in arbitrary order, 
+including multiple copies.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Array}</span> an array containing all of the elements in this bag.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="toSet"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/buckets.Set.html">buckets.Set</a>}</span>
+					<b>toSet</b>()
+					
+					</div>
+					<div class="description">
+						Returns a set of unique elements in this bag.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/buckets.Set.html">buckets.Set</a>}</span> a set of unique elements in this bag.</dd>
+							
+							</dl>
+						
+						
+						
+
+					
+				
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Jul 29 2012 17:33:03 GMT-0500 (COT)
+		</div>
+	</body>
+</html>
