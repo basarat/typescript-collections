@@ -1570,7 +1570,7 @@ module collections {
      * or greater than the second.
      */
         constructor(compareFunction) {
-            this.heap = new collections.Heap(buckets.reverseCompareFunction(compareFunction));
+            this.heap = new Heap(collections.reverseCompareFunction(compareFunction));
         }
 
          /**
@@ -1663,9 +1663,8 @@ module collections {
 
 
 
-
-
-
+    class Set{
+        private dictionary: Dictionary;
 
     /**
      * Creates an empty set.
@@ -1685,9 +1684,11 @@ module collections {
      * is not appropriate, a custom function which receives a onject and returns a
      * unique string must be provided.
      */
-    buckets.Set(toStringFunction) {
-        this.dictionary = new buckets.Dictionary(toStringFunction);
-    };
+        constructor(toStringFunction) {
+            this.dictionary = new Dictionary(toStringFunction);
+        }
+
+
 
     /**
      * Returns true if this set contains the specified element.
@@ -1695,139 +1696,147 @@ module collections {
      * @return {boolean} true if this set contains the specified element,
      * false otherwise.
      */
-    buckets.Set.prototype.contains(element) {
-        return this.dictionary.containsKey(element);
-    };
+        contains(element) {
+            return this.dictionary.containsKey(element);
+        };
 
-    /**
-     * Adds the specified element to this set if it is not already present.
-     * @param {Object} element the element to insert.
-     * @return {boolean} true if this set did not already contain the specified element.
-     */
-    buckets.Set.prototype.add(element) {
-        if (this.contains(element) || buckets.isUndefined(element)) {
-            return false;
-        } else {
-            this.dictionary.set(element, element);
-            return true;
-        }
-    };
-
-    /**
-     * Performs an intersecion between this an another set.
-     * Removes all values that are not present this set and the given set.
-     * @param {buckets.Set} otherSet other set.
-     */
-    buckets.Set.prototype.intersection(otherSet) {
-        var set = this;
-        this.forEach(function (element) {
-            if (!otherSet.contains(element)) {
-                set.remove(element);
+        /**
+         * Adds the specified element to this set if it is not already present.
+         * @param {Object} element the element to insert.
+         * @return {boolean} true if this set did not already contain the specified element.
+         */
+        add(element) {
+            if (this.contains(element) || collections.isUndefined(element)) {
+                return false;
+            } else {
+                this.dictionary.setValue(element, element);
+                return true;
             }
-        });
-    };
+        };
 
-    /**
-     * Performs a union between this an another set.
-     * Adds all values from the given set to this set.
-     * @param {buckets.Set} otherSet other set.
-     */
-    buckets.Set.prototype.union(otherSet) {
-        var set = this;
-        otherSet.forEach(function (element) {
-            set.add(element);
-        });
-    };
+        /**
+         * Performs an intersecion between this an another set.
+         * Removes all values that are not present this set and the given set.
+         * @param {buckets.Set} otherSet other set.
+         */
+        intersection(otherSet) {
+            var set = this;
+            this.forEach(function (element) {
+                if (!otherSet.contains(element)) {
+                    set.remove(element);
+                }
+            });
+        };
 
-    /**
-     * Performs a difference between this an another set.
-     * Removes from this set all the values that are present in the given set.
-     * @param {buckets.Set} otherSet other set.
-     */
-    buckets.Set.prototype.difference(otherSet) {
-        var set = this;
-        otherSet.forEach(function (element) {
-            set.remove(element);
-        });
-    };
+        /**
+         * Performs a union between this an another set.
+         * Adds all values from the given set to this set.
+         * @param {buckets.Set} otherSet other set.
+         */
+        union(otherSet) {
+            var set = this;
+            otherSet.forEach(function (element) {
+                set.add(element);
+            });
+        };
 
-    /**
-     * Checks whether the given set contains all the elements in this set.
-     * @param {buckets.Set} otherSet other set.
-     * @return {boolean} true if this set is a subset of the given set.
-     */
-    buckets.Set.prototype.isSubsetOf(otherSet) {
+        /**
+         * Performs a difference between this an another set.
+         * Removes from this set all the values that are present in the given set.
+         * @param {buckets.Set} otherSet other set.
+         */
+        difference(otherSet) {
+            var set = this;
+            otherSet.forEach(function (element) {
+                set.remove(element);
+            });
+        };
 
-        if (this.size() > otherSet.size()) {
-            return false;
-        }
+        /**
+         * Checks whether the given set contains all the elements in this set.
+         * @param {buckets.Set} otherSet other set.
+         * @return {boolean} true if this set is a subset of the given set.
+         */
+        isSubsetOf(otherSet) {
 
-        var isSub = true;
-        this.forEach(function (element) {
-            if (!otherSet.contains(element)) {
-                isSub = false;
+            if (this.size() > otherSet.size()) {
                 return false;
             }
-        });
-        return isSub;
-    };
 
-    /**
-     * Removes the specified element from this set if it is present.
-     * @return {boolean} true if this set contained the specified element.
-     */
-    buckets.Set.prototype.remove(element) {
-        if (!this.contains(element)) {
-            return false;
-        } else {
-            this.dictionary.remove(element);
-            return true;
-        }
-    };
+            var isSub = true;
+            this.forEach(function (element) {
+                if (!otherSet.contains(element)) {
+                    isSub = false;
+                    return false;
+                }
+            });
+            return isSub;
+        };
 
-    /**
-     * Executes the provided function once for each element 
-     * present in this set.
-     * @param {function(Object):*} callback function to execute, it is
-     * invoked with one arguments: the element. To break the iteration you can 
-     * optionally return false.
-     */
-    buckets.Set.prototype.forEach(callback) {
-        this.dictionary.forEach(function (k, v) {
-            return callback(v);
-        });
-    };
+        /**
+         * Removes the specified element from this set if it is present.
+         * @return {boolean} true if this set contained the specified element.
+         */
+        remove(element) {
+            if (!this.contains(element)) {
+                return false;
+            } else {
+                this.dictionary.remove(element);
+                return true;
+            }
+        };
 
-    /**
-     * Returns an array containing all of the elements in this set in arbitrary order.
-     * @return {Array} an array containing all of the elements in this set.
-     */
-    buckets.Set.prototype.toArray() {
-        return this.dictionary.values();
-    };
+        /**
+         * Executes the provided function once for each element 
+         * present in this set.
+         * @param {function(Object):*} callback function to execute, it is
+         * invoked with one arguments: the element. To break the iteration you can 
+         * optionally return false.
+         */
+        forEach(callback) {
+            this.dictionary.forEach(function (k, v) {
+                return callback(v);
+            });
+        };
 
-    /**
-     * Returns true if this set contains no elements.
-     * @return {boolean} true if this set contains no elements.
-     */
-    buckets.Set.prototype.isEmpty() {
-        return this.dictionary.isEmpty();
-    };
+            /**
+             * Returns an array containing all of the elements in this set in arbitrary order.
+             * @return {Array} an array containing all of the elements in this set.
+             */
+        toArray() {
+            return this.dictionary.values();
+        };
 
-    /**
-     * Returns the number of elements in this set.
-     * @return {number} the number of elements in this set.
-     */
-    buckets.Set.prototype.size() {
-        return this.dictionary.size();
-    };
+            /**
+             * Returns true if this set contains no elements.
+             * @return {boolean} true if this set contains no elements.
+             */
+        isEmpty() {
+            return this.dictionary.isEmpty();
+        };
 
-    /**
-     * Removes all of the elements from this set.
-     */
-    buckets.Set.prototype.clear() {
-        this.dictionary.clear();
-    };
+            /**
+             * Returns the number of elements in this set.
+             * @return {number} the number of elements in this set.
+             */
+        size() {
+            return this.dictionary.size();
+        };
+
+            /**
+             * Removes all of the elements from this set.
+             */
+        clear() {
+            this.dictionary.clear();
+        };
+    }// end of Set
+
+
+
+    class Bag{
+
+    }// End of bag 
+    
 
     /**
      * Creates an empty bag.
