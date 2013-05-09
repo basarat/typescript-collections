@@ -25,7 +25,7 @@ module collections {
         } else {
             return 1;
         }
-    };
+    }
 
     /**
      * Default function to test equality. 
@@ -33,7 +33,7 @@ module collections {
      */
     export function defaultEquals(a, b) {
         return a === b;
-    };
+    }
 
     /**
      * Default function to convert an object to a string.
@@ -49,7 +49,7 @@ module collections {
         } else {
             return item.toString();
         }
-    };
+    }
 
     /**
      * Checks if the given argument is a function.
@@ -57,7 +57,7 @@ module collections {
      */
     export function isFunction(func) {
         return (typeof func) === 'function';
-    };
+    }
 
     /**
      * Checks if the given argument is undefined.
@@ -65,7 +65,7 @@ module collections {
      */
     export function isUndefined(obj) {
         return (typeof obj) === 'undefined';
-    };
+    }
 
     /**
      * Checks if the given argument is a string.
@@ -73,7 +73,7 @@ module collections {
      */
     export function isString(obj) {
         return Object.prototype.toString.call(obj) === '[object String]';
-    };
+    }
 
     /**
      * Reverses a compare function.
@@ -95,7 +95,7 @@ module collections {
                 return compareFunction(d, v) * -1;
             };
         }
-    };
+    }
 
     /**
      * Returns an equal function given a compare function.
@@ -105,7 +105,7 @@ module collections {
         return function (a, b) {
             return compareFunction(a, b) === 0;
         };
-    };
+    }
 
     /**
      * @namespace Contains various functions for manipulating arrays.
@@ -131,7 +131,7 @@ module collections {
                 }
             }
             return -1;
-        };
+        }
 
         /**
          * Returns the position of the last occurrence of the specified element
@@ -152,7 +152,7 @@ module collections {
                 }
             }
             return -1;
-        };
+        }
 
         /**
          * Returns true if the specified array contains the specified element.
@@ -164,7 +164,7 @@ module collections {
          */
         export function contains(array, item, equalsFunction?) {
             return arrays.indexOf(array, item, equalsFunction) >= 0;
-        };
+        }
 
 
         /**
@@ -182,7 +182,7 @@ module collections {
             }
             array.splice(index, 1);
             return true;
-        };
+        }
 
         /**
          * Returns the number of elements in the specified array equal
@@ -204,7 +204,7 @@ module collections {
                 }
             }
             return freq;
-        };
+        }
 
         /**
          * Returns true if the two specified arrays are equal to one another.
@@ -230,7 +230,7 @@ module collections {
                 }
             }
             return true;
-        };
+        }
 
         /**
          * Returns shallow a copy of the specified array.
@@ -239,7 +239,7 @@ module collections {
          */
         export function copy(array) {
             return array.concat();
-        };
+        }
 
         /**
          * Swaps the elements at the specified positions in the specified array.
@@ -256,7 +256,7 @@ module collections {
             array[i] = array[j];
             array[j] = temp;
             return true;
-        };
+        }
 
         /**
          * Executes the provided function once for each element present in this array 
@@ -273,8 +273,8 @@ module collections {
                     return;
                 }
             }
-        };
-    };
+        }
+    }
 
 
     export class LinkedList {
@@ -355,7 +355,7 @@ module collections {
                 return this.firstNode.element;
             }
             return undefined;
-        };
+        }
 
             /**
             * Returns the last element in this list.
@@ -368,7 +368,7 @@ module collections {
                 return this.lastNode.element;
             }
             return undefined;
-        };
+        }
 
         /**
          * Returns the element at the specified position in this list.
@@ -383,7 +383,7 @@ module collections {
                 return undefined;
             }
             return node.element;
-        };
+        }
 
         /**
          * Returns the index in this list of the first occurrence of the
@@ -421,7 +421,7 @@ module collections {
                 currentNode = currentNode.next;
             }
             return -1;
-        };
+        }
 
 
       /**
@@ -442,9 +442,9 @@ module collections {
          * @return {boolean} true if this list contains the specified element, false
          * otherwise.
          */
-        contains = function (item, equalsFunction?) {
+        contains(item, equalsFunction?) {
             return (this.indexOf(item, equalsFunction) >= 0);
-        };
+        }
 
         /**
  * Removes the first occurrence of the specified element in this list.
@@ -492,7 +492,7 @@ module collections {
                 currentNode = currentNode.next;
             }
             return false;
-        };
+        }
 
             /**
          * Removes all of the elements from this list.
@@ -501,7 +501,7 @@ module collections {
             this.firstNode = null;
             this.lastNode = null;
             this.nElements = 0;
-        };
+        }
 
             /**
          * Returns true if this list is equal to the given list.
@@ -522,7 +522,7 @@ module collections {
                 return false;
             }
             return this.equalsAux(this.firstNode, other.firstNode, eqF);
-        };
+        }
 
              /**
          * @private
@@ -536,7 +536,7 @@ module collections {
                 n2 = n2.next;
             }
             return true;
-        };
+        }
 
         /**
      * Removes the element at the specified position in this list.
@@ -572,7 +572,7 @@ module collections {
             return element;
 
 
-        };
+        }
 
         /**
      * Executes the provided function once for each element present in this list in order.
@@ -588,7 +588,7 @@ module collections {
                 }
                 currentNode = currentNode.next;
             }
-        };
+        }
 
             /**
          * Reverses the order of the elements in this linked list (makes the last 
@@ -607,7 +607,7 @@ module collections {
             temp = this.firstNode;
             this.firstNode = this.lastNode;
             this.lastNode = temp;
-        };
+        }
 
             /**
          * Returns an array containing all of the elements in this list in proper
@@ -623,7 +623,7 @@ module collections {
                 currentNode = currentNode.next;
             }
             return array;
-        };
+        }
 
             /**
          * Returns the number of elements in this list.
@@ -631,7 +631,7 @@ module collections {
          */
     size() {
             return this.nElements;
-        };
+        }
 
             /**
          * Returns true if this list contains no elements.
@@ -639,7 +639,7 @@ module collections {
          */
     isEmpty() {
             return this.nElements <= 0;
-        };
+        }
 
             /**
      * @private
@@ -657,7 +657,7 @@ module collections {
                 node = node.next;
             }
             return node;
-        };
+        }
         /**
          * @private
          */
@@ -666,10 +666,10 @@ module collections {
                 element: item,
                 next: null
             };
-        };
+        }
 
 
-    }; // End of linked list 
+    } // End of linked list 
 
 
 
@@ -680,14 +680,14 @@ module collections {
  * @type {Object}
  * @private
  */
-        private table = {};
+        private table;
 
         /**
          * Number of elements in the list.
          * @type {number}
          * @private
          */
-        private nElements = 0;
+        private nElements: number;
 
         /**
  * Function used to convert keys to strings.
@@ -716,6 +716,8 @@ module collections {
  * unique string must be provided.
  */
         constructor(toStrFunction?) {
+            this.table = {};
+            this.nElements = 0; 
             this.toStr = toStrFunction || collections.defaultToString;
         }
 
@@ -733,7 +735,7 @@ module collections {
                 return undefined;
             }
             return pair.value;
-        };
+        }
 
 
     /**
@@ -766,7 +768,7 @@ module collections {
                 value: value
             };
             return ret;
-        };
+        }
 
     /**
      * Removes the mapping for this key from this dictionary if it is present.
@@ -784,7 +786,7 @@ module collections {
                 return previousElement.value;
             }
             return undefined;
-        };
+        }
 
             /**
          * Returns an array containing all of the keys in this dictionary.
@@ -798,7 +800,7 @@ module collections {
                 }
             }
             return array;
-        };
+        }
 
             /**
      * Returns an array containing all of the values in this dictionary.
@@ -812,7 +814,7 @@ module collections {
                 }
             }
             return array;
-        };
+        }
 
                 /**
      * Executes the provided function once for each key-value pair 
@@ -832,7 +834,7 @@ module collections {
                     }
                 }
             }
-        };
+        }
 
             /**
      * Returns true if this dictionary contains a mapping for the specified key.
@@ -844,7 +846,7 @@ module collections {
 
         containsKey(key) {
             return !collections.isUndefined(this.getValue(key));
-        };
+        }
 
             /**
         * Removes all mappings from this dictionary.
@@ -854,14 +856,14 @@ module collections {
 
             this.table = {};
             this.nElements = 0;
-        };
+        }
             /**
              * Returns the number of keys in this dictionary.
              * @return {number} the number of key-value mappings in this dictionary.
              */
         size() {
             return this.nElements;
-        };
+        }
 
             /**
              * Returns true if this dictionary contains no mappings.
@@ -869,7 +871,7 @@ module collections {
              */
         isEmpty() {
             return this.nElements <= 0;
-        };
+        }
 
 
     } // End of dictionary
@@ -891,7 +893,7 @@ module collections {
     // 		return false;
     // 	}
     // 	return this.equalsAux(this.firstNode,other.firstNode,eqF);
-    // };
+    // }
 
 
     class MultiDictionary extends Dictionary {
@@ -948,7 +950,7 @@ module collections {
                 return [];
             }
             return collections.arrays.copy(values);
-        };
+        }
 
         /**
          * Adds the value to the array associated with the specified key, if 
@@ -1010,7 +1012,7 @@ module collections {
          */
         keys() {
             return super.keys();
-        };
+        }
 
             /**
              * Returns an array containing all of the values in this dictionary.
@@ -1037,7 +1039,7 @@ module collections {
          */
         containsKey(key) {
             return super.containsKey(key);
-        };
+        }
 
             /**
              * Removes all mappings from this dictionary.
@@ -1060,7 +1062,7 @@ module collections {
          */
         isEmpty() {
             return super.isEmpty();
-        };
+        }
     }// end of multi dictionary 
 
 
@@ -1137,7 +1139,7 @@ module collections {
      */
         private leftChildIndex(nodeIndex) {
             return (2 * nodeIndex) + 1;
-        };
+        }
         /**
          * Returns the index of the right child of the node at the given index.
          * @param {number} nodeIndex The index of the node to get the right child
@@ -1147,7 +1149,7 @@ module collections {
          */
         private rightChildIndex(nodeIndex) {
             return (2 * nodeIndex) + 2;
-        };
+        }
         /**
          * Returns the index of the parent of the node at the given index.
          * @param {number} nodeIndex The index of the node to get the parent for.
@@ -1156,7 +1158,7 @@ module collections {
          */
         private parentIndex(nodeIndex) {
             return Math.floor((nodeIndex - 1) / 2);
-        };
+        }
         /**
          * Returns the index of the smaller child node (if it exists).
          * @param {number} leftChild left child index.
@@ -1180,7 +1182,7 @@ module collections {
                     return rightChild;
                 }
             }
-        };
+        }
         /**
          * Moves the node at the given index up to its proper place in the heap.
          * @param {number} index The index of the node to move up.
@@ -1194,7 +1196,7 @@ module collections {
                 index = parent;
                 parent = this.parentIndex(index);
             }
-        };
+        }
         /**
          * Moves the node at the given index down to its proper place in the heap.
          * @param {number} nodeIndex The index of the node to move down.
@@ -1213,7 +1215,7 @@ module collections {
                 min = this.minIndex(this.leftChildIndex(nodeIndex),
                 this.rightChildIndex(nodeIndex));
             }
-        };
+        }
             /**
              * Retrieves but does not remove the root element of this heap.
              * @return {*} The value at the root of the heap. Returns undefined if the
@@ -1226,7 +1228,7 @@ module collections {
             } else {
                 return undefined;
             }
-        };
+        }
         /**
          * Adds the given element into the heap.
          * @param {*} element the element.
@@ -1239,7 +1241,7 @@ module collections {
             this.data.push(element);
             this.siftUp(this.data.length - 1);
             return true;
-        };
+        }
 
             /**
              * Retrieves and removes the root element of this heap.
@@ -1258,7 +1260,7 @@ module collections {
                 return obj;
             }
             return undefined;
-        };
+        }
         /**
          * Returns true if this heap contains the specified element.
          * @param {Object} element element to search for.
@@ -1268,14 +1270,14 @@ module collections {
         contains(element) {
             var equF = collections.compareToEquals(this.compare);
             return collections.arrays.contains(this.data, element, equF);
-        };
+        }
             /**
              * Returns the number of elements in this heap.
              * @return {number} the number of elements in this heap.
              */
         size() {
             return this.data.length;
-        };
+        }
             /**
              * Checks if this heap is empty.
              * @return {boolean} true if and only if this heap contains no items; false
@@ -1283,13 +1285,13 @@ module collections {
              */
         isEmpty() {
             return this.data.length <= 0;
-        };
+        }
             /**
              * Removes all of the elements from this heap.
              */
         clear() {
             this.data.length = 0;
-        };
+        }
 
         /**
          * Executes the provided function once for each element present in this heap in 
@@ -1330,7 +1332,7 @@ module collections {
     */
         push(elem) {
             return this.list.add(elem, 0);
-        };
+        }
         /**
          * Pushes an item onto the top of this stack.
          * @param {Object} elem the element to be pushed onto this stack.
@@ -1338,7 +1340,7 @@ module collections {
          */
         add(elem) {
             return this.list.add(elem, 0);
-        };
+        }
             /**
              * Removes the object at the top of this stack and returns that object.
              * @return {*} the object at the top of this stack or undefined if the
@@ -1346,7 +1348,7 @@ module collections {
              */
         pop() {
             return this.list.removeElementAtIndex(0);
-        };
+        }
             /**
              * Looks at the object at the top of this stack without removing it from the
              * stack.
@@ -1355,14 +1357,14 @@ module collections {
              */
         peek() {
             return this.list.first();
-        };
+        }
             /**
              * Returns the number of elements in this stack.
              * @return {number} the number of elements in this stack.
              */
         size() {
             return this.list.size();
-        };
+        }
 
         /**
          * Returns true if this stack contains the specified element.
@@ -1384,7 +1386,7 @@ module collections {
          */
         contains(elem, equalsFunction?) {
             return this.list.contains(elem, equalsFunction);
-        };
+        }
             /**
              * Checks if this stack is empty.
              * @return {boolean} true if and only if this stack contains no items; false
@@ -1392,13 +1394,13 @@ module collections {
              */
         isEmpty() {
             return this.list.isEmpty();
-        };
+        }
             /**
              * Removes all of the elements from this stack.
              */
         clear() {
             this.list.clear();
-        };
+        }
 
         /**
          * Executes the provided function once for each element present in this stack in 
@@ -1409,7 +1411,7 @@ module collections {
          */
         forEach(callback) {
             this.list.forEach(callback);
-        };
+        }
 
     } // End of stack 
 
@@ -1443,7 +1445,7 @@ module collections {
          */
         enqueue(elem) {
             return this.list.add(elem);
-        };
+        }
         /**
          * Inserts the specified element into the end of this queue.
          * @param {Object} elem the element to insert.
@@ -1451,7 +1453,7 @@ module collections {
          */
         add(elem) {
             return this.list.add(elem);
-        };
+        }
             /**
              * Retrieves and removes the head of this queue.
              * @return {*} the head of this queue, or undefined if this queue is empty.
@@ -1463,7 +1465,7 @@ module collections {
                 return el;
             }
             return undefined;
-        };
+        }
             /**
              * Retrieves, but does not remove, the head of this queue.
              * @return {*} the head of this queue, or undefined if this queue is empty.
@@ -1474,7 +1476,7 @@ module collections {
                 return this.list.first();
             }
             return undefined;
-        };
+        }
 
             /**
              * Returns the number of elements in this queue.
@@ -1482,7 +1484,7 @@ module collections {
              */
         size() {
             return this.list.size();
-        };
+        }
 
         /**
          * Returns true if this queue contains the specified element.
@@ -1504,7 +1506,7 @@ module collections {
          */
         contains(elem, equalsFunction?) {
             return this.list.contains(elem, equalsFunction);
-        };
+        }
 
             /**
              * Checks if this queue is empty.
@@ -1513,14 +1515,14 @@ module collections {
              */
         isEmpty() {
             return this.list.size() <= 0;
-        };
+        }
 
             /**
              * Removes all of the elements from this queue.
              */
         clear() {
             this.list.clear();
-        };
+        }
 
         /**
          * Executes the provided function once for each element present in this queue in 
@@ -1531,7 +1533,7 @@ module collections {
          */
         forEach(callback) {
             this.list.forEach(callback);
-        };
+        }
 
     } // End of queue
 
@@ -1574,7 +1576,7 @@ module collections {
     */
         enqueue(element) {
             return this.heap.add(element);
-        };
+        }
 
         /**
          * Inserts the specified element into this priority queue.
@@ -1583,7 +1585,7 @@ module collections {
          */
         add(element) {
             return this.heap.add(element);
-        };
+        }
 
             /**
              * Retrieves and removes the highest priority element of this queue.
@@ -1597,7 +1599,7 @@ module collections {
                 return el;
             }
             return undefined;
-        };
+        }
 
             /**
              * Retrieves, but does not remove, the highest priority element of this queue.
@@ -1605,7 +1607,7 @@ module collections {
              */
         peek() {
             return this.heap.peek();
-        };
+        }
 
         /**
          * Returns true if this priority queue contains the specified element.
@@ -1615,7 +1617,7 @@ module collections {
          */
         contains(element) {
             return this.heap.contains(element);
-        };
+        }
 
             /**
              * Checks if this priority queue is empty.
@@ -1624,7 +1626,7 @@ module collections {
              */
         isEmpty() {
             return this.heap.isEmpty();
-        };
+        }
 
             /**
              * Returns the number of elements in this priority queue.
@@ -1632,14 +1634,14 @@ module collections {
              */
         size() {
             return this.heap.size();
-        };
+        }
 
             /**
              * Removes all of the elements from this priority queue.
              */
         clear() {
             this.heap.clear();
-        };
+        }
 
         /**
          * Executes the provided function once for each element present in this queue in 
@@ -1650,7 +1652,7 @@ module collections {
          */
         forEach(callback) {
             this.heap.forEach(callback);
-        };
+        }
 
     } // end of priority queue
 
@@ -1692,7 +1694,7 @@ module collections {
          */
         contains(element) {
             return this.dictionary.containsKey(element);
-        };
+        }
 
         /**
          * Adds the specified element to this set if it is not already present.
@@ -1706,7 +1708,7 @@ module collections {
                 this.dictionary.setValue(element, element);
                 return true;
             }
-        };
+        }
 
         /**
          * Performs an intersecion between this an another set.
@@ -1720,7 +1722,7 @@ module collections {
                     set.remove(element);
                 }
             });
-        };
+        }
 
         /**
          * Performs a union between this an another set.
@@ -1732,7 +1734,7 @@ module collections {
             otherSet.forEach(function (element) {
                 set.add(element);
             });
-        };
+        }
 
         /**
          * Performs a difference between this an another set.
@@ -1744,7 +1746,7 @@ module collections {
             otherSet.forEach(function (element) {
                 set.remove(element);
             });
-        };
+        }
 
         /**
          * Checks whether the given set contains all the elements in this set.
@@ -1765,7 +1767,7 @@ module collections {
                 }
             });
             return isSub;
-        };
+        }
 
         /**
          * Removes the specified element from this set if it is present.
@@ -1778,7 +1780,7 @@ module collections {
                 this.dictionary.remove(element);
                 return true;
             }
-        };
+        }
 
         /**
          * Executes the provided function once for each element 
@@ -1791,7 +1793,7 @@ module collections {
             this.dictionary.forEach(function (k, v) {
                 return callback(v);
             });
-        };
+        }
 
             /**
              * Returns an array containing all of the elements in this set in arbitrary order.
@@ -1799,7 +1801,7 @@ module collections {
              */
         toArray() {
             return this.dictionary.values();
-        };
+        }
 
             /**
              * Returns true if this set contains no elements.
@@ -1807,7 +1809,7 @@ module collections {
              */
         isEmpty() {
             return this.dictionary.isEmpty();
-        };
+        }
 
             /**
              * Returns the number of elements in this set.
@@ -1815,14 +1817,14 @@ module collections {
              */
         size() {
             return this.dictionary.size();
-        };
+        }
 
             /**
              * Removes all of the elements from this set.
              */
         clear() {
             this.dictionary.clear();
-        };
+        }
     }// end of Set
 
 
@@ -1886,7 +1888,7 @@ module collections {
             }
             this.nElements += nCopies;
             return true;
-        };
+        }
 
         /**
         * Counts the number of copies of the specified object in this bag.
@@ -1900,7 +1902,7 @@ module collections {
             } else {
                 return this.dictionary.getValue(element).copies;
             }
-        };
+        }
 
         /**
          * Returns true if this bag contains the specified element.
@@ -1910,7 +1912,7 @@ module collections {
          */
         contains(element) {
             return this.dictionary.containsKey(element);
-        };
+        }
 
         /**
         * Removes nCopies of the specified object to this bag.
@@ -1945,7 +1947,7 @@ module collections {
                 }
                 return true;
             }
-        };
+        }
 
             /**
              * Returns an array containing all of the elements in this big in arbitrary order, 
@@ -1965,7 +1967,7 @@ module collections {
                 }
             }
             return a;
-        };
+        }
 
             /**
              * Returns a set of unique elements in this bag. 
@@ -1980,7 +1982,7 @@ module collections {
                 set.add(value);
             }
             return set;
-        };
+        }
 
         /**
          * Executes the provided function once for each element 
@@ -2000,14 +2002,14 @@ module collections {
                 }
                 return true;
             });
-        };
+        }
             /**
              * Returns the number of elements in this bag.
              * @return {number} the number of elements in this bag.
              */
         size() {
             return this.nElements;
-        };
+        }
 
             /**
              * Returns true if this bag contains no elements.
@@ -2015,7 +2017,7 @@ module collections {
              */
         isEmpty() {
             return this.nElements === 0;
-        };
+        }
 
             /**
              * Removes all of the elements from this bag.
@@ -2023,7 +2025,7 @@ module collections {
         clear() {
             this.nElements = 0;
             this.dictionary.clear();
-        };
+        }
 
     }// End of bag 
 
@@ -2090,7 +2092,7 @@ module collections {
                 return true;
             }
             return false;
-        };
+        }
 
             /**
              * Removes all of the elements from this tree.
@@ -2098,7 +2100,7 @@ module collections {
         clear() {
             this.root = null;
             this.nElements = 0;
-        };
+        }
 
             /**
              * Returns true if this tree contains no elements.
@@ -2106,7 +2108,7 @@ module collections {
              */
         isEmpty() {
             return this.nElements === 0;
-        };
+        }
 
             /**
              * Returns the number of elements in this tree.
@@ -2114,7 +2116,7 @@ module collections {
              */
         size() {
             return this.nElements;
-        };
+        }
 
         /**
          * Returns true if this tree contains the specified element.
@@ -2127,7 +2129,7 @@ module collections {
                 return false;
             }
             return this.searchNode(this.root, element) !== null;
-        };
+        }
 
         /**
          * Removes the specified element from this tree if it is present.
@@ -2141,7 +2143,7 @@ module collections {
             this.removeNode(node);
             this.nElements--;
             return true;
-        };
+        }
 
         /**
          * Executes the provided function once for each element present in this tree in 
@@ -2153,7 +2155,7 @@ module collections {
             this.inorderTraversalAux(this.root, callback, {
                 stop: false
             });
-        };
+        }
 
         /**
          * Executes the provided function once for each element present in this tree in pre-order.
@@ -2164,7 +2166,7 @@ module collections {
             this.preorderTraversalAux(this.root, callback, {
                 stop: false
             });
-        };
+        }
 
         /**
          * Executes the provided function once for each element present in this tree in post-order.
@@ -2175,7 +2177,7 @@ module collections {
             this.postorderTraversalAux(this.root, callback, {
                 stop: false
             });
-        };
+        }
 
         /**
          * Executes the provided function once for each element present in this tree in 
@@ -2185,7 +2187,7 @@ module collections {
          */
         levelTraversal(callback) {
             this.levelTraversalAux(this.root, callback);
-        };
+        }
 
             /**
              * Returns the minimum element of this tree.
@@ -2197,7 +2199,7 @@ module collections {
                 return undefined;
             }
             return this.minimumAux(this.root).element;
-        };
+        }
 
             /**
              * Returns the maximum element of this tree.
@@ -2209,7 +2211,7 @@ module collections {
                 return undefined;
             }
             return this.maximumAux(this.root).element;
-        };
+        }
 
         /**
          * Executes the provided function once for each element present in this tree in inorder.
@@ -2220,7 +2222,7 @@ module collections {
          */
         forEach(callback) {
             this.inorderTraversal(callback);
-        };
+        }
 
             /**
              * Returns an array containing all of the elements in this tree in in-order.
@@ -2232,7 +2234,7 @@ module collections {
                 array.push(element);
             });
             return array;
-        };
+        }
 
             /**
              * Returns the height of this tree.
@@ -2240,7 +2242,7 @@ module collections {
              */
         height() {
             return this.heightAux(this.root);
-        };
+        }
 
         /**
         * @private
@@ -2256,7 +2258,7 @@ module collections {
                 }
             }
             return node;
-        };
+        }
 
 
         /**
@@ -2273,7 +2275,7 @@ module collections {
             if (n2 !== null) {
                 n2.parent = n1.parent;
             }
-        };
+        }
 
 
         /**
@@ -2295,7 +2297,7 @@ module collections {
                 y.leftCh = node.leftCh;
                 y.leftCh.parent = y;
             }
-        };
+        }
         /**
         * @private
         */
@@ -2312,7 +2314,7 @@ module collections {
                 return;
             }
             this.inorderTraversalAux(node.rightCh, callback, signal);
-        };
+        }
 
         /**
         * @private
@@ -2334,7 +2336,7 @@ module collections {
                     queue.enqueue(node.rightCh);
                 }
             }
-        };
+        }
 
         /**
         * @private
@@ -2352,7 +2354,7 @@ module collections {
                 return;
             }
             this.preorderTraversalAux(node.rightCh, callback, signal);
-        };
+        }
         /**
         * @private
         */
@@ -2369,7 +2371,7 @@ module collections {
                 return;
             }
             signal.stop = callback(node.element) === false;
-        };
+        }
 
         /**
         * @private
@@ -2379,7 +2381,7 @@ module collections {
                 node = node.leftCh;
             }
             return node;
-        };
+        }
 
         /**
         * @private
@@ -2389,7 +2391,7 @@ module collections {
                 node = node.rightCh;
             }
             return node;
-        };
+        }
 
         /**
         * @private
@@ -2404,7 +2406,7 @@ module collections {
                 successor = node.parent;
             }
             return successor;
-        };
+        }
 
         /**
         * @private
@@ -2414,7 +2416,7 @@ module collections {
                 return -1;
             }
             return Math.max(this.heightAux(node.leftCh), this.heightAux(node.rightCh)) + 1;
-        };
+        }
 
         /*
         * @private
@@ -2446,7 +2448,7 @@ module collections {
                 parent.rightCh = node;
             }
             return node;
-        };
+        }
 
         /**
         * @private
@@ -2458,7 +2460,7 @@ module collections {
                 rightCh: null,
                 parent: null
             };
-        };
+        }
 
     } // end of BSTree
 

@@ -31,7 +31,6 @@ var collections;
         }
     }
     collections.defaultCompare = defaultCompare;
-    ;
     /**
     * Default function to test equality.
     * @function
@@ -40,7 +39,6 @@ var collections;
         return a === b;
     }
     collections.defaultEquals = defaultEquals;
-    ;
     /**
     * Default function to convert an object to a string.
     * @function
@@ -57,7 +55,6 @@ var collections;
         }
     }
     collections.defaultToString = defaultToString;
-    ;
     /**
     * Checks if the given argument is a function.
     * @function
@@ -66,7 +63,6 @@ var collections;
         return (typeof func) === 'function';
     }
     collections.isFunction = isFunction;
-    ;
     /**
     * Checks if the given argument is undefined.
     * @function
@@ -75,7 +71,6 @@ var collections;
         return (typeof obj) === 'undefined';
     }
     collections.isUndefined = isUndefined;
-    ;
     /**
     * Checks if the given argument is a string.
     * @function
@@ -84,7 +79,6 @@ var collections;
         return Object.prototype.toString.call(obj) === '[object String]';
     }
     collections.isString = isString;
-    ;
     /**
     * Reverses a compare function.
     * @function
@@ -107,7 +101,6 @@ var collections;
         }
     }
     collections.reverseCompareFunction = reverseCompareFunction;
-    ;
     /**
     * Returns an equal function given a compare function.
     * @function
@@ -118,7 +111,6 @@ var collections;
         };
     }
     collections.compareToEquals = compareToEquals;
-    ;
     /**
     * @namespace Contains various functions for manipulating arrays.
     */
@@ -144,7 +136,6 @@ var collections;
             return -1;
         }
         arrays.indexOf = indexOf;
-        ;
         /**
         * Returns the position of the last occurrence of the specified element
         * within the specified array.
@@ -166,7 +157,6 @@ var collections;
             return -1;
         }
         arrays.lastIndexOf = lastIndexOf;
-        ;
         /**
         * Returns true if the specified array contains the specified element.
         * @param {*} array the array in which to search the element.
@@ -179,7 +169,6 @@ var collections;
             return arrays.indexOf(array, item, equalsFunction) >= 0;
         }
         arrays.contains = contains;
-        ;
         /**
         * Removes the first ocurrence of the specified element from the specified array.
         * @param {*} array the array in which to search element.
@@ -197,7 +186,6 @@ var collections;
             return true;
         }
         arrays.remove = remove;
-        ;
         /**
         * Returns the number of elements in the specified array equal
         * to the specified object.
@@ -220,7 +208,6 @@ var collections;
             return freq;
         }
         arrays.frequency = frequency;
-        ;
         /**
         * Returns true if the two specified arrays are equal to one another.
         * Two arrays are considered equal if both arrays contain the same number
@@ -246,7 +233,6 @@ var collections;
             return true;
         }
         arrays.equals = equals;
-        ;
         /**
         * Returns shallow a copy of the specified array.
         * @param {*} array the array to copy.
@@ -256,7 +242,6 @@ var collections;
             return array.concat();
         }
         arrays.copy = copy;
-        ;
         /**
         * Swaps the elements at the specified positions in the specified array.
         * @param {Array} array The array in which to swap elements.
@@ -274,7 +259,6 @@ var collections;
             return true;
         }
         arrays.swap = swap;
-        ;
         /**
         * Executes the provided function once for each element present in this array
         * starting from index 0 to length - 1.
@@ -292,10 +276,8 @@ var collections;
             }
         }
         arrays.forEach = forEach;
-        ;
     })(collections.arrays || (collections.arrays = {}));
     var arrays = collections.arrays;
-    ;
     var LinkedList = (function () {
         /**
         * Creates an empty Linked List.
@@ -322,27 +304,6 @@ var collections;
             * @private
             */
             this.nElements = 0;
-            /**
-            * Returns true if this list contains the specified element.
-            * <p>If the elements inside the list are
-            * not comparable with the === operator a custom equals function should be
-            * provided to perform searches, the function must receive two arguments and
-            * return true if they are equal, false otherwise. Example:</p>
-            *
-            * <pre>
-            * var petsAreEqualByName = function(pet1, pet2) {
-            *  return pet1.name === pet2.name;
-            * }
-            * </pre>
-            * @param {Object} item element to search for.
-            * @param {function(Object,Object):boolean=} equalsFunction Optional
-            * function used to check if two elements are equal.
-            * @return {boolean} true if this list contains the specified element, false
-            * otherwise.
-            */
-            this.contains = function (item, equalsFunction) {
-                return (this.indexOf(item, equalsFunction) >= 0);
-            };
         }
         LinkedList.prototype.add = /**
         * Adds an element to this list.
@@ -450,6 +411,27 @@ var collections;
                 currentNode = currentNode.next;
             }
             return -1;
+        };
+        LinkedList.prototype.contains = /**
+        * Returns true if this list contains the specified element.
+        * <p>If the elements inside the list are
+        * not comparable with the === operator a custom equals function should be
+        * provided to perform searches, the function must receive two arguments and
+        * return true if they are equal, false otherwise. Example:</p>
+        *
+        * <pre>
+        * var petsAreEqualByName = function(pet1, pet2) {
+        *  return pet1.name === pet2.name;
+        * }
+        * </pre>
+        * @param {Object} item element to search for.
+        * @param {function(Object,Object):boolean=} equalsFunction Optional
+        * function used to check if two elements are equal.
+        * @return {boolean} true if this list contains the specified element, false
+        * otherwise.
+        */
+        function (item, equalsFunction) {
+            return (this.indexOf(item, equalsFunction) >= 0);
         };
         LinkedList.prototype.remove = /**
         * Removes the first occurrence of the specified element in this list.
@@ -658,9 +640,8 @@ var collections;
         };
         return LinkedList;
     })();
-    collections.LinkedList = LinkedList;    
-    // End of linked list
-    ;
+    collections.LinkedList = LinkedList;    // End of linked list
+    
     var Dictionary = (function () {
         /**
         * Creates an empty dictionary.
@@ -681,18 +662,8 @@ var collections;
         * unique string must be provided.
         */
         function Dictionary(toStrFunction) {
-            /**
-            * Object holding the key-value pairs.
-            * @type {Object}
-            * @private
-            */
             this.table = {
             };
-            /**
-            * Number of elements in the list.
-            * @type {number}
-            * @private
-            */
             this.nElements = 0;
             this.toStr = toStrFunction || collections.defaultToString;
         }
@@ -853,7 +824,7 @@ var collections;
     // 		return false;
     // 	}
     // 	return this.equalsAux(this.firstNode,other.firstNode,eqF);
-    // };
+    // }
     var MultiDictionary = (function (_super) {
         __extends(MultiDictionary, _super);
         /**
