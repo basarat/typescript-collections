@@ -282,12 +282,7 @@ module collections {
         };
     };
 
-    /**
-     * Creates an empty Linked List.
-     * @class A linked list is a data structure consisting of a group of nodes
-     * which together represent a sequence.
-     * @constructor
-     */
+
     export class LinkedList {
         /**
         * First node in the list
@@ -309,6 +304,12 @@ module collections {
         */
         private nElements = 0;
 
+        /**
+        * Creates an empty Linked List.
+        * @class A linked list is a data structure consisting of a group of nodes
+        * which together represent a sequence.
+        * @constructor
+        */
         constructor() {
         }
 
@@ -362,11 +363,11 @@ module collections {
             return undefined;
         };
 
-        /**
-        * Returns the last element in this list.
-        * @return {*} the last element in the list or undefined if the list is
-        * empty.
-        */
+            /**
+            * Returns the last element in this list.
+            * @return {*} the last element in the list or undefined if the list is
+            * empty.
+            */
         last() {
 
             if (this.lastNode !== null) {
@@ -375,365 +376,373 @@ module collections {
             return undefined;
         };
 
-    };
+        /**
+         * Returns the element at the specified position in this list.
+         * @param {number} index desired index.
+         * @return {*} the element at the given index or undefined if the index is
+         * out of bounds.
+         */
+        elementAtIndex(index) {
 
-
-    
-
-
-    /**
-     * Returns the element at the specified position in this list.
-     * @param {number} index desired index.
-     * @return {*} the element at the given index or undefined if the index is
-     * out of bounds.
-     */
-    buckets.LinkedList.prototype.elementAtIndex = function (index) {
-
-        var node = this.nodeAtIndex(index);
-        if (node === null) {
-            return undefined;
-        }
-        return node.element;
-    };
-
-    /**
-     * Returns the index in this list of the first occurrence of the
-     * specified element, or -1 if the List does not contain this element.
-     * <p>If the elements inside this list are
-     * not comparable with the === operator a custom equals function should be
-     * provided to perform searches, the function must receive two arguments and
-     * return true if they are equal, false otherwise. Example:</p>
-     *
-     * <pre>
-     * var petsAreEqualByName = function(pet1, pet2) {
-     *  return pet1.name === pet2.name;
-     * }
-     * </pre>
-     * @param {Object} item element to search for.
-     * @param {function(Object,Object):boolean=} equalsFunction Optional
-     * function used to check if two elements are equal.
-     * @return {number} the index in this list of the first occurrence
-     * of the specified element, or -1 if this list does not contain the
-     * element.
-     */
-    buckets.LinkedList.prototype.indexOf = function (item, equalsFunction) {
-
-        var equalsF = equalsFunction || buckets.defaultEquals;
-        if (buckets.isUndefined(item)) {
-            return -1;
-        }
-        var currentNode = this.firstNode;
-        var index = 0;
-        while (currentNode !== null) {
-            if (equalsF(currentNode.element, item)) {
-                return index;
+            var node = this.nodeAtIndex(index);
+            if (node === null) {
+                return undefined;
             }
-            index++;
-            currentNode = currentNode.next;
-        }
-        return -1;
-    };
+            return node.element;
+        };
 
-    /**
-     * Returns true if this list contains the specified element.
-     * <p>If the elements inside the list are
-     * not comparable with the === operator a custom equals function should be
-     * provided to perform searches, the function must receive two arguments and
-     * return true if they are equal, false otherwise. Example:</p>
-     *
-     * <pre>
-     * var petsAreEqualByName = function(pet1, pet2) {
-     *  return pet1.name === pet2.name;
-     * }
-     * </pre>
-     * @param {Object} item element to search for.
-     * @param {function(Object,Object):boolean=} equalsFunction Optional
-     * function used to check if two elements are equal.
-     * @return {boolean} true if this list contains the specified element, false
-     * otherwise.
-     */
-    buckets.LinkedList.prototype.contains = function (item, equalsFunction) {
-        return (this.indexOf(item, equalsFunction) >= 0);
-    };
+        /**
+         * Returns the index in this list of the first occurrence of the
+         * specified element, or -1 if the List does not contain this element.
+         * <p>If the elements inside this list are
+         * not comparable with the === operator a custom equals function should be
+         * provided to perform searches, the function must receive two arguments and
+         * return true if they are equal, false otherwise. Example:</p>
+         *
+         * <pre>
+         * var petsAreEqualByName = function(pet1, pet2) {
+         *  return pet1.name === pet2.name;
+         * }
+         * </pre>
+         * @param {Object} item element to search for.
+         * @param {function(Object,Object):boolean=} equalsFunction Optional
+         * function used to check if two elements are equal.
+         * @return {number} the index in this list of the first occurrence
+         * of the specified element, or -1 if this list does not contain the
+         * element.
+         */
+        indexOf(item, equalsFunction) {
 
-    /**
-     * Removes the first occurrence of the specified element in this list.
-     * <p>If the elements inside the list are
-     * not comparable with the === operator a custom equals function should be
-     * provided to perform searches, the function must receive two arguments and
-     * return true if they are equal, false otherwise. Example:</p>
-     *
-     * <pre>
-     * var petsAreEqualByName = function(pet1, pet2) {
-     *  return pet1.name === pet2.name;
-     * }
-     * </pre>
-     * @param {Object} item element to be removed from this list, if present.
-     * @return {boolean} true if the list contained the specified element.
-     */
-    buckets.LinkedList.prototype.remove = function (item, equalsFunction) {
-        var equalsF = equalsFunction || buckets.defaultEquals;
-        if (this.nElements < 1 || buckets.isUndefined(item)) {
-            return false;
-        }
-        var previous = null;
-        var currentNode = this.firstNode;
-        while (currentNode !== null) {
-
-            if (equalsF(currentNode.element, item)) {
-
-                if (currentNode === this.firstNode) {
-                    this.firstNode = this.firstNode.next;
-                    if (currentNode === this.lastNode) {
-                        this.lastNode = null;
-                    }
-                } else if (currentNode === this.lastNode) {
-                    this.lastNode = previous;
-                    previous.next = currentNode.next;
-                    currentNode.next = null;
-                } else {
-                    previous.next = currentNode.next;
-                    currentNode.next = null;
+            var equalsF = equalsFunction || collections.defaultEquals;
+            if (collections.isUndefined(item)) {
+                return -1;
+            }
+            var currentNode = this.firstNode;
+            var index = 0;
+            while (currentNode !== null) {
+                if (equalsF(currentNode.element, item)) {
+                    return index;
                 }
-                this.nElements--;
-                return true;
+                index++;
+                currentNode = currentNode.next;
             }
-            previous = currentNode;
-            currentNode = currentNode.next;
-        }
-        return false;
-    };
+            return -1;
+        };
 
-    /**
-     * Removes all of the elements from this list.
-     */
-    buckets.LinkedList.prototype.clear = function () {
-        this.firstNode = null;
-        this.lastNode = null;
-        this.nElements = 0;
-    };
 
-    /**
-     * Returns true if this list is equal to the given list.
-     * Two lists are equal if they have the same elements in the same order.
-     * @param {buckets.LinkedList} other the other list.
-     * @param {function(Object,Object):boolean=} equalsFunction optional
-     * function used to check if two elements are equal. If the elements in the lists
-     * are custom objects you should provide a function, otherwise 
-     * the === operator is used to check equality between elements.
-     * @return {boolean} true if this list is equal to the given list.
-     */
-    buckets.LinkedList.prototype.equals = function (other, equalsFunction) {
-        var eqF = equalsFunction || buckets.defaultEquals;
-        if (!(other instanceof buckets.LinkedList)) {
-            return false;
-        }
-        if (this.size() !== other.size()) {
-            return false;
-        }
-        return this.equalsAux(this.firstNode, other.firstNode, eqF);
-    };
+      /**
+         * Returns true if this list contains the specified element.
+         * <p>If the elements inside the list are
+         * not comparable with the === operator a custom equals function should be
+         * provided to perform searches, the function must receive two arguments and
+         * return true if they are equal, false otherwise. Example:</p>
+         *
+         * <pre>
+         * var petsAreEqualByName = function(pet1, pet2) {
+         *  return pet1.name === pet2.name;
+         * }
+         * </pre>
+         * @param {Object} item element to search for.
+         * @param {function(Object,Object):boolean=} equalsFunction Optional
+         * function used to check if two elements are equal.
+         * @return {boolean} true if this list contains the specified element, false
+         * otherwise.
+         */
+        contains = function (item, equalsFunction) {
+            return (this.indexOf(item, equalsFunction) >= 0);
+        };
 
-    /**
-     * @private
-     */
-    buckets.LinkedList.prototype.equalsAux = function (n1, n2, eqF) {
-        while (n1 !== null) {
-            if (!eqF(n1.element, n2.element)) {
+        /**
+ * Removes the first occurrence of the specified element in this list.
+ * <p>If the elements inside the list are
+ * not comparable with the === operator a custom equals function should be
+ * provided to perform searches, the function must receive two arguments and
+ * return true if they are equal, false otherwise. Example:</p>
+ *
+ * <pre>
+ * var petsAreEqualByName = function(pet1, pet2) {
+ *  return pet1.name === pet2.name;
+ * }
+ * </pre>
+ * @param {Object} item element to be removed from this list, if present.
+ * @return {boolean} true if the list contained the specified element.
+ */
+        remove(item, equalsFunction) {
+            var equalsF = equalsFunction || collections.defaultEquals;
+            if (this.nElements < 1 || collections.isUndefined(item)) {
                 return false;
             }
-            n1 = n1.next;
-            n2 = n2.next;
-        }
-        return true;
-    };
+            var previous = null;
+            var currentNode = this.firstNode;
+            while (currentNode !== null) {
 
-    /**
+                if (equalsF(currentNode.element, item)) {
+
+                    if (currentNode === this.firstNode) {
+                        this.firstNode = this.firstNode.next;
+                        if (currentNode === this.lastNode) {
+                            this.lastNode = null;
+                        }
+                    } else if (currentNode === this.lastNode) {
+                        this.lastNode = previous;
+                        previous.next = currentNode.next;
+                        currentNode.next = null;
+                    } else {
+                        previous.next = currentNode.next;
+                        currentNode.next = null;
+                    }
+                    this.nElements--;
+                    return true;
+                }
+                previous = currentNode;
+                currentNode = currentNode.next;
+            }
+            return false;
+        };
+
+            /**
+         * Removes all of the elements from this list.
+         */
+    clear() {
+            this.firstNode = null;
+            this.lastNode = null;
+            this.nElements = 0;
+        };
+
+            /**
+         * Returns true if this list is equal to the given list.
+         * Two lists are equal if they have the same elements in the same order.
+         * @param {buckets.LinkedList} other the other list.
+         * @param {function(Object,Object):boolean=} equalsFunction optional
+         * function used to check if two elements are equal. If the elements in the lists
+         * are custom objects you should provide a function, otherwise 
+         * the === operator is used to check equality between elements.
+         * @return {boolean} true if this list is equal to the given list.
+         */
+            equals(other, equalsFunction) {
+            var eqF = equalsFunction || collections.defaultEquals;
+            if (!(other instanceof collections.LinkedList)) {
+                return false;
+            }
+            if (this.size() !== other.size()) {
+                return false;
+            }
+            return this.equalsAux(this.firstNode, other.firstNode, eqF);
+        };
+
+             /**
+         * @private
+         */
+        private equalsAux(n1, n2, eqF) {
+            while (n1 !== null) {
+                if (!eqF(n1.element, n2.element)) {
+                    return false;
+                }
+                n1 = n1.next;
+                n2 = n2.next;
+            }
+            return true;
+        };
+
+        /**
      * Removes the element at the specified position in this list.
      * @param {number} index given index.
      * @return {*} removed element or undefined if the index is out of bounds.
      */
-    buckets.LinkedList.prototype.removeElementAtIndex = function (index) {
+    removeElementAtIndex(index) {
 
-        if (index < 0 || index >= this.nElements) {
-            return undefined;
-        }
-        var element;
-        if (this.nElements === 1) {
-            //First node in the list.
-            element = this.firstNode.element;
-            this.firstNode = null;
-            this.lastNode = null;
-        } else {
-            var previous = this.nodeAtIndex(index - 1);
-            if (previous === null) {
+            if (index < 0 || index >= this.nElements) {
+                return undefined;
+            }
+            var element;
+            if (this.nElements === 1) {
+                //First node in the list.
                 element = this.firstNode.element;
-                this.firstNode = this.firstNode.next;
-            } else if (previous.next === this.lastNode) {
-                element = this.lastNode.element;
-                this.lastNode = previous;
+                this.firstNode = null;
+                this.lastNode = null;
+            } else {
+                var previous = this.nodeAtIndex(index - 1);
+                if (previous === null) {
+                    element = this.firstNode.element;
+                    this.firstNode = this.firstNode.next;
+                } else if (previous.next === this.lastNode) {
+                    element = this.lastNode.element;
+                    this.lastNode = previous;
+                }
+                if (previous !== null) {
+                    element = previous.next.element;
+                    previous.next = previous.next.next;
+                }
             }
-            if (previous !== null) {
-                element = previous.next.element;
-                previous.next = previous.next.next;
-            }
-        }
-        this.nElements--;
-        return element;
-    };
+            this.nElements--;
+            return element;
 
-    /**
+
+        };
+
+        /**
      * Executes the provided function once for each element present in this list in order.
      * @param {function(Object):*} callback function to execute, it is
      * invoked with one argument: the element value, to break the iteration you can 
      * optionally return false.
      */
-    buckets.LinkedList.prototype.forEach = function (callback) {
-        var currentNode = this.firstNode;
-        while (currentNode !== null) {
-            if (callback(currentNode.element) === false) {
-                break;
+    forEach(callback) {
+            var currentNode = this.firstNode;
+            while (currentNode !== null) {
+                if (callback(currentNode.element) === false) {
+                    break;
+                }
+                currentNode = currentNode.next;
             }
-            currentNode = currentNode.next;
-        }
-    };
-
-    /**
-     * Reverses the order of the elements in this linked list (makes the last 
-     * element first, and the first element last).
-     */
-    buckets.LinkedList.prototype.reverse = function () {
-        var previous = null;
-        var current = this.firstNode;
-        var temp = null;
-        while (current !== null) {
-            temp = current.next;
-            current.next = previous;
-            previous = current;
-            current = temp;
-        }
-        temp = this.firstNode;
-        this.firstNode = this.lastNode;
-        this.lastNode = temp;
-    };
-
-
-    /**
-     * Returns an array containing all of the elements in this list in proper
-     * sequence.
-     * @return {Array.<*>} an array containing all of the elements in this list,
-     * in proper sequence.
-     */
-    buckets.LinkedList.prototype.toArray = function () {
-        var array = [];
-        var currentNode = this.firstNode;
-        while (currentNode !== null) {
-            array.push(currentNode.element);
-            currentNode = currentNode.next;
-        }
-        return array;
-    };
-    /**
-     * Returns the number of elements in this list.
-     * @return {number} the number of elements in this list.
-     */
-    buckets.LinkedList.prototype.size = function () {
-        return this.nElements;
-    };
-
-    /**
-     * Returns true if this list contains no elements.
-     * @return {boolean} true if this list contains no elements.
-     */
-    buckets.LinkedList.prototype.isEmpty = function () {
-        return this.nElements <= 0;
-    };
-
-    /**
-     * @private
-     */
-    buckets.LinkedList.prototype.nodeAtIndex = function (index) {
-
-        if (index < 0 || index >= this.nElements) {
-            return null;
-        }
-        if (index === (this.nElements - 1)) {
-            return this.lastNode;
-        }
-        var node = this.firstNode;
-        for (var i = 0; i < index; i++) {
-            node = node.next;
-        }
-        return node;
-    };
-    /**
-     * @private
-     */
-    buckets.LinkedList.prototype.createNode = function (item) {
-        return {
-            element: item,
-            next: null
         };
-    };
 
+            /**
+         * Reverses the order of the elements in this linked list (makes the last 
+         * element first, and the first element last).
+         */
+    reverse() {
+            var previous = null;
+            var current = this.firstNode;
+            var temp = null;
+            while (current !== null) {
+                temp = current.next;
+                current.next = previous;
+                previous = current;
+                current = temp;
+            }
+            temp = this.firstNode;
+            this.firstNode = this.lastNode;
+            this.lastNode = temp;
+        };
 
-    /**
-     * Creates an empty dictionary. 
-     * @class <p>Dictionaries map keys to values; each key can map to at most one value.
-     * This implementation accepts any kind of objects as keys.</p>
-     *
-     * <p>If the keys are custom objects a function which converts keys to unique
-     * strings must be provided. Example:</p>
-     * <pre>
-     * function petToString(pet) {
-     *  return pet.name;
-     * }
-     * </pre>
-     * @constructor
-     * @param {function(Object):string=} toStrFunction optional function used
-     * to convert keys to strings. If the keys aren't strings or if toString()
-     * is not appropriate, a custom function which receives a key and returns a
-     * unique string must be provided.
+            /**
+         * Returns an array containing all of the elements in this list in proper
+         * sequence.
+         * @return {Array.<*>} an array containing all of the elements in this list,
+         * in proper sequence.
+         */
+    toArray() {
+            var array = [];
+            var currentNode = this.firstNode;
+            while (currentNode !== null) {
+                array.push(currentNode.element);
+                currentNode = currentNode.next;
+            }
+            return array;
+        };
+
+            /**
+         * Returns the number of elements in this list.
+         * @return {number} the number of elements in this list.
+         */
+    size() {
+            return this.nElements;
+        };
+
+            /**
+         * Returns true if this list contains no elements.
+         * @return {boolean} true if this list contains no elements.
+         */
+    isEmpty() {
+            return this.nElements <= 0;
+        };
+
+            /**
+     * @private
      */
-    buckets.Dictionary = function (toStrFunction) {
+    private nodeAtIndex(index) {
 
+            if (index < 0 || index >= this.nElements) {
+                return null;
+            }
+            if (index === (this.nElements - 1)) {
+                return this.lastNode;
+            }
+            var node = this.firstNode;
+            for (var i = 0; i < index; i++) {
+                node = node.next;
+            }
+            return node;
+        };
         /**
-         * Object holding the key-value pairs.
-         * @type {Object}
          * @private
          */
-        this.table = {};
+        private createNode(item) {
+            return {
+                element: item,
+                next: null
+            };
+        };
+
+
+    }; // End of linked list 
+
+
+
+
+    class Dictionary {
+        /**
+ * Object holding the key-value pairs.
+ * @type {Object}
+ * @private
+ */
+        private table = {};
 
         /**
          * Number of elements in the list.
          * @type {number}
          * @private
          */
-        this.nElements = 0;
+        private nElements = 0;
 
         /**
-         * Function used to convert keys to strings.
-         * @type {function(Object):string}
-         * @private
-         */
-        this.toStr = toStrFunction || buckets.defaultToString;
-    };
+ * Function used to convert keys to strings.
+ * @type {function(Object):string}
+ * @private
+ */
+        private toStr;
 
-    /**
-     * Returns the value to which this dictionary maps the specified key.
-     * Returns undefined if this dictionary contains no mapping for this key.
-     * @param {Object} key key whose associated value is to be returned.
-     * @return {*} the value to which this dictionary maps the specified key or
-     * undefined if the map contains no mapping for this key.
-     */
-    buckets.Dictionary.prototype.get = function (key) {
 
-        var pair = this.table[this.toStr(key)];
-        if (buckets.isUndefined(pair)) {
-            return undefined;
+        /**
+ * Creates an empty dictionary. 
+ * @class <p>Dictionaries map keys to values; each key can map to at most one value.
+ * This implementation accepts any kind of objects as keys.</p>
+ *
+ * <p>If the keys are custom objects a function which converts keys to unique
+ * strings must be provided. Example:</p>
+ * <pre>
+ * function petToString(pet) {
+ *  return pet.name;
+ * }
+ * </pre>
+ * @constructor
+ * @param {function(Object):string=} toStrFunction optional function used
+ * to convert keys to strings. If the keys aren't strings or if toString()
+ * is not appropriate, a custom function which receives a key and returns a
+ * unique string must be provided.
+ */
+        constructor(toStrFunction) {
+            this.toStr = toStrFunction || collections.defaultToString;
         }
-        return pair.value;
-    };
+
+
+        /**
+ * Returns the value to which this dictionary maps the specified key.
+ * Returns undefined if this dictionary contains no mapping for this key.
+ * @param {Object} key key whose associated value is to be returned.
+ * @return {*} the value to which this dictionary maps the specified key or
+ * undefined if the map contains no mapping for this key.
+ */
+        getValue(key) {
+
+            var pair = this.table[this.toStr(key)];
+            if (collections.isUndefined(pair)) {
+                return undefined;
+            }
+            return pair.value;
+        };
+
+
     /**
      * Associates the specified value with the specified key in this dictionary.
      * If the dictionary previously contained a mapping for this key, the old
@@ -744,27 +753,28 @@ module collections {
      * @return {*} previous value associated with the specified key, or undefined if
      * there was no mapping for the key or if the key/value are undefined.
      */
-    buckets.Dictionary.prototype.set = function (key, value) {
+        setValue(key, value) {
 
-        if (buckets.isUndefined(key) || buckets.isUndefined(value)) {
-            return undefined;
-        }
+            if (collections.isUndefined(key) || collections.isUndefined(value)) {
+                return undefined;
+            }
 
-        var ret;
-        var k = this.toStr(key);
-        var previousElement = this.table[k];
-        if (buckets.isUndefined(previousElement)) {
-            this.nElements++;
-            ret = undefined;
-        } else {
-            ret = previousElement.value;
-        }
-        this.table[k] = {
-            key: key,
-            value: value
+            var ret;
+            var k = this.toStr(key);
+            var previousElement = this.table[k];
+            if (collections.isUndefined(previousElement)) {
+                this.nElements++;
+                ret = undefined;
+            } else {
+                ret = previousElement.value;
+            }
+            this.table[k] = {
+                key: key,
+                value: value
+            };
+            return ret;
         };
-        return ret;
-    };
+
     /**
      * Removes the mapping for this key from this dictionary if it is present.
      * @param {Object} key key whose mapping is to be removed from the
@@ -772,96 +782,104 @@ module collections {
      * @return {*} previous value associated with specified key, or undefined if
      * there was no mapping for key.
      */
-    buckets.Dictionary.prototype.remove = function (key) {
-        var k = this.toStr(key);
-        var previousElement = this.table[k];
-        if (!buckets.isUndefined(previousElement)) {
-            delete this.table[k];
-            this.nElements--;
-            return previousElement.value;
-        }
-        return undefined;
-    };
-    /**
-     * Returns an array containing all of the keys in this dictionary.
-     * @return {Array} an array containing all of the keys in this dictionary.
-     */
-    buckets.Dictionary.prototype.keys = function () {
-        var array = [];
-        for (var name in this.table) {
-            if (this.table.hasOwnProperty(name)) {
-                array.push(this.table[name].key);
+        remove(key) {
+            var k = this.toStr(key);
+            var previousElement = this.table[k];
+            if (!collections.isUndefined(previousElement)) {
+                delete this.table[k];
+                this.nElements--;
+                return previousElement.value;
             }
-        }
-        return array;
-    };
-    /**
+            return undefined;
+        };
+
+            /**
+         * Returns an array containing all of the keys in this dictionary.
+         * @return {Array} an array containing all of the keys in this dictionary.
+         */
+        keys() {
+            var array = [];
+            for (var name in this.table) {
+                if (this.table.hasOwnProperty(name)) {
+                    array.push(this.table[name].key);
+                }
+            }
+            return array;
+        };
+
+            /**
      * Returns an array containing all of the values in this dictionary.
      * @return {Array} an array containing all of the values in this dictionary.
      */
-    buckets.Dictionary.prototype.values = function () {
-        var array = [];
-        for (var name in this.table) {
-            if (this.table.hasOwnProperty(name)) {
-                array.push(this.table[name].value);
+        values() {
+            var array = [];
+            for (var name in this.table) {
+                if (this.table.hasOwnProperty(name)) {
+                    array.push(this.table[name].value);
+                }
             }
-        }
-        return array;
-    };
+            return array;
+        };
 
-    /**
+                /**
      * Executes the provided function once for each key-value pair 
      * present in this dictionary.
      * @param {function(Object,Object):*} callback function to execute, it is
      * invoked with two arguments: key and value. To break the iteration you can 
      * optionally return false.
      */
-    buckets.Dictionary.prototype.forEach = function (callback) {
-        for (var name in this.table) {
-            if (this.table.hasOwnProperty(name)) {
-                var pair = this.table[name];
-                var ret = callback(pair.key, pair.value);
-                if (ret === false) {
-                    return;
+
+        forEach(callback) {
+            for (var name in this.table) {
+                if (this.table.hasOwnProperty(name)) {
+                    var pair = this.table[name];
+                    var ret = callback(pair.key, pair.value);
+                    if (ret === false) {
+                        return;
+                    }
                 }
             }
-        }
-    };
+        };
 
-    /**
+            /**
      * Returns true if this dictionary contains a mapping for the specified key.
      * @param {Object} key key whose presence in this dictionary is to be
      * tested.
      * @return {boolean} true if this dictionary contains a mapping for the
      * specified key.
      */
-    buckets.Dictionary.prototype.containsKey = function (key) {
-        return !buckets.isUndefined(this.get(key));
-    };
-    /**
-     * Removes all mappings from this dictionary.
-     * @this {buckets.Dictionary}
-     */
-    buckets.Dictionary.prototype.clear = function () {
 
-        this.table = {};
-        this.nElements = 0;
-    };
-    /**
-     * Returns the number of keys in this dictionary.
-     * @return {number} the number of key-value mappings in this dictionary.
-     */
-    buckets.Dictionary.prototype.size = function () {
-        return this.nElements;
-    };
+        containsKey(key) {
+            return !collections.isUndefined(this.getValue(key));
+        };
 
-    /**
-     * Returns true if this dictionary contains no mappings.
-     * @return {boolean} true if this dictionary contains no mappings.
-     */
-    buckets.Dictionary.prototype.isEmpty = function () {
-        return this.nElements <= 0;
-    };
+            /**
+        * Removes all mappings from this dictionary.
+        * @this {buckets.Dictionary}
+        */
+    clear() {
+
+            this.table = {};
+            this.nElements = 0;
+        };
+            /**
+             * Returns the number of keys in this dictionary.
+             * @return {number} the number of key-value mappings in this dictionary.
+             */
+        size() {
+            return this.nElements;
+        };
+
+            /**
+             * Returns true if this dictionary contains no mappings.
+             * @return {boolean} true if this dictionary contains no mappings.
+             */
+        isEmpty() {
+            return this.nElements <= 0;
+        };
+
+
+    } // End of dictionary
 
     // /**
     //  * Returns true if this dictionary is equal to the given dictionary.
@@ -881,172 +899,184 @@ module collections {
     // 	}
     // 	return this.equalsAux(this.firstNode,other.firstNode,eqF);
     // };
-    /**
-     * Creates an empty multi dictionary. 
-     * @class <p>A multi dictionary is a special kind of dictionary that holds
-     * multiple values against each key. Setting a value into the dictionary will 
-     * add the value to an array at that key. Getting a key will return an array,
-     * holding all the values set to that key.
-     * This implementation accepts any kind of objects as keys.</p>
-     *
-     * <p>If the keys are custom objects a function which converts keys to strings must be
-     * provided. Example:</p>
-     *
-     * <pre>
-     * function petToString(pet) {
-     *  return pet.name;
-     * }
-     * </pre>
-     * <p>If the values are custom objects a function to check equality between values
-     * must be provided. Example:</p>
-     *
-     * <pre>
-     * function petsAreEqualByAge(pet1,pet2) {
-     *  return pet1.age===pet2.age;
-     * }
-     * </pre>
-     * @constructor
-     * @param {function(Object):string=} toStrFunction optional function
-     * to convert keys to strings. If the keys aren't strings or if toString()
-     * is not appropriate, a custom function which receives a key and returns a
-     * unique string must be provided.
-     * @param {function(Object,Object):boolean=} valuesEqualsFunction optional
-     * function to check if two values are equal.
-     * 
-     */
-    buckets.MultiDictionary = function (toStrFunction, valuesEqualsFunction) {
-        // Call the parent's constructor
-        this.parent = new buckets.Dictionary(toStrFunction);
-        this.equalsF = valuesEqualsFunction || buckets.defaultEquals;
-    };
 
-    /**
-     * Returns an array holding the values to which this dictionary maps
-     * the specified key.
-     * Returns an empty array if this dictionary contains no mappings for this key.
-     * @param {Object} key key whose associated values are to be returned.
-     * @return {Array} an array holding the values to which this dictionary maps
-     * the specified key.
-     */
-    buckets.MultiDictionary.prototype.get = function (key) {
-        var values = this.parent.get(key);
-        if (buckets.isUndefined(values)) {
-            return [];
-        }
-        return buckets.arrays.copy(values);
-    };
 
-    /**
-     * Adds the value to the array associated with the specified key, if 
-     * it is not already present.
-     * @param {Object} key key with which the specified value is to be
-     * associated.
-     * @param {Object} value the value to add to the array at the key
-     * @return {boolean} true if the value was not already associated with that key.
-     */
-    buckets.MultiDictionary.prototype.set = function (key, value) {
+    class MultiDictionary extends Dictionary {
 
-        if (buckets.isUndefined(key) || buckets.isUndefined(value)) {
-            return false;
+        private equalsF;
+        /**
+ * Creates an empty multi dictionary. 
+ * @class <p>A multi dictionary is a special kind of dictionary that holds
+ * multiple values against each key. Setting a value into the dictionary will 
+ * add the value to an array at that key. Getting a key will return an array,
+ * holding all the values set to that key.
+ * This implementation accepts any kind of objects as keys.</p>
+ *
+ * <p>If the keys are custom objects a function which converts keys to strings must be
+ * provided. Example:</p>
+ *
+ * <pre>
+ * function petToString(pet) {
+ *  return pet.name;
+ * }
+ * </pre>
+ * <p>If the values are custom objects a function to check equality between values
+ * must be provided. Example:</p>
+ *
+ * <pre>
+ * function petsAreEqualByAge(pet1,pet2) {
+ *  return pet1.age===pet2.age;
+ * }
+ * </pre>
+ * @constructor
+ * @param {function(Object):string=} toStrFunction optional function
+ * to convert keys to strings. If the keys aren't strings or if toString()
+ * is not appropriate, a custom function which receives a key and returns a
+ * unique string must be provided.
+ * @param {function(Object,Object):boolean=} valuesEqualsFunction optional
+ * function to check if two values are equal.
+ * 
+ */
+        constructor(toStrFunction, valuesEqualsFunction) {
+            super(toStrFunction);
+            this.equalsF = valuesEqualsFunction || collections.defaultEquals;
         }
-        if (!this.containsKey(key)) {
-            this.parent.set(key, [value]);
-            return true;
-        }
-        var array = this.parent.get(key);
-        if (buckets.arrays.contains(array, value, this.equalsF)) {
-            return false;
-        }
-        array.push(value);
-        return true;
-    };
+        /**
+    * Returns an array holding the values to which this dictionary maps
+    * the specified key.
+    * Returns an empty array if this dictionary contains no mappings for this key.
+    * @param {Object} key key whose associated values are to be returned.
+    * @return {Array} an array holding the values to which this dictionary maps
+    * the specified key.
+    */
+        getValue(key) {
+            var values = super.getValue(key);
+            if (collections.isUndefined(values)) {
+                return [];
+            }
+            return collections.arrays.copy(values);
+        };
 
-    /**
-     * Removes the specified values from the array of values associated with the
-     * specified key. If a value isn't given, all values associated with the specified 
-     * key are removed.
-     * @param {Object} key key whose mapping is to be removed from the
-     * dictionary.
-     * @param {Object=} value optional argument to specify the value to remove 
-     * from the array associated with the specified key.
-     * @return {*} true if the dictionary changed, false if the key doesn't exist or 
-     * if the specified value isn't associated with the specified key.
-     */
-    buckets.MultiDictionary.prototype.remove = function (key, value) {
-        if (buckets.isUndefined(value)) {
-            var v = this.parent.remove(key);
-            if (buckets.isUndefined(v)) {
+        /**
+         * Adds the value to the array associated with the specified key, if 
+         * it is not already present.
+         * @param {Object} key key with which the specified value is to be
+         * associated.
+         * @param {Object} value the value to add to the array at the key
+         * @return {boolean} true if the value was not already associated with that key.
+         */
+        setValue(key, value) {
+
+            if (collections.isUndefined(key) || collections.isUndefined(value)) {
                 return false;
             }
+            if (!this.containsKey(key)) {
+                super.setValue(key, [value]);
+                return true;
+            }
+            var array = super.getValue(key);
+            if (collections.arrays.contains(array, value, this.equalsF)) {
+                return false;
+            }
+            array.push(value);
             return true;
         }
-        var array = this.parent.get(key);
-        if (buckets.arrays.remove(array, value, this.equalsF)) {
-            if (array.length === 0) {
-                this.parent.remove(key);
+
+        /**
+         * Removes the specified values from the array of values associated with the
+         * specified key. If a value isn't given, all values associated with the specified 
+         * key are removed.
+         * @param {Object} key key whose mapping is to be removed from the
+         * dictionary.
+         * @param {Object=} value optional argument to specify the value to remove 
+         * from the array associated with the specified key.
+         * @return {*} true if the dictionary changed, false if the key doesn't exist or 
+         * if the specified value isn't associated with the specified key.
+         */
+        remove(key, value?) {
+            if (collections.isUndefined(value)) {
+                var v = super.remove(key);
+                if (collections.isUndefined(v)) {
+                    return false;
+                }
+                return true;
             }
-            return true;
-        }
-        return false;
-    };
-
-    /**
-     * Returns an array containing all of the keys in this dictionary.
-     * @return {Array} an array containing all of the keys in this dictionary.
-     */
-    buckets.MultiDictionary.prototype.keys = function () {
-        return this.parent.keys();
-    };
-
-    /**
-     * Returns an array containing all of the values in this dictionary.
-     * @return {Array} an array containing all of the values in this dictionary.
-     */
-    buckets.MultiDictionary.prototype.values = function () {
-        var values = this.parent.values();
-        var array = [];
-        for (var i = 0; i < values.length; i++) {
-            var v = values[i];
-            for (var j = 0; j < v.length; j++) {
-                array.push(v[j]);
+            var array = super.getValue(key);
+            if (collections.arrays.remove(array, value, this.equalsF)) {
+                if (array.length === 0) {
+                    super.remove(key);
+                }
+                return true;
             }
+            return false;
         }
-        return array;
-    };
 
-    /**
-     * Returns true if this dictionary at least one value associatted the specified key.
-     * @param {Object} key key whose presence in this dictionary is to be
-     * tested.
-     * @return {boolean} true if this dictionary at least one value associatted 
-     * the specified key.
-     */
-    buckets.MultiDictionary.prototype.containsKey = function (key) {
-        return this.parent.containsKey(key);
-    };
+        /**
+         * Returns an array containing all of the keys in this dictionary.
+         * @return {Array} an array containing all of the keys in this dictionary.
+         */
+        keys() {
+            return super.keys();
+        };
 
-    /**
-     * Removes all mappings from this dictionary.
-     */
-    buckets.MultiDictionary.prototype.clear = function () {
-        return this.parent.clear();
-    };
+            /**
+             * Returns an array containing all of the values in this dictionary.
+             * @return {Array} an array containing all of the values in this dictionary.
+             */
+        values() {
+            var values = super.values();
+            var array = [];
+            for (var i = 0; i < values.length; i++) {
+                var v = values[i];
+                for (var j = 0; j < v.length; j++) {
+                    array.push(v[j]);
+                }
+            }
+            return array;
+        }
 
-    /**
-     * Returns the number of keys in this dictionary.
-     * @return {number} the number of key-value mappings in this dictionary.
-     */
-    buckets.MultiDictionary.prototype.size = function () {
-        return this.parent.size();
-    };
+        /**
+         * Returns true if this dictionary at least one value associatted the specified key.
+         * @param {Object} key key whose presence in this dictionary is to be
+         * tested.
+         * @return {boolean} true if this dictionary at least one value associatted 
+         * the specified key.
+         */
+        containsKey(key) {
+            return super.containsKey(key);
+        };
 
-    /**
-     * Returns true if this dictionary contains no mappings.
-     * @return {boolean} true if this dictionary contains no mappings.
-     */
-    buckets.MultiDictionary.prototype.isEmpty = function () {
-        return this.parent.isEmpty();
-    };
+            /**
+             * Removes all mappings from this dictionary.
+             */
+        clear() {
+            return super.clear();
+        }
+
+        /**
+         * Returns the number of keys in this dictionary.
+         * @return {number} the number of key-value mappings in this dictionary.
+         */
+        size() {
+            return super.size();
+        }
+
+        /**
+         * Returns true if this dictionary contains no mappings.
+         * @return {boolean} true if this dictionary contains no mappings.
+         */
+        isEmpty() {
+            return super.isEmpty();
+        };
+    }// end of multi dictionary 
+
+
+
+
+
+
+
+
 
     /**
      * Creates an empty Heap.

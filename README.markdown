@@ -5,6 +5,7 @@ use classes for types
 use default parameter arguments 
 use generics 
 remove extra semicolons at end of functions / classes / modules 
+function arguments types 
 
 Already done: 
 use module 
