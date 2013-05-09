@@ -13,8 +13,7 @@ module collections {
 
     /**
      * Default function to compare element order.
-     * @function
-     * @private
+     * @function     
      */
     export function defaultCompare(a, b) {
         if (a < b) {
@@ -28,8 +27,7 @@ module collections {
 
     /**
      * Default function to test equality. 
-     * @function
-     * @private
+     * @function     
      */
     export function defaultEquals(a, b) {
         return a === b;
@@ -37,8 +35,7 @@ module collections {
 
     /**
      * Default function to convert an object to a string.
-     * @function
-     * @private
+     * @function     
      */
     export function defaultToString(item) {
         if (item === null) {
@@ -54,8 +51,7 @@ module collections {
 
     /**
      * Checks if the given argument is a function.
-     * @function
-     * @private
+     * @function     
      */
     export function isFunction(func) {
         return (typeof func) === 'function';
@@ -64,7 +60,6 @@ module collections {
     /**
      * Checks if the given argument is undefined.
      * @function
-     * @private
      */
     export function isUndefined(obj) {
         return (typeof obj) === 'undefined';
@@ -73,7 +68,6 @@ module collections {
     /**
      * Checks if the given argument is a string.
      * @function
-     * @private
      */
     export function isString(obj) {
         return Object.prototype.toString.call(obj) === '[object String]';
@@ -82,7 +76,6 @@ module collections {
     /**
      * Reverses a compare function.
      * @function
-     * @private
      */
     export function reverseCompareFunction(compareFunction) {
         if (!collections.isFunction(compareFunction)) {
@@ -105,7 +98,6 @@ module collections {
     /**
      * Returns an equal function given a compare function.
      * @function
-     * @private
      */
     export function compareToEquals(compareFunction) {
         return function (a, b) {
@@ -2252,7 +2244,7 @@ module collections {
         /**
         * @private
         */
-        searchNode(node, element) {
+        private searchNode(node, element) {
             var cmp = null;
             while (node !== null && cmp !== 0) {
                 cmp = this.compare(element, node.element);
@@ -2269,7 +2261,7 @@ module collections {
         /**
         * @private
         */
-        transplant(n1, n2) {
+        private transplant(n1, n2) {
             if (n1.parent === null) {
                 this.root = n2;
             } else if (n1 === n1.parent.leftCh) {
@@ -2286,7 +2278,7 @@ module collections {
         /**
         * @private
         */
-        removeNode(node) {
+        private removeNode(node) {
             if (node.leftCh === null) {
                 this.transplant(node, node.rightCh);
             } else if (node.rightCh === null) {
@@ -2306,7 +2298,7 @@ module collections {
         /**
         * @private
         */
-        inorderTraversalAux(node, callback, signal) {
+        private inorderTraversalAux(node, callback, signal) {
             if (node === null || signal.stop) {
                 return;
             }
@@ -2324,7 +2316,7 @@ module collections {
         /**
         * @private
         */
-        levelTraversalAux(node, callback) {
+        private levelTraversalAux(node, callback) {
             var queue = new Queue();
             if (node !== null) {
                 queue.enqueue(node);
@@ -2346,7 +2338,7 @@ module collections {
         /**
         * @private
         */
-        preorderTraversalAux(node, callback, signal) {
+        private preorderTraversalAux(node, callback, signal) {
             if (node === null || signal.stop) {
                 return;
             }
@@ -2363,7 +2355,7 @@ module collections {
         /**
         * @private
         */
-        postorderTraversalAux(node, callback, signal) {
+        private postorderTraversalAux(node, callback, signal) {
             if (node === null || signal.stop) {
                 return;
             }
@@ -2381,7 +2373,7 @@ module collections {
         /**
         * @private
         */
-        minimumAux(node) {
+        private minimumAux(node) {
             while (node.leftCh !== null) {
                 node = node.leftCh;
             }
@@ -2391,7 +2383,7 @@ module collections {
         /**
         * @private
         */
-        maximumAux(node) {
+        private maximumAux(node) {
             while (node.rightCh !== null) {
                 node = node.rightCh;
             }
@@ -2401,7 +2393,7 @@ module collections {
         /**
         * @private
         */
-        successorNode(node) {
+        private successorNode(node) {
             if (node.rightCh !== null) {
                 return this.minimumAux(node.rightCh);
             }
@@ -2416,7 +2408,7 @@ module collections {
         /**
         * @private
         */
-        heightAux(node) {
+        private heightAux(node) {
             if (node === null) {
                 return -1;
             }
@@ -2426,7 +2418,7 @@ module collections {
         /*
         * @private
         */
-        insertNode(node) {
+        private insertNode(node) {
 
             var parent = null;
             var position = this.root;
@@ -2458,7 +2450,7 @@ module collections {
         /**
         * @private
         */
-        createNode(element) {
+        private createNode(element) {
             return {
                 element: element,
                 leftCh: null,

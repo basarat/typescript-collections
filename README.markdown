@@ -1,16 +1,18 @@
 [Buckets](github.com/mauriciosantos/buckets/)
 ====================
-Two things need to be done: 
-use classes for types 
+Things need to be done: 
 use default parameter arguments 
 use generics 
 remove extra semicolons at end of functions / classes / modules 
 function arguments types 
-search for all "private"s to make sure they are marked as such 
+
 search for isundefined and use to mark optional. Or search optional. 
+move all initialization to constructors 
 
 Already done: 
 use module 
+search for all "private"s to make sure they are marked as such 
+
 
 **A JavaScript Data Structure Library**
 

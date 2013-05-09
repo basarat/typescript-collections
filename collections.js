@@ -18,7 +18,6 @@ var collections;
     /**
     * Default function to compare element order.
     * @function
-    * @private
     */
     function defaultCompare(a, b) {
         if(a < b) {
@@ -34,7 +33,6 @@ var collections;
     /**
     * Default function to test equality.
     * @function
-    * @private
     */
     function defaultEquals(a, b) {
         return a === b;
@@ -44,7 +42,6 @@ var collections;
     /**
     * Default function to convert an object to a string.
     * @function
-    * @private
     */
     function defaultToString(item) {
         if(item === null) {
@@ -62,7 +59,6 @@ var collections;
     /**
     * Checks if the given argument is a function.
     * @function
-    * @private
     */
     function isFunction(func) {
         return (typeof func) === 'function';
@@ -72,7 +68,6 @@ var collections;
     /**
     * Checks if the given argument is undefined.
     * @function
-    * @private
     */
     function isUndefined(obj) {
         return (typeof obj) === 'undefined';
@@ -82,7 +77,6 @@ var collections;
     /**
     * Checks if the given argument is a string.
     * @function
-    * @private
     */
     function isString(obj) {
         return Object.prototype.toString.call(obj) === '[object String]';
@@ -92,7 +86,6 @@ var collections;
     /**
     * Reverses a compare function.
     * @function
-    * @private
     */
     function reverseCompareFunction(compareFunction) {
         if(!collections.isFunction(compareFunction)) {
@@ -116,7 +109,6 @@ var collections;
     /**
     * Returns an equal function given a compare function.
     * @function
-    * @private
     */
     function compareToEquals(compareFunction) {
         return function (a, b) {
