@@ -5,9 +5,11 @@
 //
 // Some documentation is borrowed from the official Java API
 // as it serves the same porpose.
+//
+// Rewritten for TypeScript by Basarat 2013. Same License
 
 /**
- * @namespace Top level namespace for Buckets, a JavaScript data structure library.
+ * @namespace Top level namespace for collections, a TypeScript data structure library.
  */
 module collections {
 
@@ -120,7 +122,7 @@ module collections {
          * @return {number} the position of the first occurrence of the specified element
          * within the specified array, or -1 if not found.
          */
-        export function indexOf(array, item, equalsFunction) {
+        export function indexOf(array, item, equalsFunction?) {
             var equals = equalsFunction || collections.defaultEquals;
             var length = array.length;
             for (var i = 0; i < length; i++) {
@@ -141,7 +143,7 @@ module collections {
          * @return {number} the position of the last occurrence of the specified element
          * within the specified array or -1 if not found.
          */
-        export function lastIndexOf(array, item, equalsFunction) {
+        export function lastIndexOf(array, item, equalsFunction?) {
             var equals = equalsFunction || collections.defaultEquals;
             var length = array.length;
             for (var i = length - 1; i >= 0; i--) {
@@ -160,7 +162,7 @@ module collections {
          * check equality between 2 elements.
          * @return {boolean} true if the specified array contains the specified element.
          */
-        export function contains(array, item, equalsFunction) {
+        export function contains(array, item, equalsFunction?) {
             return arrays.indexOf(array, item, equalsFunction) >= 0;
         };
 
@@ -173,7 +175,7 @@ module collections {
          * check equality between 2 elements.
          * @return {boolean} true if the array changed after this call.
          */
-        export function remove(array, item, equalsFunction) {
+        export function remove(array, item, equalsFunction?) {
             var index = arrays.indexOf(array, item, equalsFunction);
             if (index < 0) {
                 return false;
@@ -192,7 +194,7 @@ module collections {
          * @return {number} the number of elements in the specified array 
          * equal to the specified object.
          */
-        export function frequency(array, item, equalsFunction) {
+        export function frequency(array, item, equalsFunction?) {
             var equals = equalsFunction || collections.defaultEquals;
             var length = array.length;
             var freq = 0;
@@ -215,7 +217,7 @@ module collections {
          * check equality between elemements in the arrays.
          * @return {boolean} true if the two arrays are equal
          */
-        export function equals(array1, array2, equalsFunction) {
+        export function equals(array1, array2, equalsFunction?) {
             var equals = equalsFunction || collections.defaultEquals;
 
             if (array1.length !== array2.length) {
@@ -403,7 +405,7 @@ module collections {
          * of the specified element, or -1 if this list does not contain the
          * element.
          */
-        indexOf(item, equalsFunction) {
+        indexOf(item, equalsFunction?) {
 
             var equalsF = equalsFunction || collections.defaultEquals;
             if (collections.isUndefined(item)) {
@@ -440,7 +442,7 @@ module collections {
          * @return {boolean} true if this list contains the specified element, false
          * otherwise.
          */
-        contains = function (item, equalsFunction) {
+        contains = function (item, equalsFunction?) {
             return (this.indexOf(item, equalsFunction) >= 0);
         };
 
@@ -459,7 +461,7 @@ module collections {
  * @param {Object} item element to be removed from this list, if present.
  * @return {boolean} true if the list contained the specified element.
  */
-        remove(item, equalsFunction) {
+        remove(item, equalsFunction?) {
             var equalsF = equalsFunction || collections.defaultEquals;
             if (this.nElements < 1 || collections.isUndefined(item)) {
                 return false;
@@ -511,7 +513,7 @@ module collections {
          * the === operator is used to check equality between elements.
          * @return {boolean} true if this list is equal to the given list.
          */
-            equals(other, equalsFunction) {
+            equals(other, equalsFunction?) {
             var eqF = equalsFunction || collections.defaultEquals;
             if (!(other instanceof collections.LinkedList)) {
                 return false;
@@ -713,7 +715,7 @@ module collections {
  * is not appropriate, a custom function which receives a key and returns a
  * unique string must be provided.
  */
-        constructor(toStrFunction) {
+        constructor(toStrFunction?) {
             this.toStr = toStrFunction || collections.defaultToString;
         }
 
@@ -726,7 +728,6 @@ module collections {
  * undefined if the map contains no mapping for this key.
  */
         getValue(key) {
-
             var pair = this.table[this.toStr(key)];
             if (collections.isUndefined(pair)) {
                 return undefined;
@@ -929,7 +930,7 @@ module collections {
  * function to check if two values are equal.
  * 
  */
-        constructor(toStrFunction, valuesEqualsFunction) {
+        constructor(toStrFunction?, valuesEqualsFunction?) {
             super(toStrFunction);
             this.equalsF = valuesEqualsFunction || collections.defaultEquals;
         }
@@ -1123,7 +1124,7 @@ module collections {
    * or greater than the second.
    */
 
-        constructor(compareFunction) {
+        constructor(compareFunction?) {
             this.compare = compareFunction || collections.defaultCompare;
         }
 
@@ -1381,7 +1382,7 @@ module collections {
          * @return {boolean} true if this stack contains the specified element,
          * false otherwise.
          */
-        contains(elem, equalsFunction) {
+        contains(elem, equalsFunction?) {
             return this.list.contains(elem, equalsFunction);
         };
             /**
@@ -1501,7 +1502,7 @@ module collections {
          * @return {boolean} true if this queue contains the specified element,
          * false otherwise.
          */
-        contains(elem, equalsFunction) {
+        contains(elem, equalsFunction?) {
             return this.list.contains(elem, equalsFunction);
         };
 
@@ -1562,7 +1563,7 @@ module collections {
  * zero, or a positive integer as the first argument is less than, equal to,
  * or greater than the second.
  */
-        constructor(compareFunction) {
+        constructor(compareFunction?) {
             this.heap = new Heap(collections.reverseCompareFunction(compareFunction));
         }
 
@@ -1677,7 +1678,7 @@ module collections {
          * is not appropriate, a custom function which receives a onject and returns a
          * unique string must be provided.
          */
-        constructor(toStringFunction) {
+        constructor(toStringFunction?) {
             this.dictionary = new Dictionary(toStringFunction);
         }
 
@@ -1851,7 +1852,7 @@ module collections {
  * is not appropriate, a custom function which receives an object and returns a
  * unique string must be provided.
  */
-        constructor(toStrFunction) {
+        constructor(toStrFunction?) {
             this.toStrF = toStrFunction || collections.defaultToString;
             this.dictionary = new Dictionary(this.toStrF);
             this.nElements = 0;
@@ -2068,7 +2069,7 @@ module collections {
  * or greater than the second.
  */
 
-        constructor(compareFunction) {
+        constructor(compareFunction?) {
             this.root = null;
             this.compare = compareFunction || collections.defaultCompare;
             this.nElements = 0;

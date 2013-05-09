@@ -5,13 +5,14 @@ use default parameter arguments
 use generics 
 remove extra semicolons at end of functions / classes / modules 
 function arguments types 
-
-search for isundefined and use to mark optional. Or search optional. 
 move all initialization to constructors 
+
 
 Already done: 
 use module 
 search for all "private"s to make sure they are marked as such 
+search optional. 
+search for isundefined and use to mark optional. 
 
 
 **A JavaScript Data Structure Library**

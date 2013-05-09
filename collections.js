@@ -10,8 +10,10 @@ var __extends = this.__extends || function (d, b) {
 //
 // Some documentation is borrowed from the official Java API
 // as it serves the same porpose.
+//
+// Rewritten for TypeScript by Basarat 2013. Same License
 /**
-* @namespace Top level namespace for Buckets, a JavaScript data structure library.
+* @namespace Top level namespace for collections, a TypeScript data structure library.
 */
 var collections;
 (function (collections) {
