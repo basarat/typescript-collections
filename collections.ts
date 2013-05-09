@@ -321,7 +321,7 @@ module collections {
         * @return {boolean} true if the element was added or false if the index is invalid
         * or if the element is undefined.
         */
-        add(item, index) {
+        add(item, index?: number) {
             if (collections.isUndefined(index)) {
                 index = this.nElements;
             }
@@ -1422,31 +1422,32 @@ module collections {
 
 
 
-    class Queue{
+    class Queue {
 
         /**
          * List containing the elements.
          * @type buckets.LinkedList
          * @private
          */
-        private list = new collections.LinkedList();
+        private list: LinkedList;
 
-            /**
-     * Creates an empty queue.
-     * @class A queue is a First-In-First-Out (FIFO) data structure, the first
-     * element added to the queue will be the first one to be removed. This
-     * implementation uses a linked list as a container.
-     * @constructor
-     */
+        /**
+ * Creates an empty queue.
+ * @class A queue is a First-In-First-Out (FIFO) data structure, the first
+ * element added to the queue will be the first one to be removed. This
+ * implementation uses a linked list as a container.
+ * @constructor
+ */
         constructor() {
+            this.list = new LinkedList();
         }
 
 
-    /**
-     * Inserts the specified element into the end of this queue.
-     * @param {Object} elem the element to insert.
-     * @return {boolean} true if the element was inserted, or false if it is undefined.
-     */
+        /**
+         * Inserts the specified element into the end of this queue.
+         * @param {Object} elem the element to insert.
+         * @return {boolean} true if the element was inserted, or false if it is undefined.
+         */
         enqueue(elem) {
             return this.list.add(elem);
         };
@@ -1542,42 +1543,42 @@ module collections {
     } // End of queue
 
 
-    class PriorityQueue{
+    class PriorityQueue {
 
         private heap: Heap;
-            /**
-     * Creates an empty priority queue.
-     * @class <p>In a priority queue each element is associated with a "priority",
-     * elements are dequeued in highest-priority-first order (the elements with the 
-     * highest priority are dequeued first). Priority Queues are implemented as heaps. 
-     * If the inserted elements are custom objects a compare function must be provided, 
-     * otherwise the <=, === and >= operators are used to compare object priority.</p>
-     * <pre>
-     * function compare(a, b) {
-     *  if (a is less than b by some ordering criterion) {
-     *     return -1;
-     *  } if (a is greater than b by the ordering criterion) {
-     *     return 1;
-     *  } 
-     *  // a must be equal to b
-     *  return 0;
-     * }
-     * </pre>
-     * @constructor
-     * @param {function(Object,Object):number=} compareFunction optional
-     * function used to compare two element priorities. Must return a negative integer,
-     * zero, or a positive integer as the first argument is less than, equal to,
-     * or greater than the second.
-     */
+        /**
+ * Creates an empty priority queue.
+ * @class <p>In a priority queue each element is associated with a "priority",
+ * elements are dequeued in highest-priority-first order (the elements with the 
+ * highest priority are dequeued first). Priority Queues are implemented as heaps. 
+ * If the inserted elements are custom objects a compare function must be provided, 
+ * otherwise the <=, === and >= operators are used to compare object priority.</p>
+ * <pre>
+ * function compare(a, b) {
+ *  if (a is less than b by some ordering criterion) {
+ *     return -1;
+ *  } if (a is greater than b by the ordering criterion) {
+ *     return 1;
+ *  } 
+ *  // a must be equal to b
+ *  return 0;
+ * }
+ * </pre>
+ * @constructor
+ * @param {function(Object,Object):number=} compareFunction optional
+ * function used to compare two element priorities. Must return a negative integer,
+ * zero, or a positive integer as the first argument is less than, equal to,
+ * or greater than the second.
+ */
         constructor(compareFunction) {
             this.heap = new Heap(collections.reverseCompareFunction(compareFunction));
         }
 
-         /**
-     * Inserts the specified element into this priority queue.
-     * @param {Object} element the element to insert.
-     * @return {boolean} true if the element was inserted, or false if it is undefined.
-     */
+        /**
+    * Inserts the specified element into this priority queue.
+    * @param {Object} element the element to insert.
+    * @return {boolean} true if the element was inserted, or false if it is undefined.
+    */
         enqueue(element) {
             return this.heap.add(element);
         };
@@ -1663,39 +1664,39 @@ module collections {
 
 
 
-    class Set{
+    class Set {
         private dictionary: Dictionary;
 
-    /**
-     * Creates an empty set.
-     * @class <p>A set is a data structure that contains no duplicate items.</p>
-     * <p>If the inserted elements are custom objects a function 
-     * which converts elements to strings must be provided. Example:</p>
-     *
-     * <pre>
-     * function petToString(pet) {
-     *  return pet.name;
-     * }
-     * </pre>
-     *
-     * @constructor
-     * @param {function(Object):string=} toStringFunction optional function used
-     * to convert elements to strings. If the elements aren't strings or if toString()
-     * is not appropriate, a custom function which receives a onject and returns a
-     * unique string must be provided.
-     */
+        /**
+         * Creates an empty set.
+         * @class <p>A set is a data structure that contains no duplicate items.</p>
+         * <p>If the inserted elements are custom objects a function 
+         * which converts elements to strings must be provided. Example:</p>
+         *
+         * <pre>
+         * function petToString(pet) {
+         *  return pet.name;
+         * }
+         * </pre>
+         *
+         * @constructor
+         * @param {function(Object):string=} toStringFunction optional function used
+         * to convert elements to strings. If the elements aren't strings or if toString()
+         * is not appropriate, a custom function which receives a onject and returns a
+         * unique string must be provided.
+         */
         constructor(toStringFunction) {
             this.dictionary = new Dictionary(toStringFunction);
         }
 
 
 
-    /**
-     * Returns true if this set contains the specified element.
-     * @param {Object} element element to search for.
-     * @return {boolean} true if this set contains the specified element,
-     * false otherwise.
-     */
+        /**
+         * Returns true if this set contains the specified element.
+         * @param {Object} element element to search for.
+         * @return {boolean} true if this set contains the specified element,
+         * false otherwise.
+         */
         contains(element) {
             return this.dictionary.containsKey(element);
         };
@@ -1833,31 +1834,31 @@ module collections {
 
 
 
-    class Bag{
+    class Bag {
 
         private toStrF;
         private dictionary: Dictionary;
         private nElements;
 
-            /**
-     * Creates an empty bag.
-     * @class <p>A bag is a special kind of set in which members are 
-     * allowed to appear more than once.</p>
-     * <p>If the inserted elements are custom objects a function 
-     * which converts elements to unique strings must be provided. Example:</p>
-     *
-     * <pre>
-     * function petToString(pet) {
-     *  return pet.name;
-     * }
-     * </pre>
-     *
-     * @constructor
-     * @param {function(Object):string=} toStrFunction optional function used
-     * to convert elements to strings. If the elements aren't strings or if toString()
-     * is not appropriate, a custom function which receives an object and returns a
-     * unique string must be provided.
-     */
+        /**
+ * Creates an empty bag.
+ * @class <p>A bag is a special kind of set in which members are 
+ * allowed to appear more than once.</p>
+ * <p>If the inserted elements are custom objects a function 
+ * which converts elements to unique strings must be provided. Example:</p>
+ *
+ * <pre>
+ * function petToString(pet) {
+ *  return pet.name;
+ * }
+ * </pre>
+ *
+ * @constructor
+ * @param {function(Object):string=} toStrFunction optional function used
+ * to convert elements to strings. If the elements aren't strings or if toString()
+ * is not appropriate, a custom function which receives an object and returns a
+ * unique string must be provided.
+ */
         constructor(toStrFunction) {
             this.toStrF = toStrFunction || collections.defaultToString;
             this.dictionary = new Dictionary(this.toStrF);
@@ -1865,13 +1866,13 @@ module collections {
         }
 
 
-    /**
-    * Adds nCopies of the specified object to this bag.
-    * @param {Object} element element to add.
-    * @param {number=} nCopies the number of copies to add, if this argument is
-    * undefined 1 copy is added.
-    * @return {boolean} true unless element is undefined.
-    */
+        /**
+        * Adds nCopies of the specified object to this bag.
+        * @param {Object} element element to add.
+        * @param {number=} nCopies the number of copies to add, if this argument is
+        * undefined 1 copy is added.
+        * @return {boolean} true unless element is undefined.
+        */
         add(element, nCopies) {
 
             if (isNaN(nCopies) || collections.isUndefined(nCopies)) {
@@ -2032,48 +2033,48 @@ module collections {
         };
 
     }// End of bag 
-    
 
-    class BSTree{
+
+    class BSTree {
 
         private root;
         private compare;
-        private nElements: number;  
-            /**
-     * Creates an empty binary search tree.
-     * @class <p>A binary search tree is a binary tree in which each 
-     * internal node stores an element such that the elements stored in the 
-     * left subtree are less than it and the elements 
-     * stored in the right subtree are greater.</p>
-     * <p>Formally, a binary search tree is a node-based binary tree data structure which 
-     * has the following properties:</p>
-     * <ul>
-     * <li>The left subtree of a node contains only nodes with elements less 
-     * than the node's element</li>
-     * <li>The right subtree of a node contains only nodes with elements greater 
-     * than the node's element</li>
-     * <li>Both the left and right subtrees must also be binary search trees.</li>
-     * </ul>
-     * <p>If the inserted elements are custom objects a compare function must 
-     * be provided at construction time, otherwise the <=, === and >= operators are 
-     * used to compare elements. Example:</p>
-     * <pre>
-     * function compare(a, b) {
-     *  if (a is less than b by some ordering criterion) {
-     *     return -1;
-     *  } if (a is greater than b by the ordering criterion) {
-     *     return 1;
-     *  } 
-     *  // a must be equal to b
-     *  return 0;
-     * }
-     * </pre>
-     * @constructor
-     * @param {function(Object,Object):number=} compareFunction optional
-     * function used to compare two elements. Must return a negative integer,
-     * zero, or a positive integer as the first argument is less than, equal to,
-     * or greater than the second.
-     */
+        private nElements: number;
+        /**
+ * Creates an empty binary search tree.
+ * @class <p>A binary search tree is a binary tree in which each 
+ * internal node stores an element such that the elements stored in the 
+ * left subtree are less than it and the elements 
+ * stored in the right subtree are greater.</p>
+ * <p>Formally, a binary search tree is a node-based binary tree data structure which 
+ * has the following properties:</p>
+ * <ul>
+ * <li>The left subtree of a node contains only nodes with elements less 
+ * than the node's element</li>
+ * <li>The right subtree of a node contains only nodes with elements greater 
+ * than the node's element</li>
+ * <li>Both the left and right subtrees must also be binary search trees.</li>
+ * </ul>
+ * <p>If the inserted elements are custom objects a compare function must 
+ * be provided at construction time, otherwise the <=, === and >= operators are 
+ * used to compare elements. Example:</p>
+ * <pre>
+ * function compare(a, b) {
+ *  if (a is less than b by some ordering criterion) {
+ *     return -1;
+ *  } if (a is greater than b by the ordering criterion) {
+ *     return 1;
+ *  } 
+ *  // a must be equal to b
+ *  return 0;
+ * }
+ * </pre>
+ * @constructor
+ * @param {function(Object,Object):number=} compareFunction optional
+ * function used to compare two elements. Must return a negative integer,
+ * zero, or a positive integer as the first argument is less than, equal to,
+ * or greater than the second.
+ */
 
         constructor(compareFunction) {
             this.root = null;
@@ -2087,7 +2088,7 @@ module collections {
      * @return {boolean} true if this tree did not already contain the specified element.
      */
         add(element) {
-            if (buckets.isUndefined(element)) {
+            if (collections.isUndefined(element)) {
                 return false;
             }
 
@@ -2129,7 +2130,7 @@ module collections {
          * false otherwise.
          */
         contains(element) {
-            if (buckets.isUndefined(element)) {
+            if (collections.isUndefined(element)) {
                 return false;
             }
             return this.searchNode(this.root, element) !== null;
@@ -2324,7 +2325,7 @@ module collections {
         * @private
         */
         levelTraversalAux(node, callback) {
-            var queue = new buckets.Queue();
+            var queue = new Queue();
             if (node !== null) {
                 queue.enqueue(node);
             }

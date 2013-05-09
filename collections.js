@@ -1352,12 +1352,7 @@ var collections;
         * @constructor
         */
         function Queue() {
-            /**
-            * List containing the elements.
-            * @type buckets.LinkedList
-            * @private
-            */
-            this.list = new collections.LinkedList();
+            this.list = new LinkedList();
         }
         Queue.prototype.enqueue = /**
         * Inserts the specified element into the end of this queue.
@@ -1937,7 +1932,7 @@ var collections;
         * @return {boolean} true if this tree did not already contain the specified element.
         */
         function (element) {
-            if(buckets.isUndefined(element)) {
+            if(collections.isUndefined(element)) {
                 return false;
             }
             if(this.insertNode(this.createNode(element)) !== null) {
@@ -1974,7 +1969,7 @@ var collections;
         * false otherwise.
         */
         function (element) {
-            if(buckets.isUndefined(element)) {
+            if(collections.isUndefined(element)) {
                 return false;
             }
             return this.searchNode(this.root, element) !== null;
@@ -2153,7 +2148,7 @@ var collections;
         * @private
         */
         function (node, callback) {
-            var queue = new buckets.Queue();
+            var queue = new Queue();
             if(node !== null) {
                 queue.enqueue(node);
             }

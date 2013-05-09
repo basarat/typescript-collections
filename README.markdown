@@ -7,6 +7,7 @@ use generics
 remove extra semicolons at end of functions / classes / modules 
 function arguments types 
 search for all "private"s to make sure they are marked as such 
+search for isundefined and use to mark optional. Or search optional. 
 
 Already done: 
 use module 
