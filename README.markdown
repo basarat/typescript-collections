@@ -1,5 +1,14 @@
 [Buckets](github.com/mauriciosantos/buckets/)
 ====================
+Two things need to be done: 
+use classes for types 
+use default parameter arguments 
+use generics 
+remove extra semicolons at end of functions / classes / modules 
+
+Already done: 
+use module 
+
 **A JavaScript Data Structure Library**
 
 Buckets is a complete, fully tested and documented data structure library written in pure JavaScript.

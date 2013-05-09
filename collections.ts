@@ -66,7 +66,7 @@ module collections {
      * @function
      * @private
      */
-    export function isUndefined (obj) {
+    export function isUndefined(obj) {
         return (typeof obj) === 'undefined';
     };
 
@@ -107,7 +107,7 @@ module collections {
      * @function
      * @private
      */
-    export function compareToEquals  (compareFunction) {
+    export function compareToEquals(compareFunction) {
         return function (a, b) {
             return compareFunction(a, b) === 0;
         };
@@ -116,7 +116,7 @@ module collections {
     /**
      * @namespace Contains various functions for manipulating arrays.
      */
-    export module arrays {        
+    export module arrays {
 
         /**
          * Returns the position of the first occurrence of the specified item
@@ -128,7 +128,7 @@ module collections {
          * @return {number} the position of the first occurrence of the specified element
          * within the specified array, or -1 if not found.
          */
-        export function indexOf (array, item, equalsFunction) {
+        export function indexOf(array, item, equalsFunction) {
             var equals = equalsFunction || collections.defaultEquals;
             var length = array.length;
             for (var i = 0; i < length; i++) {
@@ -149,7 +149,7 @@ module collections {
          * @return {number} the position of the last occurrence of the specified element
          * within the specified array or -1 if not found.
          */
-        export function lastIndexOf (array, item, equalsFunction) {
+        export function lastIndexOf(array, item, equalsFunction) {
             var equals = equalsFunction || collections.defaultEquals;
             var length = array.length;
             for (var i = length - 1; i >= 0; i--) {
@@ -200,7 +200,7 @@ module collections {
          * @return {number} the number of elements in the specified array 
          * equal to the specified object.
          */
-        export function frequency (array, item, equalsFunction) {
+        export function frequency(array, item, equalsFunction) {
             var equals = equalsFunction || collections.defaultEquals;
             var length = array.length;
             var freq = 0;
@@ -223,7 +223,7 @@ module collections {
          * check equality between elemements in the arrays.
          * @return {boolean} true if the two arrays are equal
          */
-        export function equals (array1, array2, equalsFunction) {
+        export function equals(array1, array2, equalsFunction) {
             var equals = equalsFunction || collections.defaultEquals;
 
             if (array1.length !== array2.length) {
@@ -243,7 +243,7 @@ module collections {
          * @param {*} array the array to copy.
          * @return {Array} a copy of the specified array
          */
-        export function copy (array) {
+        export function copy(array) {
             return array.concat();
         };
 
@@ -272,7 +272,7 @@ module collections {
          * invoked with one argument: the element value, to break the iteration you can 
          * optionally return false.
          */
-        export function forEach (array, callback) {
+        export function forEach(array, callback) {
             var lenght = array.length;
             for (var i = 0; i < lenght; i++) {
                 if (callback(array[i]) === false) {
@@ -288,95 +288,97 @@ module collections {
      * which together represent a sequence.
      * @constructor
      */
-    buckets.LinkedList = function () {
+    export class LinkedList {
+        /**
+        * First node in the list
+        * @type {Object}
+        * @private
+        */
+        private firstNode = null;
+        /**
+        * Last node in the list
+        * @type {Object}
+        * @private
+        */
+        private lastNode = null;
 
         /**
-         * First node in the list
-         * @type {Object}
-         * @private
-         */
-        this.firstNode = null;
+        * Number of elements in the list
+        * @type {number}
+        * @private
+        */
+        private nElements = 0;
+
+        constructor() {
+        }
 
         /**
-         * Last node in the list
-         * @type {Object}
-         * @private
-         */
-        this.lastNode = null;
+        * Adds an element to this list.
+        * @param {Object} item element to be added.
+        * @param {number=} index optional index to add the element. If no index is specified
+        * the element is added to the end of this list.
+        * @return {boolean} true if the element was added or false if the index is invalid
+        * or if the element is undefined.
+        */
+        add(item, index) {
+            if (collections.isUndefined(index)) {
+                index = this.nElements;
+            }
+            if (index < 0 || index > this.nElements || collections.isUndefined(item)) {
+                return false;
+            }
+            var newNode = this.createNode(item);
+            if (this.nElements === 0) {
+                // First node in the list.
+                this.firstNode = newNode;
+                this.lastNode = newNode;
+            } else if (index === this.nElements) {
+                // Insert at the end.
+                this.lastNode.next = newNode;
+                this.lastNode = newNode;
+            } else if (index === 0) {
+                // Change first node.
+                newNode.next = this.firstNode;
+                this.firstNode = newNode;
+            } else {
+                var prev = this.nodeAtIndex(index - 1);
+                newNode.next = prev.next;
+                prev.next = newNode;
+            }
+            this.nElements++;
+            return true;
+        }
 
         /**
-         * Number of elements in the list
-         * @type {number}
-         * @private
-         */
-        this.nElements = 0;
+        * Returns the first element in this list.
+        * @return {*} the first element of the list or undefined if the list is
+        * empty.
+        */
+        first() {
+
+            if (this.firstNode !== null) {
+                return this.firstNode.element;
+            }
+            return undefined;
+        };
+
+        /**
+        * Returns the last element in this list.
+        * @return {*} the last element in the list or undefined if the list is
+        * empty.
+        */
+        last() {
+
+            if (this.lastNode !== null) {
+                return this.lastNode.element;
+            }
+            return undefined;
+        };
+
     };
 
 
-    /**
-     * Adds an element to this list.
-     * @param {Object} item element to be added.
-     * @param {number=} index optional index to add the element. If no index is specified
-     * the element is added to the end of this list.
-     * @return {boolean} true if the element was added or false if the index is invalid
-     * or if the element is undefined.
-     */
-    buckets.LinkedList.prototype.add = function (item, index) {
-
-        if (buckets.isUndefined(index)) {
-            index = this.nElements;
-        }
-        if (index < 0 || index > this.nElements || buckets.isUndefined(item)) {
-            return false;
-        }
-        var newNode = this.createNode(item);
-        if (this.nElements === 0) {
-            // First node in the list.
-            this.firstNode = newNode;
-            this.lastNode = newNode;
-        } else if (index === this.nElements) {
-            // Insert at the end.
-            this.lastNode.next = newNode;
-            this.lastNode = newNode;
-        } else if (index === 0) {
-            // Change first node.
-            newNode.next = this.firstNode;
-            this.firstNode = newNode;
-        } else {
-            var prev = this.nodeAtIndex(index - 1);
-            newNode.next = prev.next;
-            prev.next = newNode;
-        }
-        this.nElements++;
-        return true;
-    };
-
-
-    /**
-     * Returns the first element in this list.
-     * @return {*} the first element of the list or undefined if the list is
-     * empty.
-     */
-    buckets.LinkedList.prototype.first = function () {
-
-        if (this.firstNode !== null) {
-            return this.firstNode.element;
-        }
-        return undefined;
-    };
-
-    /**
-     * Returns the last element in this list.
-     * @return {*} the last element in the list or undefined if the list is
-     * empty.
-     */
-    buckets.LinkedList.prototype.last = function () {
-
-        if (this.lastNode !== null) {
-            return this.lastNode.element;
-        }
-        return undefined;
-    };
+    
 
 
     /**
