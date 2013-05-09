@@ -16,15 +16,15 @@ Included data structures
 ---------------------
 
 - Linked List
-- Dictionary](http://mauriciosantos.github.com/buckets/symbols/buckets.Dictionary.html)
-- Multi Dictionary](http://mauriciosantos.github.com/buckets/symbols/buckets.MultiDictionary.html)
-- Binary Search Tree](http://mauriciosantos.github.com/buckets/symbols/buckets.BSTree.html)
-- Stack](http://mauriciosantos.github.com/buckets/symbols/buckets.Stack.html)
-- Queue](http://mauriciosantos.github.com/buckets/symbols/buckets.Queue.html)
-- Set](http://mauriciosantos.github.com/buckets/symbols/buckets.Set.html)
-- Bag](http://mauriciosantos.github.com/buckets/symbols/buckets.Bag.html)
-- Binary Heap](http://mauriciosantos.github.com/buckets/symbols/buckets.Heap.html)
-- Priority Queue](http://mauriciosantos.github.com/buckets/symbols/buckets.PriorityQueue.html)
+- Dictionary
+- Multi Dictionary
+- Binary Search Tree
+- Stack
+- Queue
+- Set
+- Bag
+- Binary Heap
+- Priority Queue
 
 It also includes several functions for manipulating arrays.
 
@@ -47,9 +47,9 @@ Include the script and start coding.
 
 Example
 
-```javascript
-var setA = new buckets.Set();
-var setB = new buckets.Set();
+```typescript
+var setA = new collections.Set();
+var setB = new collections.Set();
 setA.add(1);
 setB.add(2);
 setA.union(setB); // {1,2}
