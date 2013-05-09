@@ -1542,8 +1542,10 @@ module collections {
     } // End of queue
 
 
+    class PriorityQueue{
 
-    /**
+        private heap: Heap;
+            /**
      * Creates an empty priority queue.
      * @class <p>In a priority queue each element is associated with a "priority",
      * elements are dequeued in highest-priority-first order (the elements with the 
@@ -1567,94 +1569,102 @@ module collections {
      * zero, or a positive integer as the first argument is less than, equal to,
      * or greater than the second.
      */
-    buckets.PriorityQueue  (compareFunction) {
-        this.heap = new buckets.Heap(buckets.reverseCompareFunction(compareFunction));
-    };
-
-    /**
-     * Inserts the specified element into this priority queue.
-     * @param {Object} element the element to insert.
-     * @return {boolean} true if the element was inserted, or false if it is undefined.
-     */
-    buckets.PriorityQueue.prototype.enqueue  (element) {
-        return this.heap.add(element);
-    };
-
-    /**
-     * Inserts the specified element into this priority queue.
-     * @param {Object} element the element to insert.
-     * @return {boolean} true if the element was inserted, or false if it is undefined.
-     */
-    buckets.PriorityQueue.prototype.add  (element) {
-        return this.heap.add(element);
-    };
-
-    /**
-     * Retrieves and removes the highest priority element of this queue.
-     * @return {*} the the highest priority element of this queue, 
-    or undefined if this queue is empty.
-     */
-    buckets.PriorityQueue.prototype.dequeue  () {
-        if (this.heap.size() !== 0) {
-            var el = this.heap.peek();
-            this.heap.removeRoot();
-            return el;
+        constructor(compareFunction) {
+            this.heap = new collections.Heap(buckets.reverseCompareFunction(compareFunction));
         }
-        return undefined;
-    };
 
-    /**
-     * Retrieves, but does not remove, the highest priority element of this queue.
-     * @return {*} the highest priority element of this queue, or undefined if this queue is empty.
+         /**
+     * Inserts the specified element into this priority queue.
+     * @param {Object} element the element to insert.
+     * @return {boolean} true if the element was inserted, or false if it is undefined.
      */
-    buckets.PriorityQueue.prototype.peek  () {
-        return this.heap.peek();
-    };
+        enqueue(element) {
+            return this.heap.add(element);
+        };
 
-    /**
-     * Returns true if this priority queue contains the specified element.
-     * @param {Object} element element to search for.
-     * @return {boolean} true if this priority queue contains the specified element,
-     * false otherwise.
-     */
-    buckets.PriorityQueue.prototype.contains  (element) {
-        return this.heap.contains(element);
-    };
+        /**
+         * Inserts the specified element into this priority queue.
+         * @param {Object} element the element to insert.
+         * @return {boolean} true if the element was inserted, or false if it is undefined.
+         */
+        add(element) {
+            return this.heap.add(element);
+        };
 
-    /**
-     * Checks if this priority queue is empty.
-     * @return {boolean} true if and only if this priority queue contains no items; false
-     * otherwise.
-     */
-    buckets.PriorityQueue.prototype.isEmpty  () {
-        return this.heap.isEmpty();
-    };
+            /**
+             * Retrieves and removes the highest priority element of this queue.
+             * @return {*} the the highest priority element of this queue, 
+            or undefined if this queue is empty.
+             */
+        dequeue() {
+            if (this.heap.size() !== 0) {
+                var el = this.heap.peek();
+                this.heap.removeRoot();
+                return el;
+            }
+            return undefined;
+        };
 
-    /**
-     * Returns the number of elements in this priority queue.
-     * @return {number} the number of elements in this priority queue.
-     */
-    buckets.PriorityQueue.prototype.size  () {
-        return this.heap.size();
-    };
+            /**
+             * Retrieves, but does not remove, the highest priority element of this queue.
+             * @return {*} the highest priority element of this queue, or undefined if this queue is empty.
+             */
+        peek() {
+            return this.heap.peek();
+        };
 
-    /**
-     * Removes all of the elements from this priority queue.
-     */
-    buckets.PriorityQueue.prototype.clear  () {
-        this.heap.clear();
-    };
+        /**
+         * Returns true if this priority queue contains the specified element.
+         * @param {Object} element element to search for.
+         * @return {boolean} true if this priority queue contains the specified element,
+         * false otherwise.
+         */
+        contains(element) {
+            return this.heap.contains(element);
+        };
 
-    /**
-     * Executes the provided function once for each element present in this queue in 
-     * no particular order.
-     * @param {function(Object):*} callback function to execute, it is
-     * invoked with one argument: the element value, to break the iteration you can 
-     * optionally return false.
-     */
-    buckets.PriorityQueue.prototype.forEach  (callback) {
-        this.heap.forEach(callback);
-    };
+            /**
+             * Checks if this priority queue is empty.
+             * @return {boolean} true if and only if this priority queue contains no items; false
+             * otherwise.
+             */
+        isEmpty() {
+            return this.heap.isEmpty();
+        };
+
+            /**
+             * Returns the number of elements in this priority queue.
+             * @return {number} the number of elements in this priority queue.
+             */
+        size() {
+            return this.heap.size();
+        };
+
+            /**
+             * Removes all of the elements from this priority queue.
+             */
+        clear() {
+            this.heap.clear();
+        };
+
+        /**
+         * Executes the provided function once for each element present in this queue in 
+         * no particular order.
+         * @param {function(Object):*} callback function to execute, it is
+         * invoked with one argument: the element value, to break the iteration you can 
+         * optionally return false.
+         */
+        forEach(callback) {
+            this.heap.forEach(callback);
+        };
+
+    } // end of priority queue
+
+
+
+
+
+
 
 
     /**
@@ -1675,7 +1685,7 @@ module collections {
      * is not appropriate, a custom function which receives a onject and returns a
      * unique string must be provided.
      */
-    buckets.Set  (toStringFunction) {
+    buckets.Set(toStringFunction) {
         this.dictionary = new buckets.Dictionary(toStringFunction);
     };
 
@@ -1685,7 +1695,7 @@ module collections {
      * @return {boolean} true if this set contains the specified element,
      * false otherwise.
      */
-    buckets.Set.prototype.contains  (element) {
+    buckets.Set.prototype.contains(element) {
         return this.dictionary.containsKey(element);
     };
 
@@ -1694,7 +1704,7 @@ module collections {
      * @param {Object} element the element to insert.
      * @return {boolean} true if this set did not already contain the specified element.
      */
-    buckets.Set.prototype.add  (element) {
+    buckets.Set.prototype.add(element) {
         if (this.contains(element) || buckets.isUndefined(element)) {
             return false;
         } else {
@@ -1708,7 +1718,7 @@ module collections {
      * Removes all values that are not present this set and the given set.
      * @param {buckets.Set} otherSet other set.
      */
-    buckets.Set.prototype.intersection  (otherSet) {
+    buckets.Set.prototype.intersection(otherSet) {
         var set = this;
         this.forEach(function (element) {
             if (!otherSet.contains(element)) {
@@ -1722,7 +1732,7 @@ module collections {
      * Adds all values from the given set to this set.
      * @param {buckets.Set} otherSet other set.
      */
-    buckets.Set.prototype.union  (otherSet) {
+    buckets.Set.prototype.union(otherSet) {
         var set = this;
         otherSet.forEach(function (element) {
             set.add(element);
@@ -1734,7 +1744,7 @@ module collections {
      * Removes from this set all the values that are present in the given set.
      * @param {buckets.Set} otherSet other set.
      */
-    buckets.Set.prototype.difference  (otherSet) {
+    buckets.Set.prototype.difference(otherSet) {
         var set = this;
         otherSet.forEach(function (element) {
             set.remove(element);
@@ -1746,7 +1756,7 @@ module collections {
      * @param {buckets.Set} otherSet other set.
      * @return {boolean} true if this set is a subset of the given set.
      */
-    buckets.Set.prototype.isSubsetOf  (otherSet) {
+    buckets.Set.prototype.isSubsetOf(otherSet) {
 
         if (this.size() > otherSet.size()) {
             return false;
@@ -1766,7 +1776,7 @@ module collections {
      * Removes the specified element from this set if it is present.
      * @return {boolean} true if this set contained the specified element.
      */
-    buckets.Set.prototype.remove  (element) {
+    buckets.Set.prototype.remove(element) {
         if (!this.contains(element)) {
             return false;
         } else {
@@ -1782,7 +1792,7 @@ module collections {
      * invoked with one arguments: the element. To break the iteration you can 
      * optionally return false.
      */
-    buckets.Set.prototype.forEach  (callback) {
+    buckets.Set.prototype.forEach(callback) {
         this.dictionary.forEach(function (k, v) {
             return callback(v);
         });
@@ -1792,7 +1802,7 @@ module collections {
      * Returns an array containing all of the elements in this set in arbitrary order.
      * @return {Array} an array containing all of the elements in this set.
      */
-    buckets.Set.prototype.toArray  () {
+    buckets.Set.prototype.toArray() {
         return this.dictionary.values();
     };
 
@@ -1800,7 +1810,7 @@ module collections {
      * Returns true if this set contains no elements.
      * @return {boolean} true if this set contains no elements.
      */
-    buckets.Set.prototype.isEmpty  () {
+    buckets.Set.prototype.isEmpty() {
         return this.dictionary.isEmpty();
     };
 
@@ -1808,14 +1818,14 @@ module collections {
      * Returns the number of elements in this set.
      * @return {number} the number of elements in this set.
      */
-    buckets.Set.prototype.size  () {
+    buckets.Set.prototype.size() {
         return this.dictionary.size();
     };
 
     /**
      * Removes all of the elements from this set.
      */
-    buckets.Set.prototype.clear  () {
+    buckets.Set.prototype.clear() {
         this.dictionary.clear();
     };
 
@@ -1838,7 +1848,7 @@ module collections {
      * is not appropriate, a custom function which receives an object and returns a
      * unique string must be provided.
      */
-    buckets.Bag  (toStrFunction) {
+    buckets.Bag(toStrFunction) {
         this.toStrF = toStrFunction || buckets.defaultToString;
         this.dictionary = new buckets.Dictionary(this.toStrF);
         this.nElements = 0;
@@ -1851,7 +1861,7 @@ module collections {
     * undefined 1 copy is added.
     * @return {boolean} true unless element is undefined.
     */
-    buckets.Bag.prototype.add  (element, nCopies) {
+    buckets.Bag.prototype.add(element, nCopies) {
 
         if (isNaN(nCopies) || buckets.isUndefined(nCopies)) {
             nCopies = 1;
@@ -1878,7 +1888,7 @@ module collections {
     * @param {Object} element the object to search for..
     * @return {number} the number of copies of the object, 0 if not found
     */
-    buckets.Bag.prototype.count  (element) {
+    buckets.Bag.prototype.count(element) {
 
         if (!this.contains(element)) {
             return 0;
@@ -1893,7 +1903,7 @@ module collections {
      * @return {boolean} true if this bag contains the specified element,
      * false otherwise.
      */
-    buckets.Bag.prototype.contains  (element) {
+    buckets.Bag.prototype.contains(element) {
         return this.dictionary.containsKey(element);
     };
 
@@ -1906,7 +1916,7 @@ module collections {
     * undefined 1 copy is removed.
     * @return {boolean} true if at least 1 element was removed.
     */
-    buckets.Bag.prototype.remove  (element, nCopies) {
+    buckets.Bag.prototype.remove(element, nCopies) {
 
         if (isNaN(nCopies) || buckets.isUndefined(nCopies)) {
             nCopies = 1;
@@ -1937,7 +1947,7 @@ module collections {
      * including multiple copies.
      * @return {Array} an array containing all of the elements in this bag.
      */
-    buckets.Bag.prototype.toArray  () {
+    buckets.Bag.prototype.toArray() {
         var a = [];
         var values = this.dictionary.values();
         var vl = values.length;
@@ -1956,7 +1966,7 @@ module collections {
      * Returns a set of unique elements in this bag. 
      * @return {buckets.Set} a set of unique elements in this bag.
      */
-    buckets.Bag.prototype.toSet  () {
+    buckets.Bag.prototype.toSet() {
         var set = new buckets.Set(this.toStrF);
         var elements = this.dictionary.values();
         var l = elements.length;
@@ -1974,7 +1984,7 @@ module collections {
      * invoked with one argument: the element. To break the iteration you can 
      * optionally return false.
      */
-    buckets.Bag.prototype.forEach  (callback) {
+    buckets.Bag.prototype.forEach(callback) {
         this.dictionary.forEach(function (k, v) {
             var value = v.value;
             var copies = v.copies;
@@ -1990,7 +2000,7 @@ module collections {
      * Returns the number of elements in this bag.
      * @return {number} the number of elements in this bag.
      */
-    buckets.Bag.prototype.size  () {
+    buckets.Bag.prototype.size() {
         return this.nElements;
     };
 
@@ -1998,14 +2008,14 @@ module collections {
      * Returns true if this bag contains no elements.
      * @return {boolean} true if this bag contains no elements.
      */
-    buckets.Bag.prototype.isEmpty  () {
+    buckets.Bag.prototype.isEmpty() {
         return this.nElements === 0;
     };
 
     /**
      * Removes all of the elements from this bag.
      */
-    buckets.Bag.prototype.clear  () {
+    buckets.Bag.prototype.clear() {
         this.nElements = 0;
         this.dictionary.clear();
     };
@@ -2047,7 +2057,7 @@ module collections {
      * zero, or a positive integer as the first argument is less than, equal to,
      * or greater than the second.
      */
-    buckets.BSTree  (compareFunction) {
+    buckets.BSTree(compareFunction) {
         this.root = null;
         this.compare = compareFunction || buckets.defaultCompare;
         this.nElements = 0;
@@ -2059,7 +2069,7 @@ module collections {
      * @param {Object} element the element to insert.
      * @return {boolean} true if this tree did not already contain the specified element.
      */
-    buckets.BSTree.prototype.add  (element) {
+    buckets.BSTree.prototype.add(element) {
         if (buckets.isUndefined(element)) {
             return false;
         }
@@ -2074,7 +2084,7 @@ module collections {
     /**
      * Removes all of the elements from this tree.
      */
-    buckets.BSTree.prototype.clear  () {
+    buckets.BSTree.prototype.clear() {
         this.root = null;
         this.nElements = 0;
     };
@@ -2083,7 +2093,7 @@ module collections {
      * Returns true if this tree contains no elements.
      * @return {boolean} true if this tree contains no elements.
      */
-    buckets.BSTree.prototype.isEmpty  () {
+    buckets.BSTree.prototype.isEmpty() {
         return this.nElements === 0;
     };
 
@@ -2091,7 +2101,7 @@ module collections {
      * Returns the number of elements in this tree.
      * @return {number} the number of elements in this tree.
      */
-    buckets.BSTree.prototype.size  () {
+    buckets.BSTree.prototype.size() {
         return this.nElements;
     };
 
@@ -2101,7 +2111,7 @@ module collections {
      * @return {boolean} true if this tree contains the specified element,
      * false otherwise.
      */
-    buckets.BSTree.prototype.contains  (element) {
+    buckets.BSTree.prototype.contains(element) {
         if (buckets.isUndefined(element)) {
             return false;
         }
@@ -2112,7 +2122,7 @@ module collections {
      * Removes the specified element from this tree if it is present.
      * @return {boolean} true if this tree contained the specified element.
      */
-    buckets.BSTree.prototype.remove  (element) {
+    buckets.BSTree.prototype.remove(element) {
         var node = this.searchNode(this.root, element);
         if (node === null) {
             return false;
@@ -2128,7 +2138,7 @@ module collections {
      * @param {function(Object):*} callback function to execute, it is invoked with one 
      * argument: the element value, to break the iteration you can optionally return false.
      */
-    buckets.BSTree.prototype.inorderTraversal  (callback) {
+    buckets.BSTree.prototype.inorderTraversal(callback) {
         this.inorderTraversalAux(this.root, callback, {
             stop: false
         });
@@ -2139,7 +2149,7 @@ module collections {
      * @param {function(Object):*} callback function to execute, it is invoked with one 
      * argument: the element value, to break the iteration you can optionally return false.
      */
-    buckets.BSTree.prototype.preorderTraversal  (callback) {
+    buckets.BSTree.prototype.preorderTraversal(callback) {
         this.preorderTraversalAux(this.root, callback, {
             stop: false
         });
@@ -2150,7 +2160,7 @@ module collections {
      * @param {function(Object):*} callback function to execute, it is invoked with one 
      * argument: the element value, to break the iteration you can optionally return false.
      */
-    buckets.BSTree.prototype.postorderTraversal  (callback) {
+    buckets.BSTree.prototype.postorderTraversal(callback) {
         this.postorderTraversalAux(this.root, callback, {
             stop: false
         });
@@ -2162,7 +2172,7 @@ module collections {
      * @param {function(Object):*} callback function to execute, it is invoked with one 
      * argument: the element value, to break the iteration you can optionally return false.
      */
-    buckets.BSTree.prototype.levelTraversal  (callback) {
+    buckets.BSTree.prototype.levelTraversal(callback) {
         this.levelTraversalAux(this.root, callback);
     };
 
@@ -2171,7 +2181,7 @@ module collections {
      * @return {*} the minimum element of this tree or undefined if this tree is
      * is empty.
      */
-    buckets.BSTree.prototype.minimum  () {
+    buckets.BSTree.prototype.minimum() {
         if (this.isEmpty()) {
             return undefined;
         }
@@ -2183,7 +2193,7 @@ module collections {
      * @return {*} the maximum element of this tree or undefined if this tree is
      * is empty.
      */
-    buckets.BSTree.prototype.maximum  () {
+    buckets.BSTree.prototype.maximum() {
         if (this.isEmpty()) {
             return undefined;
         }
@@ -2197,7 +2207,7 @@ module collections {
      * invoked with one argument: the element value, to break the iteration you can 
      * optionally return false.
      */
-    buckets.BSTree.prototype.forEach  (callback) {
+    buckets.BSTree.prototype.forEach(callback) {
         this.inorderTraversal(callback);
     };
 
@@ -2205,7 +2215,7 @@ module collections {
      * Returns an array containing all of the elements in this tree in in-order.
      * @return {Array} an array containing all of the elements in this tree in in-order.
      */
-    buckets.BSTree.prototype.toArray  () {
+    buckets.BSTree.prototype.toArray() {
         var array = [];
         this.inorderTraversal(function (element) {
             array.push(element);
@@ -2217,14 +2227,14 @@ module collections {
      * Returns the height of this tree.
      * @return {number} the height of this tree or -1 if is empty.
      */
-    buckets.BSTree.prototype.height  () {
+    buckets.BSTree.prototype.height() {
         return this.heightAux(this.root);
     };
 
     /**
     * @private
     */
-    buckets.BSTree.prototype.searchNode  (node, element) {
+    buckets.BSTree.prototype.searchNode(node, element) {
         var cmp = null;
         while (node !== null && cmp !== 0) {
             cmp = this.compare(element, node.element);
@@ -2241,7 +2251,7 @@ module collections {
     /**
     * @private
     */
-    buckets.BSTree.prototype.transplant  (n1, n2) {
+    buckets.BSTree.prototype.transplant(n1, n2) {
         if (n1.parent === null) {
             this.root = n2;
         } else if (n1 === n1.parent.leftCh) {
@@ -2258,7 +2268,7 @@ module collections {
     /**
     * @private
     */
-    buckets.BSTree.prototype.removeNode  (node) {
+    buckets.BSTree.prototype.removeNode(node) {
         if (node.leftCh === null) {
             this.transplant(node, node.rightCh);
         } else if (node.rightCh === null) {
@@ -2278,7 +2288,7 @@ module collections {
     /**
     * @private
     */
-    buckets.BSTree.prototype.inorderTraversalAux  (node, callback, signal) {
+    buckets.BSTree.prototype.inorderTraversalAux(node, callback, signal) {
         if (node === null || signal.stop) {
             return;
         }
@@ -2296,7 +2306,7 @@ module collections {
     /**
     * @private
     */
-    buckets.BSTree.prototype.levelTraversalAux  (node, callback) {
+    buckets.BSTree.prototype.levelTraversalAux(node, callback) {
         var queue = new buckets.Queue();
         if (node !== null) {
             queue.enqueue(node);
@@ -2318,7 +2328,7 @@ module collections {
     /**
     * @private
     */
-    buckets.BSTree.prototype.preorderTraversalAux  (node, callback, signal) {
+    buckets.BSTree.prototype.preorderTraversalAux(node, callback, signal) {
         if (node === null || signal.stop) {
             return;
         }
@@ -2335,7 +2345,7 @@ module collections {
     /**
     * @private
     */
-    buckets.BSTree.prototype.postorderTraversalAux  (node, callback, signal) {
+    buckets.BSTree.prototype.postorderTraversalAux(node, callback, signal) {
         if (node === null || signal.stop) {
             return;
         }
@@ -2353,7 +2363,7 @@ module collections {
     /**
     * @private
     */
-    buckets.BSTree.prototype.minimumAux  (node) {
+    buckets.BSTree.prototype.minimumAux(node) {
         while (node.leftCh !== null) {
             node = node.leftCh;
         }
@@ -2363,7 +2373,7 @@ module collections {
     /**
     * @private
     */
-    buckets.BSTree.prototype.maximumAux  (node) {
+    buckets.BSTree.prototype.maximumAux(node) {
         while (node.rightCh !== null) {
             node = node.rightCh;
         }
@@ -2373,7 +2383,7 @@ module collections {
     /**
     * @private
     */
-    buckets.BSTree.prototype.successorNode  (node) {
+    buckets.BSTree.prototype.successorNode(node) {
         if (node.rightCh !== null) {
             return this.minimumAux(node.rightCh);
         }
@@ -2388,7 +2398,7 @@ module collections {
     /**
     * @private
     */
-    buckets.BSTree.prototype.heightAux  (node) {
+    buckets.BSTree.prototype.heightAux(node) {
         if (node === null) {
             return -1;
         }
@@ -2398,7 +2408,7 @@ module collections {
     /*
     * @private
     */
-    buckets.BSTree.prototype.insertNode  (node) {
+    buckets.BSTree.prototype.insertNode(node) {
 
         var parent = null;
         var position = this.root;
@@ -2430,7 +2440,7 @@ module collections {
     /**
     * @private
     */
-    buckets.BSTree.prototype.createNode  (element) {
+    buckets.BSTree.prototype.createNode(element) {
         return {
             element: element,
             leftCh: null,
@@ -2440,4 +2450,4 @@ module collections {
     };
 
 
-}
+}// End of module 
