@@ -1450,14 +1450,14 @@ module collections {
          * invoked with one argument: the element value, to break the iteration you can 
          * optionally return false.
          */
-        forEach(callback:ILoopFunction<T>) {
+        forEach(callback: ILoopFunction<T>) {
             this.list.forEach(callback);
         }
     } // End of stack 
 
 
 
-    class Queue <T>{
+    class Queue<T>{
 
         /**
          * List containing the elements.
@@ -1483,7 +1483,7 @@ module collections {
          * @param {Object} elem the element to insert.
          * @return {boolean} true if the element was inserted, or false if it is undefined.
          */
-        enqueue(elem:T):boolean {
+        enqueue(elem: T): boolean {
             return this.list.add(elem);
         }
         /**
@@ -1491,14 +1491,14 @@ module collections {
          * @param {Object} elem the element to insert.
          * @return {boolean} true if the element was inserted, or false if it is undefined.
          */
-        add(elem:T):boolean {
+        add(elem: T): boolean {
             return this.list.add(elem);
         }
         /**
          * Retrieves and removes the head of this queue.
          * @return {*} the head of this queue, or undefined if this queue is empty.
          */
-        dequeue():T {
+        dequeue(): T {
             if (this.list.size() !== 0) {
                 var el = this.list.first();
                 this.list.removeElementAtIndex(0);
@@ -1510,7 +1510,7 @@ module collections {
          * Retrieves, but does not remove, the head of this queue.
          * @return {*} the head of this queue, or undefined if this queue is empty.
          */
-        peek():T {
+        peek(): T {
 
             if (this.list.size() !== 0) {
                 return this.list.first();
@@ -1522,7 +1522,7 @@ module collections {
          * Returns the number of elements in this queue.
          * @return {number} the number of elements in this queue.
          */
-        size():number {
+        size(): number {
             return this.list.size();
         }
 
@@ -1544,7 +1544,7 @@ module collections {
          * @return {boolean} true if this queue contains the specified element,
          * false otherwise.
          */
-        contains(elem:T, equalsFunction?:IEqualsFunction<T>):boolean {
+        contains(elem: T, equalsFunction?: IEqualsFunction<T>): boolean {
             return this.list.contains(elem, equalsFunction);
         }
 
@@ -1553,14 +1553,14 @@ module collections {
          * @return {boolean} true if and only if this queue contains no items; false
          * otherwise.
          */
-        isEmpty():boolean {
+        isEmpty(): boolean {
             return this.list.size() <= 0;
         }
 
         /**
          * Removes all of the elements from this queue.
          */
-        clear():void {
+        clear(): void {
             this.list.clear();
         }
 
@@ -1571,16 +1571,16 @@ module collections {
          * invoked with one argument: the element value, to break the iteration you can 
          * optionally return false.
          */
-        forEach(callback:ILoopFunction<T>) {
+        forEach(callback: ILoopFunction<T>) {
             this.list.forEach(callback);
         }
 
     } // End of queue
 
 
-    class PriorityQueue {
+    class PriorityQueue<T> {
 
-        private heap: Heap;
+        private heap: Heap<T>;
         /**
          * Creates an empty priority queue.
          * @class <p>In a priority queue each element is associated with a "priority",
@@ -1605,8 +1605,8 @@ module collections {
          * zero, or a positive integer as the first argument is less than, equal to,
          * or greater than the second.
          */
-        constructor(compareFunction?) {
-            this.heap = new Heap(collections.reverseCompareFunction(compareFunction));
+        constructor(compareFunction?: ICompareFunction<T>) {
+            this.heap = new Heap<T>(collections.reverseCompareFunction(compareFunction));
         }
 
         /**
@@ -1614,7 +1614,7 @@ module collections {
          * @param {Object} element the element to insert.
          * @return {boolean} true if the element was inserted, or false if it is undefined.
          */
-        enqueue(element) {
+        enqueue(element: T): boolean {
             return this.heap.add(element);
         }
 
@@ -1623,7 +1623,7 @@ module collections {
          * @param {Object} element the element to insert.
          * @return {boolean} true if the element was inserted, or false if it is undefined.
          */
-        add(element) {
+        add(element: T): boolean {
             return this.heap.add(element);
         }
 
@@ -1632,7 +1632,7 @@ module collections {
          * @return {*} the the highest priority element of this queue, 
          *  or undefined if this queue is empty.
          */
-        dequeue() {
+        dequeue(): T {
             if (this.heap.size() !== 0) {
                 var el = this.heap.peek();
                 this.heap.removeRoot();
@@ -1645,7 +1645,7 @@ module collections {
          * Retrieves, but does not remove, the highest priority element of this queue.
          * @return {*} the highest priority element of this queue, or undefined if this queue is empty.
          */
-        peek() {
+        peek(): T {
             return this.heap.peek();
         }
 
@@ -1655,7 +1655,7 @@ module collections {
          * @return {boolean} true if this priority queue contains the specified element,
          * false otherwise.
          */
-        contains(element) {
+        contains(element: T): boolean {
             return this.heap.contains(element);
         }
 
@@ -1664,7 +1664,7 @@ module collections {
          * @return {boolean} true if and only if this priority queue contains no items; false
          * otherwise.
          */
-        isEmpty() {
+        isEmpty(): boolean {
             return this.heap.isEmpty();
         }
 
@@ -1672,14 +1672,14 @@ module collections {
          * Returns the number of elements in this priority queue.
          * @return {number} the number of elements in this priority queue.
          */
-        size() {
+        size(): number {
             return this.heap.size();
         }
 
         /**
          * Removes all of the elements from this priority queue.
          */
-        clear() {
+        clear(): void {
             this.heap.clear();
         }
 
@@ -1690,7 +1690,7 @@ module collections {
          * invoked with one argument: the element value, to break the iteration you can 
          * optionally return false.
          */
-        forEach(callback) {
+        forEach(callback: ILoopFunction<T>) {
             this.heap.forEach(callback);
         }
 
