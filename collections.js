@@ -3,7 +3,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-// Copyright 2012 Mauricio Santos. All Rights Reserved.
+// Copyright 2013 Basarat Ali Syed. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,7 +11,7 @@ var __extends = this.__extends || function (d, b) {
 // Some documentation is borrowed from the official Java API
 // as it serves the same porpose.
 //
-// Rewritten for TypeScript by Basarat 2013. Same License
+// Orginal javascript code was by Mauricio Santos
 /**
 * @namespace Top level namespace for collections, a TypeScript data structure library.
 */
@@ -823,6 +823,9 @@ var collections;
     // 	}
     // 	return this.equalsAux(this.firstNode,other.firstNode,eqF);
     // }
+    // Cannot
+    // class MultiDictionary<K,V> extends Dictionary<K,Array<V>> {
+    // Since we want to reuse the function name setValue and types become incompatible
     var MultiDictionary = (function (_super) {
         __extends(MultiDictionary, _super);
         /**

@@ -1,4 +1,4 @@
-// Copyright 2012 Mauricio Santos. All Rights Reserved.
+// Copyright 2013 Basarat Ali Syed. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -6,7 +6,7 @@
 // Some documentation is borrowed from the official Java API
 // as it serves the same porpose.
 //
-// Rewritten for TypeScript by Basarat 2013. Same License
+// Orginal javascript code was by Mauricio Santos
 
 /**
  * @namespace Top level namespace for collections, a TypeScript data structure library.
@@ -922,9 +922,12 @@ module collections {
     // }
 
 
-    class MultiDictionary extends Dictionary {
+    // Cannot 
+    // class MultiDictionary<K,V> extends Dictionary<K,Array<V>> {
+    // Since we want to reuse the function name setValue and types become incompatible 
+    class MultiDictionary<K,V> extends Dictionary {
 
-        private equalsF;
+        private equalsF:IEqualsFunction<V>;
         /**
          * Creates an empty multi dictionary. 
          * @class <p>A multi dictionary is a special kind of dictionary that holds
@@ -958,7 +961,7 @@ module collections {
          * function to check if two values are equal.
          * 
          */
-        constructor(toStrFunction?, valuesEqualsFunction?) {
+        constructor(toStrFunction?:(key: K) => string, valuesEqualsFunction?:IEqualsFunction<V>) {
             super(toStrFunction);
             this.equalsF = valuesEqualsFunction || collections.defaultEquals;
         }
@@ -970,7 +973,7 @@ module collections {
         * @return {Array} an array holding the values to which this dictionary maps
         * the specified key.
         */
-        getValue(key) {
+        getValue(key:K):V[] {
             var values = super.getValue(key);
             if (collections.isUndefined(values)) {
                 return [];
@@ -986,7 +989,7 @@ module collections {
          * @param {Object} value the value to add to the array at the key
          * @return {boolean} true if the value was not already associated with that key.
          */
-        setValue(key, value) {
+        setValue(key:K, value:V):boolean {
 
             if (collections.isUndefined(key) || collections.isUndefined(value)) {
                 return false;
@@ -1014,7 +1017,7 @@ module collections {
          * @return {*} true if the dictionary changed, false if the key doesn't exist or 
          * if the specified value isn't associated with the specified key.
          */
-        remove(key, value?) {
+        remove(key:K, value?:V):boolean {
             if (collections.isUndefined(value)) {
                 var v = super.remove(key);
                 if (collections.isUndefined(v)) {
@@ -1036,7 +1039,7 @@ module collections {
          * Returns an array containing all of the keys in this dictionary.
          * @return {Array} an array containing all of the keys in this dictionary.
          */
-        keys() {
+        keys():K[] {
             return super.keys();
         }
 
@@ -1044,7 +1047,7 @@ module collections {
          * Returns an array containing all of the values in this dictionary.
          * @return {Array} an array containing all of the values in this dictionary.
          */
-        values() {
+        values():V[] {
             var values = super.values();
             var array = [];
             for (var i = 0; i < values.length; i++) {
@@ -1063,14 +1066,14 @@ module collections {
          * @return {boolean} true if this dictionary at least one value associatted 
          * the specified key.
          */
-        containsKey(key) {
+        containsKey(key:K):boolean {
             return super.containsKey(key);
         }
 
         /**
          * Removes all mappings from this dictionary.
          */
-        clear() {
+        clear():void {
             return super.clear();
         }
 
@@ -1078,7 +1081,7 @@ module collections {
          * Returns the number of keys in this dictionary.
          * @return {number} the number of key-value mappings in this dictionary.
          */
-        size() {
+        size():number {
             return super.size();
         }
 
@@ -1086,7 +1089,7 @@ module collections {
          * Returns true if this dictionary contains no mappings.
          * @return {boolean} true if this dictionary contains no mappings.
          */
-        isEmpty() {
+        isEmpty():boolean {
             return super.isEmpty();
         }
     }// end of multi dictionary 
