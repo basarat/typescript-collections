@@ -2344,7 +2344,7 @@ module collections {
         /**
         * @private
         */
-        private inorderTraversalAux(node: BSTreeNode<T>, callback: ILoopFunction<T>, signal: { stop: boolean;}):void {
+        private inorderTraversalAux(node: BSTreeNode<T>, callback: ILoopFunction<T>, signal: { stop: boolean; }): void {
             if (node === null || signal.stop) {
                 return;
             }
@@ -2362,7 +2362,7 @@ module collections {
         /**
         * @private
         */
-        private levelTraversalAux(node: BSTreeNode<T>, callback:ILoopFunction<T>) {
+        private levelTraversalAux(node: BSTreeNode<T>, callback: ILoopFunction<T>) {
             var queue = new Queue();
             if (node !== null) {
                 queue.enqueue(node);
@@ -2419,7 +2419,7 @@ module collections {
         /**
         * @private
         */
-        private minimumAux(node:BSTreeNode<T>):BSTreeNode<T> {
+        private minimumAux(node: BSTreeNode<T>): BSTreeNode<T> {
             while (node.leftCh !== null) {
                 node = node.leftCh;
             }
@@ -2454,7 +2454,7 @@ module collections {
         /**
         * @private
         */
-        private heightAux(node: BSTreeNode<T>):number {
+        private heightAux(node: BSTreeNode<T>): number {
             if (node === null) {
                 return -1;
             }
@@ -2496,7 +2496,7 @@ module collections {
         /**
         * @private
         */
-        private createNode(element:T): BSTreeNode<T> {
+        private createNode(element: T): BSTreeNode<T> {
             return {
                 element: element,
                 leftCh: null,
