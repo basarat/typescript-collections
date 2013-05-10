@@ -733,7 +733,8 @@ var collections;
             var array = [];
             for(var name in this.table) {
                 if (this.table.hasOwnProperty(name)) {
-                    array.push(this.table[name].key);
+                    var pair = this.table[name];
+                    array.push(pair.key);
                 }
             }
             return array;
@@ -746,7 +747,8 @@ var collections;
             var array = [];
             for(var name in this.table) {
                 if (this.table.hasOwnProperty(name)) {
-                    array.push(this.table[name].value);
+                    var pair = this.table[name];
+                    array.push(pair.value);
                 }
             }
             return array;

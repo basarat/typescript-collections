@@ -636,9 +636,9 @@ module collections {
          * @return {Array.<*>} an array containing all of the elements in this list,
          * in proper sequence.
          */
-        toArray():T[] {
-            var array:T[] = [];
-            var currentNode:ILinkedListNode<T> = this.firstNode;
+        toArray(): T[] {
+            var array: T[] = [];
+            var currentNode: ILinkedListNode<T> = this.firstNode;
             while (currentNode !== null) {
                 array.push(currentNode.element);
                 currentNode = currentNode.next;
@@ -650,7 +650,7 @@ module collections {
          * Returns the number of elements in this list.
          * @return {number} the number of elements in this list.
          */
-        size():number {
+        size(): number {
             return this.nElements;
         }
 
@@ -658,14 +658,14 @@ module collections {
          * Returns true if this list contains no elements.
          * @return {boolean} true if this list contains no elements.
          */
-        isEmpty():boolean {
+        isEmpty(): boolean {
             return this.nElements <= 0;
         }
 
         /**
          * @private
          */
-        private nodeAtIndex(index):ILinkedListNode<T> {
+        private nodeAtIndex(index): ILinkedListNode<T> {
 
             if (index < 0 || index >= this.nElements) {
                 return null;
@@ -683,7 +683,7 @@ module collections {
         /**
          * @private
          */
-        private createNode(item:T):ILinkedListNode<T> {
+        private createNode(item: T): ILinkedListNode<T> {
             return {
                 element: item,
                 next: null
@@ -693,14 +693,21 @@ module collections {
 
 
 
+    // Used internally by dictionary 
+    interface IDicitonaryPair<K, V>{
+        key: K;
+        value: V;
+    }
 
-    class Dictionary {
+    class Dictionary<K, V>{
+
         /**
- * Object holding the key-value pairs.
- * @type {Object}
- * @private
- */
-        private table;
+         * Object holding the key-value pairs.
+         * @type {Object}
+         * @private
+         */
+        private table: { [key: string]: IDicitonaryPair<K, V> };
+        //: [key: K] will not work since indices can only by strings in javascript and typescript enforces this. 
 
         /**
          * Number of elements in the list.
@@ -710,32 +717,32 @@ module collections {
         private nElements: number;
 
         /**
- * Function used to convert keys to strings.
- * @type {function(Object):string}
- * @private
- */
-        private toStr;
+         * Function used to convert keys to strings.
+         * @type {function(Object):string}
+         * @private
+         */
+        private toStr: (key: K) => string;
 
 
         /**
- * Creates an empty dictionary. 
- * @class <p>Dictionaries map keys to values; each key can map to at most one value.
- * This implementation accepts any kind of objects as keys.</p>
- *
- * <p>If the keys are custom objects a function which converts keys to unique
- * strings must be provided. Example:</p>
- * <pre>
- * function petToString(pet) {
- *  return pet.name;
- * }
- * </pre>
- * @constructor
- * @param {function(Object):string=} toStrFunction optional function used
- * to convert keys to strings. If the keys aren't strings or if toString()
- * is not appropriate, a custom function which receives a key and returns a
- * unique string must be provided.
- */
-        constructor(toStrFunction?) {
+         * Creates an empty dictionary. 
+         * @class <p>Dictionaries map keys to values; each key can map to at most one value.
+         * This implementation accepts any kind of objects as keys.</p>
+         *
+         * <p>If the keys are custom objects a function which converts keys to unique
+         * strings must be provided. Example:</p>
+         * <pre>
+         * function petToString(pet) {
+         *  return pet.name;
+         * }
+         * </pre>
+         * @constructor
+         * @param {function(Object):string=} toStrFunction optional function used
+         * to convert keys to strings. If the keys aren't strings or if toString()
+         * is not appropriate, a custom function which receives a key and returns a
+         * unique string must be provided.
+         */
+        constructor(toStrFunction?: (key: K) => string) {
             this.table = {};
             this.nElements = 0;
             this.toStr = toStrFunction || collections.defaultToString;
@@ -743,14 +750,14 @@ module collections {
 
 
         /**
- * Returns the value to which this dictionary maps the specified key.
- * Returns undefined if this dictionary contains no mapping for this key.
- * @param {Object} key key whose associated value is to be returned.
- * @return {*} the value to which this dictionary maps the specified key or
- * undefined if the map contains no mapping for this key.
- */
-        getValue(key) {
-            var pair = this.table[this.toStr(key)];
+         * Returns the value to which this dictionary maps the specified key.
+         * Returns undefined if this dictionary contains no mapping for this key.
+         * @param {Object} key key whose associated value is to be returned.
+         * @return {*} the value to which this dictionary maps the specified key or
+         * undefined if the map contains no mapping for this key.
+         */
+        getValue(key: K): V {
+            var pair: IDicitonaryPair<K, V> = this.table[this.toStr(key)];
             if (collections.isUndefined(pair)) {
                 return undefined;
             }
@@ -768,7 +775,7 @@ module collections {
          * @return {*} previous value associated with the specified key, or undefined if
          * there was no mapping for the key or if the key/value are undefined.
          */
-        setValue(key, value) {
+        setValue(key: K, value: V): V {
 
             if (collections.isUndefined(key) || collections.isUndefined(value)) {
                 return undefined;
@@ -776,7 +783,7 @@ module collections {
 
             var ret;
             var k = this.toStr(key);
-            var previousElement = this.table[k];
+            var previousElement: IDicitonaryPair<K, V> = this.table[k];
             if (collections.isUndefined(previousElement)) {
                 this.nElements++;
                 ret = undefined;
@@ -797,9 +804,9 @@ module collections {
          * @return {*} previous value associated with specified key, or undefined if
          * there was no mapping for key.
          */
-        remove(key) {
+        remove(key: K): V {
             var k = this.toStr(key);
-            var previousElement = this.table[k];
+            var previousElement: IDicitonaryPair<K, V> = this.table[k];
             if (!collections.isUndefined(previousElement)) {
                 delete this.table[k];
                 this.nElements--;
@@ -809,45 +816,46 @@ module collections {
         }
 
         /**
-     * Returns an array containing all of the keys in this dictionary.
-     * @return {Array} an array containing all of the keys in this dictionary.
-     */
-        keys() {
-            var array = [];
+         * Returns an array containing all of the keys in this dictionary.
+         * @return {Array} an array containing all of the keys in this dictionary.
+         */
+        keys(): K[] {
+            var array: K[] = [];
             for (var name in this.table) {
                 if (this.table.hasOwnProperty(name)) {
-                    array.push(this.table[name].key);
+                    var pair: IDicitonaryPair<K, V> = this.table[name];
+                    array.push(pair.key);
                 }
             }
             return array;
         }
 
         /**
- * Returns an array containing all of the values in this dictionary.
- * @return {Array} an array containing all of the values in this dictionary.
- */
-        values() {
-            var array = [];
+         * Returns an array containing all of the values in this dictionary.
+         * @return {Array} an array containing all of the values in this dictionary.
+         */
+        values(): V[] {
+            var array: V[] = [];
             for (var name in this.table) {
                 if (this.table.hasOwnProperty(name)) {
-                    array.push(this.table[name].value);
+                    var pair: IDicitonaryPair<K, V> = this.table[name];
+                    array.push(pair.value);
                 }
             }
             return array;
         }
 
         /**
-* Executes the provided function once for each key-value pair 
-* present in this dictionary.
-* @param {function(Object,Object):*} callback function to execute, it is
-* invoked with two arguments: key and value. To break the iteration you can 
-* optionally return false.
-*/
-
-        forEach(callback) {
+        * Executes the provided function once for each key-value pair 
+        * present in this dictionary.
+        * @param {function(Object,Object):*} callback function to execute, it is
+        * invoked with two arguments: key and value. To break the iteration you can 
+        * optionally return false.
+        */
+        forEach(callback: (key: K, value: V) => boolean): void {
             for (var name in this.table) {
                 if (this.table.hasOwnProperty(name)) {
-                    var pair = this.table[name];
+                    var pair: IDicitonaryPair<K, V> = this.table[name];
                     var ret = callback(pair.key, pair.value);
                     if (ret === false) {
                         return;
@@ -857,31 +865,31 @@ module collections {
         }
 
         /**
- * Returns true if this dictionary contains a mapping for the specified key.
- * @param {Object} key key whose presence in this dictionary is to be
- * tested.
- * @return {boolean} true if this dictionary contains a mapping for the
- * specified key.
- */
-
-        containsKey(key) {
+         * Returns true if this dictionary contains a mapping for the specified key.
+         * @param {Object} key key whose presence in this dictionary is to be
+         * tested.
+         * @return {boolean} true if this dictionary contains a mapping for the
+         * specified key.
+         */
+        containsKey(key: K): boolean {
             return !collections.isUndefined(this.getValue(key));
         }
 
         /**
-    * Removes all mappings from this dictionary.
-    * @this {buckets.Dictionary}
-    */
+        * Removes all mappings from this dictionary.
+        * @this {buckets.Dictionary}
+        */
         clear() {
 
             this.table = {};
             this.nElements = 0;
         }
+
         /**
          * Returns the number of keys in this dictionary.
          * @return {number} the number of key-value mappings in this dictionary.
          */
-        size() {
+        size(): number {
             return this.nElements;
         }
 
@@ -889,11 +897,9 @@ module collections {
          * Returns true if this dictionary contains no mappings.
          * @return {boolean} true if this dictionary contains no mappings.
          */
-        isEmpty() {
+        isEmpty():boolean {
             return this.nElements <= 0;
         }
-
-
     } // End of dictionary
 
     // /**
