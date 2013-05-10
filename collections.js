@@ -2017,6 +2017,7 @@ var collections;
             var array = [];
             this.inorderTraversal(function (element) {
                 array.push(element);
+                return;
             });
             return array;
         };

@@ -1720,7 +1720,7 @@ module collections {
          * is not appropriate, a custom function which receives a onject and returns a
          * unique string must be provided.
          */
-        constructor(toStringFunction?: (item:T) => string) {
+        constructor(toStringFunction?: (item: T) => string) {
             this.dictionary = new Dictionary<T, any>(toStringFunction);
         }
 
@@ -1757,7 +1757,7 @@ module collections {
          */
         intersection(otherSet: Set<T>): void {
             var set = this;
-            this.forEach(function (element:T):boolean {
+            this.forEach(function (element: T): boolean {
                 if (!otherSet.contains(element)) {
                     set.remove(element);
                 }
@@ -1772,7 +1772,7 @@ module collections {
          */
         union(otherSet: Set<T>): void {
             var set = this;
-            otherSet.forEach(function (element:T):boolean {
+            otherSet.forEach(function (element: T): boolean {
                 set.add(element);
                 return;
             } );
@@ -1785,7 +1785,7 @@ module collections {
          */
         difference(otherSet: Set<T>): void {
             var set = this;
-            otherSet.forEach(function (element:T):boolean {
+            otherSet.forEach(function (element: T): boolean {
                 set.remove(element);
                 return;
             } );
@@ -1832,7 +1832,7 @@ module collections {
          * invoked with one arguments: the element. To break the iteration you can 
          * optionally return false.
          */
-        forEach(callback:ILoopFunction<T>):void {
+        forEach(callback: ILoopFunction<T>): void {
             this.dictionary.forEach(function (k, v) {
                 return callback(v);
             } );
@@ -1874,9 +1874,9 @@ module collections {
 
     class Bag<T>{
 
-        private toStrF:(item:T)=>string;
-        private dictionary: Dictionary<T,any>;
-        private nElements:number;
+        private toStrF: (item: T) => string;
+        private dictionary: Dictionary<T, any>;
+        private nElements: number;
 
         /**
          * Creates an empty bag.
@@ -1897,9 +1897,9 @@ module collections {
          * is not appropriate, a custom function which receives an object and returns a
          * unique string must be provided.
          */
-        constructor(toStrFunction?: (item:T) => string) {
+        constructor(toStrFunction?: (item: T) => string) {
             this.toStrF = toStrFunction || collections.defaultToString;
-            this.dictionary = new Dictionary<T,any>(this.toStrF);
+            this.dictionary = new Dictionary<T, any>(this.toStrF);
             this.nElements = 0;
         }
 
@@ -1911,8 +1911,8 @@ module collections {
         * undefined 1 copy is added.
         * @return {boolean} true unless element is undefined.
         */
-        add(element:T, nCopies:number=1):boolean {
-            
+        add(element: T, nCopies: number= 1): boolean {
+
             if (collections.isUndefined(element) || nCopies <= 0) {
                 return false;
             }
@@ -1935,7 +1935,7 @@ module collections {
         * @param {Object} element the object to search for..
         * @return {number} the number of copies of the object, 0 if not found
         */
-        count(element:T):number {
+        count(element: T): number {
 
             if (!this.contains(element)) {
                 return 0;
@@ -1950,7 +1950,7 @@ module collections {
          * @return {boolean} true if this bag contains the specified element,
          * false otherwise.
          */
-        contains(element:T):boolean {
+        contains(element: T): boolean {
             return this.dictionary.containsKey(element);
         }
 
@@ -1963,7 +1963,7 @@ module collections {
         * undefined 1 copy is removed.
         * @return {boolean} true if at least 1 element was removed.
         */
-        remove(element:T, nCopies:number = 1) {
+        remove(element: T, nCopies: number = 1) {
 
             if (collections.isUndefined(element) || nCopies <= 0) {
                 return false;
@@ -1991,7 +1991,7 @@ module collections {
          * including multiple copies.
          * @return {Array} an array containing all of the elements in this bag.
          */
-        toArray():T[] {
+        toArray(): T[] {
             var a = [];
             var values = this.dictionary.values();
             var vl = values.length;
@@ -2010,7 +2010,7 @@ module collections {
          * Returns a set of unique elements in this bag. 
          * @return {buckets.Set} a set of unique elements in this bag.
          */
-        toSet():Set<T> {
+        toSet(): Set<T> {
             var toret = new Set<T>(this.toStrF);
             var elements = this.dictionary.values();
             var l = elements.length;
@@ -2028,7 +2028,7 @@ module collections {
          * invoked with one argument: the element. To break the iteration you can 
          * optionally return false.
          */
-        forEach(callback:ILoopFunction<T>) {
+        forEach(callback: ILoopFunction<T>) {
             this.dictionary.forEach(function (k, v) {
                 var value = v.value;
                 var copies = v.copies;
@@ -2044,7 +2044,7 @@ module collections {
          * Returns the number of elements in this bag.
          * @return {number} the number of elements in this bag.
          */
-        size():number {
+        size(): number {
             return this.nElements;
         }
 
@@ -2052,14 +2052,14 @@ module collections {
          * Returns true if this bag contains no elements.
          * @return {boolean} true if this bag contains no elements.
          */
-        isEmpty():boolean {
+        isEmpty(): boolean {
             return this.nElements === 0;
         }
 
         /**
          * Removes all of the elements from this bag.
          */
-        clear():void {
+        clear(): void {
             this.nElements = 0;
             this.dictionary.clear();
         }
@@ -2067,10 +2067,17 @@ module collections {
     }// End of bag 
 
 
-    class BSTree {
+    // Internal interface for BST 
+    interface BSTreeNode<T>{
+        element: T;
+        leftCh: BSTreeNode<T>;
+        rightCh: BSTreeNode<T>;
+        parent: BSTreeNode<T>;
+    }
+    class BSTree<T> {
 
-        private root;
-        private compare;
+        private root: BSTreeNode<T>;
+        private compare: ICompareFunction<T>;
         private nElements: number;
         /**
          * Creates an empty binary search tree.
@@ -2107,7 +2114,7 @@ module collections {
          * zero, or a positive integer as the first argument is less than, equal to,
          * or greater than the second.
          */
-        constructor(compareFunction?) {
+        constructor(compareFunction?: ICompareFunction<T>) {
             this.root = null;
             this.compare = compareFunction || collections.defaultCompare;
             this.nElements = 0;
@@ -2118,7 +2125,7 @@ module collections {
          * @param {Object} element the element to insert.
          * @return {boolean} true if this tree did not already contain the specified element.
          */
-        add(element) {
+        add(element: T): boolean {
             if (collections.isUndefined(element)) {
                 return false;
             }
@@ -2133,7 +2140,7 @@ module collections {
         /**
          * Removes all of the elements from this tree.
          */
-        clear() {
+        clear(): void {
             this.root = null;
             this.nElements = 0;
         }
@@ -2142,7 +2149,7 @@ module collections {
          * Returns true if this tree contains no elements.
          * @return {boolean} true if this tree contains no elements.
          */
-        isEmpty() {
+        isEmpty(): boolean {
             return this.nElements === 0;
         }
 
@@ -2150,7 +2157,7 @@ module collections {
          * Returns the number of elements in this tree.
          * @return {number} the number of elements in this tree.
          */
-        size() {
+        size(): number {
             return this.nElements;
         }
 
@@ -2160,7 +2167,7 @@ module collections {
          * @return {boolean} true if this tree contains the specified element,
          * false otherwise.
          */
-        contains(element) {
+        contains(element: T): boolean {
             if (collections.isUndefined(element)) {
                 return false;
             }
@@ -2171,7 +2178,7 @@ module collections {
          * Removes the specified element from this tree if it is present.
          * @return {boolean} true if this tree contained the specified element.
          */
-        remove(element) {
+        remove(element: T): boolean {
             var node = this.searchNode(this.root, element);
             if (node === null) {
                 return false;
@@ -2187,7 +2194,7 @@ module collections {
          * @param {function(Object):*} callback function to execute, it is invoked with one 
          * argument: the element value, to break the iteration you can optionally return false.
          */
-        inorderTraversal(callback) {
+        inorderTraversal(callback: ILoopFunction<T>): void {
             this.inorderTraversalAux(this.root, callback, {
                 stop: false
             });
@@ -2198,7 +2205,7 @@ module collections {
          * @param {function(Object):*} callback function to execute, it is invoked with one 
          * argument: the element value, to break the iteration you can optionally return false.
          */
-        preorderTraversal(callback) {
+        preorderTraversal(callback: ILoopFunction<T>): void {
             this.preorderTraversalAux(this.root, callback, {
                 stop: false
             });
@@ -2209,7 +2216,7 @@ module collections {
          * @param {function(Object):*} callback function to execute, it is invoked with one 
          * argument: the element value, to break the iteration you can optionally return false.
          */
-        postorderTraversal(callback) {
+        postorderTraversal(callback: ILoopFunction<T>): void {
             this.postorderTraversalAux(this.root, callback, {
                 stop: false
             });
@@ -2221,7 +2228,7 @@ module collections {
          * @param {function(Object):*} callback function to execute, it is invoked with one 
          * argument: the element value, to break the iteration you can optionally return false.
          */
-        levelTraversal(callback) {
+        levelTraversal(callback: ILoopFunction<T>): void {
             this.levelTraversalAux(this.root, callback);
         }
 
@@ -2230,7 +2237,7 @@ module collections {
          * @return {*} the minimum element of this tree or undefined if this tree is
          * is empty.
          */
-        minimum() {
+        minimum(): T {
             if (this.isEmpty()) {
                 return undefined;
             }
@@ -2242,7 +2249,7 @@ module collections {
          * @return {*} the maximum element of this tree or undefined if this tree is
          * is empty.
          */
-        maximum() {
+        maximum(): T {
             if (this.isEmpty()) {
                 return undefined;
             }
@@ -2256,7 +2263,7 @@ module collections {
          * invoked with one argument: the element value, to break the iteration you can 
          * optionally return false.
          */
-        forEach(callback) {
+        forEach(callback: ILoopFunction<T>): void {
             this.inorderTraversal(callback);
         }
 
@@ -2264,10 +2271,11 @@ module collections {
          * Returns an array containing all of the elements in this tree in in-order.
          * @return {Array} an array containing all of the elements in this tree in in-order.
          */
-        toArray() {
+        toArray(): T[] {
             var array = [];
-            this.inorderTraversal(function (element) {
+            this.inorderTraversal(function (element: T): boolean {
                 array.push(element);
+                return;
             } );
             return array;
         }
@@ -2276,14 +2284,14 @@ module collections {
          * Returns the height of this tree.
          * @return {number} the height of this tree or -1 if is empty.
          */
-        height() {
+        height(): number {
             return this.heightAux(this.root);
         }
 
         /**
         * @private
         */
-        private searchNode(node, element) {
+        private searchNode(node: BSTreeNode<T>, element: T): BSTreeNode<T> {
             var cmp = null;
             while (node !== null && cmp !== 0) {
                 cmp = this.compare(element, node.element);
@@ -2299,7 +2307,7 @@ module collections {
         /**
         * @private
         */
-        private transplant(n1, n2) {
+        private transplant(n1: BSTreeNode<T>, n2: BSTreeNode<T>): void {
             if (n1.parent === null) {
                 this.root = n2;
             } else if (n1 === n1.parent.leftCh) {
@@ -2315,7 +2323,7 @@ module collections {
         /**
         * @private
         */
-        private removeNode(node) {
+        private removeNode(node: BSTreeNode<T>): void {
             if (node.leftCh === null) {
                 this.transplant(node, node.rightCh);
             } else if (node.rightCh === null) {
@@ -2336,7 +2344,7 @@ module collections {
         /**
         * @private
         */
-        private inorderTraversalAux(node, callback, signal) {
+        private inorderTraversalAux(node:BSTreeNode<T>, callback:ILoopFunction<T>, signal):void {
             if (node === null || signal.stop) {
                 return;
             }
@@ -2354,7 +2362,7 @@ module collections {
         /**
         * @private
         */
-        private levelTraversalAux(node, callback) {
+        private levelTraversalAux(node: BSTreeNode<T>, callback:ILoopFunction<T>) {
             var queue = new Queue();
             if (node !== null) {
                 queue.enqueue(node);
@@ -2376,7 +2384,7 @@ module collections {
         /**
         * @private
         */
-        private preorderTraversalAux(node, callback, signal) {
+        private preorderTraversalAux(node: BSTreeNode<T>, callback:ILoopFunction<T>, signal) {
             if (node === null || signal.stop) {
                 return;
             }
@@ -2393,7 +2401,7 @@ module collections {
         /**
         * @private
         */
-        private postorderTraversalAux(node, callback, signal) {
+        private postorderTraversalAux(node: BSTreeNode<T>, callback:ILoopFunction<T>, signal) {
             if (node === null || signal.stop) {
                 return;
             }
@@ -2411,7 +2419,7 @@ module collections {
         /**
         * @private
         */
-        private minimumAux(node) {
+        private minimumAux(node:BSTreeNode<T>):BSTreeNode<T> {
             while (node.leftCh !== null) {
                 node = node.leftCh;
             }
@@ -2421,7 +2429,7 @@ module collections {
         /**
         * @private
         */
-        private maximumAux(node) {
+        private maximumAux(node: BSTreeNode<T>): BSTreeNode<T> {
             while (node.rightCh !== null) {
                 node = node.rightCh;
             }
@@ -2431,7 +2439,7 @@ module collections {
         /**
         * @private
         */
-        private successorNode(node) {
+        private successorNode(node: BSTreeNode<T>): BSTreeNode<T> {
             if (node.rightCh !== null) {
                 return this.minimumAux(node.rightCh);
             }
@@ -2446,7 +2454,7 @@ module collections {
         /**
         * @private
         */
-        private heightAux(node) {
+        private heightAux(node: BSTreeNode<T>):number {
             if (node === null) {
                 return -1;
             }
@@ -2456,7 +2464,7 @@ module collections {
         /*
         * @private
         */
-        private insertNode(node) {
+        private insertNode(node: BSTreeNode<T>): BSTreeNode<T> {
 
             var parent = null;
             var position = this.root;
@@ -2488,7 +2496,7 @@ module collections {
         /**
         * @private
         */
-        private createNode(element) {
+        private createNode(element:T): BSTreeNode<T> {
             return {
                 element: element,
                 leftCh: null,
