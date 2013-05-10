@@ -537,7 +537,7 @@ module collections {
         /**
          * Returns true if this list is equal to the given list.
          * Two lists are equal if they have the same elements in the same order.
-         * @param {buckets.LinkedList} other the other list.
+         * @param {LinkedList} other the other list.
          * @param {function(Object,Object):boolean=} equalsFunction optional
          * function used to check if two elements are equal. If the elements in the lists
          * are custom objects you should provide a function, otherwise 
@@ -884,7 +884,7 @@ module collections {
 
         /**
         * Removes all mappings from this dictionary.
-        * @this {buckets.Dictionary}
+        * @this {collections.Dictionary}
         */
         clear() {
 
@@ -912,14 +912,14 @@ module collections {
     // /**
     //  * Returns true if this dictionary is equal to the given dictionary.
     //  * Two dictionaries are equal if they contain the same mappings.
-    //  * @param {buckets.Dictionary} other the other dictionary.
+    //  * @param {collections.Dictionary} other the other dictionary.
     //  * @param {function(Object,Object):boolean=} valuesEqualFunction optional
     //  * function used to check if two values are equal.
     //  * @return {boolean} true if this dictionary is equal to the given dictionary.
     //  */
-    // buckets.Dictionary.prototype.equals = function(other,valuesEqualFunction) {
-    // 	var eqF = valuesEqualFunction || buckets.defaultEquals;
-    // 	if(!(other instanceof buckets.Dictionary)){
+    // collections.Dictionary.prototype.equals = function(other,valuesEqualFunction) {
+    // 	var eqF = valuesEqualFunction || collections.defaultEquals;
+    // 	if(!(other instanceof collections.Dictionary)){
     // 		return false;
     // 	}
     // 	if(this.size() !== other.size()){
@@ -1351,7 +1351,7 @@ module collections {
     class Stack<T> {
         /**
          * List containing the elements.
-         * @type buckets.LinkedList
+         * @type collections.LinkedList
          * @private
          */
         private list: LinkedList<T>;
@@ -1461,7 +1461,7 @@ module collections {
 
         /**
          * List containing the elements.
-         * @type buckets.LinkedList
+         * @type collections.LinkedList
          * @private
          */
         private list: LinkedList<T>;
@@ -1753,7 +1753,7 @@ module collections {
         /**
          * Performs an intersecion between this an another set.
          * Removes all values that are not present this set and the given set.
-         * @param {buckets.Set} otherSet other set.
+         * @param {collections.Set} otherSet other set.
          */
         intersection(otherSet: Set<T>): void {
             var set = this;
@@ -1768,7 +1768,7 @@ module collections {
         /**
          * Performs a union between this an another set.
          * Adds all values from the given set to this set.
-         * @param {buckets.Set} otherSet other set.
+         * @param {collections.Set} otherSet other set.
          */
         union(otherSet: Set<T>): void {
             var set = this;
@@ -1781,7 +1781,7 @@ module collections {
         /**
          * Performs a difference between this an another set.
          * Removes from this set all the values that are present in the given set.
-         * @param {buckets.Set} otherSet other set.
+         * @param {collections.Set} otherSet other set.
          */
         difference(otherSet: Set<T>): void {
             var set = this;
@@ -1793,7 +1793,7 @@ module collections {
 
         /**
          * Checks whether the given set contains all the elements in this set.
-         * @param {buckets.Set} otherSet other set.
+         * @param {collections.Set} otherSet other set.
          * @return {boolean} true if this set is a subset of the given set.
          */
         isSubsetOf(otherSet: Set<T>): boolean {
@@ -2008,7 +2008,7 @@ module collections {
 
         /**
          * Returns a set of unique elements in this bag. 
-         * @return {buckets.Set} a set of unique elements in this bag.
+         * @return {collections.Set<T>} a set of unique elements in this bag.
          */
         toSet(): Set<T> {
             var toret = new Set<T>(this.toStrF);
