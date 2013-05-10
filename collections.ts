@@ -14,10 +14,27 @@
 module collections {
 
     /**
+    * Function signature for comparing
+    * <0 means a is smaller
+    * = 0 means they are equal
+    * >0 means a is larger
+    */
+    export interface ICompareFunction<T>{
+        (a:T, b:T):number;
+    }
+
+    /**
+    * Function signature for checking equality
+    */
+    export interface IEqualsFunction<T>{
+        (a: T, b: T): boolean;
+    }
+
+    /**
      * Default function to compare element order.
      * @function     
      */
-    export function defaultCompare(a, b) {
+    export function defaultCompare<T>(a:T, b:T): number {
         if (a < b) {
             return -1;
         } else if (a === b) {
@@ -31,7 +48,7 @@ module collections {
      * Default function to test equality. 
      * @function     
      */
-    export function defaultEquals(a, b) {
+    export function defaultEquals<T>(a:T, b:T): boolean {
         return a === b;
     }
 
@@ -39,11 +56,11 @@ module collections {
      * Default function to convert an object to a string.
      * @function     
      */
-    export function defaultToString(item) {
+    export function defaultToString(item):string {
         if (item === null) {
-            return 'BUCKETS_NULL';
+            return 'COLLECTION_NULL';
         } else if (collections.isUndefined(item)) {
-            return 'BUCKETS_UNDEFINED';
+            return 'COLLECTION_UNDEFINED';
         } else if (collections.isString(item)) {
             return item;
         } else {
@@ -55,7 +72,7 @@ module collections {
      * Checks if the given argument is a function.
      * @function     
      */
-    export function isFunction(func) {
+    export function isFunction(func):boolean {
         return (typeof func) === 'function';
     }
 
@@ -63,7 +80,7 @@ module collections {
      * Checks if the given argument is undefined.
      * @function
      */
-    export function isUndefined(obj) {
+    export function isUndefined(obj):boolean {
         return (typeof obj) === 'undefined';
     }
 
@@ -71,7 +88,7 @@ module collections {
      * Checks if the given argument is a string.
      * @function
      */
-    export function isString(obj) {
+    export function isString(obj):boolean {
         return Object.prototype.toString.call(obj) === '[object String]';
     }
 
@@ -79,7 +96,7 @@ module collections {
      * Reverses a compare function.
      * @function
      */
-    export function reverseCompareFunction(compareFunction) {
+    export function reverseCompareFunction<T>(compareFunction:ICompareFunction<T>):ICompareFunction<T> {
         if (!collections.isFunction(compareFunction)) {
             return function (a, b) {
                 if (a < b) {
@@ -91,7 +108,7 @@ module collections {
                 }
             };
         } else {
-            return function (d, v) {
+            return function (d:T, v:T) {                
                 return compareFunction(d, v) * -1;
             };
         }
@@ -101,8 +118,8 @@ module collections {
      * Returns an equal function given a compare function.
      * @function
      */
-    export function compareToEquals(compareFunction) {
-        return function (a, b) {
+    export function compareToEquals<T>(compareFunction:ICompareFunction<T>):IEqualsFunction<T>{
+        return function (a:T, b:T) {
             return compareFunction(a, b) === 0;
         };
     }
@@ -357,11 +374,11 @@ module collections {
             return undefined;
         }
 
-            /**
-            * Returns the last element in this list.
-            * @return {*} the last element in the list or undefined if the list is
-            * empty.
-            */
+        /**
+        * Returns the last element in this list.
+        * @return {*} the last element in the list or undefined if the list is
+        * empty.
+        */
         last() {
 
             if (this.lastNode !== null) {
@@ -424,24 +441,24 @@ module collections {
         }
 
 
-      /**
-         * Returns true if this list contains the specified element.
-         * <p>If the elements inside the list are
-         * not comparable with the === operator a custom equals function should be
-         * provided to perform searches, the function must receive two arguments and
-         * return true if they are equal, false otherwise. Example:</p>
-         *
-         * <pre>
-         * var petsAreEqualByName = function(pet1, pet2) {
-         *  return pet1.name === pet2.name;
-         * }
-         * </pre>
-         * @param {Object} item element to search for.
-         * @param {function(Object,Object):boolean=} equalsFunction Optional
-         * function used to check if two elements are equal.
-         * @return {boolean} true if this list contains the specified element, false
-         * otherwise.
-         */
+        /**
+           * Returns true if this list contains the specified element.
+           * <p>If the elements inside the list are
+           * not comparable with the === operator a custom equals function should be
+           * provided to perform searches, the function must receive two arguments and
+           * return true if they are equal, false otherwise. Example:</p>
+           *
+           * <pre>
+           * var petsAreEqualByName = function(pet1, pet2) {
+           *  return pet1.name === pet2.name;
+           * }
+           * </pre>
+           * @param {Object} item element to search for.
+           * @param {function(Object,Object):boolean=} equalsFunction Optional
+           * function used to check if two elements are equal.
+           * @return {boolean} true if this list contains the specified element, false
+           * otherwise.
+           */
         contains(item, equalsFunction?) {
             return (this.indexOf(item, equalsFunction) >= 0);
         }
@@ -494,26 +511,26 @@ module collections {
             return false;
         }
 
-            /**
-         * Removes all of the elements from this list.
-         */
-    clear() {
+        /**
+     * Removes all of the elements from this list.
+     */
+        clear() {
             this.firstNode = null;
             this.lastNode = null;
             this.nElements = 0;
         }
 
-            /**
-         * Returns true if this list is equal to the given list.
-         * Two lists are equal if they have the same elements in the same order.
-         * @param {buckets.LinkedList} other the other list.
-         * @param {function(Object,Object):boolean=} equalsFunction optional
-         * function used to check if two elements are equal. If the elements in the lists
-         * are custom objects you should provide a function, otherwise 
-         * the === operator is used to check equality between elements.
-         * @return {boolean} true if this list is equal to the given list.
-         */
-            equals(other, equalsFunction?) {
+        /**
+     * Returns true if this list is equal to the given list.
+     * Two lists are equal if they have the same elements in the same order.
+     * @param {buckets.LinkedList} other the other list.
+     * @param {function(Object,Object):boolean=} equalsFunction optional
+     * function used to check if two elements are equal. If the elements in the lists
+     * are custom objects you should provide a function, otherwise 
+     * the === operator is used to check equality between elements.
+     * @return {boolean} true if this list is equal to the given list.
+     */
+        equals(other, equalsFunction?) {
             var eqF = equalsFunction || collections.defaultEquals;
             if (!(other instanceof collections.LinkedList)) {
                 return false;
@@ -524,9 +541,9 @@ module collections {
             return this.equalsAux(this.firstNode, other.firstNode, eqF);
         }
 
-             /**
-         * @private
-         */
+        /**
+    * @private
+    */
         private equalsAux(n1, n2, eqF) {
             while (n1 !== null) {
                 if (!eqF(n1.element, n2.element)) {
@@ -543,7 +560,7 @@ module collections {
      * @param {number} index given index.
      * @return {*} removed element or undefined if the index is out of bounds.
      */
-    removeElementAtIndex(index) {
+        removeElementAtIndex(index) {
 
             if (index < 0 || index >= this.nElements) {
                 return undefined;
@@ -580,7 +597,7 @@ module collections {
      * invoked with one argument: the element value, to break the iteration you can 
      * optionally return false.
      */
-    forEach(callback) {
+        forEach(callback) {
             var currentNode = this.firstNode;
             while (currentNode !== null) {
                 if (callback(currentNode.element) === false) {
@@ -590,11 +607,11 @@ module collections {
             }
         }
 
-            /**
-         * Reverses the order of the elements in this linked list (makes the last 
-         * element first, and the first element last).
-         */
-    reverse() {
+        /**
+     * Reverses the order of the elements in this linked list (makes the last 
+     * element first, and the first element last).
+     */
+        reverse() {
             var previous = null;
             var current = this.firstNode;
             var temp = null;
@@ -609,13 +626,13 @@ module collections {
             this.lastNode = temp;
         }
 
-            /**
-         * Returns an array containing all of the elements in this list in proper
-         * sequence.
-         * @return {Array.<*>} an array containing all of the elements in this list,
-         * in proper sequence.
-         */
-    toArray() {
+        /**
+     * Returns an array containing all of the elements in this list in proper
+     * sequence.
+     * @return {Array.<*>} an array containing all of the elements in this list,
+     * in proper sequence.
+     */
+        toArray() {
             var array = [];
             var currentNode = this.firstNode;
             while (currentNode !== null) {
@@ -625,26 +642,26 @@ module collections {
             return array;
         }
 
-            /**
-         * Returns the number of elements in this list.
-         * @return {number} the number of elements in this list.
-         */
-    size() {
+        /**
+     * Returns the number of elements in this list.
+     * @return {number} the number of elements in this list.
+     */
+        size() {
             return this.nElements;
         }
 
-            /**
-         * Returns true if this list contains no elements.
-         * @return {boolean} true if this list contains no elements.
-         */
-    isEmpty() {
+        /**
+     * Returns true if this list contains no elements.
+     * @return {boolean} true if this list contains no elements.
+     */
+        isEmpty() {
             return this.nElements <= 0;
         }
 
-            /**
-     * @private
-     */
-    private nodeAtIndex(index) {
+        /**
+ * @private
+ */
+        private nodeAtIndex(index) {
 
             if (index < 0 || index >= this.nElements) {
                 return null;
@@ -717,7 +734,7 @@ module collections {
  */
         constructor(toStrFunction?) {
             this.table = {};
-            this.nElements = 0; 
+            this.nElements = 0;
             this.toStr = toStrFunction || collections.defaultToString;
         }
 
@@ -738,16 +755,16 @@ module collections {
         }
 
 
-    /**
-     * Associates the specified value with the specified key in this dictionary.
-     * If the dictionary previously contained a mapping for this key, the old
-     * value is replaced by the specified value.
-     * @param {Object} key key with which the specified value is to be
-     * associated.
-     * @param {Object} value value to be associated with the specified key.
-     * @return {*} previous value associated with the specified key, or undefined if
-     * there was no mapping for the key or if the key/value are undefined.
-     */
+        /**
+         * Associates the specified value with the specified key in this dictionary.
+         * If the dictionary previously contained a mapping for this key, the old
+         * value is replaced by the specified value.
+         * @param {Object} key key with which the specified value is to be
+         * associated.
+         * @param {Object} value value to be associated with the specified key.
+         * @return {*} previous value associated with the specified key, or undefined if
+         * there was no mapping for the key or if the key/value are undefined.
+         */
         setValue(key, value) {
 
             if (collections.isUndefined(key) || collections.isUndefined(value)) {
@@ -770,13 +787,13 @@ module collections {
             return ret;
         }
 
-    /**
-     * Removes the mapping for this key from this dictionary if it is present.
-     * @param {Object} key key whose mapping is to be removed from the
-     * dictionary.
-     * @return {*} previous value associated with specified key, or undefined if
-     * there was no mapping for key.
-     */
+        /**
+         * Removes the mapping for this key from this dictionary if it is present.
+         * @param {Object} key key whose mapping is to be removed from the
+         * dictionary.
+         * @return {*} previous value associated with specified key, or undefined if
+         * there was no mapping for key.
+         */
         remove(key) {
             var k = this.toStr(key);
             var previousElement = this.table[k];
@@ -788,10 +805,10 @@ module collections {
             return undefined;
         }
 
-            /**
-         * Returns an array containing all of the keys in this dictionary.
-         * @return {Array} an array containing all of the keys in this dictionary.
-         */
+        /**
+     * Returns an array containing all of the keys in this dictionary.
+     * @return {Array} an array containing all of the keys in this dictionary.
+     */
         keys() {
             var array = [];
             for (var name in this.table) {
@@ -802,10 +819,10 @@ module collections {
             return array;
         }
 
-            /**
-     * Returns an array containing all of the values in this dictionary.
-     * @return {Array} an array containing all of the values in this dictionary.
-     */
+        /**
+ * Returns an array containing all of the values in this dictionary.
+ * @return {Array} an array containing all of the values in this dictionary.
+ */
         values() {
             var array = [];
             for (var name in this.table) {
@@ -816,13 +833,13 @@ module collections {
             return array;
         }
 
-                /**
-     * Executes the provided function once for each key-value pair 
-     * present in this dictionary.
-     * @param {function(Object,Object):*} callback function to execute, it is
-     * invoked with two arguments: key and value. To break the iteration you can 
-     * optionally return false.
-     */
+        /**
+* Executes the provided function once for each key-value pair 
+* present in this dictionary.
+* @param {function(Object,Object):*} callback function to execute, it is
+* invoked with two arguments: key and value. To break the iteration you can 
+* optionally return false.
+*/
 
         forEach(callback) {
             for (var name in this.table) {
@@ -836,39 +853,39 @@ module collections {
             }
         }
 
-            /**
-     * Returns true if this dictionary contains a mapping for the specified key.
-     * @param {Object} key key whose presence in this dictionary is to be
-     * tested.
-     * @return {boolean} true if this dictionary contains a mapping for the
-     * specified key.
-     */
+        /**
+ * Returns true if this dictionary contains a mapping for the specified key.
+ * @param {Object} key key whose presence in this dictionary is to be
+ * tested.
+ * @return {boolean} true if this dictionary contains a mapping for the
+ * specified key.
+ */
 
         containsKey(key) {
             return !collections.isUndefined(this.getValue(key));
         }
 
-            /**
-        * Removes all mappings from this dictionary.
-        * @this {buckets.Dictionary}
-        */
-    clear() {
+        /**
+    * Removes all mappings from this dictionary.
+    * @this {buckets.Dictionary}
+    */
+        clear() {
 
             this.table = {};
             this.nElements = 0;
         }
-            /**
-             * Returns the number of keys in this dictionary.
-             * @return {number} the number of key-value mappings in this dictionary.
-             */
+        /**
+         * Returns the number of keys in this dictionary.
+         * @return {number} the number of key-value mappings in this dictionary.
+         */
         size() {
             return this.nElements;
         }
 
-            /**
-             * Returns true if this dictionary contains no mappings.
-             * @return {boolean} true if this dictionary contains no mappings.
-             */
+        /**
+         * Returns true if this dictionary contains no mappings.
+         * @return {boolean} true if this dictionary contains no mappings.
+         */
         isEmpty() {
             return this.nElements <= 0;
         }
@@ -1014,10 +1031,10 @@ module collections {
             return super.keys();
         }
 
-            /**
-             * Returns an array containing all of the values in this dictionary.
-             * @return {Array} an array containing all of the values in this dictionary.
-             */
+        /**
+         * Returns an array containing all of the values in this dictionary.
+         * @return {Array} an array containing all of the values in this dictionary.
+         */
         values() {
             var values = super.values();
             var array = [];
@@ -1041,9 +1058,9 @@ module collections {
             return super.containsKey(key);
         }
 
-            /**
-             * Removes all mappings from this dictionary.
-             */
+        /**
+         * Removes all mappings from this dictionary.
+         */
         clear() {
             return super.clear();
         }
@@ -1216,11 +1233,11 @@ module collections {
                 this.rightChildIndex(nodeIndex));
             }
         }
-            /**
-             * Retrieves but does not remove the root element of this heap.
-             * @return {*} The value at the root of the heap. Returns undefined if the
-             * heap is empty.
-             */
+        /**
+         * Retrieves but does not remove the root element of this heap.
+         * @return {*} The value at the root of the heap. Returns undefined if the
+         * heap is empty.
+         */
         peek() {
 
             if (this.data.length > 0) {
@@ -1243,11 +1260,11 @@ module collections {
             return true;
         }
 
-            /**
-             * Retrieves and removes the root element of this heap.
-             * @return {*} The value removed from the root of the heap. Returns
-             * undefined if the heap is empty.
-             */
+        /**
+         * Retrieves and removes the root element of this heap.
+         * @return {*} The value removed from the root of the heap. Returns
+         * undefined if the heap is empty.
+         */
         removeRoot() {
 
             if (this.data.length > 0) {
@@ -1271,24 +1288,24 @@ module collections {
             var equF = collections.compareToEquals(this.compare);
             return collections.arrays.contains(this.data, element, equF);
         }
-            /**
-             * Returns the number of elements in this heap.
-             * @return {number} the number of elements in this heap.
-             */
+        /**
+         * Returns the number of elements in this heap.
+         * @return {number} the number of elements in this heap.
+         */
         size() {
             return this.data.length;
         }
-            /**
-             * Checks if this heap is empty.
-             * @return {boolean} true if and only if this heap contains no items; false
-             * otherwise.
-             */
+        /**
+         * Checks if this heap is empty.
+         * @return {boolean} true if and only if this heap contains no items; false
+         * otherwise.
+         */
         isEmpty() {
             return this.data.length <= 0;
         }
-            /**
-             * Removes all of the elements from this heap.
-             */
+        /**
+         * Removes all of the elements from this heap.
+         */
         clear() {
             this.data.length = 0;
         }
@@ -1341,27 +1358,27 @@ module collections {
         add(elem) {
             return this.list.add(elem, 0);
         }
-            /**
-             * Removes the object at the top of this stack and returns that object.
-             * @return {*} the object at the top of this stack or undefined if the
-             * stack is empty.
-             */
+        /**
+         * Removes the object at the top of this stack and returns that object.
+         * @return {*} the object at the top of this stack or undefined if the
+         * stack is empty.
+         */
         pop() {
             return this.list.removeElementAtIndex(0);
         }
-            /**
-             * Looks at the object at the top of this stack without removing it from the
-             * stack.
-             * @return {*} the object at the top of this stack or undefined if the
-             * stack is empty.
-             */
+        /**
+         * Looks at the object at the top of this stack without removing it from the
+         * stack.
+         * @return {*} the object at the top of this stack or undefined if the
+         * stack is empty.
+         */
         peek() {
             return this.list.first();
         }
-            /**
-             * Returns the number of elements in this stack.
-             * @return {number} the number of elements in this stack.
-             */
+        /**
+         * Returns the number of elements in this stack.
+         * @return {number} the number of elements in this stack.
+         */
         size() {
             return this.list.size();
         }
@@ -1387,17 +1404,17 @@ module collections {
         contains(elem, equalsFunction?) {
             return this.list.contains(elem, equalsFunction);
         }
-            /**
-             * Checks if this stack is empty.
-             * @return {boolean} true if and only if this stack contains no items; false
-             * otherwise.
-             */
+        /**
+         * Checks if this stack is empty.
+         * @return {boolean} true if and only if this stack contains no items; false
+         * otherwise.
+         */
         isEmpty() {
             return this.list.isEmpty();
         }
-            /**
-             * Removes all of the elements from this stack.
-             */
+        /**
+         * Removes all of the elements from this stack.
+         */
         clear() {
             this.list.clear();
         }
@@ -1454,10 +1471,10 @@ module collections {
         add(elem) {
             return this.list.add(elem);
         }
-            /**
-             * Retrieves and removes the head of this queue.
-             * @return {*} the head of this queue, or undefined if this queue is empty.
-             */
+        /**
+         * Retrieves and removes the head of this queue.
+         * @return {*} the head of this queue, or undefined if this queue is empty.
+         */
         dequeue() {
             if (this.list.size() !== 0) {
                 var el = this.list.first();
@@ -1466,10 +1483,10 @@ module collections {
             }
             return undefined;
         }
-            /**
-             * Retrieves, but does not remove, the head of this queue.
-             * @return {*} the head of this queue, or undefined if this queue is empty.
-             */
+        /**
+         * Retrieves, but does not remove, the head of this queue.
+         * @return {*} the head of this queue, or undefined if this queue is empty.
+         */
         peek() {
 
             if (this.list.size() !== 0) {
@@ -1478,10 +1495,10 @@ module collections {
             return undefined;
         }
 
-            /**
-             * Returns the number of elements in this queue.
-             * @return {number} the number of elements in this queue.
-             */
+        /**
+         * Returns the number of elements in this queue.
+         * @return {number} the number of elements in this queue.
+         */
         size() {
             return this.list.size();
         }
@@ -1508,18 +1525,18 @@ module collections {
             return this.list.contains(elem, equalsFunction);
         }
 
-            /**
-             * Checks if this queue is empty.
-             * @return {boolean} true if and only if this queue contains no items; false
-             * otherwise.
-             */
+        /**
+         * Checks if this queue is empty.
+         * @return {boolean} true if and only if this queue contains no items; false
+         * otherwise.
+         */
         isEmpty() {
             return this.list.size() <= 0;
         }
 
-            /**
-             * Removes all of the elements from this queue.
-             */
+        /**
+         * Removes all of the elements from this queue.
+         */
         clear() {
             this.list.clear();
         }
@@ -1587,11 +1604,11 @@ module collections {
             return this.heap.add(element);
         }
 
-            /**
-             * Retrieves and removes the highest priority element of this queue.
-             * @return {*} the the highest priority element of this queue, 
-            or undefined if this queue is empty.
-             */
+        /**
+         * Retrieves and removes the highest priority element of this queue.
+         * @return {*} the the highest priority element of this queue, 
+        or undefined if this queue is empty.
+         */
         dequeue() {
             if (this.heap.size() !== 0) {
                 var el = this.heap.peek();
@@ -1601,10 +1618,10 @@ module collections {
             return undefined;
         }
 
-            /**
-             * Retrieves, but does not remove, the highest priority element of this queue.
-             * @return {*} the highest priority element of this queue, or undefined if this queue is empty.
-             */
+        /**
+         * Retrieves, but does not remove, the highest priority element of this queue.
+         * @return {*} the highest priority element of this queue, or undefined if this queue is empty.
+         */
         peek() {
             return this.heap.peek();
         }
@@ -1619,26 +1636,26 @@ module collections {
             return this.heap.contains(element);
         }
 
-            /**
-             * Checks if this priority queue is empty.
-             * @return {boolean} true if and only if this priority queue contains no items; false
-             * otherwise.
-             */
+        /**
+         * Checks if this priority queue is empty.
+         * @return {boolean} true if and only if this priority queue contains no items; false
+         * otherwise.
+         */
         isEmpty() {
             return this.heap.isEmpty();
         }
 
-            /**
-             * Returns the number of elements in this priority queue.
-             * @return {number} the number of elements in this priority queue.
-             */
+        /**
+         * Returns the number of elements in this priority queue.
+         * @return {number} the number of elements in this priority queue.
+         */
         size() {
             return this.heap.size();
         }
 
-            /**
-             * Removes all of the elements from this priority queue.
-             */
+        /**
+         * Removes all of the elements from this priority queue.
+         */
         clear() {
             this.heap.clear();
         }
@@ -1795,33 +1812,33 @@ module collections {
             });
         }
 
-            /**
-             * Returns an array containing all of the elements in this set in arbitrary order.
-             * @return {Array} an array containing all of the elements in this set.
-             */
+        /**
+         * Returns an array containing all of the elements in this set in arbitrary order.
+         * @return {Array} an array containing all of the elements in this set.
+         */
         toArray() {
             return this.dictionary.values();
         }
 
-            /**
-             * Returns true if this set contains no elements.
-             * @return {boolean} true if this set contains no elements.
-             */
+        /**
+         * Returns true if this set contains no elements.
+         * @return {boolean} true if this set contains no elements.
+         */
         isEmpty() {
             return this.dictionary.isEmpty();
         }
 
-            /**
-             * Returns the number of elements in this set.
-             * @return {number} the number of elements in this set.
-             */
+        /**
+         * Returns the number of elements in this set.
+         * @return {number} the number of elements in this set.
+         */
         size() {
             return this.dictionary.size();
         }
 
-            /**
-             * Removes all of the elements from this set.
-             */
+        /**
+         * Removes all of the elements from this set.
+         */
         clear() {
             this.dictionary.clear();
         }
@@ -1949,11 +1966,11 @@ module collections {
             }
         }
 
-            /**
-             * Returns an array containing all of the elements in this big in arbitrary order, 
-             * including multiple copies.
-             * @return {Array} an array containing all of the elements in this bag.
-             */
+        /**
+         * Returns an array containing all of the elements in this big in arbitrary order, 
+         * including multiple copies.
+         * @return {Array} an array containing all of the elements in this bag.
+         */
         toArray() {
             var a = [];
             var values = this.dictionary.values();
@@ -1969,10 +1986,10 @@ module collections {
             return a;
         }
 
-            /**
-             * Returns a set of unique elements in this bag. 
-             * @return {buckets.Set} a set of unique elements in this bag.
-             */
+        /**
+         * Returns a set of unique elements in this bag. 
+         * @return {buckets.Set} a set of unique elements in this bag.
+         */
         toSet() {
             var set = new Set(this.toStrF);
             var elements = this.dictionary.values();
@@ -2003,25 +2020,25 @@ module collections {
                 return true;
             });
         }
-            /**
-             * Returns the number of elements in this bag.
-             * @return {number} the number of elements in this bag.
-             */
+        /**
+         * Returns the number of elements in this bag.
+         * @return {number} the number of elements in this bag.
+         */
         size() {
             return this.nElements;
         }
 
-            /**
-             * Returns true if this bag contains no elements.
-             * @return {boolean} true if this bag contains no elements.
-             */
+        /**
+         * Returns true if this bag contains no elements.
+         * @return {boolean} true if this bag contains no elements.
+         */
         isEmpty() {
             return this.nElements === 0;
         }
 
-            /**
-             * Removes all of the elements from this bag.
-             */
+        /**
+         * Removes all of the elements from this bag.
+         */
         clear() {
             this.nElements = 0;
             this.dictionary.clear();
@@ -2094,26 +2111,26 @@ module collections {
             return false;
         }
 
-            /**
-             * Removes all of the elements from this tree.
-             */
+        /**
+         * Removes all of the elements from this tree.
+         */
         clear() {
             this.root = null;
             this.nElements = 0;
         }
 
-            /**
-             * Returns true if this tree contains no elements.
-             * @return {boolean} true if this tree contains no elements.
-             */
+        /**
+         * Returns true if this tree contains no elements.
+         * @return {boolean} true if this tree contains no elements.
+         */
         isEmpty() {
             return this.nElements === 0;
         }
 
-            /**
-             * Returns the number of elements in this tree.
-             * @return {number} the number of elements in this tree.
-             */
+        /**
+         * Returns the number of elements in this tree.
+         * @return {number} the number of elements in this tree.
+         */
         size() {
             return this.nElements;
         }
@@ -2189,11 +2206,11 @@ module collections {
             this.levelTraversalAux(this.root, callback);
         }
 
-            /**
-             * Returns the minimum element of this tree.
-             * @return {*} the minimum element of this tree or undefined if this tree is
-             * is empty.
-             */
+        /**
+         * Returns the minimum element of this tree.
+         * @return {*} the minimum element of this tree or undefined if this tree is
+         * is empty.
+         */
         minimum() {
             if (this.isEmpty()) {
                 return undefined;
@@ -2201,11 +2218,11 @@ module collections {
             return this.minimumAux(this.root).element;
         }
 
-            /**
-             * Returns the maximum element of this tree.
-             * @return {*} the maximum element of this tree or undefined if this tree is
-             * is empty.
-             */
+        /**
+         * Returns the maximum element of this tree.
+         * @return {*} the maximum element of this tree or undefined if this tree is
+         * is empty.
+         */
         maximum() {
             if (this.isEmpty()) {
                 return undefined;
@@ -2224,10 +2241,10 @@ module collections {
             this.inorderTraversal(callback);
         }
 
-            /**
-             * Returns an array containing all of the elements in this tree in in-order.
-             * @return {Array} an array containing all of the elements in this tree in in-order.
-             */
+        /**
+         * Returns an array containing all of the elements in this tree in in-order.
+         * @return {Array} an array containing all of the elements in this tree in in-order.
+         */
         toArray() {
             var array = [];
             this.inorderTraversal(function (element) {
@@ -2236,10 +2253,10 @@ module collections {
             return array;
         }
 
-            /**
-             * Returns the height of this tree.
-             * @return {number} the height of this tree or -1 if is empty.
-             */
+        /**
+         * Returns the height of this tree.
+         * @return {number} the height of this tree or -1 if is empty.
+         */
         height() {
             return this.heightAux(this.root);
         }

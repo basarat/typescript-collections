@@ -22,9 +22,9 @@ var collections;
     * @function
     */
     function defaultCompare(a, b) {
-        if(a < b) {
+        if (a < b) {
             return -1;
-        } else if(a === b) {
+        } else if (a === b) {
             return 0;
         } else {
             return 1;
@@ -44,11 +44,11 @@ var collections;
     * @function
     */
     function defaultToString(item) {
-        if(item === null) {
-            return 'BUCKETS_NULL';
-        } else if(collections.isUndefined(item)) {
-            return 'BUCKETS_UNDEFINED';
-        } else if(collections.isString(item)) {
+        if (item === null) {
+            return 'COLLECTION_NULL';
+        } else if (collections.isUndefined(item)) {
+            return 'COLLECTION_UNDEFINED';
+        } else if (collections.isString(item)) {
             return item;
         } else {
             return item.toString();
@@ -84,11 +84,11 @@ var collections;
     * @function
     */
     function reverseCompareFunction(compareFunction) {
-        if(!collections.isFunction(compareFunction)) {
+        if (!collections.isFunction(compareFunction)) {
             return function (a, b) {
-                if(a < b) {
+                if (a < b) {
                     return 1;
-                } else if(a === b) {
+                } else if (a === b) {
                     return 0;
                 } else {
                     return -1;
@@ -129,7 +129,7 @@ var collections;
             var equals = equalsFunction || collections.defaultEquals;
             var length = array.length;
             for(var i = 0; i < length; i++) {
-                if(equals(array[i], item)) {
+                if (equals(array[i], item)) {
                     return i;
                 }
             }
@@ -150,7 +150,7 @@ var collections;
             var equals = equalsFunction || collections.defaultEquals;
             var length = array.length;
             for(var i = length - 1; i >= 0; i--) {
-                if(equals(array[i], item)) {
+                if (equals(array[i], item)) {
                     return i;
                 }
             }
@@ -179,7 +179,7 @@ var collections;
         */
         function remove(array, item, equalsFunction) {
             var index = arrays.indexOf(array, item, equalsFunction);
-            if(index < 0) {
+            if (index < 0) {
                 return false;
             }
             array.splice(index, 1);
@@ -201,7 +201,7 @@ var collections;
             var length = array.length;
             var freq = 0;
             for(var i = 0; i < length; i++) {
-                if(equals(array[i], item)) {
+                if (equals(array[i], item)) {
                     freq++;
                 }
             }
@@ -221,12 +221,12 @@ var collections;
         */
         function equals(array1, array2, equalsFunction) {
             var equals = equalsFunction || collections.defaultEquals;
-            if(array1.length !== array2.length) {
+            if (array1.length !== array2.length) {
                 return false;
             }
             var length = array1.length;
             for(var i = 0; i < length; i++) {
-                if(!equals(array1[i], array2[i])) {
+                if (!equals(array1[i], array2[i])) {
                     return false;
                 }
             }
@@ -250,7 +250,7 @@ var collections;
         * @return {boolean} true if the array is defined and the indexes are valid.
         */
         function swap(array, i, j) {
-            if(i < 0 || i >= array.length || j < 0 || j >= array.length) {
+            if (i < 0 || i >= array.length || j < 0 || j >= array.length) {
                 return false;
             }
             var temp = array[i];
@@ -270,7 +270,7 @@ var collections;
         function forEach(array, callback) {
             var lenght = array.length;
             for(var i = 0; i < lenght; i++) {
-                if(callback(array[i]) === false) {
+                if (callback(array[i]) === false) {
                     return;
                 }
             }
@@ -314,22 +314,22 @@ var collections;
         * or if the element is undefined.
         */
         function (item, index) {
-            if(collections.isUndefined(index)) {
+            if (collections.isUndefined(index)) {
                 index = this.nElements;
             }
-            if(index < 0 || index > this.nElements || collections.isUndefined(item)) {
+            if (index < 0 || index > this.nElements || collections.isUndefined(item)) {
                 return false;
             }
             var newNode = this.createNode(item);
-            if(this.nElements === 0) {
+            if (this.nElements === 0) {
                 // First node in the list.
                 this.firstNode = newNode;
                 this.lastNode = newNode;
-            } else if(index === this.nElements) {
+            } else if (index === this.nElements) {
                 // Insert at the end.
                 this.lastNode.next = newNode;
                 this.lastNode = newNode;
-            } else if(index === 0) {
+            } else if (index === 0) {
                 // Change first node.
                 newNode.next = this.firstNode;
                 this.firstNode = newNode;
@@ -347,7 +347,7 @@ var collections;
         * empty.
         */
         function () {
-            if(this.firstNode !== null) {
+            if (this.firstNode !== null) {
                 return this.firstNode.element;
             }
             return undefined;
@@ -358,7 +358,7 @@ var collections;
         * empty.
         */
         function () {
-            if(this.lastNode !== null) {
+            if (this.lastNode !== null) {
                 return this.lastNode.element;
             }
             return undefined;
@@ -371,7 +371,7 @@ var collections;
         */
         function (index) {
             var node = this.nodeAtIndex(index);
-            if(node === null) {
+            if (node === null) {
                 return undefined;
             }
             return node.element;
@@ -398,13 +398,13 @@ var collections;
         */
         function (item, equalsFunction) {
             var equalsF = equalsFunction || collections.defaultEquals;
-            if(collections.isUndefined(item)) {
+            if (collections.isUndefined(item)) {
                 return -1;
             }
             var currentNode = this.firstNode;
             var index = 0;
             while(currentNode !== null) {
-                if(equalsF(currentNode.element, item)) {
+                if (equalsF(currentNode.element, item)) {
                     return index;
                 }
                 index++;
@@ -450,19 +450,19 @@ var collections;
         */
         function (item, equalsFunction) {
             var equalsF = equalsFunction || collections.defaultEquals;
-            if(this.nElements < 1 || collections.isUndefined(item)) {
+            if (this.nElements < 1 || collections.isUndefined(item)) {
                 return false;
             }
             var previous = null;
             var currentNode = this.firstNode;
             while(currentNode !== null) {
-                if(equalsF(currentNode.element, item)) {
-                    if(currentNode === this.firstNode) {
+                if (equalsF(currentNode.element, item)) {
+                    if (currentNode === this.firstNode) {
                         this.firstNode = this.firstNode.next;
-                        if(currentNode === this.lastNode) {
+                        if (currentNode === this.lastNode) {
                             this.lastNode = null;
                         }
-                    } else if(currentNode === this.lastNode) {
+                    } else if (currentNode === this.lastNode) {
                         this.lastNode = previous;
                         previous.next = currentNode.next;
                         currentNode.next = null;
@@ -498,10 +498,10 @@ var collections;
         */
         function (other, equalsFunction) {
             var eqF = equalsFunction || collections.defaultEquals;
-            if(!(other instanceof collections.LinkedList)) {
+            if (!(other instanceof collections.LinkedList)) {
                 return false;
             }
-            if(this.size() !== other.size()) {
+            if (this.size() !== other.size()) {
                 return false;
             }
             return this.equalsAux(this.firstNode, other.firstNode, eqF);
@@ -511,7 +511,7 @@ var collections;
         */
         function (n1, n2, eqF) {
             while(n1 !== null) {
-                if(!eqF(n1.element, n2.element)) {
+                if (!eqF(n1.element, n2.element)) {
                     return false;
                 }
                 n1 = n1.next;
@@ -525,25 +525,25 @@ var collections;
         * @return {*} removed element or undefined if the index is out of bounds.
         */
         function (index) {
-            if(index < 0 || index >= this.nElements) {
+            if (index < 0 || index >= this.nElements) {
                 return undefined;
             }
             var element;
-            if(this.nElements === 1) {
+            if (this.nElements === 1) {
                 //First node in the list.
                 element = this.firstNode.element;
                 this.firstNode = null;
                 this.lastNode = null;
             } else {
                 var previous = this.nodeAtIndex(index - 1);
-                if(previous === null) {
+                if (previous === null) {
                     element = this.firstNode.element;
                     this.firstNode = this.firstNode.next;
-                } else if(previous.next === this.lastNode) {
+                } else if (previous.next === this.lastNode) {
                     element = this.lastNode.element;
                     this.lastNode = previous;
                 }
-                if(previous !== null) {
+                if (previous !== null) {
                     element = previous.next.element;
                     previous.next = previous.next.next;
                 }
@@ -560,7 +560,7 @@ var collections;
         function (callback) {
             var currentNode = this.firstNode;
             while(currentNode !== null) {
-                if(callback(currentNode.element) === false) {
+                if (callback(currentNode.element) === false) {
                     break;
                 }
                 currentNode = currentNode.next;
@@ -617,10 +617,10 @@ var collections;
         * @private
         */
         function (index) {
-            if(index < 0 || index >= this.nElements) {
+            if (index < 0 || index >= this.nElements) {
                 return null;
             }
-            if(index === (this.nElements - 1)) {
+            if (index === (this.nElements - 1)) {
                 return this.lastNode;
             }
             var node = this.firstNode;
@@ -640,8 +640,7 @@ var collections;
         };
         return LinkedList;
     })();
-    collections.LinkedList = LinkedList;    // End of linked list
-    
+    collections.LinkedList = LinkedList;    
     var Dictionary = (function () {
         /**
         * Creates an empty dictionary.
@@ -662,8 +661,7 @@ var collections;
         * unique string must be provided.
         */
         function Dictionary(toStrFunction) {
-            this.table = {
-            };
+            this.table = {};
             this.nElements = 0;
             this.toStr = toStrFunction || collections.defaultToString;
         }
@@ -676,7 +674,7 @@ var collections;
         */
         function (key) {
             var pair = this.table[this.toStr(key)];
-            if(collections.isUndefined(pair)) {
+            if (collections.isUndefined(pair)) {
                 return undefined;
             }
             return pair.value;
@@ -692,13 +690,13 @@ var collections;
         * there was no mapping for the key or if the key/value are undefined.
         */
         function (key, value) {
-            if(collections.isUndefined(key) || collections.isUndefined(value)) {
+            if (collections.isUndefined(key) || collections.isUndefined(value)) {
                 return undefined;
             }
             var ret;
             var k = this.toStr(key);
             var previousElement = this.table[k];
-            if(collections.isUndefined(previousElement)) {
+            if (collections.isUndefined(previousElement)) {
                 this.nElements++;
                 ret = undefined;
             } else {
@@ -720,7 +718,7 @@ var collections;
         function (key) {
             var k = this.toStr(key);
             var previousElement = this.table[k];
-            if(!collections.isUndefined(previousElement)) {
+            if (!collections.isUndefined(previousElement)) {
                 delete this.table[k];
                 this.nElements--;
                 return previousElement.value;
@@ -734,7 +732,7 @@ var collections;
         function () {
             var array = [];
             for(var name in this.table) {
-                if(this.table.hasOwnProperty(name)) {
+                if (this.table.hasOwnProperty(name)) {
                     array.push(this.table[name].key);
                 }
             }
@@ -747,7 +745,7 @@ var collections;
         function () {
             var array = [];
             for(var name in this.table) {
-                if(this.table.hasOwnProperty(name)) {
+                if (this.table.hasOwnProperty(name)) {
                     array.push(this.table[name].value);
                 }
             }
@@ -762,10 +760,10 @@ var collections;
         */
         function (callback) {
             for(var name in this.table) {
-                if(this.table.hasOwnProperty(name)) {
+                if (this.table.hasOwnProperty(name)) {
                     var pair = this.table[name];
                     var ret = callback(pair.key, pair.value);
-                    if(ret === false) {
+                    if (ret === false) {
                         return;
                     }
                 }
@@ -786,8 +784,7 @@ var collections;
         * @this {buckets.Dictionary}
         */
         function () {
-            this.table = {
-            };
+            this.table = {};
             this.nElements = 0;
         };
         Dictionary.prototype.size = /**
@@ -805,8 +802,7 @@ var collections;
             return this.nElements <= 0;
         };
         return Dictionary;
-    })();    // End of dictionary
-    
+    })();    
     // /**
     //  * Returns true if this dictionary is equal to the given dictionary.
     //  * Two dictionaries are equal if they contain the same mappings.
@@ -861,7 +857,7 @@ var collections;
         *
         */
         function MultiDictionary(toStrFunction, valuesEqualsFunction) {
-                _super.call(this, toStrFunction);
+            _super.call(this, toStrFunction);
             this.equalsF = valuesEqualsFunction || collections.defaultEquals;
         }
         MultiDictionary.prototype.getValue = /**
@@ -874,7 +870,7 @@ var collections;
         */
         function (key) {
             var values = _super.prototype.getValue.call(this, key);
-            if(collections.isUndefined(values)) {
+            if (collections.isUndefined(values)) {
                 return [];
             }
             return collections.arrays.copy(values);
@@ -888,17 +884,17 @@ var collections;
         * @return {boolean} true if the value was not already associated with that key.
         */
         function (key, value) {
-            if(collections.isUndefined(key) || collections.isUndefined(value)) {
+            if (collections.isUndefined(key) || collections.isUndefined(value)) {
                 return false;
             }
-            if(!this.containsKey(key)) {
+            if (!this.containsKey(key)) {
                 _super.prototype.setValue.call(this, key, [
                     value
                 ]);
                 return true;
             }
             var array = _super.prototype.getValue.call(this, key);
-            if(collections.arrays.contains(array, value, this.equalsF)) {
+            if (collections.arrays.contains(array, value, this.equalsF)) {
                 return false;
             }
             array.push(value);
@@ -916,16 +912,16 @@ var collections;
         * if the specified value isn't associated with the specified key.
         */
         function (key, value) {
-            if(collections.isUndefined(value)) {
+            if (collections.isUndefined(value)) {
                 var v = _super.prototype.remove.call(this, key);
-                if(collections.isUndefined(v)) {
+                if (collections.isUndefined(v)) {
                     return false;
                 }
                 return true;
             }
             var array = _super.prototype.getValue.call(this, key);
-            if(collections.arrays.remove(array, value, this.equalsF)) {
-                if(array.length === 0) {
+            if (collections.arrays.remove(array, value, this.equalsF)) {
+                if (array.length === 0) {
                     _super.prototype.remove.call(this, key);
                 }
                 return true;
@@ -985,8 +981,7 @@ var collections;
             return _super.prototype.isEmpty.call(this);
         };
         return MultiDictionary;
-    })(Dictionary);    // end of multi dictionary
-    
+    })(Dictionary);    
     var Heap = (function () {
         /**
         * Creates an empty Heap.
@@ -1078,14 +1073,14 @@ var collections;
         * @private
         */
         function (leftChild, rightChild) {
-            if(rightChild >= this.data.length) {
-                if(leftChild >= this.data.length) {
+            if (rightChild >= this.data.length) {
+                if (leftChild >= this.data.length) {
                     return -1;
                 } else {
                     return leftChild;
                 }
             } else {
-                if(this.compare(this.data[leftChild], this.data[rightChild]) <= 0) {
+                if (this.compare(this.data[leftChild], this.data[rightChild]) <= 0) {
                     return leftChild;
                 } else {
                     return rightChild;
@@ -1125,7 +1120,7 @@ var collections;
         * heap is empty.
         */
         function () {
-            if(this.data.length > 0) {
+            if (this.data.length > 0) {
                 return this.data[0];
             } else {
                 return undefined;
@@ -1137,7 +1132,7 @@ var collections;
         * @return true if the element was added or fals if it is undefined.
         */
         function (element) {
-            if(collections.isUndefined(element)) {
+            if (collections.isUndefined(element)) {
                 return undefined;
             }
             this.data.push(element);
@@ -1150,11 +1145,11 @@ var collections;
         * undefined if the heap is empty.
         */
         function () {
-            if(this.data.length > 0) {
+            if (this.data.length > 0) {
                 var obj = this.data[0];
                 this.data[0] = this.data[this.data.length - 1];
                 this.data.splice(this.data.length - 1, 1);
-                if(this.data.length > 0) {
+                if (this.data.length > 0) {
                     this.siftDown(0);
                 }
                 return obj;
@@ -1306,8 +1301,7 @@ var collections;
             this.list.forEach(callback);
         };
         return Stack;
-    })();    // End of stack
-    
+    })();    
     var Queue = (function () {
         /**
         * Creates an empty queue.
@@ -1340,7 +1334,7 @@ var collections;
         * @return {*} the head of this queue, or undefined if this queue is empty.
         */
         function () {
-            if(this.list.size() !== 0) {
+            if (this.list.size() !== 0) {
                 var el = this.list.first();
                 this.list.removeElementAtIndex(0);
                 return el;
@@ -1352,7 +1346,7 @@ var collections;
         * @return {*} the head of this queue, or undefined if this queue is empty.
         */
         function () {
-            if(this.list.size() !== 0) {
+            if (this.list.size() !== 0) {
                 return this.list.first();
             }
             return undefined;
@@ -1410,8 +1404,7 @@ var collections;
             this.list.forEach(callback);
         };
         return Queue;
-    })();    // End of queue
-    
+    })();    
     var PriorityQueue = (function () {
         /**
         * Creates an empty priority queue.
@@ -1462,7 +1455,7 @@ var collections;
         or undefined if this queue is empty.
         */
         function () {
-            if(this.heap.size() !== 0) {
+            if (this.heap.size() !== 0) {
                 var el = this.heap.peek();
                 this.heap.removeRoot();
                 return el;
@@ -1517,8 +1510,7 @@ var collections;
             this.heap.forEach(callback);
         };
         return PriorityQueue;
-    })();    // end of priority queue
-    
+    })();    
     var Set = (function () {
         /**
         * Creates an empty set.
@@ -1556,7 +1548,7 @@ var collections;
         * @return {boolean} true if this set did not already contain the specified element.
         */
         function (element) {
-            if(this.contains(element) || collections.isUndefined(element)) {
+            if (this.contains(element) || collections.isUndefined(element)) {
                 return false;
             } else {
                 this.dictionary.setValue(element, element);
@@ -1571,7 +1563,7 @@ var collections;
         function (otherSet) {
             var set = this;
             this.forEach(function (element) {
-                if(!otherSet.contains(element)) {
+                if (!otherSet.contains(element)) {
                     set.remove(element);
                 }
             });
@@ -1604,12 +1596,12 @@ var collections;
         * @return {boolean} true if this set is a subset of the given set.
         */
         function (otherSet) {
-            if(this.size() > otherSet.size()) {
+            if (this.size() > otherSet.size()) {
                 return false;
             }
             var isSub = true;
             this.forEach(function (element) {
-                if(!otherSet.contains(element)) {
+                if (!otherSet.contains(element)) {
                     isSub = false;
                     return false;
                 }
@@ -1621,7 +1613,7 @@ var collections;
         * @return {boolean} true if this set contained the specified element.
         */
         function (element) {
-            if(!this.contains(element)) {
+            if (!this.contains(element)) {
                 return false;
             } else {
                 this.dictionary.remove(element);
@@ -1668,8 +1660,7 @@ var collections;
             this.dictionary.clear();
         };
         return Set;
-    })();    // end of Set
-    
+    })();    
     var Bag = (function () {
         /**
         * Creates an empty bag.
@@ -1703,13 +1694,13 @@ var collections;
         * @return {boolean} true unless element is undefined.
         */
         function (element, nCopies) {
-            if(isNaN(nCopies) || collections.isUndefined(nCopies)) {
+            if (isNaN(nCopies) || collections.isUndefined(nCopies)) {
                 nCopies = 1;
             }
-            if(collections.isUndefined(element) || nCopies <= 0) {
+            if (collections.isUndefined(element) || nCopies <= 0) {
                 return false;
             }
-            if(!this.contains(element)) {
+            if (!this.contains(element)) {
                 var node = {
                     value: element,
                     copies: nCopies
@@ -1727,7 +1718,7 @@ var collections;
         * @return {number} the number of copies of the object, 0 if not found
         */
         function (element) {
-            if(!this.contains(element)) {
+            if (!this.contains(element)) {
                 return 0;
             } else {
                 return this.dictionary.getValue(element).copies;
@@ -1752,23 +1743,23 @@ var collections;
         * @return {boolean} true if at least 1 element was removed.
         */
         function (element, nCopies) {
-            if(isNaN(nCopies) || collections.isUndefined(nCopies)) {
+            if (isNaN(nCopies) || collections.isUndefined(nCopies)) {
                 nCopies = 1;
             }
-            if(collections.isUndefined(element) || nCopies <= 0) {
+            if (collections.isUndefined(element) || nCopies <= 0) {
                 return false;
             }
-            if(!this.contains(element)) {
+            if (!this.contains(element)) {
                 return false;
             } else {
                 var node = this.dictionary.getValue(element);
-                if(nCopies > node.copies) {
+                if (nCopies > node.copies) {
                     this.nElements -= node.copies;
                 } else {
                     this.nElements -= nCopies;
                 }
                 node.copies -= nCopies;
-                if(node.copies <= 0) {
+                if (node.copies <= 0) {
                     this.dictionary.remove(element);
                 }
                 return true;
@@ -1819,7 +1810,7 @@ var collections;
                 var value = v.value;
                 var copies = v.copies;
                 for(var i = 0; i < copies; i++) {
-                    if(callback(value) === false) {
+                    if (callback(value) === false) {
                         return false;
                     }
                 }
@@ -1848,8 +1839,7 @@ var collections;
             this.dictionary.clear();
         };
         return Bag;
-    })();    // End of bag
-    
+    })();    
     var BSTree = (function () {
         /**
         * Creates an empty binary search tree.
@@ -1897,10 +1887,10 @@ var collections;
         * @return {boolean} true if this tree did not already contain the specified element.
         */
         function (element) {
-            if(collections.isUndefined(element)) {
+            if (collections.isUndefined(element)) {
                 return false;
             }
-            if(this.insertNode(this.createNode(element)) !== null) {
+            if (this.insertNode(this.createNode(element)) !== null) {
                 this.nElements++;
                 return true;
             }
@@ -1934,7 +1924,7 @@ var collections;
         * false otherwise.
         */
         function (element) {
-            if(collections.isUndefined(element)) {
+            if (collections.isUndefined(element)) {
                 return false;
             }
             return this.searchNode(this.root, element) !== null;
@@ -1945,7 +1935,7 @@ var collections;
         */
         function (element) {
             var node = this.searchNode(this.root, element);
-            if(node === null) {
+            if (node === null) {
                 return false;
             }
             this.removeNode(node);
@@ -1998,7 +1988,7 @@ var collections;
         * is empty.
         */
         function () {
-            if(this.isEmpty()) {
+            if (this.isEmpty()) {
                 return undefined;
             }
             return this.minimumAux(this.root).element;
@@ -2009,7 +1999,7 @@ var collections;
         * is empty.
         */
         function () {
-            if(this.isEmpty()) {
+            if (this.isEmpty()) {
                 return undefined;
             }
             return this.maximumAux(this.root).element;
@@ -2049,9 +2039,9 @@ var collections;
             var cmp = null;
             while(node !== null && cmp !== 0) {
                 cmp = this.compare(element, node.element);
-                if(cmp < 0) {
+                if (cmp < 0) {
                     node = node.leftCh;
-                } else if(cmp > 0) {
+                } else if (cmp > 0) {
                     node = node.rightCh;
                 }
             }
@@ -2061,14 +2051,14 @@ var collections;
         * @private
         */
         function (n1, n2) {
-            if(n1.parent === null) {
+            if (n1.parent === null) {
                 this.root = n2;
-            } else if(n1 === n1.parent.leftCh) {
+            } else if (n1 === n1.parent.leftCh) {
                 n1.parent.leftCh = n2;
             } else {
                 n1.parent.rightCh = n2;
             }
-            if(n2 !== null) {
+            if (n2 !== null) {
                 n2.parent = n1.parent;
             }
         };
@@ -2076,13 +2066,13 @@ var collections;
         * @private
         */
         function (node) {
-            if(node.leftCh === null) {
+            if (node.leftCh === null) {
                 this.transplant(node, node.rightCh);
-            } else if(node.rightCh === null) {
+            } else if (node.rightCh === null) {
                 this.transplant(node, node.leftCh);
             } else {
                 var y = this.minimumAux(node.rightCh);
-                if(y.parent !== node) {
+                if (y.parent !== node) {
                     this.transplant(y, y.rightCh);
                     y.rightCh = node.rightCh;
                     y.rightCh.parent = y;
@@ -2096,15 +2086,15 @@ var collections;
         * @private
         */
         function (node, callback, signal) {
-            if(node === null || signal.stop) {
+            if (node === null || signal.stop) {
                 return;
             }
             this.inorderTraversalAux(node.leftCh, callback, signal);
-            if(signal.stop) {
+            if (signal.stop) {
                 return;
             }
             signal.stop = callback(node.element) === false;
-            if(signal.stop) {
+            if (signal.stop) {
                 return;
             }
             this.inorderTraversalAux(node.rightCh, callback, signal);
@@ -2114,18 +2104,18 @@ var collections;
         */
         function (node, callback) {
             var queue = new Queue();
-            if(node !== null) {
+            if (node !== null) {
                 queue.enqueue(node);
             }
             while(!queue.isEmpty()) {
                 node = queue.dequeue();
-                if(callback(node.element) === false) {
+                if (callback(node.element) === false) {
                     return;
                 }
-                if(node.leftCh !== null) {
+                if (node.leftCh !== null) {
                     queue.enqueue(node.leftCh);
                 }
-                if(node.rightCh !== null) {
+                if (node.rightCh !== null) {
                     queue.enqueue(node.rightCh);
                 }
             }
@@ -2134,15 +2124,15 @@ var collections;
         * @private
         */
         function (node, callback, signal) {
-            if(node === null || signal.stop) {
+            if (node === null || signal.stop) {
                 return;
             }
             signal.stop = callback(node.element) === false;
-            if(signal.stop) {
+            if (signal.stop) {
                 return;
             }
             this.preorderTraversalAux(node.leftCh, callback, signal);
-            if(signal.stop) {
+            if (signal.stop) {
                 return;
             }
             this.preorderTraversalAux(node.rightCh, callback, signal);
@@ -2151,15 +2141,15 @@ var collections;
         * @private
         */
         function (node, callback, signal) {
-            if(node === null || signal.stop) {
+            if (node === null || signal.stop) {
                 return;
             }
             this.postorderTraversalAux(node.leftCh, callback, signal);
-            if(signal.stop) {
+            if (signal.stop) {
                 return;
             }
             this.postorderTraversalAux(node.rightCh, callback, signal);
-            if(signal.stop) {
+            if (signal.stop) {
                 return;
             }
             signal.stop = callback(node.element) === false;
@@ -2186,7 +2176,7 @@ var collections;
         * @private
         */
         function (node) {
-            if(node.rightCh !== null) {
+            if (node.rightCh !== null) {
                 return this.minimumAux(node.rightCh);
             }
             var successor = node.parent;
@@ -2200,7 +2190,7 @@ var collections;
         * @private
         */
         function (node) {
-            if(node === null) {
+            if (node === null) {
                 return -1;
             }
             return Math.max(this.heightAux(node.leftCh), this.heightAux(node.rightCh)) + 1;
@@ -2214,9 +2204,9 @@ var collections;
             var cmp = null;
             while(position !== null) {
                 cmp = this.compare(node.element, position.element);
-                if(cmp === 0) {
+                if (cmp === 0) {
                     return null;
-                } else if(cmp < 0) {
+                } else if (cmp < 0) {
                     parent = position;
                     position = position.leftCh;
                 } else {
@@ -2225,10 +2215,10 @@ var collections;
                 }
             }
             node.parent = parent;
-            if(parent === null) {
+            if (parent === null) {
                 // tree is empty
                 this.root = node;
-            } else if(this.compare(node.element, parent.element) < 0) {
+            } else if (this.compare(node.element, parent.element) < 0) {
                 parent.leftCh = node;
             } else {
                 parent.rightCh = node;
@@ -2247,7 +2237,6 @@ var collections;
             };
         };
         return BSTree;
-    })();    // end of BSTree
-    
+    })();    
 })(collections || (collections = {}));
 // End of module
