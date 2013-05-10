@@ -20,7 +20,7 @@ module collections {
     * >0 means a is larger
     */
     export interface ICompareFunction<T>{
-        (a:T, b:T):number;
+        (a: T, b: T): number;
     }
 
     /**
@@ -34,7 +34,7 @@ module collections {
      * Default function to compare element order.
      * @function     
      */
-    export function defaultCompare<T>(a:T, b:T): number {
+    export function defaultCompare<T>(a: T, b: T): number {
         if (a < b) {
             return -1;
         } else if (a === b) {
@@ -48,7 +48,7 @@ module collections {
      * Default function to test equality. 
      * @function     
      */
-    export function defaultEquals<T>(a:T, b:T): boolean {
+    export function defaultEquals<T>(a: T, b: T): boolean {
         return a === b;
     }
 
@@ -56,7 +56,7 @@ module collections {
      * Default function to convert an object to a string.
      * @function     
      */
-    export function defaultToString(item):string {
+    export function defaultToString(item): string {
         if (item === null) {
             return 'COLLECTION_NULL';
         } else if (collections.isUndefined(item)) {
@@ -72,7 +72,7 @@ module collections {
      * Checks if the given argument is a function.
      * @function     
      */
-    export function isFunction(func):boolean {
+    export function isFunction(func): boolean {
         return (typeof func) === 'function';
     }
 
@@ -80,7 +80,7 @@ module collections {
      * Checks if the given argument is undefined.
      * @function
      */
-    export function isUndefined(obj):boolean {
+    export function isUndefined(obj): boolean {
         return (typeof obj) === 'undefined';
     }
 
@@ -88,7 +88,7 @@ module collections {
      * Checks if the given argument is a string.
      * @function
      */
-    export function isString(obj):boolean {
+    export function isString(obj): boolean {
         return Object.prototype.toString.call(obj) === '[object String]';
     }
 
@@ -96,7 +96,7 @@ module collections {
      * Reverses a compare function.
      * @function
      */
-    export function reverseCompareFunction<T>(compareFunction:ICompareFunction<T>):ICompareFunction<T> {
+    export function reverseCompareFunction<T>(compareFunction: ICompareFunction<T>): ICompareFunction<T> {
         if (!collections.isFunction(compareFunction)) {
             return function (a, b) {
                 if (a < b) {
@@ -108,7 +108,7 @@ module collections {
                 }
             };
         } else {
-            return function (d:T, v:T) {                
+            return function (d: T, v: T) {
                 return compareFunction(d, v) * -1;
             };
         }
@@ -118,8 +118,8 @@ module collections {
      * Returns an equal function given a compare function.
      * @function
      */
-    export function compareToEquals<T>(compareFunction:ICompareFunction<T>):IEqualsFunction<T>{
-        return function (a:T, b:T) {
+    export function compareToEquals<T>(compareFunction: ICompareFunction<T>): IEqualsFunction<T> {
+        return function (a: T, b: T) {
             return compareFunction(a, b) === 0;
         };
     }
@@ -139,7 +139,7 @@ module collections {
          * @return {number} the position of the first occurrence of the specified element
          * within the specified array, or -1 if not found.
          */
-        export function indexOf<T>(array:T[], item:T, equalsFunction?:collections.IEqualsFunction<T>):number {
+        export function indexOf<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>): number {
             var equals = equalsFunction || collections.defaultEquals;
             var length = array.length;
             for (var i = 0; i < length; i++) {
@@ -160,7 +160,7 @@ module collections {
          * @return {number} the position of the last occurrence of the specified element
          * within the specified array or -1 if not found.
          */
-        export function lastIndexOf<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>) :number{
+        export function lastIndexOf<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>): number {
             var equals = equalsFunction || collections.defaultEquals;
             var length = array.length;
             for (var i = length - 1; i >= 0; i--) {
@@ -179,7 +179,7 @@ module collections {
          * check equality between 2 elements.
          * @return {boolean} true if the specified array contains the specified element.
          */
-        export function contains<T>(array:T[], item:T, equalsFunction?: collections.IEqualsFunction<T>):boolean {
+        export function contains<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>): boolean {
             return arrays.indexOf(array, item, equalsFunction) >= 0;
         }
 
@@ -192,7 +192,7 @@ module collections {
          * check equality between 2 elements.
          * @return {boolean} true if the array changed after this call.
          */
-        export function remove<T>(array:T[], item:T, equalsFunction?: collections.IEqualsFunction<T>):boolean {
+        export function remove<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>): boolean {
             var index = arrays.indexOf(array, item, equalsFunction);
             if (index < 0) {
                 return false;
@@ -211,7 +211,7 @@ module collections {
          * @return {number} the number of elements in the specified array 
          * equal to the specified object.
          */
-        export function frequency<T>(array:T[], item:T, equalsFunction?: collections.IEqualsFunction<T>):number {
+        export function frequency<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>): number {
             var equals = equalsFunction || collections.defaultEquals;
             var length = array.length;
             var freq = 0;
@@ -234,7 +234,7 @@ module collections {
          * check equality between elemements in the arrays.
          * @return {boolean} true if the two arrays are equal
          */
-        export function equals<T>(array1:T[], array2:T[], equalsFunction?: collections.IEqualsFunction<T>):boolean {
+        export function equals<T>(array1: T[], array2: T[], equalsFunction?: collections.IEqualsFunction<T>): boolean {
             var equals = equalsFunction || collections.defaultEquals;
 
             if (array1.length !== array2.length) {
@@ -254,7 +254,7 @@ module collections {
          * @param {*} array the array to copy.
          * @return {Array} a copy of the specified array
          */
-        export function copy<T>(array:T[]):T[] {
+        export function copy<T>(array: T[]): T[] {
             return array.concat();
         }
 
@@ -265,7 +265,7 @@ module collections {
          * @param {number} j the index of the other element to be swapped.
          * @return {boolean} true if the array is defined and the indexes are valid.
          */
-        export function swap<T>(array:T[], i:number, j:number):boolean {
+        export function swap<T>(array: T[], i: number, j: number): boolean {
             if (i < 0 || i >= array.length || j < 0 || j >= array.length) {
                 return false;
             }
@@ -283,7 +283,7 @@ module collections {
          * invoked with one argument: the element value, to break the iteration you can 
          * optionally return false.
          */
-        export function forEach<T>(array:T[], callback:(item:T)=>boolean):void {
+        export function forEach<T>(array: T[], callback: (item: T) => boolean): void {
             var lenght = array.length;
             for (var i = 0; i < lenght; i++) {
                 if (callback(array[i]) === false) {
@@ -294,19 +294,26 @@ module collections {
     }
 
 
-    export class LinkedList {
+    // A linked list node. Used internally only
+    interface ILinkedListNode<T>{
+        element: T;
+        next: ILinkedListNode<T>;
+    }
+
+    export class LinkedList<T> {
+
         /**
         * First node in the list
         * @type {Object}
         * @private
         */
-        private firstNode = null;
+        public firstNode: ILinkedListNode<T> = null;
         /**
         * Last node in the list
         * @type {Object}
         * @private
         */
-        private lastNode = null;
+        private lastNode: ILinkedListNode<T> = null;
 
         /**
         * Number of elements in the list
@@ -332,7 +339,7 @@ module collections {
         * @return {boolean} true if the element was added or false if the index is invalid
         * or if the element is undefined.
         */
-        add(item, index?: number) {
+        add(item: T, index?: number): boolean {
             if (collections.isUndefined(index)) {
                 index = this.nElements;
             }
@@ -366,7 +373,7 @@ module collections {
         * @return {*} the first element of the list or undefined if the list is
         * empty.
         */
-        first() {
+        first(): T {
 
             if (this.firstNode !== null) {
                 return this.firstNode.element;
@@ -379,7 +386,7 @@ module collections {
         * @return {*} the last element in the list or undefined if the list is
         * empty.
         */
-        last() {
+        last(): T {
 
             if (this.lastNode !== null) {
                 return this.lastNode.element;
@@ -393,7 +400,7 @@ module collections {
          * @return {*} the element at the given index or undefined if the index is
          * out of bounds.
          */
-        elementAtIndex(index) {
+        elementAtIndex(index: number): T {
 
             var node = this.nodeAtIndex(index);
             if (node === null) {
@@ -422,7 +429,7 @@ module collections {
          * of the specified element, or -1 if this list does not contain the
          * element.
          */
-        indexOf(item, equalsFunction?) {
+        indexOf(item: T, equalsFunction?: IEqualsFunction<T>): number {
 
             var equalsF = equalsFunction || collections.defaultEquals;
             if (collections.isUndefined(item)) {
@@ -459,34 +466,34 @@ module collections {
            * @return {boolean} true if this list contains the specified element, false
            * otherwise.
            */
-        contains(item, equalsFunction?) {
+        contains(item: T, equalsFunction?: IEqualsFunction<T>): boolean {
             return (this.indexOf(item, equalsFunction) >= 0);
         }
 
         /**
- * Removes the first occurrence of the specified element in this list.
- * <p>If the elements inside the list are
- * not comparable with the === operator a custom equals function should be
- * provided to perform searches, the function must receive two arguments and
- * return true if they are equal, false otherwise. Example:</p>
- *
- * <pre>
- * var petsAreEqualByName = function(pet1, pet2) {
- *  return pet1.name === pet2.name;
- * }
- * </pre>
- * @param {Object} item element to be removed from this list, if present.
- * @return {boolean} true if the list contained the specified element.
- */
-        remove(item, equalsFunction?) {
+         * Removes the first occurrence of the specified element in this list.
+         * <p>If the elements inside the list are
+         * not comparable with the === operator a custom equals function should be
+         * provided to perform searches, the function must receive two arguments and
+         * return true if they are equal, false otherwise. Example:</p>
+         *
+         * <pre>
+         * var petsAreEqualByName = function(pet1, pet2) {
+         *  return pet1.name === pet2.name;
+         * }
+         * </pre>
+         * @param {Object} item element to be removed from this list, if present.
+         * @return {boolean} true if the list contained the specified element.
+         */
+        remove(item: T, equalsFunction?: IEqualsFunction<T>): boolean {
             var equalsF = equalsFunction || collections.defaultEquals;
             if (this.nElements < 1 || collections.isUndefined(item)) {
                 return false;
             }
             var previous = null;
             var currentNode = this.firstNode;
-            while (currentNode !== null) {
 
+            while (currentNode !== null) {
                 if (equalsF(currentNode.element, item)) {
 
                     if (currentNode === this.firstNode) {
@@ -512,25 +519,25 @@ module collections {
         }
 
         /**
-     * Removes all of the elements from this list.
-     */
-        clear() {
+         * Removes all of the elements from this list.
+         */
+        clear(): void {
             this.firstNode = null;
             this.lastNode = null;
             this.nElements = 0;
         }
 
         /**
-     * Returns true if this list is equal to the given list.
-     * Two lists are equal if they have the same elements in the same order.
-     * @param {buckets.LinkedList} other the other list.
-     * @param {function(Object,Object):boolean=} equalsFunction optional
-     * function used to check if two elements are equal. If the elements in the lists
-     * are custom objects you should provide a function, otherwise 
-     * the === operator is used to check equality between elements.
-     * @return {boolean} true if this list is equal to the given list.
-     */
-        equals(other, equalsFunction?) {
+         * Returns true if this list is equal to the given list.
+         * Two lists are equal if they have the same elements in the same order.
+         * @param {buckets.LinkedList} other the other list.
+         * @param {function(Object,Object):boolean=} equalsFunction optional
+         * function used to check if two elements are equal. If the elements in the lists
+         * are custom objects you should provide a function, otherwise 
+         * the === operator is used to check equality between elements.
+         * @return {boolean} true if this list is equal to the given list.
+         */
+        equals(other: LinkedList<T>, equalsFunction?: IEqualsFunction<T>): boolean {
             var eqF = equalsFunction || collections.defaultEquals;
             if (!(other instanceof collections.LinkedList)) {
                 return false;
@@ -542,9 +549,9 @@ module collections {
         }
 
         /**
-    * @private
-    */
-        private equalsAux(n1, n2, eqF) {
+        * @private
+        */
+        private equalsAux(n1: ILinkedListNode<T>, n2: ILinkedListNode<T>, eqF: IEqualsFunction<T>): boolean {
             while (n1 !== null) {
                 if (!eqF(n1.element, n2.element)) {
                     return false;
@@ -556,12 +563,11 @@ module collections {
         }
 
         /**
-     * Removes the element at the specified position in this list.
-     * @param {number} index given index.
-     * @return {*} removed element or undefined if the index is out of bounds.
-     */
-        removeElementAtIndex(index) {
-
+         * Removes the element at the specified position in this list.
+         * @param {number} index given index.
+         * @return {*} removed element or undefined if the index is out of bounds.
+         */
+        removeElementAtIndex(index: number): boolean {
             if (index < 0 || index >= this.nElements) {
                 return undefined;
             }
@@ -587,17 +593,15 @@ module collections {
             }
             this.nElements--;
             return element;
-
-
         }
 
         /**
-     * Executes the provided function once for each element present in this list in order.
-     * @param {function(Object):*} callback function to execute, it is
-     * invoked with one argument: the element value, to break the iteration you can 
-     * optionally return false.
-     */
-        forEach(callback) {
+         * Executes the provided function once for each element present in this list in order.
+         * @param {function(Object):*} callback function to execute, it is
+         * invoked with one argument: the element value, to break the iteration you can 
+         * optionally return false.
+         */
+        forEach(callback: (item: T) => boolean): void {
             var currentNode = this.firstNode;
             while (currentNode !== null) {
                 if (callback(currentNode.element) === false) {
@@ -608,10 +612,10 @@ module collections {
         }
 
         /**
-     * Reverses the order of the elements in this linked list (makes the last 
-     * element first, and the first element last).
-     */
-        reverse() {
+         * Reverses the order of the elements in this linked list (makes the last 
+         * element first, and the first element last).
+         */
+        reverse(): void {
             var previous = null;
             var current = this.firstNode;
             var temp = null;
@@ -627,14 +631,14 @@ module collections {
         }
 
         /**
-     * Returns an array containing all of the elements in this list in proper
-     * sequence.
-     * @return {Array.<*>} an array containing all of the elements in this list,
-     * in proper sequence.
-     */
-        toArray() {
-            var array = [];
-            var currentNode = this.firstNode;
+         * Returns an array containing all of the elements in this list in proper
+         * sequence.
+         * @return {Array.<*>} an array containing all of the elements in this list,
+         * in proper sequence.
+         */
+        toArray():T[] {
+            var array:T[] = [];
+            var currentNode:ILinkedListNode<T> = this.firstNode;
             while (currentNode !== null) {
                 array.push(currentNode.element);
                 currentNode = currentNode.next;
@@ -643,25 +647,25 @@ module collections {
         }
 
         /**
-     * Returns the number of elements in this list.
-     * @return {number} the number of elements in this list.
-     */
-        size() {
+         * Returns the number of elements in this list.
+         * @return {number} the number of elements in this list.
+         */
+        size():number {
             return this.nElements;
         }
 
         /**
-     * Returns true if this list contains no elements.
-     * @return {boolean} true if this list contains no elements.
-     */
-        isEmpty() {
+         * Returns true if this list contains no elements.
+         * @return {boolean} true if this list contains no elements.
+         */
+        isEmpty():boolean {
             return this.nElements <= 0;
         }
 
         /**
- * @private
- */
-        private nodeAtIndex(index) {
+         * @private
+         */
+        private nodeAtIndex(index):ILinkedListNode<T> {
 
             if (index < 0 || index >= this.nElements) {
                 return null;
@@ -675,17 +679,16 @@ module collections {
             }
             return node;
         }
+
         /**
          * @private
          */
-        private createNode(item) {
+        private createNode(item:T):ILinkedListNode<T> {
             return {
                 element: item,
                 next: null
             };
         }
-
-
     } // End of linked list 
 
 
@@ -1223,14 +1226,14 @@ module collections {
 
             //smaller child index
             var min = this.minIndex(this.leftChildIndex(nodeIndex),
-            this.rightChildIndex(nodeIndex));
+                this.rightChildIndex(nodeIndex));
 
             while (min >= 0 && this.compare(this.data[nodeIndex],
-            this.data[min]) > 0) {
+                this.data[min]) > 0) {
                 collections.arrays.swap(this.data, min, nodeIndex);
                 nodeIndex = min;
                 min = this.minIndex(this.leftChildIndex(nodeIndex),
-                this.rightChildIndex(nodeIndex));
+                    this.rightChildIndex(nodeIndex));
             }
         }
         /**
@@ -1738,7 +1741,7 @@ module collections {
                 if (!otherSet.contains(element)) {
                     set.remove(element);
                 }
-            });
+            } );
         }
 
         /**
@@ -1750,7 +1753,7 @@ module collections {
             var set = this;
             otherSet.forEach(function (element) {
                 set.add(element);
-            });
+            } );
         }
 
         /**
@@ -1762,7 +1765,7 @@ module collections {
             var set = this;
             otherSet.forEach(function (element) {
                 set.remove(element);
-            });
+            } );
         }
 
         /**
@@ -1782,7 +1785,7 @@ module collections {
                     isSub = false;
                     return false;
                 }
-            });
+            } );
             return isSub;
         }
 
@@ -1809,7 +1812,7 @@ module collections {
         forEach(callback) {
             this.dictionary.forEach(function (k, v) {
                 return callback(v);
-            });
+            } );
         }
 
         /**
@@ -2018,7 +2021,7 @@ module collections {
                     }
                 }
                 return true;
-            });
+            } );
         }
         /**
          * Returns the number of elements in this bag.
@@ -2249,7 +2252,7 @@ module collections {
             var array = [];
             this.inorderTraversal(function (element) {
                 array.push(element);
-            });
+            } );
             return array;
         }
 
