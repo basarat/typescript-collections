@@ -1106,24 +1106,24 @@ module collections {
 
 
 
-    class Heap {
+    class Heap<T> {
         /**
          * Array used to store the elements od the heap.
          * @type {Array.<Object>}
          * @private
          */
-        private data = [];
+        private data:T[] = [];
         /**
          * Function used to compare elements.
          * @type {function(Object,Object):number}
          * @private
          */
-        private compare;
+        private compare: ICompareFunction<T>;
         /**
          * Creates an empty Heap.
          * @class 
          * <p>A heap is a binary tree, where the nodes maintain the heap property: 
-         * each node is smaller than each of its children. 
+         * each node is smaller than each of its children and therefore a MinHeap 
          * This implementation uses an array to store elements.</p>
          * <p>If the inserted elements are custom objects a compare function must be provided, 
          *  at construction time, otherwise the <=, === and >= operators are 
@@ -1162,7 +1162,7 @@ module collections {
          * zero, or a positive integer as the first argument is less than, equal to,
          * or greater than the second.
          */
-        constructor(compareFunction?) {
+        constructor(compareFunction?:ICompareFunction<T>) {
             this.compare = compareFunction || collections.defaultCompare;
         }
 
@@ -1173,7 +1173,7 @@ module collections {
          * @return {number} The index of the left child.
          * @private
          */
-        private leftChildIndex(nodeIndex) {
+        private leftChildIndex(nodeIndex:number):number {
             return (2 * nodeIndex) + 1;
         }
         /**
@@ -1183,7 +1183,7 @@ module collections {
          * @return {number} The index of the right child.
          * @private
          */
-        private rightChildIndex(nodeIndex) {
+        private rightChildIndex(nodeIndex:number):number {
             return (2 * nodeIndex) + 2;
         }
         /**
@@ -1192,7 +1192,7 @@ module collections {
          * @return {number} The index of the parent.
          * @private
          */
-        private parentIndex(nodeIndex) {
+        private parentIndex(nodeIndex:number):number {
             return Math.floor((nodeIndex - 1) / 2);
         }
         /**
@@ -1203,7 +1203,7 @@ module collections {
          * exists.
          * @private
          */
-        private minIndex(leftChild, rightChild) {
+        private minIndex(leftChild:number, rightChild:number):number {
 
             if (rightChild >= this.data.length) {
                 if (leftChild >= this.data.length) {
@@ -1224,7 +1224,7 @@ module collections {
          * @param {number} index The index of the node to move up.
          * @private
          */
-        private siftUp(index) {
+        private siftUp(index:number):void {
 
             var parent = this.parentIndex(index);
             while (index > 0 && this.compare(this.data[parent], this.data[index]) > 0) {
@@ -1238,7 +1238,7 @@ module collections {
          * @param {number} nodeIndex The index of the node to move down.
          * @private
          */
-        private siftDown(nodeIndex) {
+        private siftDown(nodeIndex:number):void {
 
             //smaller child index
             var min = this.minIndex(this.leftChildIndex(nodeIndex),
@@ -1257,7 +1257,7 @@ module collections {
          * @return {*} The value at the root of the heap. Returns undefined if the
          * heap is empty.
          */
-        peek() {
+        peek():T {
 
             if (this.data.length > 0) {
                 return this.data[0];
@@ -1270,7 +1270,7 @@ module collections {
          * @param {*} element the element.
          * @return true if the element was added or fals if it is undefined.
          */
-        add(element) {
+        add(element:T):boolean {
             if (collections.isUndefined(element)) {
                 return undefined;
             }
@@ -1284,7 +1284,7 @@ module collections {
          * @return {*} The value removed from the root of the heap. Returns
          * undefined if the heap is empty.
          */
-        removeRoot() {
+        removeRoot():T {
 
             if (this.data.length > 0) {
                 var obj = this.data[0];
@@ -1303,7 +1303,7 @@ module collections {
          * @return {boolean} true if this Heap contains the specified element, false
          * otherwise.
          */
-        contains(element) {
+        contains(element:T):boolean {
             var equF = collections.compareToEquals(this.compare);
             return collections.arrays.contains(this.data, element, equF);
         }
@@ -1311,7 +1311,7 @@ module collections {
          * Returns the number of elements in this heap.
          * @return {number} the number of elements in this heap.
          */
-        size() {
+        size():number {
             return this.data.length;
         }
         /**
@@ -1319,13 +1319,13 @@ module collections {
          * @return {boolean} true if and only if this heap contains no items; false
          * otherwise.
          */
-        isEmpty() {
+        isEmpty():boolean {
             return this.data.length <= 0;
         }
         /**
          * Removes all of the elements from this heap.
          */
-        clear() {
+        clear():void {
             this.data.length = 0;
         }
 
@@ -1336,7 +1336,7 @@ module collections {
          * invoked with one argument: the element value, to break the iteration you can 
          * optionally return false.
          */
-        forEach(callback) {
+        forEach(callback:(item:T)=>boolean) {
             collections.arrays.forEach(this.data, callback);
         }
     }
