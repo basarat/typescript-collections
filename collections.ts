@@ -34,7 +34,7 @@ module collections {
     * Function signature for Iterations. Return false to break from loop
     */
     export interface ILoopFunction<T>{
-        (T): boolean;
+        (a: T): boolean;
     }
 
     /**
@@ -1699,8 +1699,8 @@ module collections {
 
 
 
-    class Set {
-        private dictionary: Dictionary;
+    class Set<T>{
+        private dictionary: Dictionary<T, any>;
 
         /**
          * Creates an empty set.
@@ -1720,8 +1720,8 @@ module collections {
          * is not appropriate, a custom function which receives a onject and returns a
          * unique string must be provided.
          */
-        constructor(toStringFunction?) {
-            this.dictionary = new Dictionary(toStringFunction);
+        constructor(toStringFunction?: (T) => string) {
+            this.dictionary = new Dictionary<T, any>(toStringFunction);
         }
 
 
@@ -1732,7 +1732,7 @@ module collections {
          * @return {boolean} true if this set contains the specified element,
          * false otherwise.
          */
-        contains(element) {
+        contains(element: T): boolean {
             return this.dictionary.containsKey(element);
         }
 
@@ -1741,7 +1741,7 @@ module collections {
          * @param {Object} element the element to insert.
          * @return {boolean} true if this set did not already contain the specified element.
          */
-        add(element) {
+        add(element: T): boolean {
             if (this.contains(element) || collections.isUndefined(element)) {
                 return false;
             } else {
@@ -1755,7 +1755,7 @@ module collections {
          * Removes all values that are not present this set and the given set.
          * @param {buckets.Set} otherSet other set.
          */
-        intersection(otherSet) {
+        intersection(otherSet: Set<T>): void {
             var set = this;
             this.forEach(function (element) {
                 if (!otherSet.contains(element)) {
@@ -1769,7 +1769,7 @@ module collections {
          * Adds all values from the given set to this set.
          * @param {buckets.Set} otherSet other set.
          */
-        union(otherSet) {
+        union(otherSet: Set<T>): void {
             var set = this;
             otherSet.forEach(function (element) {
                 set.add(element);
@@ -1781,7 +1781,7 @@ module collections {
          * Removes from this set all the values that are present in the given set.
          * @param {buckets.Set} otherSet other set.
          */
-        difference(otherSet) {
+        difference(otherSet: Set<T>): void {
             var set = this;
             otherSet.forEach(function (element) {
                 set.remove(element);
@@ -1793,7 +1793,7 @@ module collections {
          * @param {buckets.Set} otherSet other set.
          * @return {boolean} true if this set is a subset of the given set.
          */
-        isSubsetOf(otherSet) {
+        isSubsetOf(otherSet: Set<T>): boolean {
 
             if (this.size() > otherSet.size()) {
                 return false;
@@ -1813,7 +1813,7 @@ module collections {
          * Removes the specified element from this set if it is present.
          * @return {boolean} true if this set contained the specified element.
          */
-        remove(element) {
+        remove(element: T): boolean {
             if (!this.contains(element)) {
                 return false;
             } else {
@@ -1822,6 +1822,7 @@ module collections {
             }
         }
 
+        // TODO: our standard callback signature strategy is not working here. So this is still not generic / typed
         /**
          * Executes the provided function once for each element 
          * present in this set.
@@ -1839,7 +1840,7 @@ module collections {
          * Returns an array containing all of the elements in this set in arbitrary order.
          * @return {Array} an array containing all of the elements in this set.
          */
-        toArray() {
+        toArray(): T[] {
             return this.dictionary.values();
         }
 
@@ -1847,7 +1848,7 @@ module collections {
          * Returns true if this set contains no elements.
          * @return {boolean} true if this set contains no elements.
          */
-        isEmpty() {
+        isEmpty(): boolean {
             return this.dictionary.isEmpty();
         }
 
@@ -1855,14 +1856,14 @@ module collections {
          * Returns the number of elements in this set.
          * @return {number} the number of elements in this set.
          */
-        size() {
+        size(): number {
             return this.dictionary.size();
         }
 
         /**
          * Removes all of the elements from this set.
          */
-        clear() {
+        clear(): void {
             this.dictionary.clear();
         }
     }// end of Set

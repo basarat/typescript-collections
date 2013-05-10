@@ -1616,7 +1616,8 @@ var collections;
                 return true;
             }
         };
-        Set.prototype.forEach = /**
+        Set.prototype.forEach = // TODO: our standard callback signature strategy is not working here. So this is still not generic / typed
+        /**
         * Executes the provided function once for each element
         * present in this set.
         * @param {function(Object):*} callback function to execute, it is
