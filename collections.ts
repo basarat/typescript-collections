@@ -1757,10 +1757,11 @@ module collections {
          */
         intersection(otherSet: Set<T>): void {
             var set = this;
-            this.forEach(function (element) {
+            this.forEach(function (element:T):boolean {
                 if (!otherSet.contains(element)) {
                     set.remove(element);
                 }
+                return;
             } );
         }
 
@@ -1771,8 +1772,9 @@ module collections {
          */
         union(otherSet: Set<T>): void {
             var set = this;
-            otherSet.forEach(function (element) {
+            otherSet.forEach(function (element:T):boolean {
                 set.add(element);
+                return;
             } );
         }
 
@@ -1783,8 +1785,9 @@ module collections {
          */
         difference(otherSet: Set<T>): void {
             var set = this;
-            otherSet.forEach(function (element) {
+            otherSet.forEach(function (element:T):boolean {
                 set.remove(element);
+                return;
             } );
         }
 
@@ -1822,7 +1825,6 @@ module collections {
             }
         }
 
-        // TODO: our standard callback signature strategy is not working here. So this is still not generic / typed
         /**
          * Executes the provided function once for each element 
          * present in this set.
@@ -1830,7 +1832,7 @@ module collections {
          * invoked with one arguments: the element. To break the iteration you can 
          * optionally return false.
          */
-        forEach(callback) {
+        forEach(callback:ILoopFunction<T>):void {
             this.dictionary.forEach(function (k, v) {
                 return callback(v);
             } );

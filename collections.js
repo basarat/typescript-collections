@@ -1562,6 +1562,7 @@ var collections;
                 if (!otherSet.contains(element)) {
                     set.remove(element);
                 }
+                return;
             });
         };
         Set.prototype.union = /**
@@ -1573,6 +1574,7 @@ var collections;
             var set = this;
             otherSet.forEach(function (element) {
                 set.add(element);
+                return;
             });
         };
         Set.prototype.difference = /**
@@ -1584,6 +1586,7 @@ var collections;
             var set = this;
             otherSet.forEach(function (element) {
                 set.remove(element);
+                return;
             });
         };
         Set.prototype.isSubsetOf = /**
@@ -1616,8 +1619,7 @@ var collections;
                 return true;
             }
         };
-        Set.prototype.forEach = // TODO: our standard callback signature strategy is not working here. So this is still not generic / typed
-        /**
+        Set.prototype.forEach = /**
         * Executes the provided function once for each element
         * present in this set.
         * @param {function(Object):*} callback function to execute, it is
