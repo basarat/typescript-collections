@@ -31,6 +31,13 @@ module collections {
     }
 
     /**
+    * Function signature for Iterations. Return false to break from loop
+    */
+    export interface IIterationFunction<T>{
+        (T): boolean;
+    }
+
+    /**
      * Default function to compare element order.
      * @function     
      */
@@ -567,7 +574,7 @@ module collections {
          * @param {number} index given index.
          * @return {*} removed element or undefined if the index is out of bounds.
          */
-        removeElementAtIndex(index: number): boolean {
+        removeElementAtIndex(index: number): T {
             if (index < 0 || index >= this.nElements) {
                 return undefined;
             }
@@ -897,7 +904,7 @@ module collections {
          * Returns true if this dictionary contains no mappings.
          * @return {boolean} true if this dictionary contains no mappings.
          */
-        isEmpty():boolean {
+        isEmpty(): boolean {
             return this.nElements <= 0;
         }
     } // End of dictionary
@@ -922,8 +929,8 @@ module collections {
     // }
 
 
-    
-    class MultiDictionary<K,V> {
+
+    class MultiDictionary<K, V> {
 
         // Cannot do: 
         // class MultiDictionary<K,V> extends Dictionary<K,Array<V>> {
@@ -966,8 +973,8 @@ module collections {
          * function to check if two values are equal.
          * 
          */
-        constructor(toStrFunction?:(key: K) => string, valuesEqualsFunction?:IEqualsFunction<V>,allowDuplicateValues = false) {
-            this.dict = new Dictionary<K,Array<V>>(toStrFunction);
+        constructor(toStrFunction?: (key: K) => string, valuesEqualsFunction?: IEqualsFunction<V>, allowDuplicateValues = false) {
+            this.dict = new Dictionary<K, Array<V>>(toStrFunction);
             this.equalsF = valuesEqualsFunction || collections.defaultEquals;
             this.allowDuplicate = allowDuplicateValues;
         }
@@ -979,7 +986,7 @@ module collections {
         * @return {Array} an array holding the values to which this dictionary maps
         * the specified key.
         */
-        getValue(key:K):V[] {
+        getValue(key: K): V[] {
             var values = this.dict.getValue(key);
             if (collections.isUndefined(values)) {
                 return [];
@@ -995,7 +1002,7 @@ module collections {
          * @param {Object} value the value to add to the array at the key
          * @return {boolean} true if the value was not already associated with that key.
          */
-        setValue(key:K, value:V):boolean {
+        setValue(key: K, value: V): boolean {
 
             if (collections.isUndefined(key) || collections.isUndefined(value)) {
                 return false;
@@ -1005,7 +1012,7 @@ module collections {
                 return true;
             }
             var array = this.dict.getValue(key);
-            if(!this.allowDuplicate){
+            if (!this.allowDuplicate) {
                 if (collections.arrays.contains(array, value, this.equalsF)) {
                     return false;
                 }
@@ -1025,7 +1032,7 @@ module collections {
          * @return {*} true if the dictionary changed, false if the key doesn't exist or 
          * if the specified value isn't associated with the specified key.
          */
-        remove(key:K, value?:V):boolean {
+        remove(key: K, value?: V): boolean {
             if (collections.isUndefined(value)) {
                 var v = this.dict.remove(key);
                 if (collections.isUndefined(v)) {
@@ -1047,7 +1054,7 @@ module collections {
          * Returns an array containing all of the keys in this dictionary.
          * @return {Array} an array containing all of the keys in this dictionary.
          */
-        keys():K[] {
+        keys(): K[] {
             return this.dict.keys();
         }
 
@@ -1055,7 +1062,7 @@ module collections {
          * Returns an array containing all of the values in this dictionary.
          * @return {Array} an array containing all of the values in this dictionary.
          */
-        values():V[] {
+        values(): V[] {
             var values = this.dict.values();
             var array = [];
             for (var i = 0; i < values.length; i++) {
@@ -1074,14 +1081,14 @@ module collections {
          * @return {boolean} true if this dictionary at least one value associatted 
          * the specified key.
          */
-        containsKey(key:K):boolean {
+        containsKey(key: K): boolean {
             return this.dict.containsKey(key);
         }
 
         /**
          * Removes all mappings from this dictionary.
          */
-        clear():void {
+        clear(): void {
             return this.dict.clear();
         }
 
@@ -1089,7 +1096,7 @@ module collections {
          * Returns the number of keys in this dictionary.
          * @return {number} the number of key-value mappings in this dictionary.
          */
-        size():number {
+        size(): number {
             return this.dict.size();
         }
 
@@ -1097,7 +1104,7 @@ module collections {
          * Returns true if this dictionary contains no mappings.
          * @return {boolean} true if this dictionary contains no mappings.
          */
-        isEmpty():boolean {
+        isEmpty(): boolean {
             return this.dict.isEmpty();
         }
     }// end of multi dictionary 
@@ -1112,7 +1119,7 @@ module collections {
          * @type {Array.<Object>}
          * @private
          */
-        private data:T[] = [];
+        private data: T[] = [];
         /**
          * Function used to compare elements.
          * @type {function(Object,Object):number}
@@ -1162,7 +1169,7 @@ module collections {
          * zero, or a positive integer as the first argument is less than, equal to,
          * or greater than the second.
          */
-        constructor(compareFunction?:ICompareFunction<T>) {
+        constructor(compareFunction?: ICompareFunction<T>) {
             this.compare = compareFunction || collections.defaultCompare;
         }
 
@@ -1173,7 +1180,7 @@ module collections {
          * @return {number} The index of the left child.
          * @private
          */
-        private leftChildIndex(nodeIndex:number):number {
+        private leftChildIndex(nodeIndex: number): number {
             return (2 * nodeIndex) + 1;
         }
         /**
@@ -1183,7 +1190,7 @@ module collections {
          * @return {number} The index of the right child.
          * @private
          */
-        private rightChildIndex(nodeIndex:number):number {
+        private rightChildIndex(nodeIndex: number): number {
             return (2 * nodeIndex) + 2;
         }
         /**
@@ -1192,7 +1199,7 @@ module collections {
          * @return {number} The index of the parent.
          * @private
          */
-        private parentIndex(nodeIndex:number):number {
+        private parentIndex(nodeIndex: number): number {
             return Math.floor((nodeIndex - 1) / 2);
         }
         /**
@@ -1203,7 +1210,7 @@ module collections {
          * exists.
          * @private
          */
-        private minIndex(leftChild:number, rightChild:number):number {
+        private minIndex(leftChild: number, rightChild: number): number {
 
             if (rightChild >= this.data.length) {
                 if (leftChild >= this.data.length) {
@@ -1224,7 +1231,7 @@ module collections {
          * @param {number} index The index of the node to move up.
          * @private
          */
-        private siftUp(index:number):void {
+        private siftUp(index: number): void {
 
             var parent = this.parentIndex(index);
             while (index > 0 && this.compare(this.data[parent], this.data[index]) > 0) {
@@ -1238,7 +1245,7 @@ module collections {
          * @param {number} nodeIndex The index of the node to move down.
          * @private
          */
-        private siftDown(nodeIndex:number):void {
+        private siftDown(nodeIndex: number): void {
 
             //smaller child index
             var min = this.minIndex(this.leftChildIndex(nodeIndex),
@@ -1257,7 +1264,7 @@ module collections {
          * @return {*} The value at the root of the heap. Returns undefined if the
          * heap is empty.
          */
-        peek():T {
+        peek(): T {
 
             if (this.data.length > 0) {
                 return this.data[0];
@@ -1270,7 +1277,7 @@ module collections {
          * @param {*} element the element.
          * @return true if the element was added or fals if it is undefined.
          */
-        add(element:T):boolean {
+        add(element: T): boolean {
             if (collections.isUndefined(element)) {
                 return undefined;
             }
@@ -1284,7 +1291,7 @@ module collections {
          * @return {*} The value removed from the root of the heap. Returns
          * undefined if the heap is empty.
          */
-        removeRoot():T {
+        removeRoot(): T {
 
             if (this.data.length > 0) {
                 var obj = this.data[0];
@@ -1303,7 +1310,7 @@ module collections {
          * @return {boolean} true if this Heap contains the specified element, false
          * otherwise.
          */
-        contains(element:T):boolean {
+        contains(element: T): boolean {
             var equF = collections.compareToEquals(this.compare);
             return collections.arrays.contains(this.data, element, equF);
         }
@@ -1311,7 +1318,7 @@ module collections {
          * Returns the number of elements in this heap.
          * @return {number} the number of elements in this heap.
          */
-        size():number {
+        size(): number {
             return this.data.length;
         }
         /**
@@ -1319,13 +1326,13 @@ module collections {
          * @return {boolean} true if and only if this heap contains no items; false
          * otherwise.
          */
-        isEmpty():boolean {
+        isEmpty(): boolean {
             return this.data.length <= 0;
         }
         /**
          * Removes all of the elements from this heap.
          */
-        clear():void {
+        clear(): void {
             this.data.length = 0;
         }
 
@@ -1336,21 +1343,18 @@ module collections {
          * invoked with one argument: the element value, to break the iteration you can 
          * optionally return false.
          */
-        forEach(callback:(item:T)=>boolean) {
+        forEach(callback: (item: T) => boolean) {
             collections.arrays.forEach(this.data, callback);
         }
     }
 
-
-
-
-    class Stack {
+    class Stack<T> {
         /**
          * List containing the elements.
          * @type buckets.LinkedList
          * @private
          */
-        private list = new LinkedList();
+        private list: LinkedList<T> = new LinkedList<T>();
         /**
          * Creates an empty Stack.
          * @class A Stack is a Last-In-First-Out (LIFO) data structure, the last
@@ -1366,7 +1370,7 @@ module collections {
          * @param {Object} elem the element to be pushed onto this stack.
          * @return {boolean} true if the element was pushed or false if it is undefined.
          */
-        push(elem) {
+        push(elem: T) {
             return this.list.add(elem, 0);
         }
         /**
@@ -1374,7 +1378,7 @@ module collections {
          * @param {Object} elem the element to be pushed onto this stack.
          * @return {boolean} true if the element was pushed or false if it is undefined.
          */
-        add(elem) {
+        add(elem: T) {
             return this.list.add(elem, 0);
         }
         /**
@@ -1382,7 +1386,7 @@ module collections {
          * @return {*} the object at the top of this stack or undefined if the
          * stack is empty.
          */
-        pop() {
+        pop(): T {
             return this.list.removeElementAtIndex(0);
         }
         /**
@@ -1391,14 +1395,14 @@ module collections {
          * @return {*} the object at the top of this stack or undefined if the
          * stack is empty.
          */
-        peek() {
+        peek(): T {
             return this.list.first();
         }
         /**
          * Returns the number of elements in this stack.
          * @return {number} the number of elements in this stack.
          */
-        size() {
+        size(): number {
             return this.list.size();
         }
 
@@ -1420,7 +1424,7 @@ module collections {
          * @return {boolean} true if this stack contains the specified element,
          * false otherwise.
          */
-        contains(elem, equalsFunction?) {
+        contains(elem: T, equalsFunction?: IEqualsFunction) {
             return this.list.contains(elem, equalsFunction);
         }
         /**
@@ -1428,13 +1432,13 @@ module collections {
          * @return {boolean} true if and only if this stack contains no items; false
          * otherwise.
          */
-        isEmpty() {
+        isEmpty(): boolean {
             return this.list.isEmpty();
         }
         /**
          * Removes all of the elements from this stack.
          */
-        clear() {
+        clear(): void {
             this.list.clear();
         }
 
@@ -1445,10 +1449,9 @@ module collections {
          * invoked with one argument: the element value, to break the iteration you can 
          * optionally return false.
          */
-        forEach(callback) {
+        forEach(callback:IIterationFunction<T>) {
             this.list.forEach(callback);
         }
-
     } // End of stack 
 
 
@@ -2310,7 +2313,7 @@ module collections {
                 n2.parent = n1.parent;
             }
         }
-        
+
         /**
         * @private
         */
