@@ -139,7 +139,7 @@ module collections {
          * @return {number} the position of the first occurrence of the specified element
          * within the specified array, or -1 if not found.
          */
-        export function indexOf(array, item, equalsFunction?) {
+        export function indexOf<T>(array:T[], item:T, equalsFunction?:collections.IEqualsFunction<T>):number {
             var equals = equalsFunction || collections.defaultEquals;
             var length = array.length;
             for (var i = 0; i < length; i++) {
@@ -160,7 +160,7 @@ module collections {
          * @return {number} the position of the last occurrence of the specified element
          * within the specified array or -1 if not found.
          */
-        export function lastIndexOf(array, item, equalsFunction?) {
+        export function lastIndexOf<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>) :number{
             var equals = equalsFunction || collections.defaultEquals;
             var length = array.length;
             for (var i = length - 1; i >= 0; i--) {
@@ -179,7 +179,7 @@ module collections {
          * check equality between 2 elements.
          * @return {boolean} true if the specified array contains the specified element.
          */
-        export function contains(array, item, equalsFunction?) {
+        export function contains<T>(array:T[], item:T, equalsFunction?: collections.IEqualsFunction<T>):boolean {
             return arrays.indexOf(array, item, equalsFunction) >= 0;
         }
 
@@ -192,7 +192,7 @@ module collections {
          * check equality between 2 elements.
          * @return {boolean} true if the array changed after this call.
          */
-        export function remove(array, item, equalsFunction?) {
+        export function remove<T>(array:T[], item:T, equalsFunction?: collections.IEqualsFunction<T>):boolean {
             var index = arrays.indexOf(array, item, equalsFunction);
             if (index < 0) {
                 return false;
@@ -211,7 +211,7 @@ module collections {
          * @return {number} the number of elements in the specified array 
          * equal to the specified object.
          */
-        export function frequency(array, item, equalsFunction?) {
+        export function frequency<T>(array:T[], item:T, equalsFunction?: collections.IEqualsFunction<T>):number {
             var equals = equalsFunction || collections.defaultEquals;
             var length = array.length;
             var freq = 0;
@@ -234,7 +234,7 @@ module collections {
          * check equality between elemements in the arrays.
          * @return {boolean} true if the two arrays are equal
          */
-        export function equals(array1, array2, equalsFunction?) {
+        export function equals<T>(array1:T[], array2:T[], equalsFunction?: collections.IEqualsFunction<T>):boolean {
             var equals = equalsFunction || collections.defaultEquals;
 
             if (array1.length !== array2.length) {
@@ -254,7 +254,7 @@ module collections {
          * @param {*} array the array to copy.
          * @return {Array} a copy of the specified array
          */
-        export function copy(array) {
+        export function copy<T>(array:T[]):T[] {
             return array.concat();
         }
 
@@ -265,7 +265,7 @@ module collections {
          * @param {number} j the index of the other element to be swapped.
          * @return {boolean} true if the array is defined and the indexes are valid.
          */
-        export function swap(array, i, j) {
+        export function swap<T>(array:T[], i:number, j:number):boolean {
             if (i < 0 || i >= array.length || j < 0 || j >= array.length) {
                 return false;
             }
@@ -283,7 +283,7 @@ module collections {
          * invoked with one argument: the element value, to break the iteration you can 
          * optionally return false.
          */
-        export function forEach(array, callback) {
+        export function forEach<T>(array:T[], callback:(item:T)=>boolean):void {
             var lenght = array.length;
             for (var i = 0; i < lenght; i++) {
                 if (callback(array[i]) === false) {
