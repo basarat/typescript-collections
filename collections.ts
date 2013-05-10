@@ -926,50 +926,50 @@ module collections {
 
         private equalsF;
         /**
- * Creates an empty multi dictionary. 
- * @class <p>A multi dictionary is a special kind of dictionary that holds
- * multiple values against each key. Setting a value into the dictionary will 
- * add the value to an array at that key. Getting a key will return an array,
- * holding all the values set to that key.
- * This implementation accepts any kind of objects as keys.</p>
- *
- * <p>If the keys are custom objects a function which converts keys to strings must be
- * provided. Example:</p>
- *
- * <pre>
- * function petToString(pet) {
- *  return pet.name;
- * }
- * </pre>
- * <p>If the values are custom objects a function to check equality between values
- * must be provided. Example:</p>
- *
- * <pre>
- * function petsAreEqualByAge(pet1,pet2) {
- *  return pet1.age===pet2.age;
- * }
- * </pre>
- * @constructor
- * @param {function(Object):string=} toStrFunction optional function
- * to convert keys to strings. If the keys aren't strings or if toString()
- * is not appropriate, a custom function which receives a key and returns a
- * unique string must be provided.
- * @param {function(Object,Object):boolean=} valuesEqualsFunction optional
- * function to check if two values are equal.
- * 
- */
+         * Creates an empty multi dictionary. 
+         * @class <p>A multi dictionary is a special kind of dictionary that holds
+         * multiple values against each key. Setting a value into the dictionary will 
+         * add the value to an array at that key. Getting a key will return an array,
+         * holding all the values set to that key.
+         * This implementation accepts any kind of objects as keys.</p>
+         *
+         * <p>If the keys are custom objects a function which converts keys to strings must be
+         * provided. Example:</p>
+         *
+         * <pre>
+         * function petToString(pet) {
+         *  return pet.name;
+         * }
+         * </pre>
+         * <p>If the values are custom objects a function to check equality between values
+         * must be provided. Example:</p>
+         *
+         * <pre>
+         * function petsAreEqualByAge(pet1,pet2) {
+         *  return pet1.age===pet2.age;
+         * }
+         * </pre>
+         * @constructor
+         * @param {function(Object):string=} toStrFunction optional function
+         * to convert keys to strings. If the keys aren't strings or if toString()
+         * is not appropriate, a custom function which receives a key and returns a
+         * unique string must be provided.
+         * @param {function(Object,Object):boolean=} valuesEqualsFunction optional
+         * function to check if two values are equal.
+         * 
+         */
         constructor(toStrFunction?, valuesEqualsFunction?) {
             super(toStrFunction);
             this.equalsF = valuesEqualsFunction || collections.defaultEquals;
         }
         /**
-    * Returns an array holding the values to which this dictionary maps
-    * the specified key.
-    * Returns an empty array if this dictionary contains no mappings for this key.
-    * @param {Object} key key whose associated values are to be returned.
-    * @return {Array} an array holding the values to which this dictionary maps
-    * the specified key.
-    */
+        * Returns an array holding the values to which this dictionary maps
+        * the specified key.
+        * Returns an empty array if this dictionary contains no mappings for this key.
+        * @param {Object} key key whose associated values are to be returned.
+        * @return {Array} an array holding the values to which this dictionary maps
+        * the specified key.
+        */
         getValue(key) {
             var values = super.getValue(key);
             if (collections.isUndefined(values)) {
