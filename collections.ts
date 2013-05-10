@@ -925,15 +925,18 @@ module collections {
     // Cannot 
     // class MultiDictionary<K,V> extends Dictionary<K,Array<V>> {
     // Since we want to reuse the function name setValue and types become incompatible 
-    class MultiDictionary<K,V> extends Dictionary {
+    class MultiDictionary<K,V> {
 
-        private equalsF:IEqualsFunction<V>;
+        private dict: Dictionary<K, Array<V>>;
+        private equalsF: IEqualsFunction<V>;
+        private allowDuplicate: boolean;
         /**
          * Creates an empty multi dictionary. 
          * @class <p>A multi dictionary is a special kind of dictionary that holds
          * multiple values against each key. Setting a value into the dictionary will 
          * add the value to an array at that key. Getting a key will return an array,
-         * holding all the values set to that key.
+         * holding all the values set to that key. 
+         * You can configure to allow duplicates in the values. 
          * This implementation accepts any kind of objects as keys.</p>
          *
          * <p>If the keys are custom objects a function which converts keys to strings must be
@@ -961,9 +964,10 @@ module collections {
          * function to check if two values are equal.
          * 
          */
-        constructor(toStrFunction?:(key: K) => string, valuesEqualsFunction?:IEqualsFunction<V>) {
-            super(toStrFunction);
+        constructor(toStrFunction?:(key: K) => string, valuesEqualsFunction?:IEqualsFunction<V>,allowDuplicateValues = false) {
+            this.dict = new Dictionary<K,Array<V>>(toStrFunction);
             this.equalsF = valuesEqualsFunction || collections.defaultEquals;
+            this.allowDuplicate = allowDuplicateValues;
         }
         /**
         * Returns an array holding the values to which this dictionary maps
@@ -974,7 +978,7 @@ module collections {
         * the specified key.
         */
         getValue(key:K):V[] {
-            var values = super.getValue(key);
+            var values = this.dict.getValue(key);
             if (collections.isUndefined(values)) {
                 return [];
             }
@@ -995,12 +999,14 @@ module collections {
                 return false;
             }
             if (!this.containsKey(key)) {
-                super.setValue(key, [value]);
+                this.dict.setValue(key, [value]);
                 return true;
             }
-            var array = super.getValue(key);
-            if (collections.arrays.contains(array, value, this.equalsF)) {
-                return false;
+            var array = this.dict.getValue(key);
+            if(!this.allowDuplicate){
+                if (collections.arrays.contains(array, value, this.equalsF)) {
+                    return false;
+                }
             }
             array.push(value);
             return true;
@@ -1019,16 +1025,16 @@ module collections {
          */
         remove(key:K, value?:V):boolean {
             if (collections.isUndefined(value)) {
-                var v = super.remove(key);
+                var v = this.dict.remove(key);
                 if (collections.isUndefined(v)) {
                     return false;
                 }
                 return true;
             }
-            var array = super.getValue(key);
+            var array = this.dict.getValue(key);
             if (collections.arrays.remove(array, value, this.equalsF)) {
                 if (array.length === 0) {
-                    super.remove(key);
+                    this.dict.remove(key);
                 }
                 return true;
             }
@@ -1040,7 +1046,7 @@ module collections {
          * @return {Array} an array containing all of the keys in this dictionary.
          */
         keys():K[] {
-            return super.keys();
+            return this.dict.keys();
         }
 
         /**
@@ -1048,7 +1054,7 @@ module collections {
          * @return {Array} an array containing all of the values in this dictionary.
          */
         values():V[] {
-            var values = super.values();
+            var values = this.dict.values();
             var array = [];
             for (var i = 0; i < values.length; i++) {
                 var v = values[i];
@@ -1067,14 +1073,14 @@ module collections {
          * the specified key.
          */
         containsKey(key:K):boolean {
-            return super.containsKey(key);
+            return this.dict.containsKey(key);
         }
 
         /**
          * Removes all mappings from this dictionary.
          */
         clear():void {
-            return super.clear();
+            return this.dict.clear();
         }
 
         /**
@@ -1082,7 +1088,7 @@ module collections {
          * @return {number} the number of key-value mappings in this dictionary.
          */
         size():number {
-            return super.size();
+            return this.dict.size();
         }
 
         /**
@@ -1090,7 +1096,7 @@ module collections {
          * @return {boolean} true if this dictionary contains no mappings.
          */
         isEmpty():boolean {
-            return super.isEmpty();
+            return this.dict.isEmpty();
         }
     }// end of multi dictionary 
 

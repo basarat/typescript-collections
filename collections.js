@@ -1,8 +1,3 @@
-var __extends = this.__extends || function (d, b) {
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
 // Copyright 2013 Basarat Ali Syed. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -826,14 +821,14 @@ var collections;
     // Cannot
     // class MultiDictionary<K,V> extends Dictionary<K,Array<V>> {
     // Since we want to reuse the function name setValue and types become incompatible
-    var MultiDictionary = (function (_super) {
-        __extends(MultiDictionary, _super);
+    var MultiDictionary = (function () {
         /**
         * Creates an empty multi dictionary.
         * @class <p>A multi dictionary is a special kind of dictionary that holds
         * multiple values against each key. Setting a value into the dictionary will
         * add the value to an array at that key. Getting a key will return an array,
         * holding all the values set to that key.
+        * You can configure to allow duplicates in the values.
         * This implementation accepts any kind of objects as keys.</p>
         *
         * <p>If the keys are custom objects a function which converts keys to strings must be
@@ -861,9 +856,11 @@ var collections;
         * function to check if two values are equal.
         *
         */
-        function MultiDictionary(toStrFunction, valuesEqualsFunction) {
-            _super.call(this, toStrFunction);
+        function MultiDictionary(toStrFunction, valuesEqualsFunction, allowDuplicateValues) {
+            if (typeof allowDuplicateValues === "undefined") { allowDuplicateValues = false; }
+            this.dict = new Dictionary(toStrFunction);
             this.equalsF = valuesEqualsFunction || collections.defaultEquals;
+            this.allowDuplicate = allowDuplicateValues;
         }
         MultiDictionary.prototype.getValue = /**
         * Returns an array holding the values to which this dictionary maps
@@ -874,7 +871,7 @@ var collections;
         * the specified key.
         */
         function (key) {
-            var values = _super.prototype.getValue.call(this, key);
+            var values = this.dict.getValue(key);
             if (collections.isUndefined(values)) {
                 return [];
             }
@@ -893,14 +890,16 @@ var collections;
                 return false;
             }
             if (!this.containsKey(key)) {
-                _super.prototype.setValue.call(this, key, [
+                this.dict.setValue(key, [
                     value
                 ]);
                 return true;
             }
-            var array = _super.prototype.getValue.call(this, key);
-            if (collections.arrays.contains(array, value, this.equalsF)) {
-                return false;
+            var array = this.dict.getValue(key);
+            if (!this.allowDuplicate) {
+                if (collections.arrays.contains(array, value, this.equalsF)) {
+                    return false;
+                }
             }
             array.push(value);
             return true;
@@ -918,16 +917,16 @@ var collections;
         */
         function (key, value) {
             if (collections.isUndefined(value)) {
-                var v = _super.prototype.remove.call(this, key);
+                var v = this.dict.remove(key);
                 if (collections.isUndefined(v)) {
                     return false;
                 }
                 return true;
             }
-            var array = _super.prototype.getValue.call(this, key);
+            var array = this.dict.getValue(key);
             if (collections.arrays.remove(array, value, this.equalsF)) {
                 if (array.length === 0) {
-                    _super.prototype.remove.call(this, key);
+                    this.dict.remove(key);
                 }
                 return true;
             }
@@ -938,14 +937,14 @@ var collections;
         * @return {Array} an array containing all of the keys in this dictionary.
         */
         function () {
-            return _super.prototype.keys.call(this);
+            return this.dict.keys();
         };
         MultiDictionary.prototype.values = /**
         * Returns an array containing all of the values in this dictionary.
         * @return {Array} an array containing all of the values in this dictionary.
         */
         function () {
-            var values = _super.prototype.values.call(this);
+            var values = this.dict.values();
             var array = [];
             for(var i = 0; i < values.length; i++) {
                 var v = values[i];
@@ -963,30 +962,30 @@ var collections;
         * the specified key.
         */
         function (key) {
-            return _super.prototype.containsKey.call(this, key);
+            return this.dict.containsKey(key);
         };
         MultiDictionary.prototype.clear = /**
         * Removes all mappings from this dictionary.
         */
         function () {
-            return _super.prototype.clear.call(this);
+            return this.dict.clear();
         };
         MultiDictionary.prototype.size = /**
         * Returns the number of keys in this dictionary.
         * @return {number} the number of key-value mappings in this dictionary.
         */
         function () {
-            return _super.prototype.size.call(this);
+            return this.dict.size();
         };
         MultiDictionary.prototype.isEmpty = /**
         * Returns true if this dictionary contains no mappings.
         * @return {boolean} true if this dictionary contains no mappings.
         */
         function () {
-            return _super.prototype.isEmpty.call(this);
+            return this.dict.isEmpty();
         };
         return MultiDictionary;
-    })(Dictionary);    
+    })();    
     var Heap = (function () {
         /**
         * Creates an empty Heap.
