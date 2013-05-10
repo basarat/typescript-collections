@@ -33,7 +33,7 @@ module collections {
     /**
     * Function signature for Iterations. Return false to break from loop
     */
-    export interface IIterationFunction<T>{
+    export interface ILoopFunction<T>{
         (T): boolean;
     }
 
@@ -1354,7 +1354,7 @@ module collections {
          * @type buckets.LinkedList
          * @private
          */
-        private list: LinkedList<T> = new LinkedList<T>();
+        private list: LinkedList<T>;
         /**
          * Creates an empty Stack.
          * @class A Stack is a Last-In-First-Out (LIFO) data structure, the last
@@ -1363,6 +1363,7 @@ module collections {
          * @constructor
          */
         constructor() {
+            this.list = new LinkedList<T>();
         }
 
         /**
@@ -1449,21 +1450,21 @@ module collections {
          * invoked with one argument: the element value, to break the iteration you can 
          * optionally return false.
          */
-        forEach(callback:IIterationFunction<T>) {
+        forEach(callback:ILoopFunction<T>) {
             this.list.forEach(callback);
         }
     } // End of stack 
 
 
 
-    class Queue {
+    class Queue <T>{
 
         /**
          * List containing the elements.
          * @type buckets.LinkedList
          * @private
          */
-        private list: LinkedList;
+        private list: LinkedList<T>;
 
         /**
          * Creates an empty queue.
@@ -1482,7 +1483,7 @@ module collections {
          * @param {Object} elem the element to insert.
          * @return {boolean} true if the element was inserted, or false if it is undefined.
          */
-        enqueue(elem) {
+        enqueue(elem:T):boolean {
             return this.list.add(elem);
         }
         /**
@@ -1490,14 +1491,14 @@ module collections {
          * @param {Object} elem the element to insert.
          * @return {boolean} true if the element was inserted, or false if it is undefined.
          */
-        add(elem) {
+        add(elem:T):boolean {
             return this.list.add(elem);
         }
         /**
          * Retrieves and removes the head of this queue.
          * @return {*} the head of this queue, or undefined if this queue is empty.
          */
-        dequeue() {
+        dequeue():T {
             if (this.list.size() !== 0) {
                 var el = this.list.first();
                 this.list.removeElementAtIndex(0);
@@ -1509,7 +1510,7 @@ module collections {
          * Retrieves, but does not remove, the head of this queue.
          * @return {*} the head of this queue, or undefined if this queue is empty.
          */
-        peek() {
+        peek():T {
 
             if (this.list.size() !== 0) {
                 return this.list.first();
@@ -1521,7 +1522,7 @@ module collections {
          * Returns the number of elements in this queue.
          * @return {number} the number of elements in this queue.
          */
-        size() {
+        size():number {
             return this.list.size();
         }
 
@@ -1543,7 +1544,7 @@ module collections {
          * @return {boolean} true if this queue contains the specified element,
          * false otherwise.
          */
-        contains(elem, equalsFunction?) {
+        contains(elem:T, equalsFunction?:IEqualsFunction<T>):boolean {
             return this.list.contains(elem, equalsFunction);
         }
 
@@ -1552,14 +1553,14 @@ module collections {
          * @return {boolean} true if and only if this queue contains no items; false
          * otherwise.
          */
-        isEmpty() {
+        isEmpty():boolean {
             return this.list.size() <= 0;
         }
 
         /**
          * Removes all of the elements from this queue.
          */
-        clear() {
+        clear():void {
             this.list.clear();
         }
 
@@ -1570,7 +1571,7 @@ module collections {
          * invoked with one argument: the element value, to break the iteration you can 
          * optionally return false.
          */
-        forEach(callback) {
+        forEach(callback:ILoopFunction<T>) {
             this.list.forEach(callback);
         }
 

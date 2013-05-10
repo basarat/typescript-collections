@@ -1209,11 +1209,6 @@ var collections;
         * @constructor
         */
         function Stack() {
-            /**
-            * List containing the elements.
-            * @type buckets.LinkedList
-            * @private
-            */
             this.list = new LinkedList();
         }
         Stack.prototype.push = /**
