@@ -2344,7 +2344,7 @@ module collections {
         /**
         * @private
         */
-        private inorderTraversalAux(node:BSTreeNode<T>, callback:ILoopFunction<T>, signal):void {
+        private inorderTraversalAux(node: BSTreeNode<T>, callback: ILoopFunction<T>, signal: { stop: boolean;}):void {
             if (node === null || signal.stop) {
                 return;
             }
@@ -2384,7 +2384,7 @@ module collections {
         /**
         * @private
         */
-        private preorderTraversalAux(node: BSTreeNode<T>, callback:ILoopFunction<T>, signal) {
+        private preorderTraversalAux(node: BSTreeNode<T>, callback: ILoopFunction<T>, signal: { stop: boolean; }) {
             if (node === null || signal.stop) {
                 return;
             }
@@ -2401,7 +2401,7 @@ module collections {
         /**
         * @private
         */
-        private postorderTraversalAux(node: BSTreeNode<T>, callback:ILoopFunction<T>, signal) {
+        private postorderTraversalAux(node: BSTreeNode<T>, callback: ILoopFunction<T>, signal: { stop: boolean; }) {
             if (node === null || signal.stop) {
                 return;
             }
