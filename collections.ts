@@ -1911,11 +1911,8 @@ module collections {
         * undefined 1 copy is added.
         * @return {boolean} true unless element is undefined.
         */
-        add(element, nCopies) {
-
-            if (isNaN(nCopies) || collections.isUndefined(nCopies)) {
-                nCopies = 1;
-            }
+        add(element:T, nCopies:number=1):boolean {
+            
             if (collections.isUndefined(element) || nCopies <= 0) {
                 return false;
             }
@@ -1938,7 +1935,7 @@ module collections {
         * @param {Object} element the object to search for..
         * @return {number} the number of copies of the object, 0 if not found
         */
-        count(element) {
+        count(element:T):number {
 
             if (!this.contains(element)) {
                 return 0;
@@ -1953,7 +1950,7 @@ module collections {
          * @return {boolean} true if this bag contains the specified element,
          * false otherwise.
          */
-        contains(element) {
+        contains(element:T):boolean {
             return this.dictionary.containsKey(element);
         }
 
@@ -1966,11 +1963,8 @@ module collections {
         * undefined 1 copy is removed.
         * @return {boolean} true if at least 1 element was removed.
         */
-        remove(element, nCopies) {
+        remove(element:T, nCopies:number = 1) {
 
-            if (isNaN(nCopies) || collections.isUndefined(nCopies)) {
-                nCopies = 1;
-            }
             if (collections.isUndefined(element) || nCopies <= 0) {
                 return false;
             }
@@ -1997,7 +1991,7 @@ module collections {
          * including multiple copies.
          * @return {Array} an array containing all of the elements in this bag.
          */
-        toArray() {
+        toArray():T[] {
             var a = [];
             var values = this.dictionary.values();
             var vl = values.length;
@@ -2016,15 +2010,15 @@ module collections {
          * Returns a set of unique elements in this bag. 
          * @return {buckets.Set} a set of unique elements in this bag.
          */
-        toSet() {
-            var set = new Set(this.toStrF);
+        toSet():Set<T> {
+            var toret = new Set<T>(this.toStrF);
             var elements = this.dictionary.values();
             var l = elements.length;
             for (var i = 0; i < l; i++) {
                 var value = elements[i].value;
-                set.add(value);
+                toret.add(value);
             }
-            return set;
+            return toret;
         }
 
         /**

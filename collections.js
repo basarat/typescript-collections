@@ -1693,9 +1693,7 @@ var collections;
         * @return {boolean} true unless element is undefined.
         */
         function (element, nCopies) {
-            if (isNaN(nCopies) || collections.isUndefined(nCopies)) {
-                nCopies = 1;
-            }
+            if (typeof nCopies === "undefined") { nCopies = 1; }
             if (collections.isUndefined(element) || nCopies <= 0) {
                 return false;
             }
@@ -1742,9 +1740,7 @@ var collections;
         * @return {boolean} true if at least 1 element was removed.
         */
         function (element, nCopies) {
-            if (isNaN(nCopies) || collections.isUndefined(nCopies)) {
-                nCopies = 1;
-            }
+            if (typeof nCopies === "undefined") { nCopies = 1; }
             if (collections.isUndefined(element) || nCopies <= 0) {
                 return false;
             }
@@ -1788,14 +1784,14 @@ var collections;
         * @return {buckets.Set} a set of unique elements in this bag.
         */
         function () {
-            var set = new Set(this.toStrF);
+            var toret = new Set(this.toStrF);
             var elements = this.dictionary.values();
             var l = elements.length;
             for(var i = 0; i < l; i++) {
                 var value = elements[i].value;
-                set.add(value);
+                toret.add(value);
             }
-            return set;
+            return toret;
         };
         Bag.prototype.forEach = /**
         * Executes the provided function once for each element
