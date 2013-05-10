@@ -1720,7 +1720,7 @@ module collections {
          * is not appropriate, a custom function which receives a onject and returns a
          * unique string must be provided.
          */
-        constructor(toStringFunction?: (T) => string) {
+        constructor(toStringFunction?: (item:T) => string) {
             this.dictionary = new Dictionary<T, any>(toStringFunction);
         }
 
@@ -1872,11 +1872,11 @@ module collections {
 
 
 
-    class Bag {
+    class Bag<T>{
 
-        private toStrF;
-        private dictionary: Dictionary;
-        private nElements;
+        private toStrF:(item:T)=>string;
+        private dictionary: Dictionary<T,any>;
+        private nElements:number;
 
         /**
          * Creates an empty bag.
@@ -1897,9 +1897,9 @@ module collections {
          * is not appropriate, a custom function which receives an object and returns a
          * unique string must be provided.
          */
-        constructor(toStrFunction?) {
+        constructor(toStrFunction?: (item:T) => string) {
             this.toStrF = toStrFunction || collections.defaultToString;
-            this.dictionary = new Dictionary(this.toStrF);
+            this.dictionary = new Dictionary<T,any>(this.toStrF);
             this.nElements = 0;
         }
 
