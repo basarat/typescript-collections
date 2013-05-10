@@ -922,11 +922,13 @@ module collections {
     // }
 
 
-    // Cannot 
-    // class MultiDictionary<K,V> extends Dictionary<K,Array<V>> {
-    // Since we want to reuse the function name setValue and types become incompatible 
+    
     class MultiDictionary<K,V> {
 
+        // Cannot do: 
+        // class MultiDictionary<K,V> extends Dictionary<K,Array<V>> {
+        // Since we want to reuse the function name setValue and types in signature become incompatible 
+        // Therefore we are using composition instead of inheritance
         private dict: Dictionary<K, Array<V>>;
         private equalsF: IEqualsFunction<V>;
         private allowDuplicate: boolean;
@@ -1106,10 +1108,10 @@ module collections {
 
     class Heap {
         /**
- * Array used to store the elements od the heap.
- * @type {Array.<Object>}
- * @private
- */
+         * Array used to store the elements od the heap.
+         * @type {Array.<Object>}
+         * @private
+         */
         private data = [];
         /**
          * Function used to compare elements.
@@ -1118,60 +1120,59 @@ module collections {
          */
         private compare;
         /**
-   * Creates an empty Heap.
-   * @class 
-   * <p>A heap is a binary tree, where the nodes maintain the heap property: 
-   * each node is smaller than each of its children. 
-   * This implementation uses an array to store elements.</p>
-   * <p>If the inserted elements are custom objects a compare function must be provided, 
-   *  at construction time, otherwise the <=, === and >= operators are 
-   * used to compare elements. Example:</p>
-   *
-   * <pre>
-   * function compare(a, b) {
-   *  if (a is less than b by some ordering criterion) {
-   *     return -1;
-   *  } if (a is greater than b by the ordering criterion) {
-   *     return 1;
-   *  } 
-   *  // a must be equal to b
-   *  return 0;
-   * }
-   * </pre>
-   *
-   * <p>If a Max-Heap is wanted (greater elements on top) you can a provide a
-   * reverse compare function to accomplish that behavior. Example:</p>
-   *
-   * <pre>
-   * function reverseCompare(a, b) {
-   *  if (a is less than b by some ordering criterion) {
-   *     return 1;
-   *  } if (a is greater than b by the ordering criterion) {
-   *     return -1;
-   *  } 
-   *  // a must be equal to b
-   *  return 0;
-   * }
-   * </pre>
-   *
-   * @constructor
-   * @param {function(Object,Object):number=} compareFunction optional
-   * function used to compare two elements. Must return a negative integer,
-   * zero, or a positive integer as the first argument is less than, equal to,
-   * or greater than the second.
-   */
-
+         * Creates an empty Heap.
+         * @class 
+         * <p>A heap is a binary tree, where the nodes maintain the heap property: 
+         * each node is smaller than each of its children. 
+         * This implementation uses an array to store elements.</p>
+         * <p>If the inserted elements are custom objects a compare function must be provided, 
+         *  at construction time, otherwise the <=, === and >= operators are 
+         * used to compare elements. Example:</p>
+         *
+         * <pre>
+         * function compare(a, b) {
+         *  if (a is less than b by some ordering criterion) {
+         *     return -1;
+         *  } if (a is greater than b by the ordering criterion) {
+         *     return 1;
+         *  } 
+         *  // a must be equal to b
+         *  return 0;
+         * }
+         * </pre>
+         *
+         * <p>If a Max-Heap is wanted (greater elements on top) you can a provide a
+         * reverse compare function to accomplish that behavior. Example:</p>
+         *
+         * <pre>
+         * function reverseCompare(a, b) {
+         *  if (a is less than b by some ordering criterion) {
+         *     return 1;
+         *  } if (a is greater than b by the ordering criterion) {
+         *     return -1;
+         *  } 
+         *  // a must be equal to b
+         *  return 0;
+         * }
+         * </pre>
+         *
+         * @constructor
+         * @param {function(Object,Object):number=} compareFunction optional
+         * function used to compare two elements. Must return a negative integer,
+         * zero, or a positive integer as the first argument is less than, equal to,
+         * or greater than the second.
+         */
         constructor(compareFunction?) {
             this.compare = compareFunction || collections.defaultCompare;
         }
 
         /**
-     * Returns the index of the left child of the node at the given index.
-     * @param {number} nodeIndex The index of the node to get the left child
-     * for.
-     * @return {number} The index of the left child.
-     * @private
-     */
+         * Returns the index of the left child of the node at the given index.
+         * @param {number} nodeIndex The index of the node to get the left child
+         * for.
+         * @return {number} The index of the left child.
+         * @private
+         */
         private leftChildIndex(nodeIndex) {
             return (2 * nodeIndex) + 1;
         }
@@ -1345,26 +1346,26 @@ module collections {
 
     class Stack {
         /**
- * List containing the elements.
- * @type buckets.LinkedList
- * @private
- */
+         * List containing the elements.
+         * @type buckets.LinkedList
+         * @private
+         */
         private list = new LinkedList();
         /**
- * Creates an empty Stack.
- * @class A Stack is a Last-In-First-Out (LIFO) data structure, the last
- * element added to the stack will be the first one to be removed. This
- * implementation uses a linked list as a container.
- * @constructor
- */
+         * Creates an empty Stack.
+         * @class A Stack is a Last-In-First-Out (LIFO) data structure, the last
+         * element added to the stack will be the first one to be removed. This
+         * implementation uses a linked list as a container.
+         * @constructor
+         */
         constructor() {
         }
 
         /**
-    * Pushes an item onto the top of this stack.
-    * @param {Object} elem the element to be pushed onto this stack.
-    * @return {boolean} true if the element was pushed or false if it is undefined.
-    */
+         * Pushes an item onto the top of this stack.
+         * @param {Object} elem the element to be pushed onto this stack.
+         * @return {boolean} true if the element was pushed or false if it is undefined.
+         */
         push(elem) {
             return this.list.add(elem, 0);
         }
@@ -1462,12 +1463,12 @@ module collections {
         private list: LinkedList;
 
         /**
- * Creates an empty queue.
- * @class A queue is a First-In-First-Out (FIFO) data structure, the first
- * element added to the queue will be the first one to be removed. This
- * implementation uses a linked list as a container.
- * @constructor
- */
+         * Creates an empty queue.
+         * @class A queue is a First-In-First-Out (FIFO) data structure, the first
+         * element added to the queue will be the first one to be removed. This
+         * implementation uses a linked list as a container.
+         * @constructor
+         */
         constructor() {
             this.list = new LinkedList();
         }
@@ -1577,38 +1578,38 @@ module collections {
 
         private heap: Heap;
         /**
- * Creates an empty priority queue.
- * @class <p>In a priority queue each element is associated with a "priority",
- * elements are dequeued in highest-priority-first order (the elements with the 
- * highest priority are dequeued first). Priority Queues are implemented as heaps. 
- * If the inserted elements are custom objects a compare function must be provided, 
- * otherwise the <=, === and >= operators are used to compare object priority.</p>
- * <pre>
- * function compare(a, b) {
- *  if (a is less than b by some ordering criterion) {
- *     return -1;
- *  } if (a is greater than b by the ordering criterion) {
- *     return 1;
- *  } 
- *  // a must be equal to b
- *  return 0;
- * }
- * </pre>
- * @constructor
- * @param {function(Object,Object):number=} compareFunction optional
- * function used to compare two element priorities. Must return a negative integer,
- * zero, or a positive integer as the first argument is less than, equal to,
- * or greater than the second.
- */
+         * Creates an empty priority queue.
+         * @class <p>In a priority queue each element is associated with a "priority",
+         * elements are dequeued in highest-priority-first order (the elements with the 
+         * highest priority are dequeued first). Priority Queues are implemented as heaps. 
+         * If the inserted elements are custom objects a compare function must be provided, 
+         * otherwise the <=, === and >= operators are used to compare object priority.</p>
+         * <pre>
+         * function compare(a, b) {
+         *  if (a is less than b by some ordering criterion) {
+         *     return -1;
+         *  } if (a is greater than b by the ordering criterion) {
+         *     return 1;
+         *  } 
+         *  // a must be equal to b
+         *  return 0;
+         * }
+         * </pre>
+         * @constructor
+         * @param {function(Object,Object):number=} compareFunction optional
+         * function used to compare two element priorities. Must return a negative integer,
+         * zero, or a positive integer as the first argument is less than, equal to,
+         * or greater than the second.
+         */
         constructor(compareFunction?) {
             this.heap = new Heap(collections.reverseCompareFunction(compareFunction));
         }
 
         /**
-    * Inserts the specified element into this priority queue.
-    * @param {Object} element the element to insert.
-    * @return {boolean} true if the element was inserted, or false if it is undefined.
-    */
+         * Inserts the specified element into this priority queue.
+         * @param {Object} element the element to insert.
+         * @return {boolean} true if the element was inserted, or false if it is undefined.
+         */
         enqueue(element) {
             return this.heap.add(element);
         }
@@ -1625,7 +1626,7 @@ module collections {
         /**
          * Retrieves and removes the highest priority element of this queue.
          * @return {*} the the highest priority element of this queue, 
-        or undefined if this queue is empty.
+         *  or undefined if this queue is empty.
          */
         dequeue() {
             if (this.heap.size() !== 0) {
@@ -1871,24 +1872,24 @@ module collections {
         private nElements;
 
         /**
- * Creates an empty bag.
- * @class <p>A bag is a special kind of set in which members are 
- * allowed to appear more than once.</p>
- * <p>If the inserted elements are custom objects a function 
- * which converts elements to unique strings must be provided. Example:</p>
- *
- * <pre>
- * function petToString(pet) {
- *  return pet.name;
- * }
- * </pre>
- *
- * @constructor
- * @param {function(Object):string=} toStrFunction optional function used
- * to convert elements to strings. If the elements aren't strings or if toString()
- * is not appropriate, a custom function which receives an object and returns a
- * unique string must be provided.
- */
+         * Creates an empty bag.
+         * @class <p>A bag is a special kind of set in which members are 
+         * allowed to appear more than once.</p>
+         * <p>If the inserted elements are custom objects a function 
+         * which converts elements to unique strings must be provided. Example:</p>
+         *
+         * <pre>
+         * function petToString(pet) {
+         *  return pet.name;
+         * }
+         * </pre>
+         *
+         * @constructor
+         * @param {function(Object):string=} toStrFunction optional function used
+         * to convert elements to strings. If the elements aren't strings or if toString()
+         * is not appropriate, a custom function which receives an object and returns a
+         * unique string must be provided.
+         */
         constructor(toStrFunction?) {
             this.toStrF = toStrFunction || collections.defaultToString;
             this.dictionary = new Dictionary(this.toStrF);
@@ -2071,41 +2072,40 @@ module collections {
         private compare;
         private nElements: number;
         /**
- * Creates an empty binary search tree.
- * @class <p>A binary search tree is a binary tree in which each 
- * internal node stores an element such that the elements stored in the 
- * left subtree are less than it and the elements 
- * stored in the right subtree are greater.</p>
- * <p>Formally, a binary search tree is a node-based binary tree data structure which 
- * has the following properties:</p>
- * <ul>
- * <li>The left subtree of a node contains only nodes with elements less 
- * than the node's element</li>
- * <li>The right subtree of a node contains only nodes with elements greater 
- * than the node's element</li>
- * <li>Both the left and right subtrees must also be binary search trees.</li>
- * </ul>
- * <p>If the inserted elements are custom objects a compare function must 
- * be provided at construction time, otherwise the <=, === and >= operators are 
- * used to compare elements. Example:</p>
- * <pre>
- * function compare(a, b) {
- *  if (a is less than b by some ordering criterion) {
- *     return -1;
- *  } if (a is greater than b by the ordering criterion) {
- *     return 1;
- *  } 
- *  // a must be equal to b
- *  return 0;
- * }
- * </pre>
- * @constructor
- * @param {function(Object,Object):number=} compareFunction optional
- * function used to compare two elements. Must return a negative integer,
- * zero, or a positive integer as the first argument is less than, equal to,
- * or greater than the second.
- */
-
+         * Creates an empty binary search tree.
+         * @class <p>A binary search tree is a binary tree in which each 
+         * internal node stores an element such that the elements stored in the 
+         * left subtree are less than it and the elements 
+         * stored in the right subtree are greater.</p>
+         * <p>Formally, a binary search tree is a node-based binary tree data structure which 
+         * has the following properties:</p>
+         * <ul>
+         * <li>The left subtree of a node contains only nodes with elements less 
+         * than the node's element</li>
+         * <li>The right subtree of a node contains only nodes with elements greater 
+         * than the node's element</li>
+         * <li>Both the left and right subtrees must also be binary search trees.</li>
+         * </ul>
+         * <p>If the inserted elements are custom objects a compare function must 
+         * be provided at construction time, otherwise the <=, === and >= operators are 
+         * used to compare elements. Example:</p>
+         * <pre>
+         * function compare(a, b) {
+         *  if (a is less than b by some ordering criterion) {
+         *     return -1;
+         *  } if (a is greater than b by the ordering criterion) {
+         *     return 1;
+         *  } 
+         *  // a must be equal to b
+         *  return 0;
+         * }
+         * </pre>
+         * @constructor
+         * @param {function(Object,Object):number=} compareFunction optional
+         * function used to compare two elements. Must return a negative integer,
+         * zero, or a positive integer as the first argument is less than, equal to,
+         * or greater than the second.
+         */
         constructor(compareFunction?) {
             this.root = null;
             this.compare = compareFunction || collections.defaultCompare;
@@ -2113,10 +2113,10 @@ module collections {
         }
 
         /**
-     * Adds the specified element to this tree if it is not already present.
-     * @param {Object} element the element to insert.
-     * @return {boolean} true if this tree did not already contain the specified element.
-     */
+         * Adds the specified element to this tree if it is not already present.
+         * @param {Object} element the element to insert.
+         * @return {boolean} true if this tree did not already contain the specified element.
+         */
         add(element) {
             if (collections.isUndefined(element)) {
                 return false;
@@ -2295,7 +2295,6 @@ module collections {
             return node;
         }
 
-
         /**
         * @private
         */
@@ -2311,8 +2310,7 @@ module collections {
                 n2.parent = n1.parent;
             }
         }
-
-
+        
         /**
         * @private
         */
@@ -2333,6 +2331,7 @@ module collections {
                 y.leftCh.parent = y;
             }
         }
+
         /**
         * @private
         */

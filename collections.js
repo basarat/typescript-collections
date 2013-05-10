@@ -818,9 +818,6 @@ var collections;
     // 	}
     // 	return this.equalsAux(this.firstNode,other.firstNode,eqF);
     // }
-    // Cannot
-    // class MultiDictionary<K,V> extends Dictionary<K,Array<V>> {
-    // Since we want to reuse the function name setValue and types become incompatible
     var MultiDictionary = (function () {
         /**
         * Creates an empty multi dictionary.
@@ -1456,7 +1453,7 @@ var collections;
         PriorityQueue.prototype.dequeue = /**
         * Retrieves and removes the highest priority element of this queue.
         * @return {*} the the highest priority element of this queue,
-        or undefined if this queue is empty.
+        *  or undefined if this queue is empty.
         */
         function () {
             if (this.heap.size() !== 0) {
