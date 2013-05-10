@@ -2028,7 +2028,7 @@ module collections {
          * invoked with one argument: the element. To break the iteration you can 
          * optionally return false.
          */
-        forEach(callback) {
+        forEach(callback:ILoopFunction<T>) {
             this.dictionary.forEach(function (k, v) {
                 var value = v.value;
                 var copies = v.copies;
@@ -2044,7 +2044,7 @@ module collections {
          * Returns the number of elements in this bag.
          * @return {number} the number of elements in this bag.
          */
-        size() {
+        size():number {
             return this.nElements;
         }
 
@@ -2052,14 +2052,14 @@ module collections {
          * Returns true if this bag contains no elements.
          * @return {boolean} true if this bag contains no elements.
          */
-        isEmpty() {
+        isEmpty():boolean {
             return this.nElements === 0;
         }
 
         /**
          * Removes all of the elements from this bag.
          */
-        clear() {
+        clear():void {
             this.nElements = 0;
             this.dictionary.clear();
         }
