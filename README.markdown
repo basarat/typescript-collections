@@ -8,7 +8,7 @@ Included data structures
 ---------------------
 
 - Linked List
-- Dictionary
+- Dictionary - [Example](#a-sample-on-dictionary)
 - Multi Dictionary
 - Binary Search Tree
 - Stack
