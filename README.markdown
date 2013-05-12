@@ -20,14 +20,6 @@ Included data structures
 
 It also includes several functions for manipulating arrays.
 
-Supported platforms
---------------------
-
-- Every desktop and mobile browser (including IE6)
-- Node.js
-
-If it supports JavaScript, it probably supports this library.
-
 How to use?
 --------------------
 
@@ -49,6 +41,14 @@ x.union(y);
 
 console.log(x.toString()); // [123,456] 
 ```
+
+Supported platforms
+--------------------
+
+- Every desktop and mobile browser (including IE6)
+- Node.js
+
+If it supports JavaScript, it probably supports this library.
 
 Support
 --------------------
