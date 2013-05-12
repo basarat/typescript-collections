@@ -5,29 +5,29 @@ function() {
     var elems = 100;
 
     beforeEach(function() {
-        dict = new buckets.Dictionary();
+        dict = new collections.Dictionary();
     });
 
     it('Maps keys to values with string keys',
     function() {
 
-        expect(dict.get("sd")).toBeUndefined();
+        expect(dict.getValue("sd")).toBeUndefined();
 
         // test with string keys
         for (var i = 0; i < elems; i++) {
-            expect(dict.set("" + i, i + 1)).toBeUndefined();
+            expect(dict.setValue("" + i, i + 1)).toBeUndefined();
         }
         expect(dict.size()).toEqual(elems);
 
         for (var i = 0; i < elems; i++) {
-            expect(dict.get("" + i)).toEqual(i + 1);
+            expect(dict.getValue("" + i)).toEqual(i + 1);
         }
 
-        dict.set("a", 5);
-        expect(dict.get("a")).toEqual(5);
-        expect(dict.set("a", 21)).toEqual(5);
+        dict.setValue("a", 5);
+        expect(dict.getValue("a")).toEqual(5);
+        expect(dict.setValue("a", 21)).toEqual(5);
         expect(dict.size()).toEqual(elems + 1);
-        expect(dict.get("a")).toEqual(21);
+        expect(dict.getValue("a")).toEqual(21);
 
     });
 
@@ -36,11 +36,11 @@ function() {
 
         // test with number keys
         for (var i = 0; i < elems; i++) {
-            expect(dict.set(i, i + 1)).toBeUndefined();
+            expect(dict.setValue(i, i + 1)).toBeUndefined();
         }
 
         for (var i = 0; i < elems; i++) {
-            expect(dict.get(i)).toEqual(i + 1);
+            expect(dict.getValue(i)).toEqual(i + 1);
         }
     });
 
@@ -50,19 +50,19 @@ function() {
         var ts = function(obj) {
             return obj.s;
         };
-        dict = new buckets.Dictionary(ts);
-        expect(dict.get("sd")).toBeUndefined();
+        dict = new collections.Dictionary(ts);
+        expect(dict.getValue("sd")).toBeUndefined();
 
         for (var i = 0; i < elems; i++) {
             var o = {};
             o.s = "" + i;
-            expect(dict.set(o, i + 1)).toBeUndefined();
+            expect(dict.setValue(o, i + 1)).toBeUndefined();
         }
 
         for (var i = 0; i < elems; i++) {
             var d = {};
             d.s = "" + i;
-            expect(dict.get(d)).toEqual(i + 1);
+            expect(dict.getValue(d)).toEqual(i + 1);
         }
     });
 
@@ -71,13 +71,13 @@ function() {
 
         expect(dict.remove("1")).toBeUndefined();
         for (var i = 0; i < elems; i++) {
-            expect(dict.set("" + i, i + 1)).toBeUndefined();
+            expect(dict.setValue("" + i, i + 1)).toBeUndefined();
         }
         expect(dict.size()).toEqual(elems);
 
         for (var i = 0; i < elems; i++) {
             expect(dict.remove("" + i)).toEqual(i + 1);
-            expect(dict.get("" + i)).toBeUndefined();
+            expect(dict.getValue("" + i)).toBeUndefined();
             expect(dict.remove("" + i)).toBeUndefined();
         }
         expect(dict.size()).toEqual(0);
@@ -87,7 +87,7 @@ function() {
     function() {
 
         expect(dict.isEmpty()).toBeTruthy();
-        dict.set("1", 1);
+        dict.setValue("1", 1);
         expect(dict.isEmpty()).toBeFalsy();
         dict.remove("1");
         expect(dict.isEmpty()).toBeTruthy();
@@ -96,10 +96,10 @@ function() {
 	it('Clear removes all elements',
     function() {
 		dict.clear();
-		dict.set(1,1);
+		dict.setValue(1,1);
 		dict.clear();
 		expect(dict.isEmpty()).toBeTruthy();
-		expect(dict.get(1)).toBeUndefined();
+		expect(dict.getValue(1)).toBeUndefined();
     });
 
     it('Contains existing keys',
@@ -107,7 +107,7 @@ function() {
 
         expect(dict.containsKey(0)).toBeFalsy();
         for (var i = 0; i < 10; i++) {
-            dict.set(i, i);
+            dict.setValue(i, i);
             expect(dict.containsKey(i)).toBeTruthy();
         };
         for (var i = 0; i < 10; i++) {
@@ -121,7 +121,7 @@ function() {
 
         expect(dict.size()).toEqual(0);
         for (var i = 0; i < 10; i++) {
-            dict.set(i, i);
+            dict.setValue(i, i);
             expect(dict.size()).toEqual(i + 1);
         };
 
@@ -134,8 +134,8 @@ function() {
             var keys = dict.keys();
             k.sort();
             keys.sort();
-            expect(buckets.arrays.equals(k, keys)).toBeTruthy();
-            dict.set("" + i, i);
+            expect(collections.arrays.equals(k, keys)).toBeTruthy();
+            dict.setValue("" + i, i);
             k.push("" + i);
         }
     });
@@ -147,8 +147,8 @@ function() {
             var values = dict.values();
             v.sort();
             values.sort();
-            expect(buckets.arrays.equals(v, values)).toBeTruthy();
-            dict.set("" + i, i);
+            expect(collections.arrays.equals(v, values)).toBeTruthy();
+            dict.setValue("" + i, i);
             v.push(i);
         }
     });
@@ -156,13 +156,13 @@ function() {
 	it('For each gives all the pairs',
     function() {
         for (var i = 0; i < elems; i++) {
-            dict.set("" + i, i);
+            dict.setValue("" + i, i);
         }
 		var keys = dict.keys();
 		var values = dict.values();
 		dict.forEach(function(k,v) {
-			expect(buckets.arrays.remove(keys, k)).toBeTruthy();
-			expect(buckets.arrays.remove(values, v)).toBeTruthy();
+			expect(collections.arrays.remove(keys, k)).toBeTruthy();
+			expect(collections.arrays.remove(values, v)).toBeTruthy();
 		});
 		expect(keys.length).toEqual(0);
 		expect(values.length).toEqual(0);
@@ -172,7 +172,7 @@ function() {
 	it('For each can be interrupted',
     function() {
         for (var i = 0; i < elems; i++) {
-            dict.set("" + i, i);
+            dict.setValue("" + i, i);
         }
 		var t = 0;
 		dict.forEach(function(k,v) {

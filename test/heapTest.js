@@ -4,7 +4,7 @@ function() {
 	var heap=null;
 	
     beforeEach(function() {
-        heap = new buckets.Heap();
+        heap = new collections.Heap();
     });
 
     var createHeap1 = function() {
@@ -108,7 +108,7 @@ function() {
 
 	it('Peeks the lowest element with custom objects',
     function() {
-		heap = new buckets.Heap(customCompare)
+		heap = new collections.Heap(customCompare)
  		createHeap5();
 		expect(heap.peek().val).toEqual('a');
     });
@@ -135,7 +135,7 @@ function() {
 
 	it('Removes root with custom objects',
     function() {
-		heap = new buckets.Heap(customCompare);
+		heap = new collections.Heap(customCompare);
  		createHeap5();
 		expect(heap.removeRoot().val).toEqual("a");
 		expect(heap.removeRoot().val).toEqual("b");
@@ -208,11 +208,11 @@ function() {
 			elements.push(e);
 		});
 		
-		expect(buckets.arrays.contains(elements,0)).toBeTruthy();
-		expect(buckets.arrays.contains(elements,1)).toBeTruthy();
-		expect(buckets.arrays.contains(elements,2)).toBeTruthy();
-		expect(buckets.arrays.contains(elements,3)).toBeTruthy();
-		expect(buckets.arrays.contains(elements,4)).toBeFalsy();
+		expect(collections.arrays.contains(elements,0)).toBeTruthy();
+		expect(collections.arrays.contains(elements,1)).toBeTruthy();
+		expect(collections.arrays.contains(elements,2)).toBeTruthy();
+		expect(collections.arrays.contains(elements,3)).toBeTruthy();
+		expect(collections.arrays.contains(elements,4)).toBeFalsy();
     });
 
 	it('For each can be interrupted',
