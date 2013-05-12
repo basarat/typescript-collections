@@ -31,20 +31,23 @@ If it supports JavaScript, it probably supports this library.
 How to use?
 --------------------
 
-Download
+Download collections.ts. Add it as a reference in your TypeScript code and start coding. 
 
-- collections.js
-
-Include the script and start coding.
+For run time: 
+Load it using either a script tag (collections.js) or RequireJS. 
 
 Example
-
+--------------------
 ```typescript
-var setA = new collections.Set();
-var setB = new collections.Set();
-setA.add(1);
-setB.add(2);
-setA.union(setB); // {1,2}
+var x = new collections.Set<number>(); 
+x.add(123);
+x.add(123); // Duplicates not allowed in a set 
+
+var y = new collections.Set<number>();
+y.add(456);
+x.union(y);
+
+console.log(x.toString()); // [123,456] 
 ```
 
 Support
