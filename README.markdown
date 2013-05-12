@@ -63,6 +63,67 @@ class Car {
 }
 ```
 
+A Sample on Dictionary
+---------------------
+
+```typescript
+class Person {
+    constructor(public name: string, public yearOfBirth: number,public city?:string) {
+    }
+    toString() {
+        return this.name + "-" + this.yearOfBirth; // City is not a part of the key. 
+    }
+}
+
+class Car {
+    constructor(public company: string, public type: string, public year: number) {
+    }
+    toString() {
+        // Short hand. Adds each own property 
+        return collections.toString(this);
+    }
+}
+var dict = new collections.Dictionary<Person, Car>();
+dict.setValue(new Person("john", 1970,"melbourne"), new Car("honda", "city", 2002));
+dict.setValue(new Person("gavin", 1984), new Car("ferrari", "F50", 2006));
+console.log("Orig");
+console.log(dict);
+
+dict.setValue(new Person("john", 1970,"sydney"), new Car("honda", "accord", 2006)); // Changes the same john. 
+dict.setValue(new Person("john", 1971), new Car("nissan", "micra", 2010)); // Adds a new john
+console.log("Updated");
+console.log(dict);
+
+// Showing getting / setting a single car: 
+console.log("Single Item");
+var person = new Person("john", 1970); 
+console.log("-Person:");
+console.log(person);
+
+var car = dict.getValue(person);
+console.log("-Car:");
+console.log(car.toString());
+```
+Output: 
+```
+Orig
+{
+    john-1970 : {company:honda,type:city,year:2002}
+	gavin-1984 : {company:ferrari,type:F50,year:2006}
+}
+Updated
+{
+	john-1970 : {company:honda,type:accord,year:2006}
+	gavin-1984 : {company:ferrari,type:F50,year:2006}
+	john-1971 : {company:nissan,type:micra,year:2010}
+}
+Single Item
+-Person:
+john-1970
+-Car:
+{company:honda,type:accord,year:2006}
+```
+
 Supported platforms
 --------------------
 
