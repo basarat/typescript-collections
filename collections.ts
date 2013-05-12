@@ -1425,7 +1425,7 @@ module collections {
          * @return {boolean} true if this stack contains the specified element,
          * false otherwise.
          */
-        contains(elem: T, equalsFunction?: IEqualsFunction) {
+        contains(elem: T, equalsFunction?: IEqualsFunction<T>) {
             return this.list.contains(elem, equalsFunction);
         }
         /**
