@@ -13,7 +13,7 @@ Included data structures
 - Binary Search Tree
 - Stack
 - Queue
-- Set
+- Set - [Example](#example)
 - Bag
 - Binary Heap
 - Priority Queue
