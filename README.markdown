@@ -25,6 +25,8 @@ How to use?
 
 Download collections.ts. Add it as a reference in your TypeScript code and start coding. 
 
+A visual studio project is contained in the demo folder to show you sample usage. 
+
 For run time: 
 Load it using either a script tag (collections.js) or RequireJS. 
 
