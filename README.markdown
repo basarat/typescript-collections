@@ -1,16 +1,8 @@
 [TypeScript Collections](github.com/basarat/typescript-collections/)
 ====================
-It is a complete, fully tested and documented data structure library written in TypeScript, based on the excellent original javascript version called [buckets](https://github.com/mauriciosantos/buckets)
+It is a complete, fully tested data structure library written in TypeScript.
 
-Already done: 
-- use module / classes
-- search for all "private"s to make sure they are marked as such 
-- remove extra semicolons at end of functions / classes / modules 
-- Optionals: use default parameter arguments. 
-
-Things need to be done: 
-- use generics 
-- function arguments types 
+This project uses TypeScript Generics so you need TS 0.9 and above.
 
 Included data structures
 ---------------------
@@ -61,3 +53,5 @@ Support
 Basarat Ali, 
 
 bas AT basarat.com 
+
+Project is based on the excellent original javascript version called [buckets](https://github.com/mauriciosantos/buckets)
