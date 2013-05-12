@@ -2,11 +2,7 @@
 ====================
 It is a complete, fully tested data structure library written in TypeScript.
 
-Adds the following: 
-- Strong typing (its TypeScript!)
-- use module / classes
-- Optionals are clearly marked. 
-- Uses Generics! 
+This project uses TypeScript Generics so you need TS 0.9 and above.
 
 Included data structures
 ---------------------
