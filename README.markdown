@@ -20,6 +20,27 @@ Included data structures
 
 It also includes several functions for manipulating arrays.
 
+How to use?
+--------------------
+
+Download collections.ts. Add it as a reference in your TypeScript code and start coding. 
+
+A visual studio project is contained in the demo folder to show you sample usage. 
+
+Example
+--------------------
+```typescript
+var x = new collections.Set<number>(); 
+x.add(123);
+x.add(123); // Duplicates not allowed in a set 
+
+var y = new collections.Set<number>();
+y.add(456);
+x.union(y);
+
+console.log(x.toString()); // [123,456] 
+```
+
 Supported platforms
 --------------------
 
@@ -27,25 +48,6 @@ Supported platforms
 - Node.js
 
 If it supports JavaScript, it probably supports this library.
-
-How to use?
---------------------
-
-Download
-
-- collections.js
-
-Include the script and start coding.
-
-Example
-
-```typescript
-var setA = new collections.Set();
-var setB = new collections.Set();
-setA.add(1);
-setB.add(2);
-setA.union(setB); // {1,2}
-```
 
 Support
 --------------------
