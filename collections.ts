@@ -282,6 +282,10 @@ module collections {
             return true;
         }
 
+        export function toString<T>(array: T[]): string{
+            return '['+array.toString()+']';            
+        }
+
         /**
          * Executes the provided function once for each element present in this array 
          * starting from index 0 to length - 1.
@@ -1867,6 +1871,13 @@ module collections {
          */
         clear(): void {
             this.dictionary.clear();
+        }
+
+        /*
+        * Provides a string representation for display
+        */
+        toString(): string{
+            return collections.arrays.toString(this.toArray());
         }
     }// end of Set
 
