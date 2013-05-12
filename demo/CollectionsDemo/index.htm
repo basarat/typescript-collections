@@ -11,7 +11,6 @@
         var console = {};
         console.log = function (text) {
             var logs = $("#logs");
-            debugger;
             logs.text(logs.text() + "\n" + text);
         }
     </script>
@@ -27,27 +26,18 @@
             <h1>TypeScript Collections Demo</h1>
         </div>
         <div id="content">
-            <h2>Basic usage</h2>
-            <pre class="prettyprint lang-js">
-var x = new collections.Set&lt;number&gt;(); 
-x.add(123);
-x.add(123); // Duplicates not allowed in a set 
-
-var y = new collections.Set&lt;number&gt;();
-y.add(456);
-x.union(y);
-
-console.log(x.toString()); // [123,456] 
-
-            </pre>
-        </div>
-        <h2>Log</h2>
+        <h2>Application Log</h2>
         <pre id="logs"></pre>
     </div>
     <a href="https://github.com/you">
         <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
     </a>
 </body>
+<script>
+    $(function () {
+
+    });
+</script>
 <script src="collections.js"></script>
 <script src="app.js"></script>
 </html>

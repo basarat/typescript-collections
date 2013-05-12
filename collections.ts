@@ -76,6 +76,32 @@ module collections {
     }
 
     /**
+    * Joins all the properies of the object using the provided join string 
+    */
+    export function toString<T>(item: T, join: string = ","): string {
+        if (item === null) {
+            return 'COLLECTION_NULL';
+        } else if (collections.isUndefined(item)) {
+            return 'COLLECTION_UNDEFINED';
+        } else if (collections.isString(item)) {
+            return item.toString();
+        } else {
+            var toret = "{";
+            var first = true; 
+            for (var prop in item) {
+                if (item.hasOwnProperty(prop)) {
+                    if (first)
+                        first = false;
+                    else
+                        toret = toret + join; 
+                    toret = toret + prop+":"+ item[prop];
+                }
+            }
+            return toret+"}";
+        }
+    }
+
+    /**
      * Checks if the given argument is a function.
      * @function     
      */
@@ -282,8 +308,8 @@ module collections {
             return true;
         }
 
-        export function toString<T>(array: T[]): string{
-            return '['+array.toString()+']';            
+        export function toString<T>(array: T[]): string {
+            return '[' + array.toString() + ']';
         }
 
         /**
@@ -673,6 +699,10 @@ module collections {
             return this.nElements <= 0;
         }
 
+        toString(): string {
+            return collections.arrays.toString(this.toArray());
+        }
+
         /**
          * @private
          */
@@ -863,7 +893,7 @@ module collections {
         * invoked with two arguments: key and value. To break the iteration you can 
         * optionally return false.
         */
-        forEach(callback: (key: K, value: V) => boolean): void {
+        forEach(callback: (key: K, value: V) => any): void {
             for (var name in this.table) {
                 if (this.table.hasOwnProperty(name)) {
                     var pair: IDicitonaryPair<K, V> = this.table[name];
@@ -910,6 +940,14 @@ module collections {
          */
         isEmpty(): boolean {
             return this.nElements <= 0;
+        }
+
+        toString(): string {
+            var toret = "{";
+            this.forEach((k, v) => {
+                toret = toret + "\n\t" + k.toString() + " : " + v.toString();
+            } );
+            return toret + "\n}";
         }
     } // End of dictionary
 
@@ -1112,10 +1150,6 @@ module collections {
             return this.dict.isEmpty();
         }
     }// end of multi dictionary 
-
-
-
-
 
     export class Heap<T> {
         /**
@@ -1876,7 +1910,7 @@ module collections {
         /*
         * Provides a string representation for display
         */
-        toString(): string{
+        toString(): string {
             return collections.arrays.toString(this.toArray());
         }
     }// end of Set

@@ -51,6 +51,34 @@ var collections;
     }
     collections.defaultToString = defaultToString;
     /**
+    * Joins all the properies of the object using the provided join string
+    */
+    function toString(item, join) {
+        if (typeof join === "undefined") { join = ","; }
+        if (item === null) {
+            return 'COLLECTION_NULL';
+        } else if (collections.isUndefined(item)) {
+            return 'COLLECTION_UNDEFINED';
+        } else if (collections.isString(item)) {
+            return item.toString();
+        } else {
+            var toret = "{";
+            var first = true;
+            for(var prop in item) {
+                if (item.hasOwnProperty(prop)) {
+                    if (first) {
+                        first = false;
+                    } else {
+                        toret = toret + join;
+                    }
+                    toret = toret + prop + ":" + item[prop];
+                }
+            }
+            return toret + "}";
+        }
+    }
+    collections.toString = toString;
+    /**
     * Checks if the given argument is a function.
     * @function
     */
@@ -612,6 +640,9 @@ var collections;
         function () {
             return this.nElements <= 0;
         };
+        LinkedList.prototype.toString = function () {
+            return collections.arrays.toString(this.toArray());
+        };
         LinkedList.prototype.nodeAtIndex = /**
         * @private
         */
@@ -801,6 +832,13 @@ var collections;
         */
         function () {
             return this.nElements <= 0;
+        };
+        Dictionary.prototype.toString = function () {
+            var toret = "{";
+            this.forEach(function (k, v) {
+                toret = toret + "\n\t" + k.toString() + " : " + v.toString();
+            });
+            return toret + "\n}";
         };
         return Dictionary;
     })();
