@@ -706,7 +706,7 @@ module collections {
         value: V;
     }
 
-    class Dictionary<K, V>{
+    export class Dictionary<K, V>{
 
         /**
          * Object holding the key-value pairs.
@@ -930,7 +930,7 @@ module collections {
 
 
 
-    class MultiDictionary<K, V> {
+    export class MultiDictionary<K, V> {
 
         // Cannot do: 
         // class MultiDictionary<K,V> extends Dictionary<K,Array<V>> {
@@ -1113,7 +1113,7 @@ module collections {
 
 
 
-    class Heap<T> {
+    export class Heap<T> {
         /**
          * Array used to store the elements od the heap.
          * @type {Array.<Object>}
@@ -1348,7 +1348,7 @@ module collections {
         }
     }
 
-    class Stack<T> {
+    export class Stack<T> {
         /**
          * List containing the elements.
          * @type collections.LinkedList
@@ -1457,7 +1457,7 @@ module collections {
 
 
 
-    class Queue<T>{
+    export class Queue<T>{
 
         /**
          * List containing the elements.
@@ -1578,7 +1578,7 @@ module collections {
     } // End of queue
 
 
-    class PriorityQueue<T> {
+    export class PriorityQueue<T> {
 
         private heap: Heap<T>;
         /**
@@ -1699,7 +1699,7 @@ module collections {
 
 
 
-    class Set<T>{
+    export class Set<T>{
         private dictionary: Dictionary<T, any>;
 
         /**
@@ -1870,9 +1870,7 @@ module collections {
         }
     }// end of Set
 
-
-
-    class Bag<T>{
+    export class Bag<T>{
 
         private toStrF: (item: T) => string;
         private dictionary: Dictionary<T, any>;
@@ -2074,7 +2072,7 @@ module collections {
         rightCh: BSTreeNode<T>;
         parent: BSTreeNode<T>;
     }
-    class BSTree<T> {
+    export class BSTree<T> {
 
         private root: BSTreeNode<T>;
         private compare: ICompareFunction<T>;

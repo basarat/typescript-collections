@@ -799,7 +799,8 @@ var collections;
             return this.nElements <= 0;
         };
         return Dictionary;
-    })();    
+    })();
+    collections.Dictionary = Dictionary;    
     // /**
     //  * Returns true if this dictionary is equal to the given dictionary.
     //  * Two dictionaries are equal if they contain the same mappings.
@@ -982,7 +983,8 @@ var collections;
             return this.dict.isEmpty();
         };
         return MultiDictionary;
-    })();    
+    })();
+    collections.MultiDictionary = MultiDictionary;    
     var Heap = (function () {
         /**
         * Creates an empty Heap.
@@ -1199,7 +1201,8 @@ var collections;
             collections.arrays.forEach(this.data, callback);
         };
         return Heap;
-    })();    
+    })();
+    collections.Heap = Heap;    
     var Stack = (function () {
         /**
         * Creates an empty Stack.
@@ -1297,7 +1300,8 @@ var collections;
             this.list.forEach(callback);
         };
         return Stack;
-    })();    
+    })();
+    collections.Stack = Stack;    
     var Queue = (function () {
         /**
         * Creates an empty queue.
@@ -1400,7 +1404,8 @@ var collections;
             this.list.forEach(callback);
         };
         return Queue;
-    })();    
+    })();
+    collections.Queue = Queue;    
     var PriorityQueue = (function () {
         /**
         * Creates an empty priority queue.
@@ -1506,7 +1511,8 @@ var collections;
             this.heap.forEach(callback);
         };
         return PriorityQueue;
-    })();    
+    })();
+    collections.PriorityQueue = PriorityQueue;    
     var Set = (function () {
         /**
         * Creates an empty set.
@@ -1659,7 +1665,8 @@ var collections;
             this.dictionary.clear();
         };
         return Set;
-    })();    
+    })();
+    collections.Set = Set;    
     var Bag = (function () {
         /**
         * Creates an empty bag.
@@ -1834,7 +1841,8 @@ var collections;
             this.dictionary.clear();
         };
         return Bag;
-    })();    
+    })();
+    collections.Bag = Bag;    
     var BSTree = (function () {
         /**
         * Creates an empty binary search tree.
@@ -2233,6 +2241,7 @@ var collections;
             };
         };
         return BSTree;
-    })();    
+    })();
+    collections.BSTree = BSTree;    
 })(collections || (collections = {}));
 // End of module
