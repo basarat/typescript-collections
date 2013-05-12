@@ -4,7 +4,7 @@ function() {
 	var queue = null;
 	
 	beforeEach(function() {
-        queue = new buckets.PriorityQueue();
+        queue = new collections.PriorityQueue();
     });
 
     var createPriorityQueue1 = function () {
@@ -144,11 +144,11 @@ function() {
 			elements.push(e);
 		});
 		
-		expect(buckets.arrays.contains(elements,0)).toBeTruthy();
-		expect(buckets.arrays.contains(elements,1)).toBeTruthy();
-		expect(buckets.arrays.contains(elements,2)).toBeTruthy();
-		expect(buckets.arrays.contains(elements,3)).toBeTruthy();
-		expect(buckets.arrays.contains(elements,4)).toBeFalsy();
+		expect(collections.arrays.contains(elements,0)).toBeTruthy();
+		expect(collections.arrays.contains(elements,1)).toBeTruthy();
+		expect(collections.arrays.contains(elements,2)).toBeTruthy();
+		expect(collections.arrays.contains(elements,3)).toBeTruthy();
+		expect(collections.arrays.contains(elements,4)).toBeFalsy();
     });
 
 	it('For each can be interrupted',

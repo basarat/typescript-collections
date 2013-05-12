@@ -4,7 +4,7 @@ function() {
     var stack=null;
 
     beforeEach(function() {
-        stack = new buckets.Stack();
+        stack = new collections.Stack();
     });
 
     it('Pops',

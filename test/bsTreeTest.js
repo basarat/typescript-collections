@@ -4,7 +4,7 @@ function() {
     var tree = null;
 
     beforeEach(function() {
-        tree = new buckets.BSTree();
+        tree = new collections.BSTree();
     });
     var createTree1 = function() {
         tree.add("b");

@@ -4,7 +4,7 @@ function() {
     var queue=null;
 
     beforeEach(function() {
-        queue = new buckets.Queue();
+        queue = new collections.Queue();
     });
 
     function createQueue() {

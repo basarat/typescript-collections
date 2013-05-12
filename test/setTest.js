@@ -5,7 +5,7 @@ function() {
 
     it('Gives the right size',
     function() {
-        set = new buckets.Set();
+        set = new collections.Set();
         set.add("a");
         set.add("b");
         set.add("c");
@@ -30,7 +30,7 @@ function() {
 
     it('Contains existing elements',
     function() {
-        set = new buckets.Set();
+        set = new collections.Set();
         set.add("a");
         set.add("b");
         set.add("c");
@@ -57,7 +57,7 @@ function() {
             return f.description;
         };
 
-        set = new buckets.Set(toStringF);
+        set = new collections.Set(toStringF);
         var fn1 = function() {};
         fn1.description = "fn1";
         expect(set.contains(fn1)).toBeFalsy();
@@ -73,7 +73,7 @@ function() {
 
     it('An empty set is empty',
     function() {
-        set = new buckets.Set();
+        set = new collections.Set();
         expect(set.isEmpty()).toBeTruthy();
         set.add(1);
         expect(set.isEmpty()).toBeFalsy();
@@ -82,16 +82,16 @@ function() {
     it('Intersection is commutative',
     function() {
         //Two empty sets
-        set = new buckets.Set();
-        set2 = new buckets.Set();
+        set = new collections.Set();
+        set2 = new collections.Set();
         set.intersection(set2);
         expect(set.isEmpty()).toBeTruthy();
         set2.intersection(set);
         expect(set2.isEmpty()).toBeTruthy();
 
         // non empty with empty
-        set = new buckets.Set();
-        set2 = new buckets.Set();
+        set = new collections.Set();
+        set2 = new collections.Set();
         set.add(1);
         set.add(2);
         set.add(3);
@@ -101,8 +101,8 @@ function() {
         expect(set2.isEmpty()).toBeTruthy();
 
         // non empty sets with common elements
-        set = new buckets.Set();
-        set2 = new buckets.Set();
+        set = new collections.Set();
+        set2 = new collections.Set();
         set.add(1);
         set.add(2);
         set2.add(1);
@@ -112,7 +112,7 @@ function() {
         set.intersection(set2);
         var s1 = set.toArray().sort();
         expect(s1).toEqual([1, 2]);
-        set = new buckets.Set();
+        set = new collections.Set();
         set.add(1);
         set.add(2);
 
@@ -121,8 +121,8 @@ function() {
         expect(s2).toEqual([1, 2]);
 
         // non empty sets with  no common elements
-        set = new buckets.Set();
-        set2 = new buckets.Set();
+        set = new collections.Set();
+        set2 = new collections.Set();
         set.add(1);
         set.add(2);
         set2.add(3);
@@ -139,8 +139,8 @@ function() {
 
     it('Union is commutative',
     function() {
-        set = new buckets.Set();
-        var set2 = new buckets.Set();
+        set = new collections.Set();
+        var set2 = new collections.Set();
         set.add(1);
         set.add(2);
         set2.add(2);
@@ -161,14 +161,14 @@ function() {
     function() {
 
         //Two empty sets
-        set = new buckets.Set();
-        var set2 = new buckets.Set();
+        set = new collections.Set();
+        var set2 = new collections.Set();
         set.difference(set2);
         expect(set.isEmpty()).toBeTruthy();
 
         //Non empty and empty set
-        set = new buckets.Set();
-        var set2 = new buckets.Set();
+        set = new collections.Set();
+        var set2 = new collections.Set();
         set.add(1);
         set.add(2);
         set.difference(set2);
@@ -176,8 +176,8 @@ function() {
         expect(s1).toEqual([1, 2]);
 
         //Non empty sets with common elements
-        set = new buckets.Set();
-        var set2 = new buckets.Set();
+        set = new collections.Set();
+        var set2 = new collections.Set();
         set.add(1);
         set.add(2);
 		set.add(3);
@@ -189,8 +189,8 @@ function() {
         expect(s1).toEqual([1, 4]);
 		
 		// Two equal sets
-		set = new buckets.Set();
-        var set2 = new buckets.Set();
+		set = new collections.Set();
+        var set2 = new collections.Set();
         set.add(1);
         set.add(2);
 		set.add(3);
@@ -201,8 +201,8 @@ function() {
 		expect(set.isEmpty()).toBeTruthy();
 		
 		//Non empty sets with no common elements
-		set = new buckets.Set();
-        var set2 = new buckets.Set();
+		set = new collections.Set();
+        var set2 = new collections.Set();
         set.add(1);
         set.add(2);
 		set.add(3);
@@ -218,13 +218,13 @@ function() {
     function() {
 
         //Two empty sets
-        set = new buckets.Set();
-        var set2 = new buckets.Set();
+        set = new collections.Set();
+        var set2 = new collections.Set();
         expect(set.isSubsetOf(set2)).toBeTruthy();
 		
 		// Two equal sets
-        set = new buckets.Set();
-        var set2 = new buckets.Set();
+        set = new collections.Set();
+        var set2 = new collections.Set();
 		set.add(1);
         set.add(2);
 		set2.add(2);
@@ -233,8 +233,8 @@ function() {
 		expect(set2.isSubsetOf(set)).toBeTruthy();
 		
 		//Non empty sets with common elements
-        set = new buckets.Set();
-        var set2 = new buckets.Set();
+        set = new collections.Set();
+        var set2 = new collections.Set();
         set.add(1);
         set.add(2);
 		set.add(3);
@@ -245,8 +245,8 @@ function() {
 		expect(set.isSubsetOf(set2)).toBeFalsy();
 		
 		//Non empty sets with no common elements
-		set = new buckets.Set();
-		set2 = new buckets.Set();
+		set = new collections.Set();
+		set2 = new collections.Set();
 		set.add(3);
 		set2.add(4);
 		expect(set.isSubsetOf(set2)).toBeFalsy();
@@ -255,7 +255,7 @@ function() {
 
     it('Adds',
     function() {
-        set = new buckets.Set();
+        set = new collections.Set();
         expect(set.add('a')).toBeTruthy();
         expect(set.add('b')).toBeTruthy();
         expect(set.contains('a')).toBeTruthy();
@@ -272,7 +272,7 @@ function() {
 
     it('For each gives all the elements',
     function() {
-        set = new buckets.Set();
+        set = new collections.Set();
         set.forEach(function(e) {
             expect(false).toBeTruthy();
         });
@@ -282,14 +282,14 @@ function() {
         var values = set.toArray();
         expect(values.length).toEqual(100);
         set.forEach(function(e) {
-            expect(buckets.arrays.remove(values, e)).toBeTruthy();
+            expect(collections.arrays.remove(values, e)).toBeTruthy();
         });
         expect(values.length).toEqual(0);
     });
 
     it('For each can be interrupted',
     function() {
-        set = new buckets.Set();
+        set = new collections.Set();
         for (var i = 0; i < 5; i++) {
             set.add(i);
         }

@@ -4,7 +4,7 @@ function() {
     var bag = null;
 
     beforeEach(function() {
-        bag = new buckets.Bag();
+        bag = new collections.Bag();
     });
 
     var toStringF = function(f) {
@@ -77,7 +77,7 @@ function() {
 
     it('Contains existing elements with custom toString function',
     function() {
-        bag = new buckets.Bag(toStringF);
+        bag = new collections.Bag(toStringF);
         var fn1 = function() {};
         fn1.description = "fn1";
         expect(bag.contains(fn1)).toBeFalsy();
@@ -183,9 +183,9 @@ function() {
         expect(bag.add('a', 2)).toBeTruthy();
         expect(bag.add('c')).toBeTruthy();
         arr = bag.toArray();
-        expect(buckets.arrays.frequency(arr, "b")).toEqual(3);
-        expect(buckets.arrays.frequency(arr, "a")).toEqual(2);
-        expect(buckets.arrays.frequency(arr, "c")).toEqual(1);
+        expect(collections.arrays.frequency(arr, "b")).toEqual(3);
+        expect(collections.arrays.frequency(arr, "a")).toEqual(2);
+        expect(collections.arrays.frequency(arr, "c")).toEqual(1);
     });
 
     it('Converts to a set',
@@ -212,12 +212,12 @@ function() {
         bag.add(5);
         bag.add(6);
         bag.forEach(function(e) {
-            expect(buckets.arrays.contains(a, e)).toBeTruthy();
+            expect(collections.arrays.contains(a, e)).toBeTruthy();
         });
 
         var count = 0;
         bag.forEach(function(e) {
-            expect(buckets.arrays.contains(a, e)).toBeTruthy();
+            expect(collections.arrays.contains(a, e)).toBeTruthy();
             if (e === 5) {
                 count++;
                 bag.remove(e);

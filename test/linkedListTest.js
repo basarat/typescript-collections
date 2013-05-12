@@ -9,7 +9,7 @@ function() {
     };
 
     beforeEach(function() {
-        list = new buckets.LinkedList();
+        list = new collections.LinkedList();
     });
 
     it('Inserts elements',
@@ -99,7 +99,7 @@ function() {
 		list.add(1);
 		list.add(2);
 		
-		var list2 = new buckets.LinkedList();
+		var list2 = new collections.LinkedList();
 		list2.add(1);
 		list2.add(2);
 
@@ -350,7 +350,7 @@ function() {
 
     it('Two identical linked lists are equal',
     function() {
-        var list2 = new buckets.LinkedList();
+        var list2 = new collections.LinkedList();
 		expect(list.equals(list2)).toBeTruthy();
 		
 		list.add(1);
