@@ -87,17 +87,17 @@ module collections {
             return item.toString();
         } else {
             var toret = "{";
-            var first = true; 
+            var first = true;
             for (var prop in item) {
                 if (item.hasOwnProperty(prop)) {
                     if (first)
                         first = false;
                     else
-                        toret = toret + join; 
-                    toret = toret + prop+":"+ item[prop];
+                        toret = toret + join;
+                    toret = toret + prop + ":" + item[prop];
                 }
             }
-            return toret+"}";
+            return toret + "}";
         }
     }
 
@@ -332,7 +332,7 @@ module collections {
 
 
     // A linked list node. Used internally only
-    interface ILinkedListNode<T>{
+    export interface ILinkedListNode<T>{
         element: T;
         next: ILinkedListNode<T>;
     }
@@ -946,7 +946,7 @@ module collections {
             var toret = "{";
             this.forEach((k, v) => {
                 toret = toret + "\n\t" + k.toString() + " : " + v.toString();
-            } );
+            });
             return toret + "\n}";
         }
     } // End of dictionary
@@ -1800,7 +1800,7 @@ module collections {
                     set.remove(element);
                 }
                 return;
-            } );
+            });
         }
 
         /**
@@ -1813,7 +1813,7 @@ module collections {
             otherSet.forEach(function (element: T): boolean {
                 set.add(element);
                 return;
-            } );
+            });
         }
 
         /**
@@ -1826,7 +1826,7 @@ module collections {
             otherSet.forEach(function (element: T): boolean {
                 set.remove(element);
                 return;
-            } );
+            });
         }
 
         /**
@@ -1846,7 +1846,7 @@ module collections {
                     isSub = false;
                     return false;
                 }
-            } );
+            });
             return isSub;
         }
 
@@ -1873,7 +1873,7 @@ module collections {
         forEach(callback: ILoopFunction<T>): void {
             this.dictionary.forEach(function (k, v) {
                 return callback(v);
-            } );
+            });
         }
 
         /**
@@ -2081,7 +2081,7 @@ module collections {
                     }
                 }
                 return true;
-            } );
+            });
         }
         /**
          * Returns the number of elements in this bag.
@@ -2319,7 +2319,7 @@ module collections {
             this.inorderTraversal(function (element: T): boolean {
                 array.push(element);
                 return;
-            } );
+            });
             return array;
         }
 
