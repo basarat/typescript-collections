@@ -6,7 +6,7 @@
     <version>0.9</version>
     <authors>Basarat Ali Syed</authors>
     <owners>Basarat Ali Syed</owners>
-    <!-- licenseUrl></licenseUrl -->
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <projectUrl>https://github.com/basarat/typescript-collections</projectUrl>
     <!-- iconUrl></iconUrl -->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
