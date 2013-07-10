@@ -1,10 +1,6 @@
 // Copyright 2013 Basarat Ali Syed. All Rights Reserved.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-//
-// Some documentation is borrowed from the official Java API
-// as it serves the same porpose.
+// Licensed under MIT open source license http://opensource.org/licenses/MIT
 //
 // Orginal javascript code was by Mauricio Santos
 
