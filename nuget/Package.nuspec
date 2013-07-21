@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>typescript.collections</id>
-    <title>TypeScript Collections</title>
+    <title>TypeScript Generic Collections</title>
     <version>0.9</version>
     <authors>Basarat Ali Syed</authors>
     <owners>Basarat Ali Syed</owners>
