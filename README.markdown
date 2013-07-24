@@ -23,6 +23,8 @@ It also includes several functions for manipulating arrays.
 How to use?
 --------------------
 
+Also available on Nuget : http://www.nuget.org/packages/typescript.collections/ Thanks to https://github.com/georgiosd
+
 Download collections.ts. Add it as a reference in your TypeScript code and start coding. 
 Visual studio / any typescript IDE, will provide you with complete intellisense for your types and the compiler will 
 ensure that the collections contain the correct elements. 
