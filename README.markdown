@@ -136,10 +136,8 @@ Supported platforms
 
 If it supports JavaScript, it probably supports this library.
 
-Support
+Contact
 --------------------
-
-Basarat Ali, 
 
 bas AT basarat.com 
 
