@@ -59,7 +59,7 @@ module collections {
      * Default function to convert an object to a string.
      * @function     
      */
-    export function defaultToString(item): string {
+    export function defaultToString(item: any): string {
         if (item === null) {
             return 'COLLECTION_NULL';
         } else if (collections.isUndefined(item)) {
@@ -101,7 +101,7 @@ module collections {
      * Checks if the given argument is a function.
      * @function     
      */
-    export function isFunction(func): boolean {
+    export function isFunction(func: any): boolean {
         return (typeof func) === 'function';
     }
 
@@ -109,7 +109,7 @@ module collections {
      * Checks if the given argument is undefined.
      * @function
      */
-    export function isUndefined(obj): boolean {
+    export function isUndefined(obj: any): boolean {
         return (typeof obj) === 'undefined';
     }
 
@@ -117,7 +117,7 @@ module collections {
      * Checks if the given argument is a string.
      * @function
      */
-    export function isString(obj): boolean {
+    export function isString(obj: any): boolean {
         return Object.prototype.toString.call(obj) === '[object String]';
     }
 
@@ -523,8 +523,8 @@ module collections {
             if (this.nElements < 1 || collections.isUndefined(item)) {
                 return false;
             }
-            var previous = null;
-            var currentNode = this.firstNode;
+            var previous: ILinkedListNode<T> = null;
+            var currentNode: ILinkedListNode<T> = this.firstNode;
 
             while (currentNode !== null) {
                 if (equalsF(currentNode.element, item)) {
@@ -604,7 +604,7 @@ module collections {
             if (index < 0 || index >= this.nElements) {
                 return undefined;
             }
-            var element;
+            var element: T;
             if (this.nElements === 1) {
                 //First node in the list.
                 element = this.firstNode.element;
@@ -649,9 +649,9 @@ module collections {
          * element first, and the first element last).
          */
         reverse(): void {
-            var previous = null;
-            var current = this.firstNode;
-            var temp = null;
+            var previous: ILinkedListNode<T> = null;
+            var current: ILinkedListNode<T> = this.firstNode;
+            var temp: ILinkedListNode<T> = null;
             while (current !== null) {
                 temp = current.next;
                 current.next = previous;
@@ -702,7 +702,7 @@ module collections {
         /**
          * @private
          */
-        private nodeAtIndex(index): ILinkedListNode<T> {
+        private nodeAtIndex(index: number): ILinkedListNode<T> {
 
             if (index < 0 || index >= this.nElements) {
                 return null;
@@ -818,7 +818,7 @@ module collections {
                 return undefined;
             }
 
-            var ret;
+            var ret: V;
             var k = this.toStr(key);
             var previousElement: IDicitonaryPair<K, V> = this.table[k];
             if (collections.isUndefined(previousElement)) {
@@ -1102,7 +1102,7 @@ module collections {
          */
         values(): V[] {
             var values = this.dict.values();
-            var array = [];
+            var array:Array<V> = [];
             for (var i = 0; i < values.length; i++) {
                 var v = values[i];
                 for (var j = 0; j < v.length; j++) {
@@ -2031,7 +2031,7 @@ module collections {
          * @return {Array} an array containing all of the elements in this bag.
          */
         toArray(): T[] {
-            var a = [];
+            var a:Array<T> = [];
             var values = this.dictionary.values();
             var vl = values.length;
             for (var i = 0; i < vl; i++) {
@@ -2311,7 +2311,7 @@ module collections {
          * @return {Array} an array containing all of the elements in this tree in in-order.
          */
         toArray(): T[] {
-            var array = [];
+            var array: Array<T> = [];
             this.inorderTraversal(function (element: T): boolean {
                 array.push(element);
                 return;
@@ -2331,7 +2331,7 @@ module collections {
         * @private
         */
         private searchNode(node: BSTreeNode<T>, element: T): BSTreeNode<T> {
-            var cmp = null;
+            var cmp:number = null;
             while (node !== null && cmp !== 0) {
                 cmp = this.compare(element, node.element);
                 if (cmp < 0) {
@@ -2505,9 +2505,9 @@ module collections {
         */
         private insertNode(node: BSTreeNode<T>): BSTreeNode<T> {
 
-            var parent = null;
+            var parent: any = null;
             var position = this.root;
-            var cmp = null;
+            var cmp:number = null;
             while (position !== null) {
                 cmp = this.compare(node.element, position.element);
                 if (cmp === 0) {
