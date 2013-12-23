@@ -58,7 +58,7 @@ var collections;
     /**
     * Joins all the properies of the object using the provided join string
     */
-    function toString(item, join) {
+    function makeString(item, join) {
         if (typeof join === "undefined") { join = ","; }
         if (item === null) {
             return 'COLLECTION_NULL';
@@ -81,7 +81,7 @@ var collections;
             return toret + "}";
         }
     }
-    collections.toString = toString;
+    collections.makeString = makeString;
 
     /**
     * Checks if the given argument is a function.
@@ -2454,3 +2454,4 @@ var collections;
     })();
     collections.BSTree = BSTree;
 })(collections || (collections = {})); // End of module
+//# sourceMappingURL=collections.js.map

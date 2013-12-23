@@ -1,4 +1,4 @@
-[TypeScript Collections](github.com/basarat/typescript-collections/)
+[TypeScript Collections](https://github.com/basarat/typescript-collections/)
 ====================
 It is a complete, fully tested data structure library written in TypeScript.
 
@@ -23,7 +23,7 @@ It also includes several functions for manipulating arrays.
 How to use?
 --------------------
 
-Also available on Nuget : http://www.nuget.org/packages/typescript.collections/ Thanks to https://github.com/georgiosd
+Also available on NuGet : http://www.nuget.org/packages/typescript.collections/ Thanks to https://github.com/georgiosd
 
 Download collections.ts. Add it as a reference in your TypeScript code and start coding. 
 Visual studio / any typescript IDE, will provide you with complete intellisense for your types and the compiler will 
@@ -50,8 +50,12 @@ console.log(x.toString()); // [123,456]
 
 A note on Equality
 -------------------
-Equlity is important for hashing (e.g. dictionary / sets). Javascript only allows strings to be keys for the base dictionary {}.
-This is why the implementation for these datastructures uses the item's toString() method. 
+Equality is important for hashing (e.g. dictionary / sets). Javascript only allows strings to be keys for the base dictionary {}.
+This is why the implementation for these data structures uses the item's toString() method.
+
+
+makeString utility function
+-------------------
 
 A simple function is provided for you when you need a quick toString that uses all properties. E.g: 
 ```typescript
@@ -60,7 +64,7 @@ class Car {
     }
     toString() {
         // Short hand. Adds each own property 
-        return collections.toString(this);
+        return collections.makeString(this);
     }
 }
 ```

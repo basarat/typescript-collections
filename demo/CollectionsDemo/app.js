@@ -23,7 +23,7 @@ var Car = (function () {
     }
     Car.prototype.toString = function () {
         // Short hand. Adds each own property
-        return collections.toString(this);
+        return collections.makeString(this);
     };
     return Car;
 })();

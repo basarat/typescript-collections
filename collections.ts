@@ -74,7 +74,7 @@ module collections {
     /**
     * Joins all the properies of the object using the provided join string 
     */
-    export function toString<T>(item: T, join: string = ","): string {
+    export function makeString<T>(item: T, join: string = ","): string {
         if (item === null) {
             return 'COLLECTION_NULL';
         } else if (collections.isUndefined(item)) {

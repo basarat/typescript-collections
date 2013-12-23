@@ -17,7 +17,7 @@ class Car {
     }
     toString() {
         // Short hand. Adds each own property 
-        return collections.toString(this);
+        return collections.makeString(this);
     }
 }
 var dict = new collections.Dictionary<Person, Car>();
