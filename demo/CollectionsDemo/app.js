@@ -56,13 +56,13 @@ console.log("------");
 console.log("Set Demo");
 var x = new collections.Set();
 x.add(123);
-x.add(123);
+x.add(123); // Duplicates not allowed in a set
 
 var y = new collections.Set();
 y.add(456);
 x.union(y);
 
-console.log(x.toString());
+console.log(x.toString()); // [123,456]
 
 ///////////////////////////////////Linked list
 console.log("------");
@@ -71,4 +71,4 @@ var ll = new collections.LinkedList();
 ll.add(123);
 ll.add(456);
 console.log(ll);
-//@ sourceMappingURL=app.js.map
+//# sourceMappingURL=app.js.map
