@@ -8,6 +8,12 @@
 */
 var collections;
 (function (collections) {
+    
+
+    
+
+    
+
     /**
     * Default function to compare element order.
     * @function
@@ -52,7 +58,7 @@ var collections;
     /**
     * Joins all the properies of the object using the provided join string
     */
-    function toString(item, join) {
+    function makeString(item, join) {
         if (typeof join === "undefined") { join = ","; }
         if (item === null) {
             return 'COLLECTION_NULL';
@@ -66,7 +72,8 @@ var collections;
             for (var prop in item) {
                 if (item.hasOwnProperty(prop)) {
                     if (first)
-                        first = false; else
+                        first = false;
+                    else
                         toret = toret + join;
                     toret = toret + prop + ":" + item[prop];
                 }
@@ -74,7 +81,7 @@ var collections;
             return toret + "}";
         }
     }
-    collections.toString = toString;
+    collections.makeString = makeString;
 
     /**
     * Checks if the given argument is a function.
@@ -318,6 +325,8 @@ var collections;
         arrays.forEach = forEach;
     })(collections.arrays || (collections.arrays = {}));
     var arrays = collections.arrays;
+
+    
 
     var LinkedList = (function () {
         /**
@@ -705,6 +714,8 @@ var collections;
     })();
     collections.LinkedList = LinkedList;
 
+    
+
     var Dictionary = (function () {
         /**
         * Creates an empty dictionary.
@@ -941,6 +952,7 @@ var collections;
         * @param {function(Object,Object):boolean=} valuesEqualsFunction optional
         * function to check if two values are equal.
         *
+        * @param allowDuplicateValues
         */
         function MultiDictionary(toStrFunction, valuesEqualsFunction, allowDuplicateValues) {
             if (typeof allowDuplicateValues === "undefined") { allowDuplicateValues = false; }
@@ -1004,10 +1016,7 @@ var collections;
         MultiDictionary.prototype.remove = function (key, value) {
             if (collections.isUndefined(value)) {
                 var v = this.dict.remove(key);
-                if (collections.isUndefined(v)) {
-                    return false;
-                }
-                return true;
+                return !collections.isUndefined(v);
             }
             var array = this.dict.getValue(key);
             if (collections.arrays.remove(array, value, this.equalsF)) {
@@ -1058,7 +1067,7 @@ var collections;
         * Removes all mappings from this dictionary.
         */
         MultiDictionary.prototype.clear = function () {
-            return this.dict.clear();
+            this.dict.clear();
         };
 
         /**
@@ -1707,7 +1716,7 @@ var collections;
                 if (!otherSet.contains(element)) {
                     set.remove(element);
                 }
-                return;
+                return true;
             });
         };
 
@@ -1720,7 +1729,7 @@ var collections;
             var set = this;
             otherSet.forEach(function (element) {
                 set.add(element);
-                return;
+                return true;
             });
         };
 
@@ -1733,7 +1742,7 @@ var collections;
             var set = this;
             otherSet.forEach(function (element) {
                 set.remove(element);
-                return;
+                return true;
             });
         };
 
@@ -1753,6 +1762,7 @@ var collections;
                     isSub = false;
                     return false;
                 }
+                return true;
             });
             return isSub;
         };
@@ -2012,6 +2022,7 @@ var collections;
     })();
     collections.Bag = Bag;
 
+    
     var BSTree = (function () {
         /**
         * Creates an empty binary search tree.
@@ -2208,7 +2219,7 @@ var collections;
             var array = [];
             this.inorderTraversal(function (element) {
                 array.push(element);
-                return;
+                return true;
             });
             return array;
         };
@@ -2373,21 +2384,6 @@ var collections;
         /**
         * @private
         */
-        BSTree.prototype.successorNode = function (node) {
-            if (node.rightCh !== null) {
-                return this.minimumAux(node.rightCh);
-            }
-            var successor = node.parent;
-            while (successor !== null && node === successor.rightCh) {
-                node = successor;
-                successor = node.parent;
-            }
-            return successor;
-        };
-
-        /**
-        * @private
-        */
         BSTree.prototype.heightAux = function (node) {
             if (node === null) {
                 return -1;
@@ -2440,6 +2436,5 @@ var collections;
         return BSTree;
     })();
     collections.BSTree = BSTree;
-})(collections || (collections = {}));// End of module
-
-//@ sourceMappingURL=collections.js.map
+})(collections || (collections = {})); // End of module
+//# sourceMappingURL=collections.js.map

@@ -74,7 +74,7 @@ module collections {
     /**
     * Joins all the properies of the object using the provided join string 
     */
-    export function toString<T>(item: T, join: string = ","): string {
+    export function makeString<T>(item: T, join: string = ","): string {
         if (item === null) {
             return 'COLLECTION_NULL';
         } else if (collections.isUndefined(item)) {
@@ -977,40 +977,42 @@ module collections {
         private dict: Dictionary<K, Array<V>>;
         private equalsF: IEqualsFunction<V>;
         private allowDuplicate: boolean;
-        /**
-         * Creates an empty multi dictionary. 
-         * @class <p>A multi dictionary is a special kind of dictionary that holds
-         * multiple values against each key. Setting a value into the dictionary will 
-         * add the value to an array at that key. Getting a key will return an array,
-         * holding all the values set to that key. 
-         * You can configure to allow duplicates in the values. 
-         * This implementation accepts any kind of objects as keys.</p>
-         *
-         * <p>If the keys are custom objects a function which converts keys to strings must be
-         * provided. Example:</p>
-         *
-         * <pre>
-         * function petToString(pet) {
+
+      /**
+       * Creates an empty multi dictionary.
+       * @class <p>A multi dictionary is a special kind of dictionary that holds
+       * multiple values against each key. Setting a value into the dictionary will
+       * add the value to an array at that key. Getting a key will return an array,
+       * holding all the values set to that key.
+       * You can configure to allow duplicates in the values.
+       * This implementation accepts any kind of objects as keys.</p>
+       *
+       * <p>If the keys are custom objects a function which converts keys to strings must be
+       * provided. Example:</p>
+       *
+       * <pre>
+       * function petToString(pet) {
          *  return pet.name;
          * }
-         * </pre>
-         * <p>If the values are custom objects a function to check equality between values
-         * must be provided. Example:</p>
-         *
-         * <pre>
-         * function petsAreEqualByAge(pet1,pet2) {
+       * </pre>
+       * <p>If the values are custom objects a function to check equality between values
+       * must be provided. Example:</p>
+       *
+       * <pre>
+       * function petsAreEqualByAge(pet1,pet2) {
          *  return pet1.age===pet2.age;
          * }
-         * </pre>
-         * @constructor
-         * @param {function(Object):string=} toStrFunction optional function
-         * to convert keys to strings. If the keys aren't strings or if toString()
-         * is not appropriate, a custom function which receives a key and returns a
-         * unique string must be provided.
-         * @param {function(Object,Object):boolean=} valuesEqualsFunction optional
-         * function to check if two values are equal.
-         * 
-         */
+       * </pre>
+       * @constructor
+       * @param {function(Object):string=} toStrFunction optional function
+       * to convert keys to strings. If the keys aren't strings or if toString()
+       * is not appropriate, a custom function which receives a key and returns a
+       * unique string must be provided.
+       * @param {function(Object,Object):boolean=} valuesEqualsFunction optional
+       * function to check if two values are equal.
+       *
+       * @param allowDuplicateValues
+       */
         constructor(toStrFunction?: (key: K) => string, valuesEqualsFunction?: IEqualsFunction<V>, allowDuplicateValues = false) {
             this.dict = new Dictionary<K, Array<V>>(toStrFunction);
             this.equalsF = valuesEqualsFunction || collections.defaultEquals;
@@ -1073,10 +1075,7 @@ module collections {
         remove(key: K, value?: V): boolean {
             if (collections.isUndefined(value)) {
                 var v = this.dict.remove(key);
-                if (collections.isUndefined(v)) {
-                    return false;
-                }
-                return true;
+                return !collections.isUndefined(v);
             }
             var array = this.dict.getValue(key);
             if (collections.arrays.remove(array, value, this.equalsF)) {
@@ -1127,7 +1126,7 @@ module collections {
          * Removes all mappings from this dictionary.
          */
         clear(): void {
-            return this.dict.clear();
+            this.dict.clear();
         }
 
         /**
@@ -1508,7 +1507,7 @@ module collections {
          * @constructor
          */
         constructor() {
-            this.list = new LinkedList();
+            this.list = new LinkedList<T>();
         }
 
 
@@ -1795,7 +1794,7 @@ module collections {
                 if (!otherSet.contains(element)) {
                     set.remove(element);
                 }
-                return;
+                return true;
             });
         }
 
@@ -1808,7 +1807,7 @@ module collections {
             var set = this;
             otherSet.forEach(function (element: T): boolean {
                 set.add(element);
-                return;
+                return true;
             });
         }
 
@@ -1821,7 +1820,7 @@ module collections {
             var set = this;
             otherSet.forEach(function (element: T): boolean {
                 set.remove(element);
-                return;
+                return true;
             });
         }
 
@@ -1842,6 +1841,7 @@ module collections {
                     isSub = false;
                     return false;
                 }
+            return true;
             });
             return isSub;
         }
@@ -2314,7 +2314,7 @@ module collections {
             var array: Array<T> = [];
             this.inorderTraversal(function (element: T): boolean {
                 array.push(element);
-                return;
+                return true;
             });
             return array;
         }
@@ -2402,7 +2402,7 @@ module collections {
         * @private
         */
         private levelTraversalAux(node: BSTreeNode<T>, callback: ILoopFunction<T>) {
-            var queue = new Queue();
+            var queue = new Queue<BSTreeNode<T>>();
             if (node !== null) {
                 queue.enqueue(node);
             }
@@ -2475,22 +2475,7 @@ module collections {
             return node;
         }
 
-        /**
-        * @private
-        */
-        private successorNode(node: BSTreeNode<T>): BSTreeNode<T> {
-            if (node.rightCh !== null) {
-                return this.minimumAux(node.rightCh);
-            }
-            var successor = node.parent;
-            while (successor !== null && node === successor.rightCh) {
-                node = successor;
-                successor = node.parent;
-            }
-            return successor;
-        }
-
-        /**
+      /**
         * @private
         */
         private heightAux(node: BSTreeNode<T>): number {
