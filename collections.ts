@@ -1127,7 +1127,7 @@ module collections {
          * Removes all mappings from this dictionary.
          */
         clear(): void {
-            return this.dict.clear();
+            this.dict.clear();
         }
 
         /**
@@ -1508,7 +1508,7 @@ module collections {
          * @constructor
          */
         constructor() {
-            this.list = new LinkedList();
+            this.list = new LinkedList<T>();
         }
 
 
@@ -1795,7 +1795,7 @@ module collections {
                 if (!otherSet.contains(element)) {
                     set.remove(element);
                 }
-                return;
+                return true;
             });
         }
 
@@ -1808,7 +1808,7 @@ module collections {
             var set = this;
             otherSet.forEach(function (element: T): boolean {
                 set.add(element);
-                return;
+                return true;
             });
         }
 
@@ -1821,7 +1821,7 @@ module collections {
             var set = this;
             otherSet.forEach(function (element: T): boolean {
                 set.remove(element);
-                return;
+                return true;
             });
         }
 
@@ -1842,6 +1842,7 @@ module collections {
                     isSub = false;
                     return false;
                 }
+            return true;
             });
             return isSub;
         }
@@ -2314,7 +2315,7 @@ module collections {
             var array: Array<T> = [];
             this.inorderTraversal(function (element: T): boolean {
                 array.push(element);
-                return;
+                return true;
             });
             return array;
         }
@@ -2402,7 +2403,7 @@ module collections {
         * @private
         */
         private levelTraversalAux(node: BSTreeNode<T>, callback: ILoopFunction<T>) {
-            var queue = new Queue();
+            var queue = new Queue<BSTreeNode<T>>();
             if (node !== null) {
                 queue.enqueue(node);
             }

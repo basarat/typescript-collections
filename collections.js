@@ -8,6 +8,12 @@
 */
 var collections;
 (function (collections) {
+    
+
+    
+
+    
+
     /**
     * Default function to compare element order.
     * @function
@@ -66,7 +72,8 @@ var collections;
             for (var prop in item) {
                 if (item.hasOwnProperty(prop)) {
                     if (first)
-                        first = false; else
+                        first = false;
+                    else
                         toret = toret + join;
                     toret = toret + prop + ":" + item[prop];
                 }
@@ -318,6 +325,8 @@ var collections;
         arrays.forEach = forEach;
     })(collections.arrays || (collections.arrays = {}));
     var arrays = collections.arrays;
+
+    
 
     var LinkedList = (function () {
         /**
@@ -705,6 +714,8 @@ var collections;
     })();
     collections.LinkedList = LinkedList;
 
+    
+
     var Dictionary = (function () {
         /**
         * Creates an empty dictionary.
@@ -1058,7 +1069,7 @@ var collections;
         * Removes all mappings from this dictionary.
         */
         MultiDictionary.prototype.clear = function () {
-            return this.dict.clear();
+            this.dict.clear();
         };
 
         /**
@@ -1707,7 +1718,7 @@ var collections;
                 if (!otherSet.contains(element)) {
                     set.remove(element);
                 }
-                return;
+                return true;
             });
         };
 
@@ -1720,7 +1731,7 @@ var collections;
             var set = this;
             otherSet.forEach(function (element) {
                 set.add(element);
-                return;
+                return true;
             });
         };
 
@@ -1733,7 +1744,7 @@ var collections;
             var set = this;
             otherSet.forEach(function (element) {
                 set.remove(element);
-                return;
+                return true;
             });
         };
 
@@ -1753,6 +1764,7 @@ var collections;
                     isSub = false;
                     return false;
                 }
+                return true;
             });
             return isSub;
         };
@@ -2012,6 +2024,7 @@ var collections;
     })();
     collections.Bag = Bag;
 
+    
     var BSTree = (function () {
         /**
         * Creates an empty binary search tree.
@@ -2208,7 +2221,7 @@ var collections;
             var array = [];
             this.inorderTraversal(function (element) {
                 array.push(element);
-                return;
+                return true;
             });
             return array;
         };
@@ -2440,6 +2453,4 @@ var collections;
         return BSTree;
     })();
     collections.BSTree = BSTree;
-})(collections || (collections = {}));// End of module
-
-//@ sourceMappingURL=collections.js.map
+})(collections || (collections = {})); // End of module
