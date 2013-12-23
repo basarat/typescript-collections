@@ -952,6 +952,7 @@ var collections;
         * @param {function(Object,Object):boolean=} valuesEqualsFunction optional
         * function to check if two values are equal.
         *
+        * @param allowDuplicateValues
         */
         function MultiDictionary(toStrFunction, valuesEqualsFunction, allowDuplicateValues) {
             if (typeof allowDuplicateValues === "undefined") { allowDuplicateValues = false; }
@@ -1015,10 +1016,7 @@ var collections;
         MultiDictionary.prototype.remove = function (key, value) {
             if (collections.isUndefined(value)) {
                 var v = this.dict.remove(key);
-                if (collections.isUndefined(v)) {
-                    return false;
-                }
-                return true;
+                return !collections.isUndefined(v);
             }
             var array = this.dict.getValue(key);
             if (collections.arrays.remove(array, value, this.equalsF)) {
@@ -2381,21 +2379,6 @@ var collections;
                 node = node.rightCh;
             }
             return node;
-        };
-
-        /**
-        * @private
-        */
-        BSTree.prototype.successorNode = function (node) {
-            if (node.rightCh !== null) {
-                return this.minimumAux(node.rightCh);
-            }
-            var successor = node.parent;
-            while (successor !== null && node === successor.rightCh) {
-                node = successor;
-                successor = node.parent;
-            }
-            return successor;
         };
 
         /**
