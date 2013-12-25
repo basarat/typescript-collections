@@ -731,7 +731,7 @@ module collections {
 
 
     // Used internally by dictionary 
-    interface IDicitonaryPair<K, V>{
+    interface IDictionaryPair<K, V>{
         key: K;
         value: V;
     }
@@ -743,7 +743,7 @@ module collections {
          * @type {Object}
          * @private
          */
-        private table: { [key: string]: IDicitonaryPair<K, V> };
+        private table: { [key: string]: IDictionaryPair<K, V> };
         //: [key: K] will not work since indices can only by strings in javascript and typescript enforces this. 
 
         /**
@@ -794,7 +794,7 @@ module collections {
          * undefined if the map contains no mapping for this key.
          */
         getValue(key: K): V {
-            var pair: IDicitonaryPair<K, V> = this.table[this.toStr(key)];
+            var pair: IDictionaryPair<K, V> = this.table[this.toStr(key)];
             if (collections.isUndefined(pair)) {
                 return undefined;
             }
@@ -820,7 +820,7 @@ module collections {
 
             var ret: V;
             var k = this.toStr(key);
-            var previousElement: IDicitonaryPair<K, V> = this.table[k];
+            var previousElement: IDictionaryPair<K, V> = this.table[k];
             if (collections.isUndefined(previousElement)) {
                 this.nElements++;
                 ret = undefined;
@@ -843,7 +843,7 @@ module collections {
          */
         remove(key: K): V {
             var k = this.toStr(key);
-            var previousElement: IDicitonaryPair<K, V> = this.table[k];
+            var previousElement: IDictionaryPair<K, V> = this.table[k];
             if (!collections.isUndefined(previousElement)) {
                 delete this.table[k];
                 this.nElements--;
@@ -860,7 +860,7 @@ module collections {
             var array: K[] = [];
             for (var name in this.table) {
                 if (this.table.hasOwnProperty(name)) {
-                    var pair: IDicitonaryPair<K, V> = this.table[name];
+                    var pair: IDictionaryPair<K, V> = this.table[name];
                     array.push(pair.key);
                 }
             }
@@ -875,7 +875,7 @@ module collections {
             var array: V[] = [];
             for (var name in this.table) {
                 if (this.table.hasOwnProperty(name)) {
-                    var pair: IDicitonaryPair<K, V> = this.table[name];
+                    var pair: IDictionaryPair<K, V> = this.table[name];
                     array.push(pair.value);
                 }
             }
@@ -892,7 +892,7 @@ module collections {
         forEach(callback: (key: K, value: V) => any): void {
             for (var name in this.table) {
                 if (this.table.hasOwnProperty(name)) {
-                    var pair: IDicitonaryPair<K, V> = this.table[name];
+                    var pair: IDictionaryPair<K, V> = this.table[name];
                     var ret = callback(pair.key, pair.value);
                     if (ret === false) {
                         return;
