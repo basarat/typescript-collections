@@ -2437,4 +2437,3 @@ var collections;
     })();
     collections.BSTree = BSTree;
 })(collections || (collections = {})); // End of module
-//# sourceMappingURL=collections.js.map
