@@ -794,7 +794,7 @@ module collections {
          * undefined if the map contains no mapping for this key.
          */
         getValue(key: K): V {
-            var pair: IDictionaryPair<K, V> = this.table[this.toStr(key)];
+            var pair: IDictionaryPair<K, V> = this.table['$' + this.toStr(key)];
             if (collections.isUndefined(pair)) {
                 return undefined;
             }
@@ -819,7 +819,7 @@ module collections {
             }
 
             var ret: V;
-            var k = this.toStr(key);
+            var k = '$' + this.toStr(key);
             var previousElement: IDictionaryPair<K, V> = this.table[k];
             if (collections.isUndefined(previousElement)) {
                 this.nElements++;
@@ -842,7 +842,7 @@ module collections {
          * there was no mapping for key.
          */
         remove(key: K): V {
-            var k = this.toStr(key);
+            var k = '$' + this.toStr(key);
             var previousElement: IDictionaryPair<K, V> = this.table[k];
             if (!collections.isUndefined(previousElement)) {
                 delete this.table[k];
