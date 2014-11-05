@@ -65,9 +65,9 @@ module collections {
         } else if (collections.isUndefined(item)) {
             return 'COLLECTION_UNDEFINED';
         } else if (collections.isString(item)) {
-            return item;
+            return '$s' + item;
         } else {
-            return item.toString();
+            return '$o' + item.toString();
         }
     }
 
