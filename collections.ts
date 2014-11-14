@@ -8,6 +8,11 @@
  * @namespace Top level namespace for collections, a TypeScript data structure library.
  */
 module collections {
+    
+    var _hasOwnProperty = Object.prototype.hasOwnProperty;
+    var has = function(obj, prop) {
+        return _hasOwnProperty.call(obj, prop);
+    }
 
     /**
     * Function signature for comparing
@@ -65,9 +70,9 @@ module collections {
         } else if (collections.isUndefined(item)) {
             return 'COLLECTION_UNDEFINED';
         } else if (collections.isString(item)) {
-            return item;
+            return '$s' + item;
         } else {
-            return item.toString();
+            return '$o' + item.toString();
         }
     }
 
@@ -85,7 +90,7 @@ module collections {
             var toret = "{";
             var first = true;
             for (var prop in item) {
-                if (item.hasOwnProperty(prop)) {
+                if (has(item, prop)) {
                     if (first)
                         first = false;
                     else
@@ -794,7 +799,7 @@ module collections {
          * undefined if the map contains no mapping for this key.
          */
         getValue(key: K): V {
-            var pair: IDictionaryPair<K, V> = this.table[this.toStr(key)];
+            var pair: IDictionaryPair<K, V> = this.table['$' + this.toStr(key)];
             if (collections.isUndefined(pair)) {
                 return undefined;
             }
@@ -819,7 +824,7 @@ module collections {
             }
 
             var ret: V;
-            var k = this.toStr(key);
+            var k = '$' + this.toStr(key);
             var previousElement: IDictionaryPair<K, V> = this.table[k];
             if (collections.isUndefined(previousElement)) {
                 this.nElements++;
@@ -842,7 +847,7 @@ module collections {
          * there was no mapping for key.
          */
         remove(key: K): V {
-            var k = this.toStr(key);
+            var k = '$' + this.toStr(key);
             var previousElement: IDictionaryPair<K, V> = this.table[k];
             if (!collections.isUndefined(previousElement)) {
                 delete this.table[k];
@@ -859,7 +864,7 @@ module collections {
         keys(): K[] {
             var array: K[] = [];
             for (var name in this.table) {
-                if (this.table.hasOwnProperty(name)) {
+                if (has(this.table, name)) {
                     var pair: IDictionaryPair<K, V> = this.table[name];
                     array.push(pair.key);
                 }
@@ -874,7 +879,7 @@ module collections {
         values(): V[] {
             var array: V[] = [];
             for (var name in this.table) {
-                if (this.table.hasOwnProperty(name)) {
+                if (has(this.table, name)) {
                     var pair: IDictionaryPair<K, V> = this.table[name];
                     array.push(pair.value);
                 }
@@ -891,7 +896,7 @@ module collections {
         */
         forEach(callback: (key: K, value: V) => any): void {
             for (var name in this.table) {
-                if (this.table.hasOwnProperty(name)) {
+                if (has(this.table, name)) {
                     var pair: IDictionaryPair<K, V> = this.table[name];
                     var ret = callback(pair.key, pair.value);
                     if (ret === false) {

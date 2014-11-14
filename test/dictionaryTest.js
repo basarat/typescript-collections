@@ -3,6 +3,14 @@ function() {
 
     var dict = null;
     var elems = 100;
+    var elemKeys = [];
+    for(var i = 0; i < elems; i++) {
+        elemKeys[i] = '' + i;
+    }
+    // Test with some potentially problematic keys
+    elemKeys[2] = 'hasOwnProperty';
+    elemKeys[4] = '__proto__';
+    elemKeys[6] = '';
 
     beforeEach(function() {
         dict = new collections.Dictionary();
@@ -15,12 +23,12 @@ function() {
 
         // test with string keys
         for (var i = 0; i < elems; i++) {
-            expect(dict.setValue("" + i, i + 1)).toBeUndefined();
+            expect(dict.setValue(elemKeys[i], i + 1)).toBeUndefined();
         }
         expect(dict.size()).toEqual(elems);
 
         for (var i = 0; i < elems; i++) {
-            expect(dict.getValue("" + i)).toEqual(i + 1);
+            expect(dict.getValue(elemKeys[i])).toEqual(i + 1);
         }
 
         dict.setValue("a", 5);
@@ -28,6 +36,7 @@ function() {
         expect(dict.setValue("a", 21)).toEqual(5);
         expect(dict.size()).toEqual(elems + 1);
         expect(dict.getValue("a")).toEqual(21);
+        
 
     });
 
@@ -55,13 +64,13 @@ function() {
 
         for (var i = 0; i < elems; i++) {
             var o = {};
-            o.s = "" + i;
+            o.s = elemKeys[i];
             expect(dict.setValue(o, i + 1)).toBeUndefined();
         }
 
         for (var i = 0; i < elems; i++) {
             var d = {};
-            d.s = "" + i;
+            d.s = elemKeys[i];
             expect(dict.getValue(d)).toEqual(i + 1);
         }
     });
@@ -71,14 +80,14 @@ function() {
 
         expect(dict.remove("1")).toBeUndefined();
         for (var i = 0; i < elems; i++) {
-            expect(dict.setValue("" + i, i + 1)).toBeUndefined();
+            expect(dict.setValue(elemKeys[i], i + 1)).toBeUndefined();
         }
         expect(dict.size()).toEqual(elems);
 
         for (var i = 0; i < elems; i++) {
-            expect(dict.remove("" + i)).toEqual(i + 1);
-            expect(dict.getValue("" + i)).toBeUndefined();
-            expect(dict.remove("" + i)).toBeUndefined();
+            expect(dict.remove(elemKeys[i])).toEqual(i + 1);
+            expect(dict.getValue(elemKeys[i])).toBeUndefined();
+            expect(dict.remove(elemKeys[i])).toBeUndefined();
         }
         expect(dict.size()).toEqual(0);
     });
@@ -107,12 +116,12 @@ function() {
 
         expect(dict.containsKey(0)).toBeFalsy();
         for (var i = 0; i < 10; i++) {
-            dict.setValue(i, i);
-            expect(dict.containsKey(i)).toBeTruthy();
+            dict.setValue(elemKeys[i], i);
+            expect(dict.containsKey(elemKeys[i])).toBeTruthy();
         };
         for (var i = 0; i < 10; i++) {
-            dict.remove(i);
-            expect(dict.containsKey(i)).toBeFalsy();
+            dict.remove(elemKeys[i]);
+            expect(dict.containsKey(elemKeys[i])).toBeFalsy();
         };
     });
 
@@ -121,7 +130,7 @@ function() {
 
         expect(dict.size()).toEqual(0);
         for (var i = 0; i < 10; i++) {
-            dict.setValue(i, i);
+            dict.setValue(elemKeys[i], i);
             expect(dict.size()).toEqual(i + 1);
         };
 
@@ -135,8 +144,8 @@ function() {
             k.sort();
             keys.sort();
             expect(collections.arrays.equals(k, keys)).toBeTruthy();
-            dict.setValue("" + i, i);
-            k.push("" + i);
+            dict.setValue(elemKeys[i], i);
+            k.push(elemKeys[i]);
         }
     });
 
@@ -148,7 +157,7 @@ function() {
             v.sort();
             values.sort();
             expect(collections.arrays.equals(v, values)).toBeTruthy();
-            dict.setValue("" + i, i);
+            dict.setValue(elemKeys[i], i);
             v.push(i);
         }
     });
@@ -156,7 +165,7 @@ function() {
 	it('For each gives all the pairs',
     function() {
         for (var i = 0; i < elems; i++) {
-            dict.setValue("" + i, i);
+            dict.setValue(elemKeys[i], i);
         }
 		var keys = dict.keys();
 		var values = dict.values();
@@ -172,7 +181,7 @@ function() {
 	it('For each can be interrupted',
     function() {
         for (var i = 0; i < elems; i++) {
-            dict.setValue("" + i, i);
+            dict.setValue(elemKeys[i], i);
         }
 		var t = 0;
 		dict.forEach(function(k,v) {
