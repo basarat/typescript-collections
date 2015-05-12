@@ -1,0 +1,47 @@
+{
+  "name": "typescript-collections",
+  "version": "1.0.0",
+  "description": "NPM package for typescript-collections written by Basarat (https://github.com/basarat/typescript-collections). It is a complete, fully tested data structure library written in TypeScript.",
+  "main": "collections.js",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/basarat/typescript-collections.git"
+  },
+  "keywords": [
+    "typescript",
+    "generics",
+    "data",
+    "structures",
+    "collections",
+    "linked",
+    "list",
+    "dictionary",
+    "multi",
+    "dictionary",
+    "binary",
+    "search",
+    "tree",
+    "stack",
+    "queue",
+    "set",
+    "bag",
+    "binary",
+    "heap",
+    "priority",
+    "queue",
+    "array"
+  ],
+  "author": "Basarat Ali Syed <bas@basarat.com> (http://basarat.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/basarat/typescript-collections/issues"
+  },
+  "homepage": "https://github.com/basarat/typescript-collections"
+}
