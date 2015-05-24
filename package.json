@@ -1,7 +1,7 @@
 {
   "name": "typescript-collections",
-  "version": "1.0.1",
-  "description": "NPM package for typescript-collections written by Basarat (https://github.com/basarat/typescript-collections). It is a complete, fully tested data structure library written in TypeScript.",
+  "version": "1.0.2",
+  "description": "A complete, fully tested data structure library written in TypeScript.",
   "main": "collections.js",
   "directories": {
     "doc": "doc",
