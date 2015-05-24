@@ -81,7 +81,7 @@ declare module collections {
          * @return {number} the position of the first occurrence of the specified element
          * within the specified array, or -1 if not found.
          */
-        function indexOf<T>(array: T[], item: T, equalsFunction?: IEqualsFunction<T>): number;
+        function indexOf<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>): number;
         /**
          * Returns the position of the last occurrence of the specified element
          * within the specified array.
@@ -92,7 +92,7 @@ declare module collections {
          * @return {number} the position of the last occurrence of the specified element
          * within the specified array or -1 if not found.
          */
-        function lastIndexOf<T>(array: T[], item: T, equalsFunction?: IEqualsFunction<T>): number;
+        function lastIndexOf<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>): number;
         /**
          * Returns true if the specified array contains the specified element.
          * @param {*} array the array in which to search the element.
@@ -101,7 +101,7 @@ declare module collections {
          * check equality between 2 elements.
          * @return {boolean} true if the specified array contains the specified element.
          */
-        function contains<T>(array: T[], item: T, equalsFunction?: IEqualsFunction<T>): boolean;
+        function contains<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>): boolean;
         /**
          * Removes the first ocurrence of the specified element from the specified array.
          * @param {*} array the array in which to search element.
@@ -110,7 +110,7 @@ declare module collections {
          * check equality between 2 elements.
          * @return {boolean} true if the array changed after this call.
          */
-        function remove<T>(array: T[], item: T, equalsFunction?: IEqualsFunction<T>): boolean;
+        function remove<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>): boolean;
         /**
          * Returns the number of elements in the specified array equal
          * to the specified object.
@@ -121,7 +121,7 @@ declare module collections {
          * @return {number} the number of elements in the specified array
          * equal to the specified object.
          */
-        function frequency<T>(array: T[], item: T, equalsFunction?: IEqualsFunction<T>): number;
+        function frequency<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>): number;
         /**
          * Returns true if the two specified arrays are equal to one another.
          * Two arrays are considered equal if both arrays contain the same number
@@ -133,7 +133,7 @@ declare module collections {
          * check equality between elemements in the arrays.
          * @return {boolean} true if the two arrays are equal
          */
-        function equals<T>(array1: T[], array2: T[], equalsFunction?: IEqualsFunction<T>): boolean;
+        function equals<T>(array1: T[], array2: T[], equalsFunction?: collections.IEqualsFunction<T>): boolean;
         /**
          * Returns shallow a copy of the specified array.
          * @param {*} array the array to copy.
