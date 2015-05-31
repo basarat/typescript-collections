@@ -748,7 +748,7 @@ module collections {
          * @type {Object}
          * @private
          */
-        private table: { [key: string]: IDictionaryPair<K, V> };
+        protected table: { [key: string]: IDictionaryPair<K, V> };
         //: [key: K] will not work since indices can only by strings in javascript and typescript enforces this. 
 
         /**
@@ -761,9 +761,9 @@ module collections {
         /**
          * Function used to convert keys to strings.
          * @type {function(Object):string}
-         * @private
+         * @protected
          */
-        private toStr: (key: K) => string;
+        protected toStr: (key: K) => string;
 
 
         /**
@@ -952,6 +952,142 @@ module collections {
         }
     } // End of dictionary
 
+    /**
+     * Has to be a class, not an interface, because it needs to have 
+     * the 'unlink' function defined.
+     */
+    class LinkedDictionaryPair<K, V> implements IDictionaryPair<K, V> {
+        prev: LinkedDictionaryPair<K, V>;
+        next: LinkedDictionaryPair<K, V>;
+
+        constructor(public key: K, public value: V) {
+        }
+
+        unlink() {
+            this.prev.next = this.next;
+            this.next.prev = this.prev;
+        }
+    }
+
+    export class LinkedDictionary<K, V> extends Dictionary<K, V> {
+        private head: LinkedDictionaryPair<K, V>;
+        private tail: LinkedDictionaryPair<K, V>;
+
+        constructor() {
+            super();
+            this.head = new LinkedDictionaryPair (null, null);
+            this.tail = new LinkedDictionaryPair (null, null);
+            this.head.next = this.tail;
+            this.tail.prev = this.head;
+        }
+
+        private appendToTail(entry: LinkedDictionaryPair<K, V>) {
+            var pair = this.tail.prev;
+            pair.next = entry;
+            entry.prev = pair;
+            this.tail.prev = entry;
+        }
+
+        /*private appendToTail(entry: LinkedDictionaryPair<K, V>) {
+            this.head.prev = entry;
+            entry.next = this.head;
+            entry.prev = null;
+            this.head = entry;
+        }*/
+
+        private getLinkedDictionaryPair(key: K): LinkedDictionaryPair<K, V> {
+            var k = '$' + this.toStr(key);
+            var pair = <LinkedDictionaryPair<K, V>>(this.table[k]);
+            return pair;
+        }
+
+        getValue(key: K): V {
+            var pair = this.getLinkedDictionaryPair(key);
+            if (!collections.isUndefined(pair)) {
+                return pair.value;
+            }
+            return undefined;
+        }
+
+        remove(key: K): V {
+            var pair = this.getLinkedDictionaryPair(key);
+            if (!collections.isUndefined(pair)) {
+                super.remove(key); // This will remove it from the table
+                pair.unlink(); // This will unlink it from the chain
+                return pair.value;
+            }
+            return undefined;
+        } 
+
+        setValue(key: K, value: V): V {
+
+            if (collections.isUndefined(key) || collections.isUndefined(value)) {
+                return undefined;
+            }
+
+            var k = '$' + this.toStr(key);
+
+            var existingPair = this.getLinkedDictionaryPair(key);
+            var newPair = new LinkedDictionaryPair<K, V>(key, value);
+
+            // If there is already an element for that key, we 
+            // keep it's place in the LinkedList
+            if (!collections.isUndefined(existingPair)) {
+                newPair.next = existingPair.next;
+                newPair.prev = existingPair.prev;
+                this.remove(existingPair.key);
+                this.table[k] = newPair;
+                return existingPair.value;
+            } else {
+                this.appendToTail(newPair);
+                return undefined;
+            }
+
+        }
+
+        /**
+         * Returns an array containing all of the keys in this dictionary.
+         * @return {Array} an array containing all of the keys in this dictionary.
+         */
+        keys(): K[] {
+            var array: K[] = [];
+            this.forEach((key, value) => {
+                array.push(key);
+            });
+            return array;
+        }
+
+        /**
+         * Returns an array containing all of the values in this dictionary.
+         * @return {Array} an array containing all of the values in this dictionary.
+         */
+        values(): V[] {
+            var array: V[] = [];
+            this.forEach((key, value) => {
+                array.push(value);
+            });
+            return array;
+        }
+
+        /**
+        * Executes the provided function once for each key-value pair 
+        * present in this dictionary.
+        * @param {function(Object,Object):*} callback function to execute, it is
+        * invoked with two arguments: key and value. To break the iteration you can 
+        * optionally return false.
+        */
+        forEach(callback: (key: K, value: V) => any): void {
+            var crawlNode = this.head.next;
+            while (crawlNode != null) {
+                var ret = callback(crawlNode.key, crawlNode.value);
+                if (ret === false) {
+                    return;
+                }
+                crawlNode = crawlNode.next;
+            }
+        }
+
+    }
     // /**
     //  * Returns true if this dictionary is equal to the given dictionary.
     //  * Two dictionaries are equal if they contain the same mappings.
@@ -970,8 +1106,6 @@ module collections {
     // 	}
     // 	return this.equalsAux(this.firstNode,other.firstNode,eqF);
     // }
-
-
 
     export class MultiDictionary<K, V> {
 

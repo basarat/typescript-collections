@@ -43,6 +43,22 @@ var car = dict.getValue(person);
 console.log("-Car:");
 console.log(car.toString());
 
+///////////////////////////////////LinkedDictionary
+
+console.log("------");
+console.log("Linked Dictionary Demo");
+var linkedDictionary = new collections.LinkedDictionary<Person, Car>();
+linkedDictionary.setValue(new Person("Joe", 1994, "Gainesville"), new Car("Mazda", "3", 2010));
+linkedDictionary.setValue(new Person("Elena", 1995, "Gainesville"), new Car("Mazda", "Tribute", 2002));
+linkedDictionary.setValue(new Person("Chris", 1994, "Ocala"), new Car("Honda", "Accord", 2006));
+linkedDictionary.setValue(new Person("Daniel", 1994, "Saint Petersburg"), new Car("Honda", "Accord", 2006));
+linkedDictionary.setValue(new Person("Joe", 1994, "Gainesville"), new Car("Mazda", "3", 2010));
+
+console.log("Linked Dictionary Keys after Insertion");
+var keys = linkedDictionary.keys();
+
+console.log(keys);
+
 
 ///////////////////////////////////Set 
 console.log("------");

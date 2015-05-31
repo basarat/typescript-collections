@@ -3,6 +3,12 @@
 // Licensed under MIT open source license http://opensource.org/licenses/MIT
 //
 // Orginal javascript code was by Mauricio Santos
+var __extends = this.__extends || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
 /**
  * @namespace Top level namespace for collections, a TypeScript data structure library.
  */
@@ -861,6 +867,126 @@ var collections;
         return Dictionary;
     })();
     collections.Dictionary = Dictionary; // End of dictionary
+    /**
+     * Has to be a class, not an interface, because it needs to have
+     * the 'unlink' function defined.
+     */
+    var LinkedDictionaryPair = (function () {
+        function LinkedDictionaryPair(key, value) {
+            this.key = key;
+            this.value = value;
+        }
+        LinkedDictionaryPair.prototype.unlink = function () {
+            this.prev.next = this.next;
+            this.next.prev = this.prev;
+        };
+        return LinkedDictionaryPair;
+    })();
+    var LinkedDictionary = (function (_super) {
+        __extends(LinkedDictionary, _super);
+        function LinkedDictionary() {
+            _super.call(this);
+            this.head = new LinkedDictionaryPair(null, null);
+            this.tail = new LinkedDictionaryPair(null, null);
+            this.head.next = this.tail;
+            this.tail.prev = this.head;
+        }
+        LinkedDictionary.prototype.appendToTail = function (entry) {
+            var pair = this.tail.prev;
+            pair.next = entry;
+            entry.prev = pair;
+            this.tail.prev = entry;
+        };
+        /*private appendToTail(entry: LinkedDictionaryPair<K, V>) {
+            this.head.prev = entry;
+            entry.next = this.head;
+            entry.prev = null;
+            this.head = entry;
+        }*/
+        LinkedDictionary.prototype.getLinkedDictionaryPair = function (key) {
+            var k = '$' + this.toStr(key);
+            var pair = (this.table[k]);
+            return pair;
+        };
+        LinkedDictionary.prototype.getValue = function (key) {
+            var pair = this.getLinkedDictionaryPair(key);
+            if (!collections.isUndefined(pair)) {
+                return pair.value;
+            }
+            return undefined;
+        };
+        LinkedDictionary.prototype.remove = function (key) {
+            var pair = this.getLinkedDictionaryPair(key);
+            if (!collections.isUndefined(pair)) {
+                _super.prototype.remove.call(this, key); // This will remove it from the table
+                pair.unlink(); // This will unlink it from the chain
+                return pair.value;
+            }
+            return undefined;
+        };
+        LinkedDictionary.prototype.setValue = function (key, value) {
+            if (collections.isUndefined(key) || collections.isUndefined(value)) {
+                return undefined;
+            }
+            var k = '$' + this.toStr(key);
+            var existingPair = this.getLinkedDictionaryPair(key);
+            var newPair = new LinkedDictionaryPair(key, value);
+            // If there is already an element for that key, we 
+            // keep it's place in the LinkedList
+            if (!collections.isUndefined(existingPair)) {
+                newPair.next = existingPair.next;
+                newPair.prev = existingPair.prev;
+                this.remove(existingPair.key);
+                this.table[k] = newPair;
+                return existingPair.value;
+            }
+            else {
+                this.appendToTail(newPair);
+                return undefined;
+            }
+        };
+        /**
+         * Returns an array containing all of the keys in this dictionary.
+         * @return {Array} an array containing all of the keys in this dictionary.
+         */
+        LinkedDictionary.prototype.keys = function () {
+            var array = [];
+            this.forEach(function (key, value) {
+                array.push(key);
+            });
+            return array;
+        };
+        /**
+         * Returns an array containing all of the values in this dictionary.
+         * @return {Array} an array containing all of the values in this dictionary.
+         */
+        LinkedDictionary.prototype.values = function () {
+            var array = [];
+            this.forEach(function (key, value) {
+                array.push(value);
+            });
+            return array;
+        };
+        /**
+        * Executes the provided function once for each key-value pair
+        * present in this dictionary.
+        * @param {function(Object,Object):*} callback function to execute, it is
+        * invoked with two arguments: key and value. To break the iteration you can
+        * optionally return false.
+        */
+        LinkedDictionary.prototype.forEach = function (callback) {
+            var crawlNode = this.head.next;
+            while (crawlNode != null) {
+                var ret = callback(crawlNode.key, crawlNode.value);
+                if (ret === false) {
+                    return;
+                }
+                crawlNode = crawlNode.next;
+            }
+        };
+        return LinkedDictionary;
+    })(Dictionary);
+    collections.LinkedDictionary = LinkedDictionary;
     // /**
     //  * Returns true if this dictionary is equal to the given dictionary.
     //  * Two dictionaries are equal if they contain the same mappings.
@@ -2312,3 +2438,4 @@ var collections;
     })();
     collections.BSTree = BSTree; // end of BSTree
 })(collections || (collections = {})); // End of module 
+//# sourceMappingURL=collections.js.map
