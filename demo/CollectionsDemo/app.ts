@@ -47,18 +47,37 @@ console.log(car.toString());
 
 console.log("------");
 console.log("Linked Dictionary Demo");
+
+var joe = new Person("Joe", 1994, "Gainesville");
+var elena = new Person("Elena", 1995, "Gainesville");
+var chris = new Person("Chris", 1994, "Ocala");
+
 var linkedDictionary = new collections.LinkedDictionary<Person, Car>();
-linkedDictionary.setValue(new Person("Joe", 1994, "Gainesville"), new Car("Mazda", "3", 2010));
-linkedDictionary.setValue(new Person("Elena", 1995, "Gainesville"), new Car("Mazda", "Tribute", 2002));
-linkedDictionary.setValue(new Person("Chris", 1994, "Ocala"), new Car("Honda", "Accord", 2006));
-linkedDictionary.setValue(new Person("Daniel", 1994, "Saint Petersburg"), new Car("Honda", "Accord", 2006));
-linkedDictionary.setValue(new Person("Joe", 1994, "Gainesville"), new Car("Mazda", "3", 2010));
 
-console.log("Linked Dictionary Keys after Insertion");
-var keys = linkedDictionary.keys();
+// Add Three People, print them in order of insertion.
+linkedDictionary.setValue(joe, new Car("Mazda", "3", 2010));
+linkedDictionary.setValue(elena, new Car("Mazda", "Tribute", 2002));
+linkedDictionary.setValue(chris, new Car("Honda", "Accord", 2006));
 
-console.log(keys);
+console.log("Insertion Order Preserved for Insertions and Interations");
+console.log(linkedDictionary.toString());
 
+// Update Preserves order
+linkedDictionary.setValue(elena, new Car("Maserati", "Granturismo", 2015));
+
+console.log("Updating one Value maintains insertion order");
+console.log(linkedDictionary.toString());
+
+// Removal, then adding back does not.
+linkedDictionary.remove(joe);
+linkedDictionary.setValue(joe, new Car("Lamorghini", "Huracan", 2015));
+
+console.log(linkedDictionary.toString());
+
+// Retrieving a Car for a person.
+console.log("Retrieving a Car for a person.");
+var car = linkedDictionary.getValue(chris);
+console.log(car);
 
 ///////////////////////////////////Set 
 console.log("------");

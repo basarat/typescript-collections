@@ -736,7 +736,7 @@ module collections {
 
 
     // Used internally by dictionary 
-    interface IDictionaryPair<K, V>{
+    export interface IDictionaryPair<K, V>{
         key: K;
         value: V;
     }
@@ -953,6 +953,7 @@ module collections {
     } // End of dictionary
 
     /**
+     * This class is used by the LinkedDictionary Internally
      * Has to be a class, not an interface, because it needs to have 
      * the 'unlink' function defined.
      */
@@ -960,8 +961,7 @@ module collections {
         prev: LinkedDictionaryPair<K, V>;
         next: LinkedDictionaryPair<K, V>;
 
-        constructor(public key: K, public value: V) {
-        }
+        constructor(public key: K, public value: V) { }
 
         unlink() {
             this.prev.next = this.next;
@@ -982,18 +982,11 @@ module collections {
         }
 
         private appendToTail(entry: LinkedDictionaryPair<K, V>) {
-            var pair = this.tail.prev;
-            pair.next = entry;
-            entry.prev = pair;
+            var lastNode = this.tail.prev;
+            lastNode.next = entry;
+            entry.prev = lastNode;
             this.tail.prev = entry;
         }
-
-        /*private appendToTail(entry: LinkedDictionaryPair<K, V>) {
-            this.head.prev = entry;
-            entry.next = this.head;
-            entry.prev = null;
-            this.head = entry;
-        }*/
 
         private getLinkedDictionaryPair(key: K): LinkedDictionaryPair<K, V> {
             var k = '$' + this.toStr(key);
@@ -1025,21 +1018,34 @@ module collections {
                 return undefined;
             }
 
-            var k = '$' + this.toStr(key);
 
             var existingPair = this.getLinkedDictionaryPair(key);
             var newPair = new LinkedDictionaryPair<K, V>(key, value);
 
+            var k = '$' + this.toStr(key);
+
             // If there is already an element for that key, we 
             // keep it's place in the LinkedList
             if (!collections.isUndefined(existingPair)) {
+                // set the new Pair's links to existingPair's links
                 newPair.next = existingPair.next;
                 newPair.prev = existingPair.prev;
-                this.remove(existingPair.key);
+
+                // Delete Existing Pair from the table, unlink it from chain.
+                this.remove(key);
+
+                // Link new Pair in place of where existingPair was,
+                // by pointing the existing pair's neighbors to it.
+                newPair.prev.next = newPair;
+                newPair.next.prev = newPair;
+
                 this.table[k] = newPair;
+
                 return existingPair.value;
             } else {
                 this.appendToTail(newPair);
+                this.table[k] = newPair;
+
                 return undefined;
             }
 

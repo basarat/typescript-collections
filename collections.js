@@ -868,6 +868,7 @@ var collections;
     })();
     collections.Dictionary = Dictionary; // End of dictionary
     /**
+     * This class is used by the LinkedDictionary Internally
      * Has to be a class, not an interface, because it needs to have
      * the 'unlink' function defined.
      */
@@ -892,17 +893,11 @@ var collections;
             this.tail.prev = this.head;
         }
         LinkedDictionary.prototype.appendToTail = function (entry) {
-            var pair = this.tail.prev;
-            pair.next = entry;
-            entry.prev = pair;
+            var lastNode = this.tail.prev;
+            lastNode.next = entry;
+            entry.prev = lastNode;
             this.tail.prev = entry;
         };
-        /*private appendToTail(entry: LinkedDictionaryPair<K, V>) {
-            this.head.prev = entry;
-            entry.next = this.head;
-            entry.prev = null;
-            this.head = entry;
-        }*/
         LinkedDictionary.prototype.getLinkedDictionaryPair = function (key) {
             var k = '$' + this.toStr(key);
             var pair = (this.table[k]);
@@ -928,20 +923,27 @@ var collections;
             if (collections.isUndefined(key) || collections.isUndefined(value)) {
                 return undefined;
             }
-            var k = '$' + this.toStr(key);
             var existingPair = this.getLinkedDictionaryPair(key);
             var newPair = new LinkedDictionaryPair(key, value);
+            var k = '$' + this.toStr(key);
             // If there is already an element for that key, we 
             // keep it's place in the LinkedList
             if (!collections.isUndefined(existingPair)) {
+                // set the new Pair's links to existingPair's links
                 newPair.next = existingPair.next;
                 newPair.prev = existingPair.prev;
-                this.remove(existingPair.key);
+                // Delete Existing Pair from the table, unlink it from chain.
+                this.remove(key);
+                // Link new Pair in place of where existingPair was,
+                // by pointing the existing pair's neighbors to it.
+                newPair.prev.next = newPair;
+                newPair.next.prev = newPair;
                 this.table[k] = newPair;
                 return existingPair.value;
             }
             else {
                 this.appendToTail(newPair);
+                this.table[k] = newPair;
                 return undefined;
             }
         };
