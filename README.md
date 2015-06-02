@@ -10,6 +10,7 @@ Included data structures
 - Linked List
 - Dictionary - [Example](#a-sample-on-dictionary)
 - Multi Dictionary
+- Linked Dictionary
 - Binary Search Tree
 - Stack
 - Queue
