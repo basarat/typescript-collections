@@ -52,23 +52,36 @@ var elena = new Person("Elena", 1995, "Gainesville");
 var chris = new Person("Chris", 1994, "Ocala");
 var linkedDictionary = new collections.LinkedDictionary();
 // Add Three People, print them in order of insertion.
+console.log("==Insertion Order Preserved for Insertions and Iterations==");
+console.log("Inserting Joe");
 linkedDictionary.setValue(joe, new Car("Mazda", "3", 2010));
+console.log(linkedDictionary.toString());
+console.log("Inserting Elena");
 linkedDictionary.setValue(elena, new Car("Mazda", "Tribute", 2002));
+console.log(linkedDictionary.toString());
+console.log("Inserting Chris");
 linkedDictionary.setValue(chris, new Car("Honda", "Accord", 2006));
-console.log("Insertion Order Preserved for Insertions and Interations");
 console.log(linkedDictionary.toString());
 // Update Preserves order
+console.log("==Update Preserves order==");
+console.log("Giving Elena a Maserati");
 linkedDictionary.setValue(elena, new Car("Maserati", "Granturismo", 2015));
-console.log("Updating one Value maintains insertion order");
 console.log(linkedDictionary.toString());
 // Removal, then adding back does not.
+console.log("==Removal, then adding entry with same key back does not preserve order==");
+console.log("Removing Joe");
 linkedDictionary.remove(joe);
-linkedDictionary.setValue(joe, new Car("Lamorghini", "Huracan", 2015));
 console.log(linkedDictionary.toString());
-// Retrieving a Car for a person.
-console.log("Retrieving a Car for a person.");
-var car = linkedDictionary.getValue(chris);
-console.log(car);
+console.log("Contains Joe? : " + linkedDictionary.containsKey(joe));
+console.log("Replacing Joe, and he will have Lamborghini, and be at end of the ordering");
+linkedDictionary.setValue(joe, new Car("Lamborghini", "Huracan", 2015));
+console.log(linkedDictionary.toString());
+console.log("Contains Joe? : " + linkedDictionary.containsKey(joe));
+// Printing cars in order of insertion
+console.log("Printing cars in order of insertion");
+linkedDictionary.values().forEach(function (car) {
+    console.log("TypeOfCar: " + car.type);
+});
 ///////////////////////////////////Set 
 console.log("------");
 console.log("Set Demo");
