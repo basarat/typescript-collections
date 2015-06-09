@@ -1,6 +1,6 @@
 {
   "name": "typescript-collections",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "A complete, fully tested data structure library written in TypeScript.",
   "main": "collections.js",
   "directories": {
