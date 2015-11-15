@@ -10,7 +10,7 @@
 module collections {
     
     var _hasOwnProperty = Object.prototype.hasOwnProperty;
-    var has = function(obj, prop) {
+    var has = function(obj: any, prop: any) {
         return _hasOwnProperty.call(obj, prop);
     }
 
@@ -95,7 +95,7 @@ module collections {
                         first = false;
                     else
                         toret = toret + join;
-                    toret = toret + prop + ":" + item[prop];
+                    toret = toret + prop + ":" + (<any>item)[prop];
                 }
             }
             return toret + "}";
