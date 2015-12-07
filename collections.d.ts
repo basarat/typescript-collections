@@ -21,7 +21,7 @@ declare module collections {
     * Function signature for Iterations. Return false to break from loop
     */
     interface ILoopFunction<T> {
-        (a: T): boolean;
+        (a: T): boolean | void;
     }
     /**
      * Default function to compare element order.
@@ -157,7 +157,7 @@ declare module collections {
          * invoked with one argument: the element value, to break the iteration you can
          * optionally return false.
          */
-        function forEach<T>(array: T[], callback: (item: T) => boolean): void;
+        function forEach<T>(array: T[], callback: ILoopFunction<T>): void;
     }
     interface ILinkedListNode<T> {
         element: T;
@@ -304,7 +304,7 @@ declare module collections {
          * invoked with one argument: the element value, to break the iteration you can
          * optionally return false.
          */
-        forEach(callback: (item: T) => boolean): void;
+        forEach(callback: ILoopFunction<T>): void;
         /**
          * Reverses the order of the elements in this linked list (makes the last
          * element first, and the first element last).
@@ -782,7 +782,7 @@ declare module collections {
          * invoked with one argument: the element value, to break the iteration you can
          * optionally return false.
          */
-        forEach(callback: (item: T) => boolean): void;
+        forEach(callback: ILoopFunction<T>): void;
     }
     class Stack<T> {
         /**

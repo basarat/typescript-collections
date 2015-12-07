@@ -35,7 +35,7 @@ module collections {
     * Function signature for Iterations. Return false to break from loop
     */
     export interface ILoopFunction<T>{
-        (a: T): boolean;
+        (a: T): boolean | void;
     }
 
     /**
@@ -321,7 +321,7 @@ module collections {
          * invoked with one argument: the element value, to break the iteration you can 
          * optionally return false.
          */
-        export function forEach<T>(array: T[], callback: (item: T) => boolean): void {
+        export function forEach<T>(array: T[], callback: ILoopFunction<T>): void {
             var lenght = array.length;
             for (var i = 0; i < lenght; i++) {
                 if (callback(array[i]) === false) {
@@ -639,7 +639,7 @@ module collections {
          * invoked with one argument: the element value, to break the iteration you can 
          * optionally return false.
          */
-        forEach(callback: (item: T) => boolean): void {
+        forEach(callback: ILoopFunction<T>): void {
             var currentNode = this.firstNode;
             while (currentNode !== null) {
                 if (callback(currentNode.element) === false) {
@@ -1592,7 +1592,7 @@ module collections {
          * invoked with one argument: the element value, to break the iteration you can 
          * optionally return false.
          */
-        forEach(callback: (item: T) => boolean) {
+        forEach(callback: ILoopFunction<T>) {
             collections.arrays.forEach(this.data, callback);
         }
     }
