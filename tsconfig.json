@@ -11,6 +11,18 @@
         "suppressImplicitAnyIndexErrors": true
     },
     "files": [
+        "src/Stack.ts",
+        "src/Set.ts",
+        "src/Queue.ts",
+        "src/LinkedList.ts",
+        "src/Heap.ts",
+        "src/Dictionary.ts",
+        "src/LinkedDictionary.ts",
+        "src/MultiDictionary.ts",
+        "src/common.ts",
+        "src/BSTree.ts",
+        "src/Bag.ts",
+        "src/arrays.ts",
         "./collections.ts"
     ]
 }
