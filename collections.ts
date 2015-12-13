@@ -322,9 +322,8 @@ module collections {
          * optionally return false.
          */
         export function forEach<T>(array: T[], callback: ILoopFunction<T>): void {
-            const lenght = array.length;
-            for (let i = 0; i < lenght; i++) {
-                if (callback(array[i]) === false) {
+            for (const ele of array) {
+                if (callback(ele) === false) {
                     return;
                 }
             }
@@ -1318,10 +1317,9 @@ module collections {
         values(): V[] {
             const values = this.dict.values();
             const array:Array<V> = [];
-            for (let i = 0; i < values.length; i++) {
-                const v = values[i];
-                for (let j = 0; j < v.length; j++) {
-                    array.push(v[j]);
+            for (const v of values) {
+                for (const w of v) {
+                    array.push(w);
                 }
             }
             return array;
@@ -2249,9 +2247,7 @@ module collections {
         toArray(): T[] {
             const a:Array<T> = [];
             const values = this.dictionary.values();
-            const vl = values.length;
-            for (let i = 0; i < vl; i++) {
-                const node = values[i];
+            for (const node of values) {
                 const element = node.value;
                 const copies = node.copies;
                 for (let j = 0; j < copies; j++) {
@@ -2268,9 +2264,8 @@ module collections {
         toSet(): Set<T> {
             const toret = new Set<T>(this.toStrF);
             const elements = this.dictionary.values();
-            const l = elements.length;
-            for (let i = 0; i < l; i++) {
-                const value = elements[i].value;
+            for (const ele of elements) {
+                const value = ele.value;
                 toret.add(value);
             }
             return toret;
