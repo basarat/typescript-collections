@@ -8,9 +8,9 @@
  * @namespace Top level namespace for collections, a TypeScript data structure library.
  */
 module collections {
-    
-    var _hasOwnProperty = Object.prototype.hasOwnProperty;
-    var has = function(obj: any, prop: any) {
+
+    const _hasOwnProperty = Object.prototype.hasOwnProperty;
+    const has = function(obj: any, prop: any) {
         return _hasOwnProperty.call(obj, prop);
     }
 
@@ -40,7 +40,7 @@ module collections {
 
     /**
      * Default function to compare element order.
-     * @function     
+     * @function
      */
     export function defaultCompare<T>(a: T, b: T): number {
         if (a < b) {
@@ -53,8 +53,8 @@ module collections {
     }
 
     /**
-     * Default function to test equality. 
-     * @function     
+     * Default function to test equality.
+     * @function
      */
     export function defaultEquals<T>(a: T, b: T): boolean {
         return a === b;
@@ -62,7 +62,7 @@ module collections {
 
     /**
      * Default function to convert an object to a string.
-     * @function     
+     * @function
      */
     export function defaultToString(item: any): string {
         if (item === null) {
@@ -77,7 +77,7 @@ module collections {
     }
 
     /**
-    * Joins all the properies of the object using the provided join string 
+    * Joins all the properies of the object using the provided join string
     */
     export function makeString<T>(item: T, join: string = ","): string {
         if (item === null) {
@@ -87,9 +87,9 @@ module collections {
         } else if (collections.isString(item)) {
             return item.toString();
         } else {
-            var toret = "{";
-            var first = true;
-            for (var prop in item) {
+            let toret = "{";
+            let first = true;
+            for (const prop in item) {
                 if (has(item, prop)) {
                     if (first)
                         first = false;
@@ -104,7 +104,7 @@ module collections {
 
     /**
      * Checks if the given argument is a function.
-     * @function     
+     * @function
      */
     export function isFunction(func: any): boolean {
         return (typeof func) === 'function';
@@ -168,15 +168,15 @@ module collections {
          * within the specified array.
          * @param {*} array the array in which to search the element.
          * @param {Object} item the element to search.
-         * @param {function(Object,Object):boolean=} equalsFunction optional function used to 
+         * @param {function(Object,Object):boolean=} equalsFunction optional function used to
          * check equality between 2 elements.
          * @return {number} the position of the first occurrence of the specified element
          * within the specified array, or -1 if not found.
          */
         export function indexOf<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>): number {
-            var equals = equalsFunction || collections.defaultEquals;
-            var length = array.length;
-            for (var i = 0; i < length; i++) {
+            const equals = equalsFunction || collections.defaultEquals;
+            const length = array.length;
+            for (let i = 0; i < length; i++) {
                 if (equals(array[i], item)) {
                     return i;
                 }
@@ -189,15 +189,15 @@ module collections {
          * within the specified array.
          * @param {*} array the array in which to search the element.
          * @param {Object} item the element to search.
-         * @param {function(Object,Object):boolean=} equalsFunction optional function used to 
+         * @param {function(Object,Object):boolean=} equalsFunction optional function used to
          * check equality between 2 elements.
          * @return {number} the position of the last occurrence of the specified element
          * within the specified array or -1 if not found.
          */
         export function lastIndexOf<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>): number {
-            var equals = equalsFunction || collections.defaultEquals;
-            var length = array.length;
-            for (var i = length - 1; i >= 0; i--) {
+            const equals = equalsFunction || collections.defaultEquals;
+            const length = array.length;
+            for (let i = length - 1; i >= 0; i--) {
                 if (equals(array[i], item)) {
                     return i;
                 }
@@ -209,7 +209,7 @@ module collections {
          * Returns true if the specified array contains the specified element.
          * @param {*} array the array in which to search the element.
          * @param {Object} item the element to search.
-         * @param {function(Object,Object):boolean=} equalsFunction optional function to 
+         * @param {function(Object,Object):boolean=} equalsFunction optional function to
          * check equality between 2 elements.
          * @return {boolean} true if the specified array contains the specified element.
          */
@@ -222,12 +222,12 @@ module collections {
          * Removes the first ocurrence of the specified element from the specified array.
          * @param {*} array the array in which to search element.
          * @param {Object} item the element to search.
-         * @param {function(Object,Object):boolean=} equalsFunction optional function to 
+         * @param {function(Object,Object):boolean=} equalsFunction optional function to
          * check equality between 2 elements.
          * @return {boolean} true if the array changed after this call.
          */
         export function remove<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>): boolean {
-            var index = arrays.indexOf(array, item, equalsFunction);
+            const index = arrays.indexOf(array, item, equalsFunction);
             if (index < 0) {
                 return false;
             }
@@ -240,16 +240,16 @@ module collections {
          * to the specified object.
          * @param {Array} array the array in which to determine the frequency of the element.
          * @param {Object} item the element whose frequency is to be determined.
-         * @param {function(Object,Object):boolean=} equalsFunction optional function used to 
+         * @param {function(Object,Object):boolean=} equalsFunction optional function used to
          * check equality between 2 elements.
-         * @return {number} the number of elements in the specified array 
+         * @return {number} the number of elements in the specified array
          * equal to the specified object.
          */
         export function frequency<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>): number {
-            var equals = equalsFunction || collections.defaultEquals;
-            var length = array.length;
-            var freq = 0;
-            for (var i = 0; i < length; i++) {
+            const equals = equalsFunction || collections.defaultEquals;
+            const length = array.length;
+            let freq = 0;
+            for (let i = 0; i < length; i++) {
                 if (equals(array[i], item)) {
                     freq++;
                 }
@@ -260,22 +260,22 @@ module collections {
         /**
          * Returns true if the two specified arrays are equal to one another.
          * Two arrays are considered equal if both arrays contain the same number
-         * of elements, and all corresponding pairs of elements in the two 
-         * arrays are equal and are in the same order. 
+         * of elements, and all corresponding pairs of elements in the two
+         * arrays are equal and are in the same order.
          * @param {Array} array1 one array to be tested for equality.
          * @param {Array} array2 the other array to be tested for equality.
-         * @param {function(Object,Object):boolean=} equalsFunction optional function used to 
+         * @param {function(Object,Object):boolean=} equalsFunction optional function used to
          * check equality between elemements in the arrays.
          * @return {boolean} true if the two arrays are equal
          */
         export function equals<T>(array1: T[], array2: T[], equalsFunction?: collections.IEqualsFunction<T>): boolean {
-            var equals = equalsFunction || collections.defaultEquals;
+            const equals = equalsFunction || collections.defaultEquals;
 
             if (array1.length !== array2.length) {
                 return false;
             }
-            var length = array1.length;
-            for (var i = 0; i < length; i++) {
+            const length = array1.length;
+            for (let i = 0; i < length; i++) {
                 if (!equals(array1[i], array2[i])) {
                     return false;
                 }
@@ -303,7 +303,7 @@ module collections {
             if (i < 0 || i >= array.length || j < 0 || j >= array.length) {
                 return false;
             }
-            var temp = array[i];
+            const temp = array[i];
             array[i] = array[j];
             array[j] = temp;
             return true;
@@ -314,16 +314,16 @@ module collections {
         }
 
         /**
-         * Executes the provided function once for each element present in this array 
+         * Executes the provided function once for each element present in this array
          * starting from index 0 to length - 1.
          * @param {Array} array The array in which to iterate.
          * @param {function(Object):*} callback function to execute, it is
-         * invoked with one argument: the element value, to break the iteration you can 
+         * invoked with one argument: the element value, to break the iteration you can
          * optionally return false.
          */
         export function forEach<T>(array: T[], callback: ILoopFunction<T>): void {
-            var lenght = array.length;
-            for (var i = 0; i < lenght; i++) {
+            const lenght = array.length;
+            for (let i = 0; i < lenght; i++) {
                 if (callback(array[i]) === false) {
                     return;
                 }
@@ -384,7 +384,7 @@ module collections {
             if (index < 0 || index > this.nElements || collections.isUndefined(item)) {
                 return false;
             }
-            var newNode = this.createNode(item);
+            const newNode = this.createNode(item);
             if (this.nElements === 0) {
                 // First node in the list.
                 this.firstNode = newNode;
@@ -398,7 +398,7 @@ module collections {
                 newNode.next = this.firstNode;
                 this.firstNode = newNode;
             } else {
-                var prev = this.nodeAtIndex(index - 1);
+                const prev = this.nodeAtIndex(index - 1);
                 newNode.next = prev.next;
                 prev.next = newNode;
             }
@@ -440,7 +440,7 @@ module collections {
          */
         elementAtIndex(index: number): T {
 
-            var node = this.nodeAtIndex(index);
+            const node = this.nodeAtIndex(index);
             if (node === null) {
                 return undefined;
             }
@@ -456,7 +456,7 @@ module collections {
          * return true if they are equal, false otherwise. Example:</p>
          *
          * <pre>
-         * var petsAreEqualByName = function(pet1, pet2) {
+         * const petsAreEqualByName = function(pet1, pet2) {
          *  return pet1.name === pet2.name;
          * }
          * </pre>
@@ -469,12 +469,12 @@ module collections {
          */
         indexOf(item: T, equalsFunction?: IEqualsFunction<T>): number {
 
-            var equalsF = equalsFunction || collections.defaultEquals;
+            const equalsF = equalsFunction || collections.defaultEquals;
             if (collections.isUndefined(item)) {
                 return -1;
             }
-            var currentNode = this.firstNode;
-            var index = 0;
+            let currentNode = this.firstNode;
+            let index = 0;
             while (currentNode !== null) {
                 if (equalsF(currentNode.element, item)) {
                     return index;
@@ -494,7 +494,7 @@ module collections {
            * return true if they are equal, false otherwise. Example:</p>
            *
            * <pre>
-           * var petsAreEqualByName = function(pet1, pet2) {
+           * const petsAreEqualByName = function(pet1, pet2) {
            *  return pet1.name === pet2.name;
            * }
            * </pre>
@@ -516,7 +516,7 @@ module collections {
          * return true if they are equal, false otherwise. Example:</p>
          *
          * <pre>
-         * var petsAreEqualByName = function(pet1, pet2) {
+         * const petsAreEqualByName = function(pet1, pet2) {
          *  return pet1.name === pet2.name;
          * }
          * </pre>
@@ -524,12 +524,12 @@ module collections {
          * @return {boolean} true if the list contained the specified element.
          */
         remove(item: T, equalsFunction?: IEqualsFunction<T>): boolean {
-            var equalsF = equalsFunction || collections.defaultEquals;
+            const equalsF = equalsFunction || collections.defaultEquals;
             if (this.nElements < 1 || collections.isUndefined(item)) {
                 return false;
             }
-            var previous: ILinkedListNode<T> = null;
-            var currentNode: ILinkedListNode<T> = this.firstNode;
+            let previous: ILinkedListNode<T> = null;
+            let currentNode: ILinkedListNode<T> = this.firstNode;
 
             while (currentNode !== null) {
                 if (equalsF(currentNode.element, item)) {
@@ -571,12 +571,12 @@ module collections {
          * @param {LinkedList} other the other list.
          * @param {function(Object,Object):boolean=} equalsFunction optional
          * function used to check if two elements are equal. If the elements in the lists
-         * are custom objects you should provide a function, otherwise 
+         * are custom objects you should provide a function, otherwise
          * the === operator is used to check equality between elements.
          * @return {boolean} true if this list is equal to the given list.
          */
         equals(other: LinkedList<T>, equalsFunction?: IEqualsFunction<T>): boolean {
-            var eqF = equalsFunction || collections.defaultEquals;
+            const eqF = equalsFunction || collections.defaultEquals;
             if (!(other instanceof collections.LinkedList)) {
                 return false;
             }
@@ -609,14 +609,14 @@ module collections {
             if (index < 0 || index >= this.nElements) {
                 return undefined;
             }
-            var element: T;
+            let element: T;
             if (this.nElements === 1) {
                 //First node in the list.
                 element = this.firstNode.element;
                 this.firstNode = null;
                 this.lastNode = null;
             } else {
-                var previous = this.nodeAtIndex(index - 1);
+                const previous = this.nodeAtIndex(index - 1);
                 if (previous === null) {
                     element = this.firstNode.element;
                     this.firstNode = this.firstNode.next;
@@ -636,11 +636,11 @@ module collections {
         /**
          * Executes the provided function once for each element present in this list in order.
          * @param {function(Object):*} callback function to execute, it is
-         * invoked with one argument: the element value, to break the iteration you can 
+         * invoked with one argument: the element value, to break the iteration you can
          * optionally return false.
          */
         forEach(callback: ILoopFunction<T>): void {
-            var currentNode = this.firstNode;
+            let currentNode = this.firstNode;
             while (currentNode !== null) {
                 if (callback(currentNode.element) === false) {
                     break;
@@ -650,13 +650,13 @@ module collections {
         }
 
         /**
-         * Reverses the order of the elements in this linked list (makes the last 
+         * Reverses the order of the elements in this linked list (makes the last
          * element first, and the first element last).
          */
         reverse(): void {
-            var previous: ILinkedListNode<T> = null;
-            var current: ILinkedListNode<T> = this.firstNode;
-            var temp: ILinkedListNode<T> = null;
+            let previous: ILinkedListNode<T> = null;
+            let current: ILinkedListNode<T> = this.firstNode;
+            let temp: ILinkedListNode<T> = null;
             while (current !== null) {
                 temp = current.next;
                 current.next = previous;
@@ -675,8 +675,8 @@ module collections {
          * in proper sequence.
          */
         toArray(): T[] {
-            var array: T[] = [];
-            var currentNode: ILinkedListNode<T> = this.firstNode;
+            const array: T[] = [];
+            let currentNode: ILinkedListNode<T> = this.firstNode;
             while (currentNode !== null) {
                 array.push(currentNode.element);
                 currentNode = currentNode.next;
@@ -715,8 +715,8 @@ module collections {
             if (index === (this.nElements - 1)) {
                 return this.lastNode;
             }
-            var node = this.firstNode;
-            for (var i = 0; i < index; i++) {
+            let node = this.firstNode;
+            for (let i = 0; i < index; i++) {
                 node = node.next;
             }
             return node;
@@ -731,11 +731,11 @@ module collections {
                 next: null
             };
         }
-    } // End of linked list 
+    } // End of linked list
 
 
 
-    // Used internally by dictionary 
+    // Used internally by dictionary
     export interface IDictionaryPair<K, V>{
         key: K;
         value: V;
@@ -749,7 +749,7 @@ module collections {
          * @private
          */
         protected table: { [key: string]: IDictionaryPair<K, V> };
-        //: [key: K] will not work since indices can only by strings in javascript and typescript enforces this. 
+        //: [key: K] will not work since indices can only by strings in javascript and typescript enforces this.
 
         /**
          * Number of elements in the list.
@@ -767,7 +767,7 @@ module collections {
 
 
         /**
-         * Creates an empty dictionary. 
+         * Creates an empty dictionary.
          * @class <p>Dictionaries map keys to values; each key can map to at most one value.
          * This implementation accepts any kind of objects as keys.</p>
          *
@@ -799,7 +799,7 @@ module collections {
          * undefined if the map contains no mapping for this key.
          */
         getValue(key: K): V {
-            var pair: IDictionaryPair<K, V> = this.table['$' + this.toStr(key)];
+            const pair: IDictionaryPair<K, V> = this.table['$' + this.toStr(key)];
             if (collections.isUndefined(pair)) {
                 return undefined;
             }
@@ -823,9 +823,9 @@ module collections {
                 return undefined;
             }
 
-            var ret: V;
-            var k = '$' + this.toStr(key);
-            var previousElement: IDictionaryPair<K, V> = this.table[k];
+            let ret: V;
+            const k = '$' + this.toStr(key);
+            const previousElement: IDictionaryPair<K, V> = this.table[k];
             if (collections.isUndefined(previousElement)) {
                 this.nElements++;
                 ret = undefined;
@@ -847,8 +847,8 @@ module collections {
          * there was no mapping for key.
          */
         remove(key: K): V {
-            var k = '$' + this.toStr(key);
-            var previousElement: IDictionaryPair<K, V> = this.table[k];
+            const k = '$' + this.toStr(key);
+            const previousElement: IDictionaryPair<K, V> = this.table[k];
             if (!collections.isUndefined(previousElement)) {
                 delete this.table[k];
                 this.nElements--;
@@ -862,10 +862,10 @@ module collections {
          * @return {Array} an array containing all of the keys in this dictionary.
          */
         keys(): K[] {
-            var array: K[] = [];
-            for (var name in this.table) {
+            const array: K[] = [];
+            for (const name in this.table) {
                 if (has(this.table, name)) {
-                    var pair: IDictionaryPair<K, V> = this.table[name];
+                    const pair: IDictionaryPair<K, V> = this.table[name];
                     array.push(pair.key);
                 }
             }
@@ -877,10 +877,10 @@ module collections {
          * @return {Array} an array containing all of the values in this dictionary.
          */
         values(): V[] {
-            var array: V[] = [];
-            for (var name in this.table) {
+            const array: V[] = [];
+            for (const name in this.table) {
                 if (has(this.table, name)) {
-                    var pair: IDictionaryPair<K, V> = this.table[name];
+                    const pair: IDictionaryPair<K, V> = this.table[name];
                     array.push(pair.value);
                 }
             }
@@ -888,17 +888,17 @@ module collections {
         }
 
         /**
-        * Executes the provided function once for each key-value pair 
+        * Executes the provided function once for each key-value pair
         * present in this dictionary.
         * @param {function(Object,Object):*} callback function to execute, it is
-        * invoked with two arguments: key and value. To break the iteration you can 
+        * invoked with two arguments: key and value. To break the iteration you can
         * optionally return false.
         */
         forEach(callback: (key: K, value: V) => any): void {
-            for (var name in this.table) {
+            for (const name in this.table) {
                 if (has(this.table, name)) {
-                    var pair: IDictionaryPair<K, V> = this.table[name];
-                    var ret = callback(pair.key, pair.value);
+                    const pair: IDictionaryPair<K, V> = this.table[name];
+                    const ret = callback(pair.key, pair.value);
                     if (ret === false) {
                         return;
                     }
@@ -943,7 +943,7 @@ module collections {
         }
 
         toString(): string {
-            var toret = "{";
+            let toret = "{";
             this.forEach((k, v) => {
                 toret = toret + "\n\t" + k.toString() + " : " + v.toString();
             });
@@ -953,7 +953,7 @@ module collections {
 
     /**
      * This class is used by the LinkedDictionary Internally
-     * Has to be a class, not an interface, because it needs to have 
+     * Has to be a class, not an interface, because it needs to have
      * the 'unlink' function defined.
      */
     class LinkedDictionaryPair<K, V> implements IDictionaryPair<K, V> {
@@ -981,12 +981,12 @@ module collections {
         }
 
         /**
-         * Inserts the new node to the 'tail' of the list, updating the 
+         * Inserts the new node to the 'tail' of the list, updating the
          * neighbors, and moving 'this.tail' (the End of List indicator) that
          * to the end.
          */
         private appendToTail(entry: LinkedDictionaryPair<K, V>) {
-            var lastNode = this.tail.prev;
+            const lastNode = this.tail.prev;
             lastNode.next = entry;
             entry.prev = lastNode;
             entry.next = this.tail;
@@ -1000,8 +1000,8 @@ module collections {
             if (collections.isUndefined(key)) {
                 return undefined;
             }
-            var k = '$' + this.toStr(key);
-            var pair = <LinkedDictionaryPair<K, V>>(this.table[k]);
+            const k = '$' + this.toStr(key);
+            const pair = <LinkedDictionaryPair<K, V>>(this.table[k]);
             return pair;
         }
 
@@ -1013,7 +1013,7 @@ module collections {
          * undefined if the map contains no mapping for this key.
          */
         getValue(key: K): V {
-            var pair = this.getLinkedDictionaryPair(key);
+            const pair = this.getLinkedDictionaryPair(key);
             if (!collections.isUndefined(pair)) {
                 return pair.value;
             }
@@ -1022,7 +1022,7 @@ module collections {
 
         /**
          * Removes the mapping for this key from this dictionary if it is present.
-         * Also, if a value is present for this key, the entry is removed from the 
+         * Also, if a value is present for this key, the entry is removed from the
          * insertion ordering.
          * @param {Object} key key whose mapping is to be removed from the
          * dictionary.
@@ -1030,14 +1030,14 @@ module collections {
          * there was no mapping for key.
          */
         remove(key: K): V {
-            var pair = this.getLinkedDictionaryPair(key);
+            const pair = this.getLinkedDictionaryPair(key);
             if (!collections.isUndefined(pair)) {
                 super.remove(key); // This will remove it from the table
                 pair.unlink(); // This will unlink it from the chain
                 return pair.value;
             }
             return undefined;
-        } 
+        }
 
         /**
         * Removes all mappings from this LinkedDictionary.
@@ -1051,11 +1051,11 @@ module collections {
 
         /**
          * Internal function used when updating an existing KeyValue pair.
-         * It places the new value indexed by key into the table, but maintains 
+         * It places the new value indexed by key into the table, but maintains
          * its place in the linked ordering.
          */
         private replace(oldPair: LinkedDictionaryPair<K, V>, newPair: LinkedDictionaryPair<K, V>) {
-            var k = '$' + this.toStr(newPair.key);
+            const k = '$' + this.toStr(newPair.key);
 
             // set the new Pair's links to existingPair's links
             newPair.next = oldPair.next;
@@ -1082,7 +1082,7 @@ module collections {
          * Associates the specified value with the specified key in this dictionary.
          * If the dictionary previously contained a mapping for this key, the old
          * value is replaced by the specified value.
-         * Updating of a key that already exists maintains its place in the 
+         * Updating of a key that already exists maintains its place in the
          * insertion order into the map.
          * @param {Object} key key with which the specified value is to be
          * associated.
@@ -1096,12 +1096,12 @@ module collections {
                 return undefined;
             }
 
-            var existingPair = this.getLinkedDictionaryPair(key);
-            var newPair = new LinkedDictionaryPair<K, V>(key, value);
+            const existingPair = this.getLinkedDictionaryPair(key);
+            const newPair = new LinkedDictionaryPair<K, V>(key, value);
 
-            var k = '$' + this.toStr(key);
+            const k = '$' + this.toStr(key);
 
-            // If there is already an element for that key, we 
+            // If there is already an element for that key, we
             // keep it's place in the LinkedList
             if (!collections.isUndefined(existingPair)) {
                 this.replace(existingPair, newPair);
@@ -1124,7 +1124,7 @@ module collections {
          * ordered by insertion order.
          */
         keys(): K[] {
-            var array: K[] = [];
+            const array: K[] = [];
             this.forEach((key, value) => {
                 array.push(key);
             });
@@ -1132,13 +1132,13 @@ module collections {
         }
 
         /**
-         * Returns an array containing all of the values in this LinkedDictionary, ordered by 
+         * Returns an array containing all of the values in this LinkedDictionary, ordered by
          * insertion order.
          * @return {Array} an array containing all of the values in this LinkedDictionary,
          * ordered by insertion order.
          */
         values(): V[] {
-            var array: V[] = [];
+            const array: V[] = [];
             this.forEach((key, value) => {
                 array.push(value);
             });
@@ -1146,17 +1146,17 @@ module collections {
         }
 
         /**
-        * Executes the provided function once for each key-value pair 
+        * Executes the provided function once for each key-value pair
         * present in this LinkedDictionary. It is done in the order of insertion
         * into the LinkedDictionary
         * @param {function(Object,Object):*} callback function to execute, it is
-        * invoked with two arguments: key and value. To break the iteration you can 
+        * invoked with two arguments: key and value. To break the iteration you can
         * optionally return false.
         */
         forEach(callback: (key: K, value: V) => any): void {
-            var crawlNode = this.head.next;
+            let crawlNode = this.head.next;
             while (crawlNode.next != null) {
-                var ret = callback(crawlNode.key, crawlNode.value);
+                const ret = callback(crawlNode.key, crawlNode.value);
                 if (ret === false) {
                     return;
                 }
@@ -1174,7 +1174,7 @@ module collections {
     //  * @return {boolean} true if this dictionary is equal to the given dictionary.
     //  */
     // collections.Dictionary.prototype.equals = function(other,valuesEqualFunction) {
-    // 	var eqF = valuesEqualFunction || collections.defaultEquals;
+    // 	const eqF = valuesEqualFunction || collections.defaultEquals;
     // 	if(!(other instanceof collections.Dictionary)){
     // 		return false;
     // 	}
@@ -1186,9 +1186,9 @@ module collections {
 
     export class MultiDictionary<K, V> {
 
-        // Cannot do: 
+        // Cannot do:
         // class MultiDictionary<K,V> extends Dictionary<K,Array<V>> {
-        // Since we want to reuse the function name setValue and types in signature become incompatible 
+        // Since we want to reuse the function name setValue and types in signature become incompatible
         // Therefore we are using composition instead of inheritance
         private dict: Dictionary<K, Array<V>>;
         private equalsF: IEqualsFunction<V>;
@@ -1243,7 +1243,7 @@ module collections {
         * the specified key.
         */
         getValue(key: K): V[] {
-            var values = this.dict.getValue(key);
+            const values = this.dict.getValue(key);
             if (collections.isUndefined(values)) {
                 return [];
             }
@@ -1251,7 +1251,7 @@ module collections {
         }
 
         /**
-         * Adds the value to the array associated with the specified key, if 
+         * Adds the value to the array associated with the specified key, if
          * it is not already present.
          * @param {Object} key key with which the specified value is to be
          * associated.
@@ -1267,7 +1267,7 @@ module collections {
                 this.dict.setValue(key, [value]);
                 return true;
             }
-            var array = this.dict.getValue(key);
+            const array = this.dict.getValue(key);
             if (!this.allowDuplicate) {
                 if (collections.arrays.contains(array, value, this.equalsF)) {
                     return false;
@@ -1279,21 +1279,21 @@ module collections {
 
         /**
          * Removes the specified values from the array of values associated with the
-         * specified key. If a value isn't given, all values associated with the specified 
+         * specified key. If a value isn't given, all values associated with the specified
          * key are removed.
          * @param {Object} key key whose mapping is to be removed from the
          * dictionary.
-         * @param {Object=} value optional argument to specify the value to remove 
+         * @param {Object=} value optional argument to specify the value to remove
          * from the array associated with the specified key.
-         * @return {*} true if the dictionary changed, false if the key doesn't exist or 
+         * @return {*} true if the dictionary changed, false if the key doesn't exist or
          * if the specified value isn't associated with the specified key.
          */
         remove(key: K, value?: V): boolean {
             if (collections.isUndefined(value)) {
-                var v = this.dict.remove(key);
+                const v = this.dict.remove(key);
                 return !collections.isUndefined(v);
             }
-            var array = this.dict.getValue(key);
+            const array = this.dict.getValue(key);
             if (collections.arrays.remove(array, value, this.equalsF)) {
                 if (array.length === 0) {
                     this.dict.remove(key);
@@ -1316,11 +1316,11 @@ module collections {
          * @return {Array} an array containing all of the values in this dictionary.
          */
         values(): V[] {
-            var values = this.dict.values();
-            var array:Array<V> = [];
-            for (var i = 0; i < values.length; i++) {
-                var v = values[i];
-                for (var j = 0; j < v.length; j++) {
+            const values = this.dict.values();
+            const array:Array<V> = [];
+            for (let i = 0; i < values.length; i++) {
+                const v = values[i];
+                for (let j = 0; j < v.length; j++) {
                     array.push(v[j]);
                 }
             }
@@ -1331,7 +1331,7 @@ module collections {
          * Returns true if this dictionary at least one value associatted the specified key.
          * @param {Object} key key whose presence in this dictionary is to be
          * tested.
-         * @return {boolean} true if this dictionary at least one value associatted 
+         * @return {boolean} true if this dictionary at least one value associatted
          * the specified key.
          */
         containsKey(key: K): boolean {
@@ -1360,7 +1360,7 @@ module collections {
         isEmpty(): boolean {
             return this.dict.isEmpty();
         }
-    }// end of multi dictionary 
+    }// end of multi dictionary
 
     export class Heap<T> {
         /**
@@ -1377,12 +1377,12 @@ module collections {
         private compare: ICompareFunction<T>;
         /**
          * Creates an empty Heap.
-         * @class 
-         * <p>A heap is a binary tree, where the nodes maintain the heap property: 
-         * each node is smaller than each of its children and therefore a MinHeap 
+         * @class
+         * <p>A heap is a binary tree, where the nodes maintain the heap property:
+         * each node is smaller than each of its children and therefore a MinHeap
          * This implementation uses an array to store elements.</p>
-         * <p>If the inserted elements are custom objects a compare function must be provided, 
-         *  at construction time, otherwise the <=, === and >= operators are 
+         * <p>If the inserted elements are custom objects a compare function must be provided,
+         *  at construction time, otherwise the <=, === and >= operators are
          * used to compare elements. Example:</p>
          *
          * <pre>
@@ -1391,7 +1391,7 @@ module collections {
          *     return -1;
          *  } if (a is greater than b by the ordering criterion) {
          *     return 1;
-         *  } 
+         *  }
          *  // a must be equal to b
          *  return 0;
          * }
@@ -1406,7 +1406,7 @@ module collections {
          *     return 1;
          *  } if (a is greater than b by the ordering criterion) {
          *     return -1;
-         *  } 
+         *  }
          *  // a must be equal to b
          *  return 0;
          * }
@@ -1482,7 +1482,7 @@ module collections {
          */
         private siftUp(index: number): void {
 
-            var parent = this.parentIndex(index);
+            let parent = this.parentIndex(index);
             while (index > 0 && this.compare(this.data[parent], this.data[index]) > 0) {
                 collections.arrays.swap(this.data, parent, index);
                 index = parent;
@@ -1497,7 +1497,7 @@ module collections {
         private siftDown(nodeIndex: number): void {
 
             //smaller child index
-            var min = this.minIndex(this.leftChildIndex(nodeIndex),
+            let min = this.minIndex(this.leftChildIndex(nodeIndex),
                 this.rightChildIndex(nodeIndex));
 
             while (min >= 0 && this.compare(this.data[nodeIndex],
@@ -1543,7 +1543,7 @@ module collections {
         removeRoot(): T {
 
             if (this.data.length > 0) {
-                var obj = this.data[0];
+                const obj = this.data[0];
                 this.data[0] = this.data[this.data.length - 1];
                 this.data.splice(this.data.length - 1, 1);
                 if (this.data.length > 0) {
@@ -1560,7 +1560,7 @@ module collections {
          * otherwise.
          */
         contains(element: T): boolean {
-            var equF = collections.compareToEquals(this.compare);
+            const equF = collections.compareToEquals(this.compare);
             return collections.arrays.contains(this.data, element, equF);
         }
         /**
@@ -1586,10 +1586,10 @@ module collections {
         }
 
         /**
-         * Executes the provided function once for each element present in this heap in 
+         * Executes the provided function once for each element present in this heap in
          * no particular order.
          * @param {function(Object):*} callback function to execute, it is
-         * invoked with one argument: the element value, to break the iteration you can 
+         * invoked with one argument: the element value, to break the iteration you can
          * optionally return false.
          */
         forEach(callback: ILoopFunction<T>) {
@@ -1664,7 +1664,7 @@ module collections {
          * return true if they are equal, false otherwise. Example:</p>
          *
          * <pre>
-         * var petsAreEqualByName (pet1, pet2) {
+         * const petsAreEqualByName (pet1, pet2) {
          *  return pet1.name === pet2.name;
          * }
          * </pre>
@@ -1693,16 +1693,16 @@ module collections {
         }
 
         /**
-         * Executes the provided function once for each element present in this stack in 
+         * Executes the provided function once for each element present in this stack in
          * LIFO order.
          * @param {function(Object):*} callback function to execute, it is
-         * invoked with one argument: the element value, to break the iteration you can 
+         * invoked with one argument: the element value, to break the iteration you can
          * optionally return false.
          */
         forEach(callback: ILoopFunction<T>) {
             this.list.forEach(callback);
         }
-    } // End of stack 
+    } // End of stack
 
 
 
@@ -1749,7 +1749,7 @@ module collections {
          */
         dequeue(): T {
             if (this.list.size() !== 0) {
-                var el = this.list.first();
+                const el = this.list.first();
                 this.list.removeElementAtIndex(0);
                 return el;
             }
@@ -1783,7 +1783,7 @@ module collections {
          * return true if they are equal, false otherwise. Example:</p>
          *
          * <pre>
-         * var petsAreEqualByName (pet1, pet2) {
+         * const petsAreEqualByName (pet1, pet2) {
          *  return pet1.name === pet2.name;
          * }
          * </pre>
@@ -1814,10 +1814,10 @@ module collections {
         }
 
         /**
-         * Executes the provided function once for each element present in this queue in 
+         * Executes the provided function once for each element present in this queue in
          * FIFO order.
          * @param {function(Object):*} callback function to execute, it is
-         * invoked with one argument: the element value, to break the iteration you can 
+         * invoked with one argument: the element value, to break the iteration you can
          * optionally return false.
          */
         forEach(callback: ILoopFunction<T>) {
@@ -1833,9 +1833,9 @@ module collections {
         /**
          * Creates an empty priority queue.
          * @class <p>In a priority queue each element is associated with a "priority",
-         * elements are dequeued in highest-priority-first order (the elements with the 
-         * highest priority are dequeued first). Priority Queues are implemented as heaps. 
-         * If the inserted elements are custom objects a compare function must be provided, 
+         * elements are dequeued in highest-priority-first order (the elements with the
+         * highest priority are dequeued first). Priority Queues are implemented as heaps.
+         * If the inserted elements are custom objects a compare function must be provided,
          * otherwise the <=, === and >= operators are used to compare object priority.</p>
          * <pre>
          * function compare(a, b) {
@@ -1843,7 +1843,7 @@ module collections {
          *     return -1;
          *  } if (a is greater than b by the ordering criterion) {
          *     return 1;
-         *  } 
+         *  }
          *  // a must be equal to b
          *  return 0;
          * }
@@ -1878,12 +1878,12 @@ module collections {
 
         /**
          * Retrieves and removes the highest priority element of this queue.
-         * @return {*} the the highest priority element of this queue, 
+         * @return {*} the the highest priority element of this queue,
          *  or undefined if this queue is empty.
          */
         dequeue(): T {
             if (this.heap.size() !== 0) {
-                var el = this.heap.peek();
+                const el = this.heap.peek();
                 this.heap.removeRoot();
                 return el;
             }
@@ -1933,10 +1933,10 @@ module collections {
         }
 
         /**
-         * Executes the provided function once for each element present in this queue in 
+         * Executes the provided function once for each element present in this queue in
          * no particular order.
          * @param {function(Object):*} callback function to execute, it is
-         * invoked with one argument: the element value, to break the iteration you can 
+         * invoked with one argument: the element value, to break the iteration you can
          * optionally return false.
          */
         forEach(callback: ILoopFunction<T>) {
@@ -1954,7 +1954,7 @@ module collections {
         /**
          * Creates an empty set.
          * @class <p>A set is a data structure that contains no duplicate items.</p>
-         * <p>If the inserted elements are custom objects a function 
+         * <p>If the inserted elements are custom objects a function
          * which converts elements to strings must be provided. Example:</p>
          *
          * <pre>
@@ -2005,7 +2005,7 @@ module collections {
          * @param {collections.Set} otherSet other set.
          */
         intersection(otherSet: Set<T>): void {
-            var set = this;
+            const set = this;
             this.forEach(function (element: T): boolean {
                 if (!otherSet.contains(element)) {
                     set.remove(element);
@@ -2020,7 +2020,7 @@ module collections {
          * @param {collections.Set} otherSet other set.
          */
         union(otherSet: Set<T>): void {
-            var set = this;
+            const set = this;
             otherSet.forEach(function (element: T): boolean {
                 set.add(element);
                 return true;
@@ -2033,7 +2033,7 @@ module collections {
          * @param {collections.Set} otherSet other set.
          */
         difference(otherSet: Set<T>): void {
-            var set = this;
+            const set = this;
             otherSet.forEach(function (element: T): boolean {
                 set.remove(element);
                 return true;
@@ -2051,7 +2051,7 @@ module collections {
                 return false;
             }
 
-            var isSub = true;
+            let isSub = true;
             this.forEach(function (element) {
                 if (!otherSet.contains(element)) {
                     isSub = false;
@@ -2076,10 +2076,10 @@ module collections {
         }
 
         /**
-         * Executes the provided function once for each element 
+         * Executes the provided function once for each element
          * present in this set.
          * @param {function(Object):*} callback function to execute, it is
-         * invoked with one arguments: the element. To break the iteration you can 
+         * invoked with one arguments: the element. To break the iteration you can
          * optionally return false.
          */
         forEach(callback: ILoopFunction<T>): void {
@@ -2135,9 +2135,9 @@ module collections {
 
         /**
          * Creates an empty bag.
-         * @class <p>A bag is a special kind of set in which members are 
+         * @class <p>A bag is a special kind of set in which members are
          * allowed to appear more than once.</p>
-         * <p>If the inserted elements are custom objects a function 
+         * <p>If the inserted elements are custom objects a function
          * which converts elements to unique strings must be provided. Example:</p>
          *
          * <pre>
@@ -2173,7 +2173,7 @@ module collections {
             }
 
             if (!this.contains(element)) {
-                var node = {
+                const node = {
                     value: element,
                     copies: nCopies
                 };
@@ -2211,8 +2211,8 @@ module collections {
 
         /**
         * Removes nCopies of the specified object to this bag.
-        * If the number of copies to remove is greater than the actual number 
-        * of copies in the Bag, all copies are removed. 
+        * If the number of copies to remove is greater than the actual number
+        * of copies in the Bag, all copies are removed.
         * @param {Object} element element to remove.
         * @param {number=} nCopies the number of copies to remove, if this argument is
         * undefined 1 copy is removed.
@@ -2227,7 +2227,7 @@ module collections {
             if (!this.contains(element)) {
                 return false;
             } else {
-                var node = this.dictionary.getValue(element);
+                const node = this.dictionary.getValue(element);
                 if (nCopies > node.copies) {
                     this.nElements -= node.copies;
                 } else {
@@ -2242,19 +2242,19 @@ module collections {
         }
 
         /**
-         * Returns an array containing all of the elements in this big in arbitrary order, 
+         * Returns an array containing all of the elements in this big in arbitrary order,
          * including multiple copies.
          * @return {Array} an array containing all of the elements in this bag.
          */
         toArray(): T[] {
-            var a:Array<T> = [];
-            var values = this.dictionary.values();
-            var vl = values.length;
-            for (var i = 0; i < vl; i++) {
-                var node = values[i];
-                var element = node.value;
-                var copies = node.copies;
-                for (var j = 0; j < copies; j++) {
+            const a:Array<T> = [];
+            const values = this.dictionary.values();
+            const vl = values.length;
+            for (let i = 0; i < vl; i++) {
+                const node = values[i];
+                const element = node.value;
+                const copies = node.copies;
+                for (let j = 0; j < copies; j++) {
                     a.push(element);
                 }
             }
@@ -2262,32 +2262,32 @@ module collections {
         }
 
         /**
-         * Returns a set of unique elements in this bag. 
+         * Returns a set of unique elements in this bag.
          * @return {collections.Set<T>} a set of unique elements in this bag.
          */
         toSet(): Set<T> {
-            var toret = new Set<T>(this.toStrF);
-            var elements = this.dictionary.values();
-            var l = elements.length;
-            for (var i = 0; i < l; i++) {
-                var value = elements[i].value;
+            const toret = new Set<T>(this.toStrF);
+            const elements = this.dictionary.values();
+            const l = elements.length;
+            for (let i = 0; i < l; i++) {
+                const value = elements[i].value;
                 toret.add(value);
             }
             return toret;
         }
 
         /**
-         * Executes the provided function once for each element 
+         * Executes the provided function once for each element
          * present in this bag, including multiple copies.
          * @param {function(Object):*} callback function to execute, it is
-         * invoked with one argument: the element. To break the iteration you can 
+         * invoked with one argument: the element. To break the iteration you can
          * optionally return false.
          */
         forEach(callback: ILoopFunction<T>) {
             this.dictionary.forEach(function (k, v) {
-                var value = v.value;
-                var copies = v.copies;
-                for (var i = 0; i < copies; i++) {
+                const value = v.value;
+                const copies = v.copies;
+                for (let i = 0; i < copies; i++) {
                     if (callback(value) === false) {
                         return false;
                     }
@@ -2319,10 +2319,10 @@ module collections {
             this.dictionary.clear();
         }
 
-    }// End of bag 
+    }// End of bag
 
 
-    // Internal interface for BST 
+    // Internal interface for BST
     interface BSTreeNode<T>{
         element: T;
         leftCh: BSTreeNode<T>;
@@ -2336,21 +2336,21 @@ module collections {
         private nElements: number;
         /**
          * Creates an empty binary search tree.
-         * @class <p>A binary search tree is a binary tree in which each 
-         * internal node stores an element such that the elements stored in the 
-         * left subtree are less than it and the elements 
+         * @class <p>A binary search tree is a binary tree in which each
+         * internal node stores an element such that the elements stored in the
+         * left subtree are less than it and the elements
          * stored in the right subtree are greater.</p>
-         * <p>Formally, a binary search tree is a node-based binary tree data structure which 
+         * <p>Formally, a binary search tree is a node-based binary tree data structure which
          * has the following properties:</p>
          * <ul>
-         * <li>The left subtree of a node contains only nodes with elements less 
+         * <li>The left subtree of a node contains only nodes with elements less
          * than the node's element</li>
-         * <li>The right subtree of a node contains only nodes with elements greater 
+         * <li>The right subtree of a node contains only nodes with elements greater
          * than the node's element</li>
          * <li>Both the left and right subtrees must also be binary search trees.</li>
          * </ul>
-         * <p>If the inserted elements are custom objects a compare function must 
-         * be provided at construction time, otherwise the <=, === and >= operators are 
+         * <p>If the inserted elements are custom objects a compare function must
+         * be provided at construction time, otherwise the <=, === and >= operators are
          * used to compare elements. Example:</p>
          * <pre>
          * function compare(a, b) {
@@ -2358,7 +2358,7 @@ module collections {
          *     return -1;
          *  } if (a is greater than b by the ordering criterion) {
          *     return 1;
-         *  } 
+         *  }
          *  // a must be equal to b
          *  return 0;
          * }
@@ -2434,7 +2434,7 @@ module collections {
          * @return {boolean} true if this tree contained the specified element.
          */
         remove(element: T): boolean {
-            var node = this.searchNode(this.root, element);
+            const node = this.searchNode(this.root, element);
             if (node === null) {
                 return false;
             }
@@ -2444,9 +2444,9 @@ module collections {
         }
 
         /**
-         * Executes the provided function once for each element present in this tree in 
+         * Executes the provided function once for each element present in this tree in
          * in-order.
-         * @param {function(Object):*} callback function to execute, it is invoked with one 
+         * @param {function(Object):*} callback function to execute, it is invoked with one
          * argument: the element value, to break the iteration you can optionally return false.
          */
         inorderTraversal(callback: ILoopFunction<T>): void {
@@ -2457,7 +2457,7 @@ module collections {
 
         /**
          * Executes the provided function once for each element present in this tree in pre-order.
-         * @param {function(Object):*} callback function to execute, it is invoked with one 
+         * @param {function(Object):*} callback function to execute, it is invoked with one
          * argument: the element value, to break the iteration you can optionally return false.
          */
         preorderTraversal(callback: ILoopFunction<T>): void {
@@ -2468,7 +2468,7 @@ module collections {
 
         /**
          * Executes the provided function once for each element present in this tree in post-order.
-         * @param {function(Object):*} callback function to execute, it is invoked with one 
+         * @param {function(Object):*} callback function to execute, it is invoked with one
          * argument: the element value, to break the iteration you can optionally return false.
          */
         postorderTraversal(callback: ILoopFunction<T>): void {
@@ -2478,9 +2478,9 @@ module collections {
         }
 
         /**
-         * Executes the provided function once for each element present in this tree in 
+         * Executes the provided function once for each element present in this tree in
          * level-order.
-         * @param {function(Object):*} callback function to execute, it is invoked with one 
+         * @param {function(Object):*} callback function to execute, it is invoked with one
          * argument: the element value, to break the iteration you can optionally return false.
          */
         levelTraversal(callback: ILoopFunction<T>): void {
@@ -2515,7 +2515,7 @@ module collections {
          * Executes the provided function once for each element present in this tree in inorder.
          * Equivalent to inorderTraversal.
          * @param {function(Object):*} callback function to execute, it is
-         * invoked with one argument: the element value, to break the iteration you can 
+         * invoked with one argument: the element value, to break the iteration you can
          * optionally return false.
          */
         forEach(callback: ILoopFunction<T>): void {
@@ -2527,7 +2527,7 @@ module collections {
          * @return {Array} an array containing all of the elements in this tree in in-order.
          */
         toArray(): T[] {
-            var array: Array<T> = [];
+            const array: Array<T> = [];
             this.inorderTraversal(function (element: T): boolean {
                 array.push(element);
                 return true;
@@ -2547,7 +2547,7 @@ module collections {
         * @private
         */
         private searchNode(node: BSTreeNode<T>, element: T): BSTreeNode<T> {
-            var cmp:number = null;
+            let cmp:number = null;
             while (node !== null && cmp !== 0) {
                 cmp = this.compare(element, node.element);
                 if (cmp < 0) {
@@ -2584,7 +2584,7 @@ module collections {
             } else if (node.rightCh === null) {
                 this.transplant(node, node.leftCh);
             } else {
-                var y = this.minimumAux(node.rightCh);
+                const y = this.minimumAux(node.rightCh);
                 if (y.parent !== node) {
                     this.transplant(y, y.rightCh);
                     y.rightCh = node.rightCh;
@@ -2618,7 +2618,7 @@ module collections {
         * @private
         */
         private levelTraversalAux(node: BSTreeNode<T>, callback: ILoopFunction<T>) {
-            var queue = new Queue<BSTreeNode<T>>();
+            const queue = new Queue<BSTreeNode<T>>();
             if (node !== null) {
                 queue.enqueue(node);
             }
@@ -2706,9 +2706,9 @@ module collections {
         */
         private insertNode(node: BSTreeNode<T>): BSTreeNode<T> {
 
-            var parent: any = null;
-            var position = this.root;
-            var cmp:number = null;
+            let parent: any = null;
+            let position = this.root;
+            let cmp:number = null;
             while (position !== null) {
                 cmp = this.compare(node.element, position.element);
                 if (cmp === 0) {
@@ -2748,4 +2748,4 @@ module collections {
     } // end of BSTree
 
 
-}// End of module 
+}// End of module
