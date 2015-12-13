@@ -1,4 +1,4 @@
-import {ILoopFunction, ICompareFunction, defaultCompare, isUndefined} from "./util";
+import * as util from "./util";
 import Queue from "./Queue";
 // Internal interface for BST
 interface BSTreeNode<T> {
@@ -10,7 +10,7 @@ interface BSTreeNode<T> {
 export default class BSTree<T> {
 
     private root: BSTreeNode<T>;
-    private compare: ICompareFunction<T>;
+    private compare: util.ICompareFunction<T>;
     private nElements: number;
     /**
      * Creates an empty binary search tree.
@@ -47,9 +47,9 @@ export default class BSTree<T> {
      * zero, or a positive integer as the first argument is less than, equal to,
      * or greater than the second.
      */
-    constructor(compareFunction?: ICompareFunction<T>) {
+    constructor(compareFunction?: util.ICompareFunction<T>) {
         this.root = null;
-        this.compare = compareFunction || defaultCompare;
+        this.compare = compareFunction || util.defaultCompare;
         this.nElements = 0;
     }
 
@@ -59,7 +59,7 @@ export default class BSTree<T> {
      * @return {boolean} true if this tree did not already contain the specified element.
      */
     add(element: T): boolean {
-        if (isUndefined(element)) {
+        if (util.isUndefined(element)) {
             return false;
         }
 
@@ -101,7 +101,7 @@ export default class BSTree<T> {
      * false otherwise.
      */
     contains(element: T): boolean {
-        if (isUndefined(element)) {
+        if (util.isUndefined(element)) {
             return false;
         }
         return this.searchNode(this.root, element) !== null;
@@ -127,7 +127,7 @@ export default class BSTree<T> {
      * @param {function(Object):*} callback function to execute, it is invoked with one
      * argument: the element value, to break the iteration you can optionally return false.
      */
-    inorderTraversal(callback: ILoopFunction<T>): void {
+    inorderTraversal(callback: util.ILoopFunction<T>): void {
         this.inorderTraversalAux(this.root, callback, {
             stop: false
         });
@@ -138,7 +138,7 @@ export default class BSTree<T> {
      * @param {function(Object):*} callback function to execute, it is invoked with one
      * argument: the element value, to break the iteration you can optionally return false.
      */
-    preorderTraversal(callback: ILoopFunction<T>): void {
+    preorderTraversal(callback: util.ILoopFunction<T>): void {
         this.preorderTraversalAux(this.root, callback, {
             stop: false
         });
@@ -149,7 +149,7 @@ export default class BSTree<T> {
      * @param {function(Object):*} callback function to execute, it is invoked with one
      * argument: the element value, to break the iteration you can optionally return false.
      */
-    postorderTraversal(callback: ILoopFunction<T>): void {
+    postorderTraversal(callback: util.ILoopFunction<T>): void {
         this.postorderTraversalAux(this.root, callback, {
             stop: false
         });
@@ -161,7 +161,7 @@ export default class BSTree<T> {
      * @param {function(Object):*} callback function to execute, it is invoked with one
      * argument: the element value, to break the iteration you can optionally return false.
      */
-    levelTraversal(callback: ILoopFunction<T>): void {
+    levelTraversal(callback: util.ILoopFunction<T>): void {
         this.levelTraversalAux(this.root, callback);
     }
 
@@ -196,7 +196,7 @@ export default class BSTree<T> {
      * invoked with one argument: the element value, to break the iteration you can
      * optionally return false.
      */
-    forEach(callback: ILoopFunction<T>): void {
+    forEach(callback: util.ILoopFunction<T>): void {
         this.inorderTraversal(callback);
     }
 
@@ -277,7 +277,7 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private inorderTraversalAux(node: BSTreeNode<T>, callback: ILoopFunction<T>, signal: { stop: boolean; }): void {
+    private inorderTraversalAux(node: BSTreeNode<T>, callback: util.ILoopFunction<T>, signal: { stop: boolean; }): void {
         if (node === null || signal.stop) {
             return;
         }
@@ -295,7 +295,7 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private levelTraversalAux(node: BSTreeNode<T>, callback: ILoopFunction<T>) {
+    private levelTraversalAux(node: BSTreeNode<T>, callback: util.ILoopFunction<T>) {
         const queue = new Queue<BSTreeNode<T>>();
         if (node !== null) {
             queue.enqueue(node);
@@ -317,7 +317,7 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private preorderTraversalAux(node: BSTreeNode<T>, callback: ILoopFunction<T>, signal: { stop: boolean; }) {
+    private preorderTraversalAux(node: BSTreeNode<T>, callback: util.ILoopFunction<T>, signal: { stop: boolean; }) {
         if (node === null || signal.stop) {
             return;
         }
@@ -334,7 +334,7 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private postorderTraversalAux(node: BSTreeNode<T>, callback: ILoopFunction<T>, signal: { stop: boolean; }) {
+    private postorderTraversalAux(node: BSTreeNode<T>, callback: util.ILoopFunction<T>, signal: { stop: boolean; }) {
         if (node === null || signal.stop) {
             return;
         }

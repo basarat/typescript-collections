@@ -1,6 +1,6 @@
 import {IDictionaryPair, default as Dictionary} from "./Dictionary";
 
-import * as collections from "./util";
+import * as util from "./util";
 
 /**
  * This class is used by the LinkedDictionary Internally
@@ -48,7 +48,7 @@ export default class LinkedDictionary<K, V> extends Dictionary<K, V> {
      * Retrieves a linked dictionary from the table internally
      */
     private getLinkedDictionaryPair(key: K): LinkedDictionaryPair<K, V> {
-        if (collections.isUndefined(key)) {
+        if (util.isUndefined(key)) {
             return undefined;
         }
         const k = '$' + this.toStr(key);
@@ -65,7 +65,7 @@ export default class LinkedDictionary<K, V> extends Dictionary<K, V> {
      */
     getValue(key: K): V {
         const pair = this.getLinkedDictionaryPair(key);
-        if (!collections.isUndefined(pair)) {
+        if (!util.isUndefined(pair)) {
             return pair.value;
         }
         return undefined;
@@ -82,7 +82,7 @@ export default class LinkedDictionary<K, V> extends Dictionary<K, V> {
      */
     remove(key: K): V {
         const pair = this.getLinkedDictionaryPair(key);
-        if (!collections.isUndefined(pair)) {
+        if (!util.isUndefined(pair)) {
             super.remove(key); // This will remove it from the table
             pair.unlink(); // This will unlink it from the chain
             return pair.value;
@@ -143,7 +143,7 @@ export default class LinkedDictionary<K, V> extends Dictionary<K, V> {
      */
     setValue(key: K, value: V): V {
 
-        if (collections.isUndefined(key) || collections.isUndefined(value)) {
+        if (util.isUndefined(key) || util.isUndefined(value)) {
             return undefined;
         }
 
@@ -154,7 +154,7 @@ export default class LinkedDictionary<K, V> extends Dictionary<K, V> {
 
         // If there is already an element for that key, we
         // keep it's place in the LinkedList
-        if (!collections.isUndefined(existingPair)) {
+        if (!util.isUndefined(existingPair)) {
             this.replace(existingPair, newPair);
 
             return existingPair.value;

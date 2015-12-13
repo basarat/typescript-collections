@@ -1,4 +1,4 @@
-import * as collections from "./util";
+import * as util from "./util";
 
 /**
  * Returns the position of the first occurrence of the specified item
@@ -10,8 +10,8 @@ import * as collections from "./util";
  * @return {number} the position of the first occurrence of the specified element
  * within the specified array, or -1 if not found.
  */
-export function indexOf<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>): number {
-    const equals = equalsFunction || collections.defaultEquals;
+export function indexOf<T>(array: T[], item: T, equalsFunction?: util.IEqualsFunction<T>): number {
+    const equals = equalsFunction || util.defaultEquals;
     const length = array.length;
     for (let i = 0; i < length; i++) {
         if (equals(array[i], item)) {
@@ -31,8 +31,8 @@ export function indexOf<T>(array: T[], item: T, equalsFunction?: collections.IEq
  * @return {number} the position of the last occurrence of the specified element
  * within the specified array or -1 if not found.
  */
-export function lastIndexOf<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>): number {
-    const equals = equalsFunction || collections.defaultEquals;
+export function lastIndexOf<T>(array: T[], item: T, equalsFunction?: util.IEqualsFunction<T>): number {
+    const equals = equalsFunction || util.defaultEquals;
     const length = array.length;
     for (let i = length - 1; i >= 0; i--) {
         if (equals(array[i], item)) {
@@ -50,7 +50,7 @@ export function lastIndexOf<T>(array: T[], item: T, equalsFunction?: collections
  * check equality between 2 elements.
  * @return {boolean} true if the specified array contains the specified element.
  */
-export function contains<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>): boolean {
+export function contains<T>(array: T[], item: T, equalsFunction?: util.IEqualsFunction<T>): boolean {
     return indexOf(array, item, equalsFunction) >= 0;
 }
 
@@ -63,7 +63,7 @@ export function contains<T>(array: T[], item: T, equalsFunction?: collections.IE
  * check equality between 2 elements.
  * @return {boolean} true if the array changed after this call.
  */
-export function remove<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>): boolean {
+export function remove<T>(array: T[], item: T, equalsFunction?: util.IEqualsFunction<T>): boolean {
     const index = indexOf(array, item, equalsFunction);
     if (index < 0) {
         return false;
@@ -82,8 +82,8 @@ export function remove<T>(array: T[], item: T, equalsFunction?: collections.IEqu
  * @return {number} the number of elements in the specified array
  * equal to the specified object.
  */
-export function frequency<T>(array: T[], item: T, equalsFunction?: collections.IEqualsFunction<T>): number {
-    const equals = equalsFunction || collections.defaultEquals;
+export function frequency<T>(array: T[], item: T, equalsFunction?: util.IEqualsFunction<T>): number {
+    const equals = equalsFunction || util.defaultEquals;
     const length = array.length;
     let freq = 0;
     for (let i = 0; i < length; i++) {
@@ -105,8 +105,8 @@ export function frequency<T>(array: T[], item: T, equalsFunction?: collections.I
  * check equality between elemements in the arrays.
  * @return {boolean} true if the two arrays are equal
  */
-export function equals<T>(array1: T[], array2: T[], equalsFunction?: collections.IEqualsFunction<T>): boolean {
-    const equals = equalsFunction || collections.defaultEquals;
+export function equals<T>(array1: T[], array2: T[], equalsFunction?: util.IEqualsFunction<T>): boolean {
+    const equals = equalsFunction || util.defaultEquals;
 
     if (array1.length !== array2.length) {
         return false;
@@ -158,7 +158,7 @@ export function toString<T>(array: T[]): string {
  * invoked with one argument: the element value, to break the iteration you can
  * optionally return false.
  */
-export function forEach<T>(array: T[], callback: collections.ILoopFunction<T>): void {
+export function forEach<T>(array: T[], callback: util.ILoopFunction<T>): void {
     for (const ele of array) {
         if (callback(ele) === false) {
             return;

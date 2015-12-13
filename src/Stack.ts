@@ -1,5 +1,5 @@
 import LinkedList from "./LinkedList";
-import * as collections from "./util";
+import * as util from "./util";
 
 export default class Stack<T> {
     /**
@@ -78,7 +78,7 @@ export default class Stack<T> {
      * @return {boolean} true if this stack contains the specified element,
      * false otherwise.
      */
-    contains(elem: T, equalsFunction?: collections.IEqualsFunction<T>) {
+    contains(elem: T, equalsFunction?: util.IEqualsFunction<T>) {
         return this.list.contains(elem, equalsFunction);
     }
     /**
@@ -103,7 +103,7 @@ export default class Stack<T> {
      * invoked with one argument: the element value, to break the iteration you can
      * optionally return false.
      */
-    forEach(callback: collections.ILoopFunction<T>) {
+    forEach(callback: util.ILoopFunction<T>) {
         this.list.forEach(callback);
     }
 } // End of stack

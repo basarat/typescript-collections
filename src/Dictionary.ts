@@ -1,4 +1,4 @@
-import * as collections from "./util";
+import * as util from "./util";
 import * as arrays from "./arrays";
 
 // Used internally by dictionary
@@ -53,7 +53,7 @@ export default class Dictionary<K, V>{
     constructor(toStrFunction?: (key: K) => string) {
         this.table = {};
         this.nElements = 0;
-        this.toStr = toStrFunction || collections.defaultToString;
+        this.toStr = toStrFunction || util.defaultToString;
     }
 
 
@@ -66,7 +66,7 @@ export default class Dictionary<K, V>{
      */
     getValue(key: K): V {
         const pair: IDictionaryPair<K, V> = this.table['$' + this.toStr(key)];
-        if (collections.isUndefined(pair)) {
+        if (util.isUndefined(pair)) {
             return undefined;
         }
         return pair.value;
@@ -85,14 +85,14 @@ export default class Dictionary<K, V>{
      */
     setValue(key: K, value: V): V {
 
-        if (collections.isUndefined(key) || collections.isUndefined(value)) {
+        if (util.isUndefined(key) || util.isUndefined(value)) {
             return undefined;
         }
 
         let ret: V;
         const k = '$' + this.toStr(key);
         const previousElement: IDictionaryPair<K, V> = this.table[k];
-        if (collections.isUndefined(previousElement)) {
+        if (util.isUndefined(previousElement)) {
             this.nElements++;
             ret = undefined;
         } else {
@@ -115,7 +115,7 @@ export default class Dictionary<K, V>{
     remove(key: K): V {
         const k = '$' + this.toStr(key);
         const previousElement: IDictionaryPair<K, V> = this.table[k];
-        if (!collections.isUndefined(previousElement)) {
+        if (!util.isUndefined(previousElement)) {
             delete this.table[k];
             this.nElements--;
             return previousElement.value;
@@ -130,7 +130,7 @@ export default class Dictionary<K, V>{
     keys(): K[] {
         const array: K[] = [];
         for (const name in this.table) {
-            if (collections.has(this.table, name)) {
+            if (util.has(this.table, name)) {
                 const pair: IDictionaryPair<K, V> = this.table[name];
                 array.push(pair.key);
             }
@@ -145,7 +145,7 @@ export default class Dictionary<K, V>{
     values(): V[] {
         const array: V[] = [];
         for (const name in this.table) {
-            if (collections.has(this.table, name)) {
+            if (util.has(this.table, name)) {
                 const pair: IDictionaryPair<K, V> = this.table[name];
                 array.push(pair.value);
             }
@@ -162,7 +162,7 @@ export default class Dictionary<K, V>{
     */
     forEach(callback: (key: K, value: V) => any): void {
         for (const name in this.table) {
-            if (collections.has(this.table, name)) {
+            if (util.has(this.table, name)) {
                 const pair: IDictionaryPair<K, V> = this.table[name];
                 const ret = callback(pair.key, pair.value);
                 if (ret === false) {
@@ -180,7 +180,7 @@ export default class Dictionary<K, V>{
      * specified key.
      */
     containsKey(key: K): boolean {
-        return !collections.isUndefined(this.getValue(key));
+        return !util.isUndefined(this.getValue(key));
     }
 
     /**

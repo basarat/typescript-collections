@@ -1,4 +1,4 @@
-import * as collections from "./util";
+import * as util from "./util";
 
 import * as arrays from "./arrays";
 
@@ -47,7 +47,7 @@ export default class Set<T>{
      * @return {boolean} true if this set did not already contain the specified element.
      */
     add(element: T): boolean {
-        if (this.contains(element) || collections.isUndefined(element)) {
+        if (this.contains(element) || util.isUndefined(element)) {
             return false;
         } else {
             this.dictionary.setValue(element, element);
@@ -138,7 +138,7 @@ export default class Set<T>{
      * invoked with one arguments: the element. To break the iteration you can
      * optionally return false.
      */
-    forEach(callback: collections.ILoopFunction<T>): void {
+    forEach(callback: util.ILoopFunction<T>): void {
         this.dictionary.forEach(function (k, v) {
             return callback(v);
         });

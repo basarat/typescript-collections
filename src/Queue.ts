@@ -1,4 +1,4 @@
-import * as collections from "./util";
+import * as util from "./util";
 import LinkedList from "./LinkedList";
 import Heap from "./Heap";
 
@@ -89,7 +89,7 @@ export default class Queue<T>{
      * @return {boolean} true if this queue contains the specified element,
      * false otherwise.
      */
-    contains(elem: T, equalsFunction?: collections.IEqualsFunction<T>): boolean {
+    contains(elem: T, equalsFunction?: util.IEqualsFunction<T>): boolean {
         return this.list.contains(elem, equalsFunction);
     }
 
@@ -116,7 +116,7 @@ export default class Queue<T>{
      * invoked with one argument: the element value, to break the iteration you can
      * optionally return false.
      */
-    forEach(callback: collections.ILoopFunction<T>) {
+    forEach(callback: util.ILoopFunction<T>) {
         this.list.forEach(callback);
     }
 
@@ -150,8 +150,8 @@ export class PriorityQueue<T> {
      * zero, or a positive integer as the first argument is less than, equal to,
      * or greater than the second.
      */
-    constructor(compareFunction?: collections.ICompareFunction<T>) {
-        this.heap = new Heap<T>(collections.reverseCompareFunction(compareFunction));
+    constructor(compareFunction?: util.ICompareFunction<T>) {
+        this.heap = new Heap<T>(util.reverseCompareFunction(compareFunction));
     }
 
     /**
@@ -235,7 +235,7 @@ export class PriorityQueue<T> {
      * invoked with one argument: the element value, to break the iteration you can
      * optionally return false.
      */
-    forEach(callback: collections.ILoopFunction<T>) {
+    forEach(callback: util.ILoopFunction<T>) {
         this.heap.forEach(callback);
     }
 

@@ -1,4 +1,4 @@
-import * as collections from "./util";
+import * as util from "./util";
 import Dictionary from "./Dictionary";
 import Set from "./Set";
 
@@ -28,7 +28,7 @@ export default class Bag<T>{
      * unique string must be provided.
      */
     constructor(toStrFunction?: (item: T) => string) {
-        this.toStrF = toStrFunction || collections.defaultToString;
+        this.toStrF = toStrFunction || util.defaultToString;
         this.dictionary = new Dictionary<T, any>(this.toStrF);
         this.nElements = 0;
     }
@@ -43,7 +43,7 @@ export default class Bag<T>{
     */
     add(element: T, nCopies: number= 1): boolean {
 
-        if (collections.isUndefined(element) || nCopies <= 0) {
+        if (util.isUndefined(element) || nCopies <= 0) {
             return false;
         }
 
@@ -95,7 +95,7 @@ export default class Bag<T>{
     */
     remove(element: T, nCopies: number = 1) {
 
-        if (collections.isUndefined(element) || nCopies <= 0) {
+        if (util.isUndefined(element) || nCopies <= 0) {
             return false;
         }
 
@@ -155,7 +155,7 @@ export default class Bag<T>{
      * invoked with one argument: the element. To break the iteration you can
      * optionally return false.
      */
-    forEach(callback: collections.ILoopFunction<T>) {
+    forEach(callback: util.ILoopFunction<T>) {
         this.dictionary.forEach(function (k, v) {
             const value = v.value;
             const copies = v.copies;

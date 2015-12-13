@@ -1,4 +1,4 @@
-import * as collections from "./util";
+import * as util from "./util";
 import Dictionary from "./Dictionary";
 import * as arrays from "./arrays"
 
@@ -9,7 +9,7 @@ export default class MultiDictionary<K, V> {
     // Since we want to reuse the function name setValue and types in signature become incompatible
     // Therefore we are using composition instead of inheritance
     private dict: Dictionary<K, Array<V>>;
-    private equalsF: collections.IEqualsFunction<V>;
+    private equalsF: util.IEqualsFunction<V>;
     private allowDuplicate: boolean;
 
   /**
@@ -47,9 +47,9 @@ export default class MultiDictionary<K, V> {
    *
    * @param allowDuplicateValues
    */
-    constructor(toStrFunction?: (key: K) => string, valuesEqualsFunction?: collections.IEqualsFunction<V>, allowDuplicateValues = false) {
+    constructor(toStrFunction?: (key: K) => string, valuesEqualsFunction?: util.IEqualsFunction<V>, allowDuplicateValues = false) {
         this.dict = new Dictionary<K, Array<V>>(toStrFunction);
-        this.equalsF = valuesEqualsFunction || collections.defaultEquals;
+        this.equalsF = valuesEqualsFunction || util.defaultEquals;
         this.allowDuplicate = allowDuplicateValues;
     }
     /**
@@ -62,7 +62,7 @@ export default class MultiDictionary<K, V> {
     */
     getValue(key: K): V[] {
         const values = this.dict.getValue(key);
-        if (collections.isUndefined(values)) {
+        if (util.isUndefined(values)) {
             return [];
         }
         return arrays.copy(values);
@@ -78,7 +78,7 @@ export default class MultiDictionary<K, V> {
      */
     setValue(key: K, value: V): boolean {
 
-        if (collections.isUndefined(key) || collections.isUndefined(value)) {
+        if (util.isUndefined(key) || util.isUndefined(value)) {
             return false;
         }
         if (!this.containsKey(key)) {
@@ -107,9 +107,9 @@ export default class MultiDictionary<K, V> {
      * if the specified value isn't associated with the specified key.
      */
     remove(key: K, value?: V): boolean {
-        if (collections.isUndefined(value)) {
+        if (util.isUndefined(value)) {
             const v = this.dict.remove(key);
-            return !collections.isUndefined(v);
+            return !util.isUndefined(v);
         }
         const array = this.dict.getValue(key);
         if (arrays.remove(array, value, this.equalsF)) {

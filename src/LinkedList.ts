@@ -1,4 +1,4 @@
-import * as collections from "./util";
+import * as util from "./util";
 import * as arrays from "./arrays";
 
 // A linked list node
@@ -47,10 +47,10 @@ export default class LinkedList<T> {
     * or if the element is undefined.
     */
     add(item: T, index?: number): boolean {
-        if (collections.isUndefined(index)) {
+        if (util.isUndefined(index)) {
             index = this.nElements;
         }
-        if (index < 0 || index > this.nElements || collections.isUndefined(item)) {
+        if (index < 0 || index > this.nElements || util.isUndefined(item)) {
             return false;
         }
         const newNode = this.createNode(item);
@@ -136,10 +136,10 @@ export default class LinkedList<T> {
      * of the specified element, or -1 if this list does not contain the
      * element.
      */
-    indexOf(item: T, equalsFunction?: collections.IEqualsFunction<T>): number {
+    indexOf(item: T, equalsFunction?: util.IEqualsFunction<T>): number {
 
-        const equalsF = equalsFunction || collections.defaultEquals;
-        if (collections.isUndefined(item)) {
+        const equalsF = equalsFunction || util.defaultEquals;
+        if (util.isUndefined(item)) {
             return -1;
         }
         let currentNode = this.firstNode;
@@ -173,7 +173,7 @@ export default class LinkedList<T> {
        * @return {boolean} true if this list contains the specified element, false
        * otherwise.
        */
-    contains(item: T, equalsFunction?: collections.IEqualsFunction<T>): boolean {
+    contains(item: T, equalsFunction?: util.IEqualsFunction<T>): boolean {
         return (this.indexOf(item, equalsFunction) >= 0);
     }
 
@@ -192,9 +192,9 @@ export default class LinkedList<T> {
      * @param {Object} item element to be removed from this list, if present.
      * @return {boolean} true if the list contained the specified element.
      */
-    remove(item: T, equalsFunction?: collections.IEqualsFunction<T>): boolean {
-        const equalsF = equalsFunction || collections.defaultEquals;
-        if (this.nElements < 1 || collections.isUndefined(item)) {
+    remove(item: T, equalsFunction?: util.IEqualsFunction<T>): boolean {
+        const equalsF = equalsFunction || util.defaultEquals;
+        if (this.nElements < 1 || util.isUndefined(item)) {
             return false;
         }
         let previous: ILinkedListNode<T> = null;
@@ -244,8 +244,8 @@ export default class LinkedList<T> {
      * the === operator is used to check equality between elements.
      * @return {boolean} true if this list is equal to the given list.
      */
-    equals(other: LinkedList<T>, equalsFunction?: collections.IEqualsFunction<T>): boolean {
-        const eqF = equalsFunction || collections.defaultEquals;
+    equals(other: LinkedList<T>, equalsFunction?: util.IEqualsFunction<T>): boolean {
+        const eqF = equalsFunction || util.defaultEquals;
         if (!(other instanceof LinkedList)) {
             return false;
         }
@@ -258,7 +258,7 @@ export default class LinkedList<T> {
     /**
     * @private
     */
-    private equalsAux(n1: ILinkedListNode<T>, n2: ILinkedListNode<T>, eqF: collections.IEqualsFunction<T>): boolean {
+    private equalsAux(n1: ILinkedListNode<T>, n2: ILinkedListNode<T>, eqF: util.IEqualsFunction<T>): boolean {
         while (n1 !== null) {
             if (!eqF(n1.element, n2.element)) {
                 return false;
@@ -308,7 +308,7 @@ export default class LinkedList<T> {
      * invoked with one argument: the element value, to break the iteration you can
      * optionally return false.
      */
-    forEach(callback: collections.ILoopFunction<T>): void {
+    forEach(callback: util.ILoopFunction<T>): void {
         let currentNode = this.firstNode;
         while (currentNode !== null) {
             if (callback(currentNode.element) === false) {
