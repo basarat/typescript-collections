@@ -1,0 +1,15 @@
+{
+  "name": "typescript-collections",
+  "version": "1.0.5",
+  "homepage": "https://github.com/basarat/typescript-collections",
+  "authors": [
+    "bas@basarat.com"
+  ],
+  "description": "A generically typed set of collections for use with TypeScript",
+  "main": "collections.ts",
+  "keywords": [
+    "collections",
+    "typescript"
+  ],
+  "license": "MIT"
+}
