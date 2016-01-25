@@ -211,7 +211,7 @@ export default class Dictionary<K, V>{
     toString(): string {
         let toret = "{";
         this.forEach((k, v) => {
-            toret = toret + "\n\t" + k.toString() + " : " + v.toString();
+            toret = toret + "\n\t" + (k === null ? k : k.toString()) + " : " + (v === null ? v : v.toString())
         });
         return toret + "\n}";
     }
