@@ -1,6 +1,6 @@
 {
   "name": "typescript-collections",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A complete, fully tested data structure library written in TypeScript.",
   "main": "collections.js",
   "directories": {
@@ -43,5 +43,6 @@
   "bugs": {
     "url": "https://github.com/basarat/typescript-collections/issues"
   },
-  "homepage": "https://github.com/basarat/typescript-collections"
+  "homepage": "https://github.com/basarat/typescript-collections",
+  "typings": "./collections.d.ts"
 }
