@@ -43,5 +43,6 @@
   "bugs": {
     "url": "https://github.com/basarat/typescript-collections/issues"
   },
-  "homepage": "https://github.com/basarat/typescript-collections"
+  "homepage": "https://github.com/basarat/typescript-collections",
+  "typings": "./collections.d.ts"
 }
