@@ -77,7 +77,7 @@ coverage
 coverage/
 node_modules
 temp/
-*.d.ts
+/typings
 *.log
 *.tgz
 
