@@ -75,7 +75,6 @@ coverage
 .vscode/
 .settings/
 coverage/
-dist/
 node_modules
 temp/
 *.d.ts
