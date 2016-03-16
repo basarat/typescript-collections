@@ -201,7 +201,7 @@ export function findIndex<T>(array: T[], callback: util.ILoopFunction<T>): numbe
             return index;
         }
     }
-    return null;
+    return -1;
 }
 
 /**
