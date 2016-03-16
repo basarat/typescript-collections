@@ -86,3 +86,25 @@ export declare function toString<T>(array: T[]): string;
  * optionally return false.
  */
 export declare function forEach<T>(array: T[], callback: util.ILoopFunction<T>): void;
+/**
+ * Returns a value in the array if the item in the array satisfies the the provided testing function
+ * @param {Array} array The array to iterate
+ * @param {function(Object):*} callback function to execute, it is
+ * invoked with one arugment: the current item in the array and should return true or false
+ */
+export declare function find<T>(array: T[], callback: util.ILoopFunction<T>): T;
+/**
+ * Returns the index of the item in the array based on whether the provided testing function returns true
+ * @param {Array} array The array to iterate
+ * @param {function(Object):*} callback function to execute, it is
+ * invoked with one arugment: the current item in the array and should return true or false
+ */
+export declare function findIndex<T>(array: T[], callback: util.ILoopFunction<T>): number;
+/**
+ * Returns an array of items from the array if an item in the array satisfies the the provided testing function.
+ * This is typically used for an array of objects
+ * @param {Array} array The array to iterate
+ * @param {function(Object):*} callback function to execute, it is
+ * invoked with one arugment: the current item in the array and should return true or false
+ */
+export declare function findAll<T>(array: T[], callback: util.ILoopFunction<T>): T[];

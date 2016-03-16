@@ -304,5 +304,42 @@ function() {
         expect(collections.arrays.swap(a, 7, 2)).toEqual(false);
         expect(collections.arrays.swap(a, -1, 9)).toEqual(false);
     });
+    
+    it('Finds an item',
+    function() {
+        var c = 8;
+        var cmp = function(arg1) {
+            return arg1 === c;
+        };
+        var a = [1, 2, 5, 8, 10, 12];
+        expect(collections.arrays.find(a, cmp)).toEqual(8);
+        c = 10;
+        expect(collections.arrays.find(a, cmp)).toEqual(10);
+    });
+    
+    it('Finds the index of an item',
+    function() {
+        var c = 8;
+        var cmp = function(arg1) {
+            return arg1 === c;
+        };
+        var a = [1, 2, 5, 8, 10, 12];
+        expect(collections.arrays.findIndex(a, cmp)).toEqual(3);
+        c = 12;
+        expect(collections.arrays.findIndex(a, cmp)).toEqual(5);
+    });
+    
+    it('Finds multiple items',
+    function() {
+        var c = 8;
+        var cmp = function(arg1) {
+            return arg1 === c;
+        };
+        var a = [1, 8, 8, 8, 10, 10];
+        var r = [8, 8, 8];
+        expect(collections.arrays.findAll(a, cmp)).toEqual([8, 8, 8]);
+        c = 10;
+        expect(collections.arrays.findAll(a, cmp)).toEqual([10, 10]);
+    });
 
 });
