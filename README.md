@@ -39,7 +39,7 @@ or if you are plain, old, javascript guy
 var Collections = require('typescript-collections');
 ```
 
-![](http://www.gfycat.com/SeriousPointlessCob.gif)
+![](https://zippy.gfycat.com/SeriousPointlessCob.gif)
 
 Visual studio / any typescript IDE, will provide you with complete intellisense for your types and the compiler will 
 ensure that the collections contain the correct elements. 
