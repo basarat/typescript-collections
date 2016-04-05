@@ -38,6 +38,7 @@ or legacy ala JS
 ```typescript
 var Collections = require('typescript-collections');
 ```
+
 ![](http://www.gfycat.com/SeriousPointlessCob)
 
 Visual studio / any typescript IDE, will provide you with complete intellisense for your types and the compiler will 
