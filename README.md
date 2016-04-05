@@ -24,13 +24,29 @@ It also includes several functions for manipulating arrays.
 How to use?
 --------------------
 
-Also available on NuGet : http://www.nuget.org/packages/typescript.collections/ Thanks to https://github.com/georgiosd
+`npm install typescript-collections --save`
 
-Download collections.ts. Add it as a reference in your TypeScript code and start coding. 
+ES6
+```typescript
+import * as Collections from 'typescript-collections';
+```
+or good, old TS import
+```typescript
+import Collections = require('typescript-collections');
+```
+or legacy ala JS
+```typescript
+var Collections = require('typescript-collections');
+```
+![](http://www.gfycat.com/SeriousPointlessCob)
+
 Visual studio / any typescript IDE, will provide you with complete intellisense for your types and the compiler will 
 ensure that the collections contain the correct elements. 
 
 A visual studio project is contained in the demo folder to show you sample usage. 
+
+Also available on NuGet : http://www.nuget.org/packages/typescript.collections/ 
+Thanks to https://github.com/georgiosd
 
 Example
 --------------------
