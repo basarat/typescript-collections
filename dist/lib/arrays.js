@@ -165,4 +165,63 @@ function forEach(array, callback) {
     }
 }
 exports.forEach = forEach;
+/**
+ * Returns a value in the array if the item in the array satisfies the the provided testing function
+ * @param {Array} array The array to iterate
+ * @param {function(Object):*} callback function to execute, it is
+ * invoked with one arugment: the current item in the array and should return true or false
+ */
+function find(array, callback) {
+    if (!array) {
+        return null;
+    }
+    for (var index = 0; index < array.length; index++) {
+        var item = array[index];
+        if (callback(item)) {
+            return item;
+        }
+    }
+    return null;
+}
+exports.find = find;
+/**
+ * Returns the index of the item in the array based on whether the provided testing function returns true
+ * @param {Array} array The array to iterate
+ * @param {function(Object):*} callback function to execute, it is
+ * invoked with one arugment: the current item in the array and should return true or false
+ */
+function findIndex(array, callback) {
+    if (!array) {
+        return null;
+    }
+    for (var index = 0; index < array.length; index++) {
+        var item = array[index];
+        if (callback(item)) {
+            return index;
+        }
+    }
+    return -1;
+}
+exports.findIndex = findIndex;
+/**
+ * Returns an array of items from the array if an item in the array satisfies the the provided testing function.
+ * This is typically used for an array of objects
+ * @param {Array} array The array to iterate
+ * @param {function(Object):*} callback function to execute, it is
+ * invoked with one arugment: the current item in the array and should return true or false
+ */
+function findAll(array, callback) {
+    if (!array) {
+        return null;
+    }
+    var matches = [];
+    for (var index = 0; index < array.length; index++) {
+        var item = array[index];
+        if (callback(item)) {
+            matches.push(item);
+        }
+    }
+    return matches;
+}
+exports.findAll = findAll;
 //# sourceMappingURL=arrays.js.map
