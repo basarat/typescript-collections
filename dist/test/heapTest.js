@@ -1,4 +1,3 @@
-/// <reference path="../../typings/tsd.d.ts" />
 "use strict";
 var collections = require('../lib/index');
 var chai_1 = require('chai');

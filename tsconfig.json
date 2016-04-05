@@ -10,45 +10,10 @@
         "noLib": false,
         "preserveConstEnums": true
     },
-    "formatCodeOptions": {
-        "indentSize": 4,
-        "tabSize": 4,
-        "newLineCharacter": "\n",
-        "convertTabsToSpaces": true,
-        "insertSpaceAfterCommaDelimiter": true,
-        "insertSpaceAfterSemicolonInForStatements": true,
-        "insertSpaceBeforeAndAfterBinaryOperators": true,
-        "insertSpaceAfterKeywordsInControlFlowStatements": true,
-        "insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
-        "insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
-        "placeOpenBraceOnNewLineForFunctions": false,
-        "placeOpenBraceOnNewLineForControlBlocks": false
-    },
-    "files": [
-        "src/lib/index.ts",
-        "src/lib/Stack.ts",
-        "src/lib/Set.ts",
-        "src/lib/Queue.ts",
-        "src/lib/PriorityQueue.ts",
-        "src/lib/LinkedList.ts",
-        "src/lib/Heap.ts",
-        "src/lib/Dictionary.ts",
-        "src/lib/LinkedDictionary.ts",
-        "src/lib/MultiDictionary.ts",
-        "src/lib/util.ts",
-        "src/lib/BSTree.ts",
-        "src/lib/Bag.ts",
-        "src/lib/arrays.ts",
-        "src/test/arraysTest.ts",
-        "src/test/bagTest.ts",
-        "src/test/bsTreeTest.ts",
-        "src/test/dictionaryTest.ts",
-        "src/test/heapTest.ts",
-        "src/test/linkedListTest.ts",
-        "src/test/multiDictionaryTest.ts",
-        "src/test/priorityQueueTest.ts",
-        "src/test/queueTest.ts",
-        "src/test/setTest.ts",
-        "src/test/stackTest.ts"
+    "exclude": [
+        "node_modules",
+        "typings/browser",
+        "typings/browser.d.ts",
+        "examples"
     ]
 }

@@ -1,5 +1,3 @@
-/// <reference path="../../typings/tsd.d.ts" />
-
 import * as collections from '../lib/index';
 
 import assert = require('assert');
