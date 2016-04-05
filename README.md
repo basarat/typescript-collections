@@ -34,8 +34,8 @@ or good, old TS import
 ```typescript
 import Collections = require('typescript-collections');
 ```
-or legacy ala JS
-```typescript
+or if you are plain, old, javascript guy
+```js
 var Collections = require('typescript-collections');
 ```
 
