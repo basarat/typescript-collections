@@ -2,7 +2,9 @@
 ====================
 It is a complete, fully tested data structure library written in TypeScript.
 
-This project uses TypeScript Generics so you need TS 0.9 and above.
+This project uses TypeScript Generics so you need TS 0.9 and above. 
+
+[This projects supports UMD (Universal Module Definition)](https://github.com/umdjs/umd)
 
 Included data structures
 ---------------------
@@ -24,29 +26,48 @@ It also includes several functions for manipulating arrays.
 How to use?
 --------------------
 
-Also available on NuGet : http://www.nuget.org/packages/typescript.collections/ Thanks to https://github.com/georgiosd
+`npm install typescript-collections --save`
 
-Download collections.ts. Add it as a reference in your TypeScript code and start coding. 
+ES6
+```typescript
+import * as Collections from 'typescript-collections';
+```
+or good, old TS import
+```typescript
+import Collections = require('typescript-collections');
+```
+or if you are plain, old, javascript guy
+```js
+var Collections = require('typescript-collections');
+```
+
+![](https://zippy.gfycat.com/SeriousPointlessCob.gif)
+
 Visual studio / any typescript IDE, will provide you with complete intellisense for your types and the compiler will 
 ensure that the collections contain the correct elements. 
 
 A visual studio project is contained in the demo folder to show you sample usage. 
 
+Also available on NuGet : http://www.nuget.org/packages/typescript.collections/ 
+Thanks to https://github.com/georgiosd
+
 Example
 --------------------
 ```typescript
-/// <reference path="collections.ts" />
-var x = new collections.Set<number>(); 
-x.add(123);
-x.add(123); // Duplicates not allowed in a set 
+import * as Collections from 'typescript-collections';
+
+var mySet = new Collections.Set<number>(); 
+mySet.add(123);
+mySet.add(123); // Duplicates not allowed in a set 
 // The following will give error due to wrong type: 
-// x.add("asdf"); // Can only add numbers since that is the type argument. 
+// mySet.add("asdf"); // Can only add numbers since that is the type argument. 
 
-var y = new collections.Set<number>();
-y.add(456);
-x.union(y);
+var myQueue = new Collections.Queue();
+myQueue.enqueue(1);
+myQueue.enqueue(2);
 
-console.log(x.toString()); // [123,456] 
+console.log(myQueue.dequeue()); // prints 1
+console.log(myQueue.dequeue()); // prints 2 
 ```
 
 A note on Equality
@@ -60,12 +81,14 @@ makeString utility function
 
 A simple function is provided for you when you need a quick toString that uses all properties. E.g: 
 ```typescript
+import * as Collections from 'typescript-collections';
+
 class Car {
     constructor(public company: string, public type: string, public year: number) {
     }
     toString() {
         // Short hand. Adds each own property 
-        return collections.makeString(this);
+        return Collections.makeString(this);
     }
 }
 ```
@@ -74,6 +97,8 @@ A Sample on Dictionary
 ---------------------
 
 ```typescript
+import * as Collections from 'typescript-collections';
+
 class Person {
     constructor(public name: string, public yearOfBirth: number,public city?:string) {
     }
@@ -87,10 +112,10 @@ class Car {
     }
     toString() {
         // Short hand. Adds each own property 
-        return collections.toString(this);
+        return Collections.toString(this);
     }
 }
-var dict = new collections.Dictionary<Person, Car>();
+var dict = new Collections.Dictionary<Person, Car>();
 dict.setValue(new Person("john", 1970,"melbourne"), new Car("honda", "city", 2002));
 dict.setValue(new Person("gavin", 1984), new Car("ferrari", "F50", 2006));
 console.log("Orig");
@@ -132,6 +157,15 @@ john-1970
 -Car:
 {company:honda,type:accord,year:2006}
 ```
+
+Dev & Contrb
+--------------------
+
+Install deps & tools
+`npm run install_tools`
+
+Compile, test & check coverage
+`npm run all`
 
 Supported platforms
 --------------------

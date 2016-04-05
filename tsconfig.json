@@ -1,29 +1,19 @@
 {
-    "version": "1.5.0-alpha",
     "compilerOptions": {
         "target": "es5",
         "module": "commonjs",
         "declaration": true,
-        "noImplicitAny": false,
+        "noImplicitAny": true,
         "removeComments": false,
+        "sourceMap": true,
+        "outDir": "./dist",
         "noLib": false,
-        "preserveConstEnums": true,
-        "suppressImplicitAnyIndexErrors": true
+        "preserveConstEnums": true
     },
-    "files": [
-        "src/Stack.ts",
-        "src/Set.ts",
-        "src/Queue.ts",
-        "src/PriorityQueue.ts",
-        "src/LinkedList.ts",
-        "src/Heap.ts",
-        "src/Dictionary.ts",
-        "src/LinkedDictionary.ts",
-        "src/MultiDictionary.ts",
-        "src/util.ts",
-        "src/BSTree.ts",
-        "src/Bag.ts",
-        "src/arrays.ts",
-        "./collections.ts"
+    "exclude": [
+        "node_modules",
+        "typings/browser",
+        "typings/browser.d.ts",
+        "examples"
     ]
 }
