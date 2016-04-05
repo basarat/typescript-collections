@@ -5,7 +5,7 @@
   "main": "./dist/umd.js",
   "typings": "./dist/lib/index.d.ts",
   "scripts": {
-    "install": "npm install && typings install",
+    "install_tools": "npm install && typings install",
     "clean": "rimraf ./dist",
     "lint": "tslint -c ./tslint.json ./src/**/*.ts",
     "tsc": "tsc",

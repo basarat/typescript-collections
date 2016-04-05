@@ -35,18 +35,20 @@ A visual studio project is contained in the demo folder to show you sample usage
 Example
 --------------------
 ```typescript
-/// <reference path="collections.ts" />
-var x = new collections.Set<number>(); 
-x.add(123);
-x.add(123); // Duplicates not allowed in a set 
+import * as Collections from 'typescript-collections';
+
+var mySet = new Collections.Set<number>(); 
+mySet.add(123);
+mySet.add(123); // Duplicates not allowed in a set 
 // The following will give error due to wrong type: 
-// x.add("asdf"); // Can only add numbers since that is the type argument. 
+// mySet.add("asdf"); // Can only add numbers since that is the type argument. 
 
-var y = new collections.Set<number>();
-y.add(456);
-x.union(y);
+var myQueue = new Collections.Queue();
+myQueue.enqueue(1);
+myQueue.enqueue(2);
 
-console.log(x.toString()); // [123,456] 
+console.log(myQueue.dequeue()); // prints 1
+console.log(myQueue.dequeue()); // prints 2 
 ```
 
 A note on Equality
@@ -60,12 +62,14 @@ makeString utility function
 
 A simple function is provided for you when you need a quick toString that uses all properties. E.g: 
 ```typescript
+import * as Collections from 'typescript-collections';
+
 class Car {
     constructor(public company: string, public type: string, public year: number) {
     }
     toString() {
         // Short hand. Adds each own property 
-        return collections.makeString(this);
+        return Collections.makeString(this);
     }
 }
 ```
@@ -74,6 +78,8 @@ A Sample on Dictionary
 ---------------------
 
 ```typescript
+import * as Collections from 'typescript-collections';
+
 class Person {
     constructor(public name: string, public yearOfBirth: number,public city?:string) {
     }
@@ -87,10 +93,10 @@ class Car {
     }
     toString() {
         // Short hand. Adds each own property 
-        return collections.toString(this);
+        return Collections.toString(this);
     }
 }
-var dict = new collections.Dictionary<Person, Car>();
+var dict = new Collections.Dictionary<Person, Car>();
 dict.setValue(new Person("john", 1970,"melbourne"), new Car("honda", "city", 2002));
 dict.setValue(new Person("gavin", 1984), new Car("ferrari", "F50", 2006));
 console.log("Orig");
