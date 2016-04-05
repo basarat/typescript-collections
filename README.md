@@ -158,6 +158,15 @@ john-1970
 {company:honda,type:accord,year:2006}
 ```
 
+Dev & Contrb
+--------------------
+
+Install deps & tools
+`npm run install_tools`
+
+Compile, test & check coverage
+`npm run all`
+
 Supported platforms
 --------------------
 
