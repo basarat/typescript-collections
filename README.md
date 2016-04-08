@@ -70,6 +70,19 @@ console.log(myQueue.dequeue()); // prints 1
 console.log(myQueue.dequeue()); // prints 2 
 ```
 
+Typings resolution
+-------------------
+Remember to set "moduleResolution": "node", so TypeScript compiler can resolve typings in the node_modules/typescript-collections directory.
+
+![](http://i30.photobucket.com/albums/c316/Tilosag/Screen%20Shot%202016-04-08%20at%2015.55.30.png)
+
+In browser usage
+-------------------
+You should include `umd.js` or `umd.min.js` from `dist/lib/` directory.
+```html
+<script src="[server public path]/typescript-collections/dist/lib/umd.min.js"></script>
+```
+
 A note on Equality
 -------------------
 Equality is important for hashing (e.g. dictionary / sets). Javascript only allows strings to be keys for the base dictionary {}.
