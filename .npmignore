@@ -19,3 +19,4 @@ minify-umd.js
 tsconfig.json
 tsd.json
 tslint.json
+*.tgz
