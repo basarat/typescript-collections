@@ -11,3 +11,5 @@ export { default as Queue } from './Queue';
 export { default as PriorityQueue } from './PriorityQueue';
 export { default as Set } from './Set';
 export { default as Stack } from './Stack';
+import * as _util from './util';
+export declare var util: typeof _util;

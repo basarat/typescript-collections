@@ -29,4 +29,6 @@ var Set_1 = require('./Set');
 exports.Set = Set_1.default;
 var Stack_1 = require('./Stack');
 exports.Stack = Stack_1.default;
+var _util = require('./util');
+exports.util = _util;
 //# sourceMappingURL=index.js.map
