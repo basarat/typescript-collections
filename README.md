@@ -82,7 +82,7 @@ console.log(myQueue.dequeue()); // prints 2
 Typings resolution
 -------------------
 
-Remember to set "moduleResolution": "node", so TypeScript compiler can resolve typings in the node_modules/typescript-collections directory.
+Remember to set `"moduleResolution": "node"`, so TypeScript compiler can resolve typings in the `node_modules/typescript-collections` directory.
 
 ![](http://i30.photobucket.com/albums/c316/Tilosag/Screen%20Shot%202016-04-08%20at%2015.55.30.png)
 
@@ -123,7 +123,7 @@ console.log(new Car("BMW", "A", 2016).toString());
 
 Output:
 
-```JSON
+```text
 {company:BMW,type:A,year:2016}
 ```
 
