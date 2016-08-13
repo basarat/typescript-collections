@@ -103,7 +103,7 @@ class Car {
     }
     toString() {
         // Short hand. Adds each own property 
-        return Collections.makeString(this);
+        return Collections.util.makeString(this);
     }
 }
 ```
@@ -127,7 +127,7 @@ class Car {
     }
     toString() {
         // Short hand. Adds each own property 
-        return Collections.toString(this);
+        return Collections.util.makeString(this);
     }
 }
 var dict = new Collections.Dictionary<Person, Car>();
