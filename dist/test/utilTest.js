@@ -14,7 +14,7 @@ describe('util', function () {
         };
         return Car;
     }());
-    it('makeString utility function works', function () {
+    it('makeString function works', function () {
         var carStringified = new Car('BMW', 'A', 2016).toString();
         assert.equal(carStringified, '{company:BMW,type:A,year:2016}');
     });
