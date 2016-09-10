@@ -16,6 +16,7 @@ Included data structures
 - Dictionary - [Example](#a-sample-on-dictionary)
 - Multi Dictionary
 - Linked Dictionary
+- Default Dictionary - [Info](#default-dictionary)
 - Binary Search Tree
 - Stack
 - Queue
@@ -193,6 +194,16 @@ john-1970
 -Car:
 {company:honda,type:accord,year:2006}
 ```
+
+Default Dictionary
+---------------------
+
+Also known as `Factory Dictionary` [[ref.](https://github.com/basarat/typescript-collections/pull/47)]
+
+If a key doesn't exist, the Default Dictionary automatically creates it with `setDefault(defaultValue)`.
+
+Default Dictionary is a @michaelneu contribution which copies Python's [defaultDict](https://docs.python.org/2/library/collections.html#collections.defaultdict).
+
 
 Dev & Contrb
 --------------------
