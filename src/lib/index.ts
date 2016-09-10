@@ -13,6 +13,7 @@ export {default as Heap} from './Heap';
 export {default as LinkedDictionary} from './LinkedDictionary';
 export {default as LinkedList} from './LinkedList';
 export {default as MultiDictionary} from './MultiDictionary';
+export {default as FactoryDictionary} from './FactoryDictionary';
 export {default as Queue} from './Queue';
 export {default as PriorityQueue} from './PriorityQueue';
 export {default as Set} from './Set';
