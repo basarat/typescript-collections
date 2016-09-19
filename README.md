@@ -211,8 +211,10 @@ Multi Root Tree
 It's a [forest](https://en.wikipedia.org/wiki/Tree_(graph_theory)#Forest) like data structure which must consist of unique keys. It exposes advanced forest manipulation methods.
 
 ```javascript
+import * as Collections from 'typescript-collections';
+
 let tree = new Collections.MultiRootTree();
-tree.rootInsertId('1');
+tree.insertIdIntoRoot('1');
 ```
 
 ```text
@@ -230,8 +232,8 @@ Constraints
 
 Tree manipulation methods
 
-- insertIdIntoNode(nodeKey: string, id: string, position?: number)
 - insertIdIntoRoot(id: string, position?: number)
+- insertIdIntoNode(nodeKey: string, id: string, position?: number)
 - insertIdAfterId(belowId: string, insertId: string)
 - insertIdBeforeId(beforeId: string, insertId: string)
 - insertIdIntoId(insideId: string, insertId: string)
