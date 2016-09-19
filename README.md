@@ -205,7 +205,6 @@ If a key doesn't exist, the Default Dictionary automatically creates it with `se
 
 Default Dictionary is a @michaelneu contribution which copies Python's [defaultDict](https://docs.python.org/2/library/collections.html#collections.defaultdict).
 
-
 Multi Root Tree
 ---------------------
 
@@ -246,7 +245,6 @@ Tree manipulation methods
 ToDos:
 
 - drop unique key constraint
-
 
 Development and contrbutions
 --------------------
