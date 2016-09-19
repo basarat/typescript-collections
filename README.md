@@ -211,8 +211,8 @@ Multi Root Tree
 It's a [forest](https://en.wikipedia.org/wiki/Tree_(graph_theory)#Forest) like data structure which must consist of unique keys. It exposes advanced forest manipulation methods.
 
 ```javascript
-    let tree = new Collections.MultiRootTree();
-    tree.rootInsertId('1');
+let tree = new Collections.MultiRootTree();
+tree.rootInsertId('1');
 ```
 
 ```text
