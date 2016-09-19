@@ -1,170 +1,145 @@
-
-export enum Direction {
-    BEFORE,
-    AFTER,
-    INSIDE_AT_END,
-    INSIDE_AT_START,
-}
-
-export default class MultiRootIdsTree {
-
-    rootIds: Array<string>;
-    nodes: { [id: string]: Array<string> };
-
-    constructor() {
+"use strict";
+(function (Direction) {
+    Direction[Direction["BEFORE"] = 0] = "BEFORE";
+    Direction[Direction["AFTER"] = 1] = "AFTER";
+    Direction[Direction["INSIDE_AT_END"] = 2] = "INSIDE_AT_END";
+    Direction[Direction["INSIDE_AT_START"] = 3] = "INSIDE_AT_START";
+})(exports.Direction || (exports.Direction = {}));
+var Direction = exports.Direction;
+var MultiRootTree = (function () {
+    function MultiRootTree() {
         // ids must be unique
         this.rootIds = [];
         this.nodes = {};
     }
-
-    getRootIds() {
-        let clone = this.rootIds.slice();
+    MultiRootTree.prototype.getRootIds = function () {
+        var clone = this.rootIds.slice();
         return clone;
-    }
-
-    getNodes() {
-        let clone: { [id: string]: Array<string> } = {};
-        for (let nodeKey in this.nodes) {
+    };
+    MultiRootTree.prototype.getNodes = function () {
+        var clone = {};
+        for (var nodeKey in this.nodes) {
             if (this.nodes.hasOwnProperty(nodeKey)) {
                 clone[nodeKey] = this.nodes[nodeKey].slice();
             }
         }
-
         return clone;
-    }
-
-    moveIdBeforeId(moveId: string, beforeId: string) {
+    };
+    MultiRootTree.prototype.moveIdBeforeId = function (moveId, beforeId) {
         return this.moveId(moveId, beforeId, Direction.BEFORE);
-    }
-
-    moveIdAfterId(moveId: string, afterId: string) {
+    };
+    MultiRootTree.prototype.moveIdAfterId = function (moveId, afterId) {
         return this.moveId(moveId, afterId, Direction.AFTER);
-    }
-
-    moveIdIntoId(moveId: string, insideId: string, atStart = true) {
+    };
+    MultiRootTree.prototype.moveIdIntoId = function (moveId, insideId, atStart) {
+        if (atStart === void 0) { atStart = true; }
         if (atStart) {
             return this.moveId(moveId, insideId, Direction.INSIDE_AT_START);
-        } else {
+        }
+        else {
             return this.moveId(moveId, insideId, Direction.INSIDE_AT_END);
         }
-    }
-
-
-    deleteId(id: string) {
+    };
+    MultiRootTree.prototype.deleteId = function (id) {
         this.rootDeleteId(id);
         this.nodeAndSubNodesDelete(id);
         this.nodeRefrencesDelete(id);
-    }
-
-    insertIdBeforeId(beforeId: string, insertId: string) {
-        let foundRootIdIndex = this.findRootId(beforeId);
+    };
+    MultiRootTree.prototype.insertIdBeforeId = function (beforeId, insertId) {
+        var foundRootIdIndex = this.findRootId(beforeId);
         if (foundRootIdIndex > -1) {
             this.insertIdIntoRoot(insertId, foundRootIdIndex);
         }
-
-        for (let nodeKey in this.nodes) {
+        for (var nodeKey in this.nodes) {
             if (this.nodes.hasOwnProperty(nodeKey)) {
-                let foundNodeIdIndex = this.findNodeId(nodeKey, beforeId);
+                var foundNodeIdIndex = this.findNodeId(nodeKey, beforeId);
                 if (foundNodeIdIndex > -1) {
                     this.insertIdIntoNode(nodeKey, insertId, foundNodeIdIndex);
                 }
             }
         }
-    }
-
-    insertIdAfterId(belowId: string, insertId: string) {
-        let foundRootIdIndex = this.findRootId(belowId);
+    };
+    MultiRootTree.prototype.insertIdAfterId = function (belowId, insertId) {
+        var foundRootIdIndex = this.findRootId(belowId);
         if (foundRootIdIndex > -1) {
             this.insertIdIntoRoot(insertId, foundRootIdIndex + 1);
         }
-
-        for (let nodeKey in this.nodes) {
+        for (var nodeKey in this.nodes) {
             if (this.nodes.hasOwnProperty(nodeKey)) {
-                let foundNodeIdIndex = this.findNodeId(nodeKey, belowId);
+                var foundNodeIdIndex = this.findNodeId(nodeKey, belowId);
                 if (foundNodeIdIndex > -1) {
                     this.insertIdIntoNode(nodeKey, insertId, foundNodeIdIndex + 1);
                 }
             }
         }
-    }
-
-    insertIdIntoId(insideId: string, insertId: string) {
+    };
+    MultiRootTree.prototype.insertIdIntoId = function (insideId, insertId) {
         this.nodeInsertAtEnd(insideId, insertId);
         this.nodes[insertId] = [];
-    }
-
-    insertIdIntoRoot(id: string, position?: number) {
+    };
+    MultiRootTree.prototype.insertIdIntoRoot = function (id, position) {
         if (position === undefined) {
             this.rootInsertAtEnd(id);
-        } else {
+        }
+        else {
             if (position < 0) {
-                const length = this.rootIds.length;
-                this.rootIds.splice((position + length + 1), 0, id);
-            } else {
+                var length_1 = this.rootIds.length;
+                this.rootIds.splice((position + length_1 + 1), 0, id);
+            }
+            else {
                 this.rootIds.splice(position, 0, id);
             }
         }
-
         this.nodes[id] = this.nodes[id] || [];
-    }
-
-    insertIdIntoNode(nodeKey: string, id: string, position?: number) {
+    };
+    MultiRootTree.prototype.insertIdIntoNode = function (nodeKey, id, position) {
         this.nodes[nodeKey] = this.nodes[nodeKey] || [];
         this.nodes[id] = this.nodes[id] || [];
         if (position === undefined) {
             this.nodeInsertAtEnd(nodeKey, id);
-        } else {
+        }
+        else {
             if (position < 0) {
-                const length = this.nodes[nodeKey].length;
-                this.nodes[nodeKey].splice((position + length + 1), 0, id);
-            } else {
+                var length_2 = this.nodes[nodeKey].length;
+                this.nodes[nodeKey].splice((position + length_2 + 1), 0, id);
+            }
+            else {
                 this.nodes[nodeKey].splice(position, 0, id);
             }
         }
-    }
-
-    private moveId(moveId: string, beforeId: string, direction: Direction) {
-
-        let sourceId = moveId;
-        const sourceRootIndex = this.findRootId(sourceId);
-        let sourceNodeKey: string;
-        let sourceNodeIdIndex: number;
-
+    };
+    MultiRootTree.prototype.moveId = function (moveId, beforeId, direction) {
+        var sourceId = moveId;
+        var sourceRootIndex = this.findRootId(sourceId);
+        var sourceNodeKey;
+        var sourceNodeIdIndex;
         if (this.nodes[beforeId]) {
             sourceNodeKey = beforeId;
         }
-
-        for (let nodeKey in this.nodes) {
+        for (var nodeKey in this.nodes) {
             if (this.nodes.hasOwnProperty(nodeKey)) {
                 sourceNodeIdIndex = this.findNodeId(nodeKey, beforeId);
                 break;
             }
         }
-
         // got all
-
-        let targetId = beforeId;
-        const targetRootIndex = this.findRootId(targetId);
-        let targetNodeKey: string;
-        let targetNodeIdIndex: number;
-
+        var targetId = beforeId;
+        var targetRootIndex = this.findRootId(targetId);
+        var targetNodeKey;
+        var targetNodeIdIndex;
         if (this.nodes[beforeId]) {
             targetNodeKey = beforeId;
         }
-
-        for (let nodeKey in this.nodes) {
+        for (var nodeKey in this.nodes) {
             if (this.nodes.hasOwnProperty(nodeKey)) {
                 targetNodeIdIndex = this.findNodeId(nodeKey, beforeId);
                 break;
             }
         }
-
         // got all
-
         if (sourceRootIndex > -1) {
             if (targetRootIndex > -1) {
                 this.rootDelete(sourceRootIndex);
-
                 switch (direction) {
                     case Direction.BEFORE:
                         this.insertIdIntoRoot(sourceId, targetRootIndex);
@@ -179,15 +154,14 @@ export default class MultiRootIdsTree {
                         this.nodeInsertAtEnd(targetId, sourceId);
                         break;
                 }
-            } else {
+            }
+            else {
                 // moving root (source) ABOVE node (target)
-
                 // will remove one entry from roots
                 this.rootDelete(sourceRootIndex);
-
-                for (let nodeKey in this.nodes) {
+                for (var nodeKey in this.nodes) {
                     if (this.nodes.hasOwnProperty(nodeKey)) {
-                        let index = this.findNodeId(nodeKey, targetId);
+                        var index = this.findNodeId(nodeKey, targetId);
                         if (index > -1) {
                             switch (direction) {
                                 case Direction.BEFORE:
@@ -208,14 +182,14 @@ export default class MultiRootIdsTree {
                     }
                 }
             }
-        } else {
+        }
+        else {
             if (targetRootIndex > -1) {
                 // moving node (source) ABOVE root (target)
-
                 // delete source id from each node
-                for (let nodeKey in this.nodes) {
+                for (var nodeKey in this.nodes) {
                     if (this.nodes.hasOwnProperty(nodeKey)) {
-                        let index = this.findNodeId(nodeKey, sourceId);
+                        var index = this.findNodeId(nodeKey, sourceId);
                         if (index > -1) {
                             // this.nodeInsertId(nodeKey, sourceId, index);
                             this.nodeDeleteAtIndex(nodeKey, index);
@@ -223,7 +197,6 @@ export default class MultiRootIdsTree {
                         }
                     }
                 }
-
                 switch (direction) {
                     case Direction.BEFORE:
                         this.insertIdIntoRoot(sourceId, targetRootIndex);
@@ -238,24 +211,22 @@ export default class MultiRootIdsTree {
                         this.nodeInsertAtEnd(targetId, sourceId);
                         break;
                 }
-
-            } else {
+            }
+            else {
                 // moving node (source) ABOVE node (target)
-
                 // delete source id from each node
-                for (let nodeKey in this.nodes) {
+                for (var nodeKey in this.nodes) {
                     if (this.nodes.hasOwnProperty(nodeKey)) {
-                        let index = this.findNodeId(nodeKey, sourceId);
+                        var index = this.findNodeId(nodeKey, sourceId);
                         if (index > -1) {
                             this.nodeDeleteAtIndex(nodeKey, index);
                             break;
                         }
                     }
                 }
-
-                for (let nodeKey in this.nodes) {
+                for (var nodeKey in this.nodes) {
                     if (this.nodes.hasOwnProperty(nodeKey)) {
-                        let index = this.findNodeId(nodeKey, targetId);
+                        var index = this.findNodeId(nodeKey, targetId);
                         if (index > -1) {
                             switch (direction) {
                                 case Direction.BEFORE:
@@ -275,91 +246,78 @@ export default class MultiRootIdsTree {
                         }
                     }
                 }
-
             }
         }
-    }
-
-    private swapArrayElements(arr: Array<any>, indexA: number, indexB: number) {
+    };
+    MultiRootTree.prototype.swapArrayElements = function (arr, indexA, indexB) {
         var temp = arr[indexA];
         arr[indexA] = arr[indexB];
         arr[indexB] = temp;
         return arr;
     };
-
-    private rootDeleteId(id: string) {
-        let index = this.findRootId(id);
+    ;
+    MultiRootTree.prototype.rootDeleteId = function (id) {
+        var index = this.findRootId(id);
         if (index > -1) {
             this.rootDelete(index);
         }
-    }
-
-    private nodeAndSubNodesDelete(nodeKey: string) {
-        let toDeleteLater: Array<string> = [];
-        for (let i = 0; i < this.nodes[nodeKey].length; i++) {
-            let id = this.nodes[nodeKey][i];
+    };
+    MultiRootTree.prototype.nodeAndSubNodesDelete = function (nodeKey) {
+        var toDeleteLater = [];
+        for (var i = 0; i < this.nodes[nodeKey].length; i++) {
+            var id = this.nodes[nodeKey][i];
             this.nodeAndSubNodesDelete(id);
             toDeleteLater.push(nodeKey);
         }
-
         this.nodeDelete(nodeKey);
-        for (let i = 0; i < toDeleteLater.length; i++) {
+        for (var i = 0; i < toDeleteLater.length; i++) {
             this.nodeDelete(toDeleteLater[i]);
         }
-    }
-
-    private nodeRefrencesDelete(id: string) {
-        for (let nodeKey in this.nodes) {
+    };
+    MultiRootTree.prototype.nodeRefrencesDelete = function (id) {
+        for (var nodeKey in this.nodes) {
             if (this.nodes.hasOwnProperty(nodeKey)) {
-                for (let i = 0; i < this.nodes[nodeKey].length; i++) {
-                    let targetId = this.nodes[nodeKey][i];
+                for (var i = 0; i < this.nodes[nodeKey].length; i++) {
+                    var targetId = this.nodes[nodeKey][i];
                     if (targetId === id) {
                         this.nodeDeleteAtIndex(nodeKey, i);
                     }
                 }
             }
         }
-    }
-
-    private nodeDelete(nodeKey: string) {
+    };
+    MultiRootTree.prototype.nodeDelete = function (nodeKey) {
         delete this.nodes[nodeKey];
-    }
-
-
-    private findRootId(id: string): number {
+    };
+    MultiRootTree.prototype.findRootId = function (id) {
         return this.rootIds.indexOf(id);
-    }
-
-    private findNodeId(nodeKey: string, id: string): number {
+    };
+    MultiRootTree.prototype.findNodeId = function (nodeKey, id) {
         return this.nodes[nodeKey].indexOf(id);
-    }
-
-    private findNode(nodeKey: string) {
+    };
+    MultiRootTree.prototype.findNode = function (nodeKey) {
         return this.nodes[nodeKey];
-    }
-
-
-    private nodeInsertAtStart(nodeKey: string, id: string) {
+    };
+    MultiRootTree.prototype.nodeInsertAtStart = function (nodeKey, id) {
         this.nodes[nodeKey].unshift(id);
-    }
-
-    private nodeInsertAtEnd(nodeKey: string, id: string) {
+    };
+    MultiRootTree.prototype.nodeInsertAtEnd = function (nodeKey, id) {
         this.nodes[nodeKey].push(id);
-    }
-
-    private rootDelete(index: number) {
+    };
+    MultiRootTree.prototype.rootDelete = function (index) {
         this.rootIds.splice(index, 1);
-    }
-
-    private nodeDeleteAtIndex(nodeKey: string, index: number) {
+    };
+    MultiRootTree.prototype.nodeDeleteAtIndex = function (nodeKey, index) {
         this.nodes[nodeKey].splice(index, 1);
-    }
-
-    private rootInsertAtStart(id: string) {
+    };
+    MultiRootTree.prototype.rootInsertAtStart = function (id) {
         this.rootIds.unshift(id);
-    }
-
-    private rootInsertAtEnd(id: string) {
+    };
+    MultiRootTree.prototype.rootInsertAtEnd = function (id) {
         this.rootIds.push(id);
-    }
-}
+    };
+    return MultiRootTree;
+}());
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = MultiRootTree;
+//# sourceMappingURL=MultiRootTree.js.map

@@ -4,7 +4,7 @@ export declare enum Direction {
     INSIDE_AT_END = 2,
     INSIDE_AT_START = 3,
 }
-export default class MultiRootIdsTree {
+export default class MultiRootTree {
     rootIds: Array<string>;
     nodes: {
         [id: string]: Array<string>;
