@@ -1,6 +1,6 @@
 {
   "name": "typescript-collections",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "A complete, fully tested data structure library written in TypeScript.",
   "main": "./dist/lib/umd.js",
   "typings": "./dist/lib/index.d.ts",
@@ -12,7 +12,7 @@
     "umd": "node browserify-umd.js",
     "minify": "node minify-umd.js",
     "build": "npm run lint && npm run tsc && npm run umd && npm run minify",
-    "test": "mocha ./dist/test/*Test.js",
+    "test": "npm run clean && npm run tsc && mocha ./dist/test/*Test.js",
     "cover": "istanbul cover ./node_modules/mocha/bin/_mocha -- ./dist/test/*.js",
     "publish_to_npm": "npm publish",
     "all": "npm run clean && npm run build && npm run test && npm run cover"

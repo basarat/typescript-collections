@@ -19,5 +19,6 @@ export {default as Queue} from './Queue';
 export {default as PriorityQueue} from './PriorityQueue';
 export {default as Set} from './Set';
 export {default as Stack} from './Stack';
+export {default as MultiRootIdsTree} from './MultiRootIdsTree';
 import * as _util from './util';
 export var util = _util;

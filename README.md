@@ -18,6 +18,7 @@ Included data structures
 - Linked Dictionary
 - Default Dictionary - [Info](#default-dictionary)
 - Binary Search Tree
+- Multi Root Tree - [Info](#multi-root-tree)
 - Stack
 - Queue
 - Set - [Example](#example)
@@ -204,14 +205,54 @@ If a key doesn't exist, the Default Dictionary automatically creates it with `se
 
 Default Dictionary is a @michaelneu contribution which copies Python's [defaultDict](https://docs.python.org/2/library/collections.html#collections.defaultdict).
 
+Multi Root Tree
+---------------------
 
-Dev & Contrb
+It's a [forest](https://en.wikipedia.org/wiki/Tree_(graph_theory)#Forest) like data structure which must consist of unique keys. It exposes advanced forest manipulation methods.
+
+```javascript
+    let tree = new Collections.MultiRootTree();
+    tree.rootInsertId('1');
+```
+
+```json
+{
+    rootIds: ['1']
+    nodes: { '1': [] }
+}
+```
+
+Where `rootIds` are tree roots and `nodes` contains keys in order and describe keys nesting.
+
+Constraints
+
+- inserted keys MUST be unique
+
+Tree manipulation methods
+
+- insertIdIntoNode(nodeKey: string, id: string, position?: number)
+- insertIdIntoRoot(id: string, position?: number)
+- insertIdAfterId(belowId: string, insertId: string)
+- insertIdBeforeId(beforeId: string, insertId: string)
+- insertIdIntoId(insideId: string, insertId: string)
+- moveIdBeforeId(moveId: string, beforeId: string)
+- moveIdAfterId(moveId: string, afterId: string)
+- moveIdIntoId(moveId: string, insideId: string, atStart = true)
+- deleteId(id: string)
+- getRootIds() - get a copy of rootIds
+- getNodes() - get a copy of nodes
+
+ToDos:
+
+- drop unique key constraint
+
+Development and contrbutions
 --------------------
 
-Install deps & tools
+Install dependencies and tools
 `npm run install_tools`
 
-Compile, test & check coverage
+Compile, test and check coverage
 `npm run all`
 
 Supported platforms
@@ -220,7 +261,9 @@ Supported platforms
 - Every desktop and mobile browser (including IE6)
 - Node.js
 
+```text
 If it supports JavaScript, it probably supports this library.
+```
 
 Contact
 --------------------
