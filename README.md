@@ -215,7 +215,7 @@ It's a [forest](https://en.wikipedia.org/wiki/Tree_(graph_theory)#Forest) like d
     tree.rootInsertId('1');
 ```
 
-```json
+```text
 {
     rootIds: ['1']
     nodes: { '1': [] }
