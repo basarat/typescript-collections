@@ -7,10 +7,11 @@
 })(exports.Direction || (exports.Direction = {}));
 var Direction = exports.Direction;
 var MultiRootTree = (function () {
-    function MultiRootTree() {
-        // ids must be unique
-        this.rootIds = [];
-        this.nodes = {};
+    function MultiRootTree(rootIds, nodes) {
+        if (rootIds === void 0) { rootIds = []; }
+        if (nodes === void 0) { nodes = {}; }
+        this.rootIds = rootIds;
+        this.nodes = nodes;
     }
     MultiRootTree.prototype.getRootIds = function () {
         var clone = this.rootIds.slice();
@@ -24,6 +25,12 @@ var MultiRootTree = (function () {
             }
         }
         return clone;
+    };
+    MultiRootTree.prototype.getObject = function () {
+        return {
+            rootIds: this.getRootIds(),
+            nodes: this.getNodes(),
+        };
     };
     MultiRootTree.prototype.moveIdBeforeId = function (moveId, beforeId) {
         return this.moveId(moveId, beforeId, Direction.BEFORE);

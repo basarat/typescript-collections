@@ -9,10 +9,18 @@ export default class MultiRootTree {
     nodes: {
         [id: string]: Array<string>;
     };
-    constructor();
+    constructor(rootIds?: Array<string>, nodes?: {
+        [id: string]: Array<string>;
+    });
     getRootIds(): string[];
     getNodes(): {
         [id: string]: string[];
+    };
+    getObject(): {
+        rootIds: string[];
+        nodes: {
+            [id: string]: string[];
+        };
     };
     moveIdBeforeId(moveId: string, beforeId: string): void;
     moveIdAfterId(moveId: string, afterId: string): void;

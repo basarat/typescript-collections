@@ -11,10 +11,9 @@ export default class MultiRootTree {
     rootIds: Array<string>;
     nodes: { [id: string]: Array<string> };
 
-    constructor() {
-        // ids must be unique
-        this.rootIds = [];
-        this.nodes = {};
+    constructor(rootIds: Array<string> = [], nodes: { [id: string]: Array<string> } = {}) {
+        this.rootIds = rootIds;
+        this.nodes = nodes;
     }
 
     getRootIds() {
@@ -31,6 +30,13 @@ export default class MultiRootTree {
         }
 
         return clone;
+    }
+
+    getObject() {
+        return {
+            rootIds: this.getRootIds(),
+            nodes: this.getNodes(),
+        };
     }
 
     moveIdBeforeId(moveId: string, beforeId: string) {
