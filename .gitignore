@@ -81,4 +81,4 @@ temp/
 *.log
 *.tgz
 
-./dist
+/dist
