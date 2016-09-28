@@ -654,6 +654,51 @@ describe('Multi Root Tree', function () {
         });
     });
 
+
+    it('Can flatten a tree', function () {
+        tree.insertIdIntoRoot('1');
+        tree.insertIdIntoRoot('2');
+
+        tree.insertIdIntoNode('1', '1.1');
+        tree.insertIdIntoNode('1.1', '1.1.1');
+        tree.insertIdIntoNode('1.1', '1.1.2');
+
+        const nodes = tree.flatten();
+
+        expect(nodes).to.deep.equal([
+            {
+                id: '1',
+                level: 0,
+                hasParent: false,
+                childrenCount: 1,
+            },
+            {
+                id: '1.1',
+                level: 1,
+                hasParent: true,
+                childrenCount: 2,
+            },
+            {
+                id: '1.1.1',
+                level: 2,
+                hasParent: true,
+                childrenCount: 0,
+            }, {
+                id: '1.1.2',
+                level: 2,
+                hasParent: true,
+                childrenCount: 0,
+            },
+            {
+                id: '2',
+                level: 0,
+                hasParent: false,
+                childrenCount: 0,
+            },
+        ]);
+    });
+
+
 });
 
 

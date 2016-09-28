@@ -6,6 +6,13 @@ enum Direction {
     INSIDE_AT_START,
 }
 
+export interface FlatTreeNode {
+    id: string;
+    level: number;
+    hasParent: boolean;
+    childrenCount: number;
+}
+
 export default class MultiRootTree {
 
     rootIds: Array<string>;
@@ -67,6 +74,55 @@ export default class MultiRootTree {
 
     toObject() {
         return this.getObject();
+    }
+
+    flatten(): Array<FlatTreeNode> {
+        const _this = this;
+        let extraPropsObject: Array<FlatTreeNode> = [];
+
+        for (let i = 0; i < this.rootIds.length; i++) {
+            const rootId = this.rootIds[i];
+            extraPropsObject.push({
+                id: rootId,
+                level: 0,
+                hasParent: false,
+                childrenCount: undefined,
+            });
+
+            traverse(rootId, this.nodes, extraPropsObject, 0);
+        }
+
+        for (let o of extraPropsObject) {
+            o.childrenCount = countChildren(o.id);
+        }
+
+        return extraPropsObject;
+
+        function countChildren(id: string) {
+            if (!_this.nodes[id]) {
+                return 0;
+            } else {
+                const childrenCount = _this.nodes[id].length;
+                return childrenCount;
+            }
+        }
+
+        function traverse(startId: string, nodes: { [id: string]: Array<string> }, returnArray: Array<any>, level = 0) {
+            if (!startId || !nodes || !returnArray || !nodes[startId]) {
+                return;
+            }
+
+            level++;
+
+            let idsList = nodes[startId];
+            for (let i = 0; i < idsList.length; i++) {
+                let id = idsList[i];
+                returnArray.push({ id, level, hasParent: true });
+                traverse(id, nodes, returnArray, level);
+            }
+
+            level--;
+        }
     }
 
     moveIdBeforeId(moveId: string, beforeId: string) {
