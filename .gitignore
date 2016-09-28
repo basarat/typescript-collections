@@ -76,7 +76,7 @@ coverage
 .settings/
 coverage/
 node_modules
-temp/
+/temp
 /typings
 *.log
 *.tgz
