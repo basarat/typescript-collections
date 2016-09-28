@@ -1,9 +1,3 @@
-export declare enum Direction {
-    BEFORE = 0,
-    AFTER = 1,
-    INSIDE_AT_END = 2,
-    INSIDE_AT_START = 3,
-}
 export default class MultiRootTree {
     rootIds: Array<string>;
     nodes: {
@@ -12,11 +6,20 @@ export default class MultiRootTree {
     constructor(rootIds?: Array<string>, nodes?: {
         [id: string]: Array<string>;
     });
+    initRootIds(): void;
+    initNodes(): void;
+    createEmptyNodeIfNotExist(nodeKey: string): void;
     getRootIds(): string[];
     getNodes(): {
         [id: string]: string[];
     };
     getObject(): {
+        rootIds: string[];
+        nodes: {
+            [id: string]: string[];
+        };
+    };
+    toObject(): {
         rootIds: string[];
         nodes: {
             [id: string]: string[];

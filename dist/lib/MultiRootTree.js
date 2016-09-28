@@ -1,18 +1,41 @@
 "use strict";
+var Direction;
 (function (Direction) {
     Direction[Direction["BEFORE"] = 0] = "BEFORE";
     Direction[Direction["AFTER"] = 1] = "AFTER";
     Direction[Direction["INSIDE_AT_END"] = 2] = "INSIDE_AT_END";
     Direction[Direction["INSIDE_AT_START"] = 3] = "INSIDE_AT_START";
-})(exports.Direction || (exports.Direction = {}));
-var Direction = exports.Direction;
+})(Direction || (Direction = {}));
 var MultiRootTree = (function () {
     function MultiRootTree(rootIds, nodes) {
         if (rootIds === void 0) { rootIds = []; }
         if (nodes === void 0) { nodes = {}; }
         this.rootIds = rootIds;
         this.nodes = nodes;
+        this.initRootIds();
+        this.initNodes();
     }
+    MultiRootTree.prototype.initRootIds = function () {
+        for (var _i = 0, _a = this.rootIds; _i < _a.length; _i++) {
+            var rootId = _a[_i];
+            this.createEmptyNodeIfNotExist(rootId);
+        }
+    };
+    MultiRootTree.prototype.initNodes = function () {
+        for (var nodeKey in this.nodes) {
+            if (this.nodes.hasOwnProperty(nodeKey)) {
+                for (var _i = 0, _a = this.nodes[nodeKey]; _i < _a.length; _i++) {
+                    var nodeListItem = _a[_i];
+                    this.createEmptyNodeIfNotExist(nodeListItem);
+                }
+            }
+        }
+    };
+    MultiRootTree.prototype.createEmptyNodeIfNotExist = function (nodeKey) {
+        if (!this.nodes[nodeKey]) {
+            this.nodes[nodeKey] = [];
+        }
+    };
     MultiRootTree.prototype.getRootIds = function () {
         var clone = this.rootIds.slice();
         return clone;
@@ -31,6 +54,9 @@ var MultiRootTree = (function () {
             rootIds: this.getRootIds(),
             nodes: this.getNodes(),
         };
+    };
+    MultiRootTree.prototype.toObject = function () {
+        return this.getObject();
     };
     MultiRootTree.prototype.moveIdBeforeId = function (moveId, beforeId) {
         return this.moveId(moveId, beforeId, Direction.BEFORE);

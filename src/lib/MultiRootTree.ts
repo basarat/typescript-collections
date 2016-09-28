@@ -1,5 +1,5 @@
 
-export enum Direction {
+enum Direction {
     BEFORE,
     AFTER,
     INSIDE_AT_END,
@@ -14,7 +14,33 @@ export default class MultiRootTree {
     constructor(rootIds: Array<string> = [], nodes: { [id: string]: Array<string> } = {}) {
         this.rootIds = rootIds;
         this.nodes = nodes;
+
+        this.initRootIds();
+        this.initNodes();
     }
+
+    initRootIds() {
+        for (let rootId of this.rootIds) {
+            this.createEmptyNodeIfNotExist(rootId);
+        }
+    }
+
+    initNodes() {
+        for (let nodeKey in this.nodes) {
+            if (this.nodes.hasOwnProperty(nodeKey)) {
+                for (let nodeListItem of this.nodes[nodeKey]) {
+                    this.createEmptyNodeIfNotExist(nodeListItem);
+                }
+            }
+        }
+    }
+
+    createEmptyNodeIfNotExist(nodeKey: string) {
+        if (!this.nodes[nodeKey]) {
+            this.nodes[nodeKey] = [];
+        }
+    }
+
 
     getRootIds() {
         let clone = this.rootIds.slice();
@@ -37,6 +63,10 @@ export default class MultiRootTree {
             rootIds: this.getRootIds(),
             nodes: this.getNodes(),
         };
+    }
+
+    toObject() {
+        return this.getObject();
     }
 
     moveIdBeforeId(moveId: string, beforeId: string) {
