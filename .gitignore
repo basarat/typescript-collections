@@ -1,4 +1,20 @@
-.idea/
+# Compile time directories
+node_modules
+/temp
+/coverage
+/dist
+/typings
+
+# Editor configuration
+.vscode
+.settings
+.idea
+
+# Logs and compressed files
+*.log
+*.tgz
+
+# Demos
 collections.js.map
 demo/CollectionsDemo/app.js.map
 demo/packages/
@@ -71,14 +87,3 @@ coverage
 
 # node-waf configuration
 .lock-wscript
-
-.vscode/
-.settings/
-coverage/
-node_modules
-temp/
-/typings
-*.log
-*.tgz
-
-./dist
