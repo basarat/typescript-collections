@@ -256,11 +256,11 @@ export default class MultiRootTree {
         if (sourceRootIndex > -1) {
             if (targetRootIndex > -1) {
                 // moving root to root
-                console.log(`Moving ROOT to ROOT`);
-                console.log(`RootIds:`);
-                console.log(this.rootIds);
-                console.log(`TargetIndex=${targetRootIndex}, SourceIndex=${sourceRootIndex}`);
-                console.log(`TargetId=${targetId}, SourceId=${sourceId}`);
+                // console.log(`Moving ROOT to ROOT`);
+                // console.log(`RootIds:`);
+                // console.log(this.rootIds);
+                // console.log(`TargetIndex=${targetRootIndex}, SourceIndex=${sourceRootIndex}`);
+                // console.log(`TargetId=${targetId}, SourceId=${sourceId}`);
 
                 this.rootDelete(sourceRootIndex); // indexes change now
 
