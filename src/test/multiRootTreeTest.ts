@@ -280,6 +280,20 @@ describe('Multi Root Tree', function () {
         });
     });
 
+
+    it('Can move id before id (root to root) v2', function () {
+        tree.insertIdIntoRoot('1');
+        tree.insertIdIntoRoot('2');
+        tree.insertIdIntoRoot('3');
+
+        tree.moveIdBeforeId('3', '1');
+
+        expect(tree.getRootIds()).to.deep.equal(['3', '1', '2']);
+        expect(tree.getNodes()).to.deep.equal({
+            '1': [], '2': [], '3': []
+        });
+    });
+
     it('Can move id before id (root to node)', function () {
         tree.insertIdIntoRoot('1');
         tree.insertIdIntoRoot('2');
@@ -406,6 +420,54 @@ describe('Multi Root Tree', function () {
         expect(tree.getRootIds()).to.deep.equal(['3', '1', '2']);
         expect(tree.getNodes()).to.deep.equal({
             '1': [], '2': [], '3': []
+        });
+    });
+
+    it('Can move id after id (root to root) v2', function () {
+        tree.insertIdIntoRoot('1');
+        tree.insertIdIntoRoot('2');
+        tree.insertIdIntoRoot('3');
+        tree.insertIdIntoRoot('4');
+        tree.insertIdIntoRoot('5');
+        tree.insertIdIntoRoot('6');
+
+        tree.moveIdAfterId('3', '5');
+
+        expect(tree.getRootIds()).to.deep.equal(['1', '2', '4', '5', '3', '6']);
+        expect(tree.getNodes()).to.deep.equal({
+            '1': [], '2': [], '3': [], '4': [], '5': [], '6': [],
+        });
+    });
+
+    it('Can move id after id (root to root) v3', function () {
+        tree.insertIdIntoRoot('1');
+        tree.insertIdIntoRoot('2');
+        tree.insertIdIntoRoot('3');
+        tree.insertIdIntoRoot('4');
+        tree.insertIdIntoRoot('5');
+        tree.insertIdIntoRoot('6');
+
+        tree.moveIdAfterId('5', '1');
+
+        expect(tree.getRootIds()).to.deep.equal(['1', '5', '2', '3', '4', '6']);
+        expect(tree.getNodes()).to.deep.equal({
+            '1': [], '2': [], '3': [], '4': [], '5': [], '6': [],
+        });
+    });
+
+    it('Can move id after id (root to root) v3', function () {
+        tree.insertIdIntoRoot('1');
+        tree.insertIdIntoRoot('2');
+        tree.insertIdIntoRoot('3');
+        tree.insertIdIntoRoot('4');
+        tree.insertIdIntoRoot('5');
+        tree.insertIdIntoRoot('6');
+
+        tree.moveIdAfterId('1', '6');
+
+        expect(tree.getRootIds()).to.deep.equal(['2', '3', '4', '5', '6', '1']);
+        expect(tree.getNodes()).to.deep.equal({
+            '1': [], '2': [], '3': [], '4': [], '5': [], '6': [],
         });
     });
 

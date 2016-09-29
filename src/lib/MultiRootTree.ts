@@ -236,7 +236,7 @@ export default class MultiRootTree {
         // got all
 
         let targetId = beforeId;
-        const targetRootIndex = this.findRootId(targetId);
+        let targetRootIndex = this.findRootId(targetId);
         let targetNodeKey: string;
         let targetNodeIdIndex: number;
 
@@ -255,7 +255,20 @@ export default class MultiRootTree {
 
         if (sourceRootIndex > -1) {
             if (targetRootIndex > -1) {
-                this.rootDelete(sourceRootIndex);
+                // moving root to root
+                console.log(`Moving ROOT to ROOT`);
+                console.log(`RootIds:`);
+                console.log(this.rootIds);
+                console.log(`TargetIndex=${targetRootIndex}, SourceIndex=${sourceRootIndex}`);
+                console.log(`TargetId=${targetId}, SourceId=${sourceId}`);
+
+                this.rootDelete(sourceRootIndex); // indexes change now
+
+                if (targetRootIndex > sourceRootIndex) {
+                    targetRootIndex--;
+                } else {
+
+                }
 
                 switch (direction) {
                     case Direction.BEFORE:
