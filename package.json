@@ -1,6 +1,6 @@
 {
     "name": "typescript-collections",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "description": "A complete, fully tested data structure library written in TypeScript.",
     "main": "./dist/lib/umd.js",
     "jsnext:main": "dist/lib/index.js",
