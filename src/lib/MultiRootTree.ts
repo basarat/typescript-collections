@@ -141,6 +141,18 @@ export default class MultiRootTree {
         }
     }
 
+    swapRootIdWithRootId(rootId: string, withRootId: string) {
+        let leftIndex = this.findRootId(rootId);
+        let rightIndex = this.findRootId(withRootId);
+        this.swapRootPositionWithRootPosition(leftIndex, rightIndex);
+    }
+
+    swapRootPositionWithRootPosition(swapRootPosition: number, withRootPosition: number) {
+        let temp = this.rootIds[withRootPosition];
+        this.rootIds[withRootPosition] = this.rootIds[swapRootPosition];
+        this.rootIds[swapRootPosition] = temp;
+    }
+
 
     deleteId(id: string) {
         this.rootDeleteId(id);
