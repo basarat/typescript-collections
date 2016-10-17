@@ -18,7 +18,6 @@ Included data structures
 - Linked Dictionary
 - Default Dictionary - [Info](#default-dictionary)
 - Binary Search Tree
-- Multi Root Tree - [Info](#multi-root-tree)
 - Stack
 - Queue
 - Set - [Example](#example)
