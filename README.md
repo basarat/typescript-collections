@@ -205,49 +205,6 @@ If a key doesn't exist, the Default Dictionary automatically creates it with `se
 
 Default Dictionary is a @michaelneu contribution which copies Python's [defaultDict](https://docs.python.org/2/library/collections.html#collections.defaultdict).
 
-Multi Root Tree
----------------------
-
-It's a [forest](https://en.wikipedia.org/wiki/Tree_(graph_theory)#Forest) like data structure which must consist of unique keys. It exposes advanced node manipulation methods.
-
-```javascript
-import * as Collections from 'typescript-collections';
-
-let tree = new Collections.MultiRootTree();
-tree.insertIdIntoRoot('1');
-```
-
-```text
-{
-    rootIds: ['1']
-    nodes: { '1': [] }
-}
-```
-
-Where `rootIds` are tree roots and `nodes` contains keys in order and describe keys nesting.
-
-Constraints
-
-- inserted keys MUST be unique
-
-Tree manipulation methods
-
-- insertIdIntoRoot(id: string, position?: number)
-- insertIdIntoNode(nodeKey: string, id: string, position?: number)
-- insertIdAfterId(belowId: string, insertId: string)
-- insertIdBeforeId(beforeId: string, insertId: string)
-- insertIdIntoId(insideId: string, insertId: string)
-- moveIdBeforeId(moveId: string, beforeId: string)
-- moveIdAfterId(moveId: string, afterId: string)
-- moveIdIntoId(moveId: string, insideId: string, atStart = true)
-- deleteId(id: string)
-- getRootIds() - get a copy of rootIds
-- getNodes() - get a copy of nodes
-
-ToDos:
-
-- drop unique key constraint
-
 Development and contrbutions
 --------------------
 
