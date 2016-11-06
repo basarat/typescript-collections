@@ -157,8 +157,8 @@ export default class Dictionary<K, V>{
      * Returns an array of all key, value pairs in this dictionary.
      * @return {Array} an array containing all of the key, value pairs in this dictionary.
      */
-    entries(): [K,V][] {
-        const array: V[] = [];
+    entries(): [K, V][] {
+        const array: [K, V][] = [];
         for (const name in this.table) {
             if (util.has(this.table, name)) {
                 const pair: IDictionaryPair<K, V> = this.table[name];
