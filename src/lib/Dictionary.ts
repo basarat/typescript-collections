@@ -154,6 +154,21 @@ export default class Dictionary<K, V>{
     }
 
     /**
+     * Returns an array of all key, value pairs in this dictionary.
+     * @return {Array} an array containing all of the key, value pairs in this dictionary.
+     */
+    entries(): [K,V][] {
+        const array: V[] = [];
+        for (const name in this.table) {
+            if (util.has(this.table, name)) {
+                const pair: IDictionaryPair<K, V> = this.table[name];
+                array.push([pair.key, pair.value]);
+            }
+        }
+        return array;
+    }
+
+    /**
     * Executes the provided function once for each key-value pair
     * present in this dictionary.
     * @param {function(Object,Object):*} callback function to execute, it is
