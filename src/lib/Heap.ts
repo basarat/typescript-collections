@@ -3,7 +3,7 @@ import * as arrays from './arrays';
 
 export default class Heap<T> {
     /**
-     * Array used to store the elements od the heap.
+     * Array used to store the elements of the heap.
      * @type {Array.<Object>}
      * @private
      */
