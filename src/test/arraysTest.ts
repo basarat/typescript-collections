@@ -310,4 +310,16 @@ describe('Arrays',
                 expect(collections.arrays.swap(a, -1, 9)).equals(false);
             });
 
+        it('Can generate a set',
+            function() {
+                var a = [1, 2, 3, 4, 5, 6];
+                var s = a.toSet();
+                expect(collections.set.contains(1));
+                expect(collections.set.contains(2));
+                expect(collections.set.contains(3));
+                expect(collections.set.contains(4));
+                expect(collections.set.contains(5));
+                expect(collections.set.contains(6));
+            });
+
     });
