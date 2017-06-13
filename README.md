@@ -204,7 +204,7 @@ If a key doesn't exist, the Default Dictionary automatically creates it with `se
 
 Default Dictionary is a @michaelneu contribution which copies Python's [defaultDict](https://docs.python.org/2/library/collections.html#collections.defaultdict).
 
-Development and contrbutions
+Development and contributions
 --------------------
 
 Install dependencies and tools
