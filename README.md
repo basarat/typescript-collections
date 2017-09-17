@@ -7,7 +7,7 @@ This project uses TypeScript Generics so you need TS 0.9 and above.
 
 [This projects supports UMD (Universal Module Definition)](https://github.com/umdjs/umd)
 
-[![NPM](https://nodei.co/npm/typescript-collections.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/typescript-collections/)
+[![NPM](https://nodei.co/npm-dl/typescript-collections.png?height=3)](https://nodei.co/npm/typescript-collections/)
 
 Included data structures
 ---------------------
