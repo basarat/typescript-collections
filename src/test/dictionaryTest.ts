@@ -1,6 +1,6 @@
 import * as collections from '../lib/index';
 
-import assert = require('assert');
+import * as assert from 'power-assert';
 import {expect} from 'chai';
 
 describe('Dictionary',
@@ -123,11 +123,11 @@ describe('Dictionary',
                 for (var i = 0; i < 10; i++) {
                     dict.setValue(elemKeys[i], i);
                     expect(dict.containsKey(elemKeys[i])).equals(true);
-                };
+                }
                 for (var i = 0; i < 10; i++) {
                     dict.remove(elemKeys[i]);
                     expect(dict.containsKey(elemKeys[i])).equals(false);
-                };
+                }
             });
 
         it('Gives the right size',
@@ -137,7 +137,7 @@ describe('Dictionary',
                 for (var i = 0; i < 10; i++) {
                     dict.setValue(elemKeys[i], i);
                     expect(dict.size()).equals(i + 1);
-                };
+                }
 
             });
 

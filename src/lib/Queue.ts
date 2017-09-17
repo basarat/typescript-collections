@@ -2,7 +2,7 @@ import * as util from './util';
 import LinkedList from './LinkedList';
 import Heap from './Heap';
 
-export default class Queue<T>{
+export default class Queue<T> {
 
     /**
      * List containing the elements.

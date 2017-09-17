@@ -9,7 +9,6 @@
             "spaces"
         ],
         "label-position": true,
-        "label-undefined": true,
         "max-line-length": [
             true,
             140
@@ -26,8 +25,7 @@
         ],
         "no-construct": true,
         "no-debugger": true,
-        "no-duplicate-key": true,
-        "no-duplicate-variable": true,
+        "no-duplicate-variable": false,
         "no-empty": false,
         "no-eval": true,
         "no-string-literal": true,
@@ -35,7 +33,6 @@
         "no-trailing-whitespace": true,
         "no-unused-expression": true,
         "no-unused-variable": false,
-        "no-unreachable": true,
         "no-use-before-declare": true,
         "one-line": [
             true,

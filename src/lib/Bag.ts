@@ -2,7 +2,7 @@ import * as util from './util';
 import Dictionary from './Dictionary';
 import Set from './Set';
 
-export default class Bag<T>{
+export default class Bag<T> {
 
     private toStrF: (item: T) => string;
     private dictionary: Dictionary<T, any>;

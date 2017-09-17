@@ -205,9 +205,6 @@ Default Dictionary is a @michaelneu contribution which copies Python's [defaultD
 Development and contributions
 --------------------
 
-Install dependencies and tools
-`npm run install_tools`
-
 Compile, test and check coverage
 `npm run all`
 

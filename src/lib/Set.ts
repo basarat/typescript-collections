@@ -4,7 +4,7 @@ import * as arrays from './arrays';
 
 import Dictionary from './Dictionary';
 
-export default class Set<T>{
+export default class Set<T> {
     private dictionary: Dictionary<T, any>;
 
     /**

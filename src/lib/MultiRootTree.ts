@@ -402,7 +402,7 @@ export default class MultiRootTree {
         arr[indexA] = arr[indexB];
         arr[indexB] = temp;
         return arr;
-    };
+    }
 
     private rootDeleteId(id: string) {
         let index = this.findRootId(id);

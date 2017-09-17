@@ -7,7 +7,7 @@ export interface IDictionaryPair<K, V> {
     value: V;
 }
 
-export default class Dictionary<K, V>{
+export default class Dictionary<K, V> {
 
     /**
      * Object holding the key-value pairs.

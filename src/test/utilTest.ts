@@ -1,6 +1,6 @@
 import * as Collections from '../lib/index';
 
-import assert = require('assert');
+import * as assert from 'power-assert';
 import {expect} from 'chai';
 
 describe('util',
@@ -10,7 +10,7 @@ describe('util',
             constructor(public company: string, public type: string, public year: number) {
             }
             toString() {
-                // Short hand. Adds each own property 
+                // Short hand. Adds each own property
                 return Collections.util.makeString(this);
             }
         }

@@ -1,12 +1,11 @@
 {
     "name": "typescript-collections",
-    "version": "1.2.3",
+    "version": "1.2.4",
     "description": "A complete, fully tested data structure library written in TypeScript.",
     "main": "./dist/lib/umd.js",
     "jsnext:main": "dist/lib/index.js",
     "typings": "./dist/lib/index.d.ts",
     "scripts": {
-        "install_tools": "npm install && typings install",
         "clean": "rimraf ./dist",
         "lint": "tslint -c ./tslint.json ./src/**/*.ts",
         "tsc": "tsc",
@@ -50,25 +49,22 @@
     ],
     "author": "Basarat Ali Syed <bas@basarat.com> (http://basarat.com)",
     "contributors": [
-        "Tomasz Ciborski <episage>"
+        "Tomasz Ciborski <episage> (http://ciborski.com)"
     ],
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/basarat/typescript-collections/issues"
     },
     "homepage": "https://github.com/basarat/typescript-collections",
-    "dependencies": {},
     "devDependencies": {
-        "@types/assert": "0.0.29",
-        "@types/assertion-error": "^1.0.30",
-        "@types/chai": "^3.4.34",
+        "@types/chai": "^4.0.4",
         "@types/mocha": "^2.2.32",
-        "@types/node": "^6.0.46",
-        "@types/source-map-support": "^0.2.28",
-        "assert": "^1.4.1",
-        "browserify": "^13.1.0",
+        "@types/node": "^8.0.28",
+        "@types/power-assert": "^1.4.29",
+        "@types/source-map-support": "^0.4.0",
+        "browserify": "^14.4.0",
         "browserify-umdify": "^1.0.3",
-        "chai": "^3.5.0",
+        "chai": "^4.1.2",
         "glob": "^7.0.6",
         "istanbul": "^0.4.5",
         "jasmine": "^2.5.1",
@@ -78,12 +74,13 @@
         "karma-mocha": "^1.1.1",
         "karma-mocha-reporter": "^2.1.0",
         "mkdirp": "^0.5.1",
-        "mocha": "^3.0.2",
+        "mocha": "^3.5.3",
+        "power-assert": "^1.4.4",
         "rimraf": "^2.5.4",
         "source-map-support": "^0.4.2",
-        "tslint": "^3.15.1",
-        "typescript": "^1.8.10",
-        "uglify-js": "^2.7.3",
+        "tslint": "^5.7.0",
+        "typescript": "^2.5.2",
+        "uglify-js": "^3.1.1",
         "util": "^0.10.3"
     }
 }
