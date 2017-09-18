@@ -1,9 +1,10 @@
 {
     "name": "typescript-collections",
-    "version": "1.2.4",
+    "version": "1.2.5",
     "description": "A complete, fully tested data structure library written in TypeScript.",
     "main": "./dist/lib/umd.js",
-    "jsnext:main": "dist/lib/index.js",
+    "browser": "./dist/lib/index.js",
+    "jsnext:main": "./dist/lib/index.js",
     "typings": "./dist/lib/index.d.ts",
     "scripts": {
         "clean": "rimraf ./dist",
