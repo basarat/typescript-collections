@@ -165,3 +165,11 @@ export function forEach<T>(array: T[], callback: util.ILoopFunction<T>): void {
         }
     }
 }
+
+export function toSet<T>(array: T[]): string {
+    var s = new collections.Set<number>();
+    for ( let item of array ) {
+        s.add(item);
+    }
+    return s;
+}
