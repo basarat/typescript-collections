@@ -6,7 +6,7 @@ import {expect} from 'chai';
 describe('Linked List',
     function() {
 
-        var list: any = null;
+        var list: collections.LinkedList<any>;
         var elems = 100;
 
         var equals = function(a: any, b: any) {

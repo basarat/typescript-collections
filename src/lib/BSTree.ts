@@ -3,13 +3,13 @@ import Queue from './Queue';
 // Internal interface for BST
 interface BSTreeNode<T> {
     element: T;
-    leftCh: BSTreeNode<T>;
-    rightCh: BSTreeNode<T>;
-    parent: BSTreeNode<T>;
+    leftCh: BSTreeNode<T> | null;
+    rightCh: BSTreeNode<T> | null;
+    parent: BSTreeNode<T> | null;
 }
 export default class BSTree<T> {
 
-    private root: BSTreeNode<T>;
+    private root: BSTreeNode<T> | null;
     private compare: util.ICompareFunction<T>;
     private nElements: number;
     /**
@@ -170,8 +170,8 @@ export default class BSTree<T> {
      * @return {*} the minimum element of this tree or undefined if this tree is
      * is empty.
      */
-    minimum(): T {
-        if (this.isEmpty()) {
+    minimum(): T | undefined {
+        if (this.isEmpty() || this.root === null) {
             return undefined;
         }
         return this.minimumAux(this.root).element;
@@ -182,8 +182,8 @@ export default class BSTree<T> {
      * @return {*} the maximum element of this tree or undefined if this tree is
      * is empty.
      */
-    maximum(): T {
-        if (this.isEmpty()) {
+    maximum(): T | undefined {
+        if (this.isEmpty() || this.root === null) {
             return undefined;
         }
         return this.maximumAux(this.root).element;
@@ -224,8 +224,8 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private searchNode(node: BSTreeNode<T>, element: T): BSTreeNode<T> {
-        let cmp: number = null;
+    private searchNode(node: BSTreeNode<T> | null, element: T): BSTreeNode<T> | null {
+        let cmp: number = 1;
         while (node !== null && cmp !== 0) {
             cmp = this.compare(element, node.element);
             if (cmp < 0) {
@@ -240,7 +240,7 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private transplant(n1: BSTreeNode<T>, n2: BSTreeNode<T>): void {
+    private transplant(n1: BSTreeNode<T>, n2: BSTreeNode<T> | null): void {
         if (n1.parent === null) {
             this.root = n2;
         } else if (n1 === n1.parent.leftCh) {
@@ -277,7 +277,7 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private inorderTraversalAux(node: BSTreeNode<T>, callback: util.ILoopFunction<T>, signal: { stop: boolean; }): void {
+    private inorderTraversalAux(node: BSTreeNode<T> | null, callback: util.ILoopFunction<T>, signal: { stop: boolean; }): void {
         if (node === null || signal.stop) {
             return;
         }
@@ -295,13 +295,13 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private levelTraversalAux(node: BSTreeNode<T>, callback: util.ILoopFunction<T>) {
+    private levelTraversalAux(node: BSTreeNode<T> | null, callback: util.ILoopFunction<T>) {
         const queue = new Queue<BSTreeNode<T>>();
         if (node !== null) {
             queue.enqueue(node);
         }
-        while (!queue.isEmpty()) {
-            node = queue.dequeue();
+        node = queue.dequeue() || null;
+        while (node != null) {
             if (callback(node.element) === false) {
                 return;
             }
@@ -311,13 +311,14 @@ export default class BSTree<T> {
             if (node.rightCh !== null) {
                 queue.enqueue(node.rightCh);
             }
+            node = queue.dequeue() || null;
         }
     }
 
     /**
     * @private
     */
-    private preorderTraversalAux(node: BSTreeNode<T>, callback: util.ILoopFunction<T>, signal: { stop: boolean; }) {
+    private preorderTraversalAux(node: BSTreeNode<T> | null, callback: util.ILoopFunction<T>, signal: { stop: boolean; }) {
         if (node === null || signal.stop) {
             return;
         }
@@ -334,7 +335,7 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private postorderTraversalAux(node: BSTreeNode<T>, callback: util.ILoopFunction<T>, signal: { stop: boolean; }) {
+    private postorderTraversalAux(node: BSTreeNode<T> | null, callback: util.ILoopFunction<T>, signal: { stop: boolean; }) {
         if (node === null || signal.stop) {
             return;
         }
@@ -352,8 +353,10 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private minimumAux(node: BSTreeNode<T>): BSTreeNode<T> {
-        while (node.leftCh !== null) {
+    private minimumAux(node: BSTreeNode<T>): BSTreeNode<T>;
+    private minimumAux(node: BSTreeNode<T> | null): BSTreeNode<T> | null;
+    private minimumAux(node: BSTreeNode<T> | null): BSTreeNode<T> | null {
+        while (node != null && node.leftCh !== null) {
             node = node.leftCh;
         }
         return node;
@@ -362,8 +365,10 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private maximumAux(node: BSTreeNode<T>): BSTreeNode<T> {
-        while (node.rightCh !== null) {
+    private maximumAux(node: BSTreeNode<T>): BSTreeNode<T>;
+    private maximumAux(node: BSTreeNode<T> | null): BSTreeNode<T> | null;
+    private maximumAux(node: BSTreeNode<T> | null): BSTreeNode<T> | null {
+        while (node != null && node.rightCh !== null) {
             node = node.rightCh;
         }
         return node;
@@ -372,7 +377,7 @@ export default class BSTree<T> {
     /**
       * @private
       */
-    private heightAux(node: BSTreeNode<T>): number {
+    private heightAux(node: BSTreeNode<T> | null): number {
         if (node === null) {
             return -1;
         }
@@ -382,13 +387,12 @@ export default class BSTree<T> {
     /*
     * @private
     */
-    private insertNode(node: BSTreeNode<T>): BSTreeNode<T> {
+    private insertNode(node: BSTreeNode<T>): BSTreeNode<T> | null {
 
         let parent: any = null;
         let position = this.root;
-        let cmp: number = null;
         while (position !== null) {
-            cmp = this.compare(node.element, position.element);
+            const cmp = this.compare(node.element, position.element);
             if (cmp === 0) {
                 return null;
             } else if (cmp < 0) {

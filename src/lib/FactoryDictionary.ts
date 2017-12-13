@@ -55,7 +55,7 @@ export default class FactoryDictionary<K, V> extends Dictionary<K, V> {
      * if the key didn't exist yet.
      */
     setDefault(key: K, defaultValue: V): V {
-        const currentValue: V = super.getValue(key);
+        const currentValue: V | undefined = super.getValue(key);
 
         if (util.isUndefined(currentValue)) {
             this.setValue(key, defaultValue);
