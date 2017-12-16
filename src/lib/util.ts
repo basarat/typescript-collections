@@ -104,7 +104,7 @@ export function isFunction(func: any): boolean {
  * Checks if the given argument is undefined.
  * @function
  */
-export function isUndefined(obj: any): boolean {
+export function isUndefined(obj: any): obj is undefined {
     return (typeof obj) === 'undefined';
 }
 
@@ -120,8 +120,8 @@ export function isString(obj: any): boolean {
  * Reverses a compare function.
  * @function
  */
-export function reverseCompareFunction<T>(compareFunction: ICompareFunction<T>): ICompareFunction<T> {
-    if (!isFunction(compareFunction)) {
+export function reverseCompareFunction<T>(compareFunction?: ICompareFunction<T>): ICompareFunction<T> {
+    if (isUndefined(compareFunction) || !isFunction(compareFunction)) {
         return function(a, b) {
             if (a < b) {
                 return 1;

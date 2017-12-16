@@ -40,7 +40,7 @@ export default class Stack<T> {
      * @return {*} the object at the top of this stack or undefined if the
      * stack is empty.
      */
-    pop(): T {
+    pop(): T | undefined {
         return this.list.removeElementAtIndex(0);
     }
     /**
@@ -49,7 +49,7 @@ export default class Stack<T> {
      * @return {*} the object at the top of this stack or undefined if the
      * stack is empty.
      */
-    peek(): T {
+    peek(): T | undefined {
         return this.list.first();
     }
     /**
