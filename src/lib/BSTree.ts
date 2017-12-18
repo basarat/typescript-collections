@@ -7,10 +7,21 @@ interface BSTreeNode<T> {
     rightCh: BSTreeNode<T> | null;
     parent: BSTreeNode<T> | null;
 }
-export default class BSTree<T> {
 
-    private root: BSTreeNode<T> | null;
-    private compare: util.ICompareFunction<T>;
+/**
+ * General binary search tree implementation.
+ *
+ * This interface allows one to search elements using a subset of their attributes (thus the
+ * tree can be used as an index for complex objects).
+ * The attributes required to define an ordering in the tree must be defined in the type K.
+ * Any additional attribute must be defined in the type V.
+ *
+ * @see BSTree
+ */
+export class BSTreeKV<K, V extends K> {
+
+    private root: BSTreeNode<V> | null;
+    private compare: util.ICompareFunction<K>;
     private nElements: number;
     /**
      * Creates an empty binary search tree.
@@ -47,7 +58,7 @@ export default class BSTree<T> {
      * zero, or a positive integer as the first argument is less than, equal to,
      * or greater than the second.
      */
-    constructor(compareFunction?: util.ICompareFunction<T>) {
+    constructor(compareFunction?: util.ICompareFunction<K>) {
         this.root = null;
         this.compare = compareFunction || util.defaultCompare;
         this.nElements = 0;
@@ -58,7 +69,7 @@ export default class BSTree<T> {
      * @param {Object} element the element to insert.
      * @return {boolean} true if this tree did not already contain the specified element.
      */
-    add(element: T): boolean {
+    add(element: V): boolean {
         if (util.isUndefined(element)) {
             return false;
         }
@@ -100,7 +111,7 @@ export default class BSTree<T> {
      * @return {boolean} true if this tree contains the specified element,
      * false otherwise.
      */
-    contains(element: T): boolean {
+    contains(element: K): boolean {
         if (util.isUndefined(element)) {
             return false;
         }
@@ -108,10 +119,23 @@ export default class BSTree<T> {
     }
 
     /**
+     * Looks for the value with the provided search key.
+     * @param {Object} element The key to look for
+     * @return {Object} The value found or undefined if it was not found.
+     */
+    search(element: K): V | undefined {
+        const ret = this.searchNode(this.root, element);
+        if (ret === null) {
+            return undefined;
+        }
+        return ret.element;
+    }
+
+    /**
      * Removes the specified element from this tree if it is present.
      * @return {boolean} true if this tree contained the specified element.
      */
-    remove(element: T): boolean {
+    remove(element: K): boolean {
         const node = this.searchNode(this.root, element);
         if (node === null) {
             return false;
@@ -127,7 +151,7 @@ export default class BSTree<T> {
      * @param {function(Object):*} callback function to execute, it is invoked with one
      * argument: the element value, to break the iteration you can optionally return false.
      */
-    inorderTraversal(callback: util.ILoopFunction<T>): void {
+    inorderTraversal(callback: util.ILoopFunction<V>): void {
         this.inorderTraversalAux(this.root, callback, {
             stop: false
         });
@@ -138,7 +162,7 @@ export default class BSTree<T> {
      * @param {function(Object):*} callback function to execute, it is invoked with one
      * argument: the element value, to break the iteration you can optionally return false.
      */
-    preorderTraversal(callback: util.ILoopFunction<T>): void {
+    preorderTraversal(callback: util.ILoopFunction<V>): void {
         this.preorderTraversalAux(this.root, callback, {
             stop: false
         });
@@ -149,7 +173,7 @@ export default class BSTree<T> {
      * @param {function(Object):*} callback function to execute, it is invoked with one
      * argument: the element value, to break the iteration you can optionally return false.
      */
-    postorderTraversal(callback: util.ILoopFunction<T>): void {
+    postorderTraversal(callback: util.ILoopFunction<V>): void {
         this.postorderTraversalAux(this.root, callback, {
             stop: false
         });
@@ -161,7 +185,7 @@ export default class BSTree<T> {
      * @param {function(Object):*} callback function to execute, it is invoked with one
      * argument: the element value, to break the iteration you can optionally return false.
      */
-    levelTraversal(callback: util.ILoopFunction<T>): void {
+    levelTraversal(callback: util.ILoopFunction<V>): void {
         this.levelTraversalAux(this.root, callback);
     }
 
@@ -170,7 +194,7 @@ export default class BSTree<T> {
      * @return {*} the minimum element of this tree or undefined if this tree is
      * is empty.
      */
-    minimum(): T | undefined {
+    minimum(): V | undefined {
         if (this.isEmpty() || this.root === null) {
             return undefined;
         }
@@ -182,7 +206,7 @@ export default class BSTree<T> {
      * @return {*} the maximum element of this tree or undefined if this tree is
      * is empty.
      */
-    maximum(): T | undefined {
+    maximum(): V | undefined {
         if (this.isEmpty() || this.root === null) {
             return undefined;
         }
@@ -196,7 +220,7 @@ export default class BSTree<T> {
      * invoked with one argument: the element value, to break the iteration you can
      * optionally return false.
      */
-    forEach(callback: util.ILoopFunction<T>): void {
+    forEach(callback: util.ILoopFunction<V>): void {
         this.inorderTraversal(callback);
     }
 
@@ -204,9 +228,9 @@ export default class BSTree<T> {
      * Returns an array containing all of the elements in this tree in in-order.
      * @return {Array} an array containing all of the elements in this tree in in-order.
      */
-    toArray(): T[] {
-        const array: Array<T> = [];
-        this.inorderTraversal(function(element: T): boolean {
+    toArray(): V[] {
+        const array: Array<V> = [];
+        this.inorderTraversal(function(element: V): boolean {
             array.push(element);
             return true;
         });
@@ -224,7 +248,7 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private searchNode(node: BSTreeNode<T> | null, element: T): BSTreeNode<T> | null {
+    private searchNode(node: BSTreeNode<V> | null, element: K): BSTreeNode<V> | null {
         let cmp: number = 1;
         while (node !== null && cmp !== 0) {
             cmp = this.compare(element, node.element);
@@ -240,7 +264,7 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private transplant(n1: BSTreeNode<T>, n2: BSTreeNode<T> | null): void {
+    private transplant(n1: BSTreeNode<V>, n2: BSTreeNode<V> | null): void {
         if (n1.parent === null) {
             this.root = n2;
         } else if (n1 === n1.parent.leftCh) {
@@ -256,7 +280,7 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private removeNode(node: BSTreeNode<T>): void {
+    private removeNode(node: BSTreeNode<V>): void {
         if (node.leftCh === null) {
             this.transplant(node, node.rightCh);
         } else if (node.rightCh === null) {
@@ -277,7 +301,7 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private inorderTraversalAux(node: BSTreeNode<T> | null, callback: util.ILoopFunction<T>, signal: { stop: boolean; }): void {
+    private inorderTraversalAux(node: BSTreeNode<V> | null, callback: util.ILoopFunction<V>, signal: { stop: boolean; }): void {
         if (node === null || signal.stop) {
             return;
         }
@@ -295,8 +319,8 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private levelTraversalAux(node: BSTreeNode<T> | null, callback: util.ILoopFunction<T>) {
-        const queue = new Queue<BSTreeNode<T>>();
+    private levelTraversalAux(node: BSTreeNode<V> | null, callback: util.ILoopFunction<V>) {
+        const queue = new Queue<BSTreeNode<V>>();
         if (node !== null) {
             queue.enqueue(node);
         }
@@ -318,7 +342,7 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private preorderTraversalAux(node: BSTreeNode<T> | null, callback: util.ILoopFunction<T>, signal: { stop: boolean; }) {
+    private preorderTraversalAux(node: BSTreeNode<V> | null, callback: util.ILoopFunction<V>, signal: { stop: boolean; }) {
         if (node === null || signal.stop) {
             return;
         }
@@ -335,7 +359,7 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private postorderTraversalAux(node: BSTreeNode<T> | null, callback: util.ILoopFunction<T>, signal: { stop: boolean; }) {
+    private postorderTraversalAux(node: BSTreeNode<V> | null, callback: util.ILoopFunction<V>, signal: { stop: boolean; }) {
         if (node === null || signal.stop) {
             return;
         }
@@ -353,9 +377,9 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private minimumAux(node: BSTreeNode<T>): BSTreeNode<T>;
-    private minimumAux(node: BSTreeNode<T> | null): BSTreeNode<T> | null;
-    private minimumAux(node: BSTreeNode<T> | null): BSTreeNode<T> | null {
+    private minimumAux(node: BSTreeNode<V>): BSTreeNode<V>;
+    private minimumAux(node: BSTreeNode<V> | null): BSTreeNode<V> | null;
+    private minimumAux(node: BSTreeNode<V> | null): BSTreeNode<V> | null {
         while (node != null && node.leftCh !== null) {
             node = node.leftCh;
         }
@@ -365,9 +389,9 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private maximumAux(node: BSTreeNode<T>): BSTreeNode<T>;
-    private maximumAux(node: BSTreeNode<T> | null): BSTreeNode<T> | null;
-    private maximumAux(node: BSTreeNode<T> | null): BSTreeNode<T> | null {
+    private maximumAux(node: BSTreeNode<V>): BSTreeNode<V>;
+    private maximumAux(node: BSTreeNode<V> | null): BSTreeNode<V> | null;
+    private maximumAux(node: BSTreeNode<V> | null): BSTreeNode<V> | null {
         while (node != null && node.rightCh !== null) {
             node = node.rightCh;
         }
@@ -377,7 +401,7 @@ export default class BSTree<T> {
     /**
       * @private
       */
-    private heightAux(node: BSTreeNode<T> | null): number {
+    private heightAux(node: BSTreeNode<V> | null): number {
         if (node === null) {
             return -1;
         }
@@ -387,7 +411,7 @@ export default class BSTree<T> {
     /*
     * @private
     */
-    private insertNode(node: BSTreeNode<T>): BSTreeNode<T> | null {
+    private insertNode(node: BSTreeNode<V>): BSTreeNode<V> | null {
 
         let parent: any = null;
         let position = this.root;
@@ -418,7 +442,7 @@ export default class BSTree<T> {
     /**
     * @private
     */
-    private createNode(element: T): BSTreeNode<T> {
+    private createNode(element: V): BSTreeNode<V> {
         return {
             element: element,
             leftCh: null,
@@ -427,4 +451,22 @@ export default class BSTree<T> {
         };
     }
 
+}
+
+/**
+ * Special-case of the binary search tree in which the search key is equal to the element type.
+ * This definition is suitable when the element type can not be split between what defines its order
+ * and what does not (eg. primitive types as opposed to indexed records).
+ *
+ * The table below shows some use-case examples for both interfaces:
+ *
+ *           element type              |  most suitable interface
+ * ------------------------------------|----------------------------
+ *    number                           |  BSTree<number>
+ *    string                           |  BSTree<string>
+ * { order: number, data: string }     |  BSTreeKV<{order: number}, {order: number, data: string}>
+ *
+ * @see BSTreeKV
+ */
+export default class BSTree<T> extends BSTreeKV<T, T> {
 }
