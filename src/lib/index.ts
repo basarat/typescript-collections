@@ -7,7 +7,7 @@
 import * as _arrays from './arrays';
 export var arrays = _arrays;
 export {default as Bag} from './Bag';
-export {default as BSTree} from './BSTree';
+export {default as BSTree, BSTreeKV} from './BSTree';
 export {default as Dictionary} from './Dictionary';
 export {default as Heap} from './Heap';
 export {default as LinkedDictionary} from './LinkedDictionary';
