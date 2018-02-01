@@ -3,8 +3,14 @@ var UglifyJS = require("uglify-js");
 var util = require("util");
 var packageJson = require("./package.json");
 
-var distInFile = "./dist/lib/umd.js";
-var distOutFileUnversioned = "./dist/lib/umd.min.js";
+var inputFilePath = "./dist/lib/umd.js";
+var outputFilePath = "./dist/lib/umd.min.js";
 
-var result = UglifyJS.minify(distInFile, { mangle: true });
-fs.writeFileSync(distOutFileUnversioned, result.code, { encoding: "utf-8" });
+var code = fs.readFileSync(inputFilePath, { encoding: "utf-8" });
+var result = UglifyJS.minify(code);
+if (result.error) {
+    console.log('Error during minification: ');
+    console.log(result)
+    throw result.error;
+}
+fs.writeFileSync(outputFilePath, result.code, { encoding: "utf-8" });
