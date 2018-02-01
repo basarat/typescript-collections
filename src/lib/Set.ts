@@ -5,7 +5,13 @@ import * as arrays from './arrays';
 import Dictionary from './Dictionary';
 
 export default class Set<T> {
-    private dictionary: Dictionary<T, any>;
+
+    /**
+     * Dictionary key and value holds the elements in the set.
+     * @type {Object}
+     * @protected
+     */
+    protected dictionary: Dictionary<T, any>;
 
     /**
      * Creates an empty set.
