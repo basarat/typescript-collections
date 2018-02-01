@@ -1,6 +1,6 @@
 {
     "name": "typescript-collections",
-    "version": "1.2.5",
+    "version": "1.3.0",
     "description": "A complete, fully tested data structure library written in TypeScript.",
     "main": "./dist/lib/umd.js",
     "browser": "./dist/lib/index.js",
@@ -38,6 +38,8 @@
         "binary",
         "search",
         "tree",
+        "key",
+        "value",
         "stack",
         "queue",
         "set",
