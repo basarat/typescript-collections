@@ -8,8 +8,8 @@ import * as util from './util';
  * the 'unlink' function defined.
  */
 class LinkedDictionaryPair<K, V> implements IDictionaryPair<K, V> {
-    prev: LinkedDictionaryPair<K, V>;
-    next: LinkedDictionaryPair<K, V>;
+    prev: LinkedDictionaryPair<K, V> | HeadOrTailLinkedDictionaryPair<K, V>;
+    next: LinkedDictionaryPair<K, V> | HeadOrTailLinkedDictionaryPair<K, V>;
 
     constructor(public key: K, public value: V) { }
 
@@ -19,14 +19,35 @@ class LinkedDictionaryPair<K, V> implements IDictionaryPair<K, V> {
     }
 }
 
+/**
+ * The head and tail elements of the list have null key and value properties but they
+ * usually link to normal nodes.
+ */
+class HeadOrTailLinkedDictionaryPair<K, V> implements IDictionaryPair<null, null> {
+    prev: LinkedDictionaryPair<K, V> | HeadOrTailLinkedDictionaryPair<K, V>;
+    next: LinkedDictionaryPair<K, V> | HeadOrTailLinkedDictionaryPair<K, V>;
+    key: null = null;
+    value: null = null;
+
+    unlink() {
+        this.prev.next = this.next;
+        this.next.prev = this.prev;
+    }
+}
+
+function isHeadOrTailLinkedDictionaryPair<K, V>(p: HeadOrTailLinkedDictionaryPair<K, V> | LinkedDictionaryPair<K, V>)
+        : p is HeadOrTailLinkedDictionaryPair<K, V> {
+    return p.next === null;
+}
+
 export default class LinkedDictionary<K, V> extends Dictionary<K, V> {
-    private head: LinkedDictionaryPair<K, V>; // Head Identifier of the list.  holds no Key or Value
-    private tail: LinkedDictionaryPair<K, V>; // Tail Identifier of the list.  holds no Key or Value
+    private head: HeadOrTailLinkedDictionaryPair<K, V>; // Head Identifier of the list.  holds no Key or Value
+    private tail: HeadOrTailLinkedDictionaryPair<K, V>; // Tail Identifier of the list.  holds no Key or Value
 
     constructor(toStrFunction?: (key: K) => string) {
         super(toStrFunction);
-        this.head = new LinkedDictionaryPair(null, null);
-        this.tail = new LinkedDictionaryPair(null, null);
+        this.head = new HeadOrTailLinkedDictionaryPair();
+        this.tail = new HeadOrTailLinkedDictionaryPair();
         this.head.next = this.tail;
         this.tail.prev = this.head;
     }
@@ -47,7 +68,7 @@ export default class LinkedDictionary<K, V> extends Dictionary<K, V> {
     /**
      * Retrieves a linked dictionary from the table internally
      */
-    private getLinkedDictionaryPair(key: K): LinkedDictionaryPair<K, V> {
+    private getLinkedDictionaryPair(key: K): LinkedDictionaryPair<K, V> | undefined {
         if (util.isUndefined(key)) {
             return undefined;
         }
@@ -63,7 +84,7 @@ export default class LinkedDictionary<K, V> extends Dictionary<K, V> {
      * @return {*} the value to which this dictionary maps the specified key or
      * undefined if the map contains no mapping for this key.
      */
-    getValue(key: K): V {
+    getValue(key: K): V | undefined {
         const pair = this.getLinkedDictionaryPair(key);
         if (!util.isUndefined(pair)) {
             return pair.value;
@@ -80,7 +101,7 @@ export default class LinkedDictionary<K, V> extends Dictionary<K, V> {
      * @return {*} previous value associated with specified key, or undefined if
      * there was no mapping for key.
      */
-    remove(key: K): V {
+    remove(key: K): V | undefined {
         const pair = this.getLinkedDictionaryPair(key);
         if (!util.isUndefined(pair)) {
             super.remove(key); // This will remove it from the table
@@ -141,7 +162,7 @@ export default class LinkedDictionary<K, V> extends Dictionary<K, V> {
      * @return {*} previous value associated with the specified key, or undefined if
      * there was no mapping for the key or if the key/value are undefined.
      */
-    setValue(key: K, value: V): V {
+    setValue(key: K, value: V): V | undefined {
 
         if (util.isUndefined(key) || util.isUndefined(value)) {
             return undefined;
@@ -206,7 +227,7 @@ export default class LinkedDictionary<K, V> extends Dictionary<K, V> {
     */
     forEach(callback: (key: K, value: V) => any): void {
         let crawlNode = this.head.next;
-        while (crawlNode.next != null) {
+        while (!isHeadOrTailLinkedDictionaryPair(crawlNode)) {
             const ret = callback(crawlNode.key, crawlNode.value);
             if (ret === false) {
                 return;

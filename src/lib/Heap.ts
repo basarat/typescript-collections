@@ -152,7 +152,7 @@ export default class Heap<T> {
      * @return {*} The value at the root of the heap. Returns undefined if the
      * heap is empty.
      */
-    peek(): T {
+    peek(): T | undefined {
 
         if (this.data.length > 0) {
             return this.data[0];
@@ -167,7 +167,7 @@ export default class Heap<T> {
      */
     add(element: T): boolean {
         if (collections.isUndefined(element)) {
-            return undefined;
+            return false;
         }
         this.data.push(element);
         this.siftUp(this.data.length - 1);
@@ -179,7 +179,7 @@ export default class Heap<T> {
      * @return {*} The value removed from the root of the heap. Returns
      * undefined if the heap is empty.
      */
-    removeRoot(): T {
+    removeRoot(): T | undefined {
 
         if (this.data.length > 0) {
             const obj = this.data[0];

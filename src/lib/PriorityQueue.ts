@@ -55,7 +55,7 @@ export default class PriorityQueue<T> {
      * @return {*} the the highest priority element of this queue,
      *  or undefined if this queue is empty.
      */
-    dequeue(): T {
+    dequeue(): T | undefined {
         if (this.heap.size() !== 0) {
             const el = this.heap.peek();
             this.heap.removeRoot();
@@ -68,7 +68,7 @@ export default class PriorityQueue<T> {
      * Retrieves, but does not remove, the highest priority element of this queue.
      * @return {*} the highest priority element of this queue, or undefined if this queue is empty.
      */
-    peek(): T {
+    peek(): T | undefined {
         return this.heap.peek();
     }
 
