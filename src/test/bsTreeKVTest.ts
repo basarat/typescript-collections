@@ -8,7 +8,7 @@ import {expect} from 'chai';
    This test suite focuses on the correctness of the type interface of BSTreeKV.
    The behavior of the class is asserted in bsTreeTest.ts
 */
-describe('Binary Search Tree - general form',
+describe('Binary Search Tree for Key-Value pairs',
     function() {
 
         type K = {
