@@ -215,17 +215,4 @@ export default class Dictionary<K, V> {
         });
         return toret + '\n}';
     }
-
-    /**
-     * Converts dictionary mappings to JSON string.
-     * @param keyToStringConverter The function that should return a string from a key. This is optional.
-     */
-    toJSON(keyToStringConverter?: (key: K) => string): string {
-        const jsonObject: any = {};
-        this.forEach((k, v) => {
-            const stringConverter = keyToStringConverter || String;
-            jsonObject[stringConverter(k)] = v;
-        });
-        return JSON.stringify(jsonObject);
-    }
 } // End of dictionary
