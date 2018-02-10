@@ -1,8 +1,11 @@
+"use strict";
 /// <reference path="../../collections.ts" />
+exports.__esModule = true;
+var collections = require("../../dist/lib/index");
 ///////////////////////////////////Dictionary 
 console.log("------");
 console.log("Dictionary demo");
-var Person = (function () {
+var Person = /** @class */ (function () {
     function Person(name, yearOfBirth, city) {
         this.name = name;
         this.yearOfBirth = yearOfBirth;
@@ -12,8 +15,8 @@ var Person = (function () {
         return this.name + "-" + this.yearOfBirth; // City is not a part of the key. 
     };
     return Person;
-})();
-var Car = (function () {
+}());
+var Car = /** @class */ (function () {
     function Car(company, type, year) {
         this.company = company;
         this.type = type;
@@ -24,11 +27,12 @@ var Car = (function () {
         return collections.makeString(this);
     };
     return Car;
-})();
+}());
 var dict = new collections.Dictionary();
 dict.setValue(new Person("john", 1970, "melbourne"), new Car("honda", "city", 2002));
 dict.setValue(new Person("gavin", 1984), new Car("ferrari", "F50", 2006));
 console.log("Orig");
+console.log(dict.toJSON());
 console.log(dict);
 // Changes the same john, since city is not part of key 
 dict.setValue(new Person("john", 1970, "sydney"), new Car("honda", "accord", 2006));
@@ -101,4 +105,3 @@ ll.add(456);
 console.log(ll);
 //console.log("------");
 //console.log("PriorityQueue demo"); 
-//# sourceMappingURL=app.js.map

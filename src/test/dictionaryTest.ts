@@ -1,10 +1,10 @@
 import * as collections from '../lib/index';
 
 import * as assert from 'power-assert';
-import {expect} from 'chai';
+import { expect } from 'chai';
 
 describe('Dictionary',
-    function() {
+    function () {
 
         var dict: any = null;
         var elems = 100;
@@ -17,12 +17,12 @@ describe('Dictionary',
         elemKeys[4] = '__proto__';
         elemKeys[6] = '';
 
-        beforeEach(function() {
+        beforeEach(function () {
             dict = new collections.Dictionary();
         });
 
         it('Maps keys to values with string keys',
-            function() {
+            function () {
 
                 expect(dict.getValue('sd')).equals(undefined);
 
@@ -46,7 +46,7 @@ describe('Dictionary',
             });
 
         it('Maps keys to values with number keys',
-            function() {
+            function () {
 
                 // test with number keys
                 for (var i = 0; i < elems; i++) {
@@ -59,9 +59,9 @@ describe('Dictionary',
             });
 
         it('Maps keys to values with custom keys',
-            function() {
+            function () {
 
-                var ts = function(obj: any) {
+                var ts = function (obj: any) {
                     return obj.s;
                 };
                 dict = new collections.Dictionary(ts);
@@ -81,7 +81,7 @@ describe('Dictionary',
             });
 
         it('Removes existing elements from the dictionary',
-            function() {
+            function () {
 
                 expect(dict.remove('1')).equals(undefined);
                 for (var i = 0; i < elems; i++) {
@@ -98,7 +98,7 @@ describe('Dictionary',
             });
 
         it('An empty dictionary is empty',
-            function() {
+            function () {
 
                 expect(dict.isEmpty()).equals(true);
                 dict.setValue('1', 1);
@@ -108,7 +108,7 @@ describe('Dictionary',
             });
 
         it('Clear removes all elements',
-            function() {
+            function () {
                 dict.clear();
                 dict.setValue(1, 1);
                 dict.clear();
@@ -117,7 +117,7 @@ describe('Dictionary',
             });
 
         it('Contains existing keys',
-            function() {
+            function () {
 
                 expect(dict.containsKey(0)).equals(false);
                 for (var i = 0; i < 10; i++) {
@@ -131,7 +131,7 @@ describe('Dictionary',
             });
 
         it('Gives the right size',
-            function() {
+            function () {
 
                 expect(dict.size()).equals(0);
                 for (var i = 0; i < 10; i++) {
@@ -142,7 +142,7 @@ describe('Dictionary',
             });
 
         it('Gives all the stored keys',
-            function() {
+            function () {
                 var k: any = [];
                 for (var i = 0; i < elems; i++) {
                     var keys = dict.keys();
@@ -155,7 +155,7 @@ describe('Dictionary',
             });
 
         it('Gives all the stored values',
-            function() {
+            function () {
                 var v: any = [];
                 for (var i = 0; i < elems; i++) {
                     var values = dict.values();
@@ -168,13 +168,13 @@ describe('Dictionary',
             });
 
         it('For each gives all the pairs',
-            function() {
+            function () {
                 for (var i = 0; i < elems; i++) {
                     dict.setValue(elemKeys[i], i);
                 }
                 var keys = dict.keys();
                 var values = dict.values();
-                dict.forEach(function(k: any, v: any) {
+                dict.forEach(function (k: any, v: any) {
                     expect(collections.arrays.remove(keys, k)).equals(true);
                     expect(collections.arrays.remove(values, v)).equals(true);
                 });
@@ -184,16 +184,46 @@ describe('Dictionary',
 
 
         it('For each can be interrupted',
-            function() {
+            function () {
                 for (var i = 0; i < elems; i++) {
                     dict.setValue(elemKeys[i], i);
                 }
                 var t = 0;
-                dict.forEach(function(k: any, v: any) {
+                dict.forEach(function (k: any, v: any) {
                     t++;
                     return false;
                 });
                 expect(t).equals(1);
+            });
+
+        it('The result of toJSON() should have every element',
+            function () {
+                dict.setValue('key', 'value');
+                dict.setValue('sample', 'value');
+
+                const json = dict.toJSON();
+                const parsedObject = JSON.parse(json);
+
+                Object.keys(parsedObject).forEach((key) => {
+                    expect(dict.containsKey(key)).equals(true);
+                });
+
+                expect(Object.keys(parsedObject).length).equals(dict.size());
+            });
+
+        it('toJSON() should also work with custom key to string converter',
+            function () {
+                dict.setValue('key', 'value');
+                dict.setValue('sample', 'value');
+
+                const json = dict.toJSON((key: string) => 'converted' + key);
+                const parsedObject = JSON.parse(json);
+
+                Object.keys(parsedObject).forEach((key) => {
+                    expect(dict.containsKey(key.substring('converted'.length))).equals(true);
+                });
+
+                expect(Object.keys(parsedObject).length).equals(dict.size());
             });
 
     });

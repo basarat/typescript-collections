@@ -1,5 +1,7 @@
 /// <reference path="../../collections.ts" />
 
+import * as collections from '../../dist/lib/index';
+
 ///////////////////////////////////Dictionary 
 console.log("------");
 console.log("Dictionary demo");
@@ -24,6 +26,7 @@ var dict = new collections.Dictionary<Person, Car>();
 dict.setValue(new Person("john", 1970,"melbourne"), new Car("honda", "city", 2002));
 dict.setValue(new Person("gavin", 1984), new Car("ferrari", "F50", 2006));
 console.log("Orig");
+console.log(dict.toJSON());
 console.log(dict);
 
 // Changes the same john, since city is not part of key 
