@@ -86,7 +86,7 @@ export default class MultiRootTree {
                 id: rootId,
                 level: 0,
                 hasParent: false,
-                childrenCount: undefined,
+                childrenCount: 0,
             });
 
             traverse(rootId, this.nodes, extraPropsObject, 0);
@@ -402,7 +402,7 @@ export default class MultiRootTree {
         arr[indexA] = arr[indexB];
         arr[indexB] = temp;
         return arr;
-    };
+    }
 
     private rootDeleteId(id: string) {
         let index = this.findRootId(id);

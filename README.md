@@ -7,7 +7,7 @@ This project uses TypeScript Generics so you need TS 0.9 and above.
 
 [This projects supports UMD (Universal Module Definition)](https://github.com/umdjs/umd)
 
-![typescript-collections downloads](https://nodei.co/npm-dl/typescript-collections.png)
+[![NPM](https://nodei.co/npm-dl/typescript-collections.png?height=3)](https://nodei.co/npm/typescript-collections/)
 
 Included data structures
 ---------------------
@@ -18,6 +18,7 @@ Included data structures
 - Linked Dictionary
 - Default Dictionary - [Info](#default-dictionary)
 - Binary Search Tree
+- Binary Search Tree for Key-Value pairs
 - Stack
 - Queue
 - Set - [Example](#example)
@@ -84,8 +85,6 @@ Typings resolution
 -------------------
 
 Remember to set `"moduleResolution": "node"`, so TypeScript compiler can resolve typings in the `node_modules/typescript-collections` directory.
-
-![](http://i30.photobucket.com/albums/c316/Tilosag/Screen%20Shot%202016-04-08%20at%2015.55.30.png)
 
 In browser usage
 -------------------
@@ -204,11 +203,8 @@ If a key doesn't exist, the Default Dictionary automatically creates it with `se
 
 Default Dictionary is a @michaelneu contribution which copies Python's [defaultDict](https://docs.python.org/2/library/collections.html#collections.defaultdict).
 
-Development and contrbutions
+Development and contributions
 --------------------
-
-Install dependencies and tools
-`npm run install_tools`
 
 Compile, test and check coverage
 `npm run all`

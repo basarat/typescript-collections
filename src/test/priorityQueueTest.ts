@@ -1,6 +1,6 @@
 import * as collections from '../lib/index';
 
-import assert = require('assert');
+import * as assert from 'power-assert';
 import {expect} from 'chai';
 
 describe('Priority Queue',

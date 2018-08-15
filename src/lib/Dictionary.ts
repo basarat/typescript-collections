@@ -7,7 +7,7 @@ export interface IDictionaryPair<K, V> {
     value: V;
 }
 
-export default class Dictionary<K, V>{
+export default class Dictionary<K, V> {
 
     /**
      * Object holding the key-value pairs.
@@ -64,7 +64,7 @@ export default class Dictionary<K, V>{
      * @return {*} the value to which this dictionary maps the specified key or
      * undefined if the map contains no mapping for this key.
      */
-    getValue(key: K): V {
+    getValue(key: K): V | undefined {
         const pair: IDictionaryPair<K, V> = this.table['$' + this.toStr(key)];
         if (util.isUndefined(pair)) {
             return undefined;
@@ -83,13 +83,13 @@ export default class Dictionary<K, V>{
      * @return {*} previous value associated with the specified key, or undefined if
      * there was no mapping for the key or if the key/value are undefined.
      */
-    setValue(key: K, value: V): V {
+    setValue(key: K, value: V): V | undefined {
 
         if (util.isUndefined(key) || util.isUndefined(value)) {
             return undefined;
         }
 
-        let ret: V;
+        let ret: V | undefined;
         const k = '$' + this.toStr(key);
         const previousElement: IDictionaryPair<K, V> = this.table[k];
         if (util.isUndefined(previousElement)) {
@@ -112,7 +112,7 @@ export default class Dictionary<K, V>{
      * @return {*} previous value associated with specified key, or undefined if
      * there was no mapping for key.
      */
-    remove(key: K): V {
+    remove(key: K): V | undefined {
         const k = '$' + this.toStr(key);
         const previousElement: IDictionaryPair<K, V> = this.table[k];
         if (!util.isUndefined(previousElement)) {

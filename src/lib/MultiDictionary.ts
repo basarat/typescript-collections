@@ -81,11 +81,11 @@ export default class MultiDictionary<K, V> {
         if (util.isUndefined(key) || util.isUndefined(value)) {
             return false;
         }
-        if (!this.containsKey(key)) {
+        const array = this.dict.getValue(key);
+        if (util.isUndefined(array)) {
             this.dict.setValue(key, [value]);
             return true;
         }
-        const array = this.dict.getValue(key);
         if (!this.allowDuplicate) {
             if (arrays.contains(array, value, this.equalsF)) {
                 return false;
@@ -112,7 +112,7 @@ export default class MultiDictionary<K, V> {
             return !util.isUndefined(v);
         }
         const array = this.dict.getValue(key);
-        if (arrays.remove(array, value, this.equalsF)) {
+        if (!util.isUndefined(array) && arrays.remove(array, value, this.equalsF)) {
             if (array.length === 0) {
                 this.dict.remove(key);
             }

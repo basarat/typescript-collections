@@ -1,6 +1,6 @@
 import * as collections from '../lib/index';
 
-import assert = require('assert');
+import * as assert from 'power-assert';
 import {expect} from 'chai';
 
 describe('Arrays',
@@ -267,10 +267,10 @@ describe('Arrays',
                     a.push(i);
                 }
 
-                var i = 0;
+                var j = 0;
                 collections.arrays.forEach(a, function(e) {
-                    expect(e).equals(i);
-                    i++;
+                    expect(e).equals(j);
+                    j++;
                 });
             });
 

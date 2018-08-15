@@ -2,7 +2,7 @@ import * as util from './util';
 import LinkedList from './LinkedList';
 import Heap from './Heap';
 
-export default class Queue<T>{
+export default class Queue<T> {
 
     /**
      * List containing the elements.
@@ -43,7 +43,7 @@ export default class Queue<T>{
      * Retrieves and removes the head of this queue.
      * @return {*} the head of this queue, or undefined if this queue is empty.
      */
-    dequeue(): T {
+    dequeue(): T | undefined {
         if (this.list.size() !== 0) {
             const el = this.list.first();
             this.list.removeElementAtIndex(0);
@@ -55,7 +55,7 @@ export default class Queue<T>{
      * Retrieves, but does not remove, the head of this queue.
      * @return {*} the head of this queue, or undefined if this queue is empty.
      */
-    peek(): T {
+    peek(): T | undefined {
 
         if (this.list.size() !== 0) {
             return this.list.first();

@@ -1,12 +1,15 @@
 import * as collections from '../lib/index';
 
-import assert = require('assert');
+import * as assert from 'power-assert';
 import {expect} from 'chai';
 
 describe('Binary Search Tree',
     function() {
 
-        var tree: any = null;
+        // The type of elements in the tested data structure.
+        type T = string|number|null|undefined;
+
+        var tree: collections.BSTree<T>;
 
         beforeEach(function() {
             tree = new collections.BSTree();
@@ -172,8 +175,8 @@ describe('Binary Search Tree',
                 createTree2();
                 tree.remove('c');
                 var array = ['a', 'b', 'd', 'e', 'f', 'g', 'h', 'i'];
-                var b: any = [];
-                tree.inorderTraversal(function(element: any) {
+                var b: T[] = [];
+                tree.inorderTraversal(function(element) {
                     b.push(element);
                 });
                 expect(array).to.deep.equal(b);
@@ -184,8 +187,8 @@ describe('Binary Search Tree',
                 createTree2();
                 tree.remove('i');
                 var array = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-                var b: any = [];
-                tree.inorderTraversal(function(element: any) {
+                var b: T[] = [];
+                tree.inorderTraversal(function(element) {
                     b.push(element);
                 });
                 expect(array).to.deep.equal(b);
@@ -196,8 +199,8 @@ describe('Binary Search Tree',
                 createTree2();
                 tree.remove('b');
                 var array = ['a', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
-                var b: any = [];
-                tree.inorderTraversal(function(element: any) {
+                var b: T[] = [];
+                tree.inorderTraversal(function(element) {
                     b.push(element);
                 });
                 expect(array).to.deep.equal(b);
@@ -208,8 +211,8 @@ describe('Binary Search Tree',
                 createTree2();
                 tree.remove('f');
                 var array = ['a', 'b', 'c', 'd', 'e', 'g', 'h', 'i'];
-                var b: any = [];
-                tree.inorderTraversal(function(element: any) {
+                var b: T[] = [];
+                tree.inorderTraversal(function(element) {
                     b.push(element);
                 });
                 expect(array).to.deep.equal(b);
@@ -219,8 +222,8 @@ describe('Binary Search Tree',
             function() {
                 createTree2();
                 var array = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
-                var b: any = [];
-                tree.inorderTraversal(function(element: any) {
+                var b: T[] = [];
+                tree.inorderTraversal(function(element) {
                     b.push(element);
                 });
                 expect(array).to.deep.equal(b);
@@ -230,8 +233,8 @@ describe('Binary Search Tree',
             function() {
                 createTree2();
                 var array = ['a', 'b', 'c', 'd'];
-                var b: any = [];
-                tree.inorderTraversal(function(element: any) {
+                var b: T[] = [];
+                tree.inorderTraversal(function(element) {
                     b.push(element);
                     if (element === 'd') {
                         return false;
@@ -244,8 +247,8 @@ describe('Binary Search Tree',
             function() {
                 createTree2();
                 var array = ['f', 'b', 'a', 'd', 'c', 'e', 'g', 'i', 'h'];
-                var b: any = [];
-                tree.preorderTraversal(function(element: any) {
+                var b: T[] = [];
+                tree.preorderTraversal(function(element) {
                     b.push(element);
                 });
                 expect(array).to.deep.equal(b);
@@ -255,8 +258,8 @@ describe('Binary Search Tree',
             function() {
                 createTree2();
                 var array = ['f', 'b', 'a'];
-                var b: any = [];
-                tree.preorderTraversal(function(element: any) {
+                var b: T[] = [];
+                tree.preorderTraversal(function(element) {
                     b.push(element);
                     if (element === 'a') {
                         return false;
@@ -269,8 +272,8 @@ describe('Binary Search Tree',
             function() {
                 createTree2();
                 var array = ['f', 'b', 'g', 'a', 'd', 'i', 'c', 'e', 'h'];
-                var b: any = [];
-                tree.levelTraversal(function(element: any) {
+                var b: T[] = [];
+                tree.levelTraversal(function(element) {
                     b.push(element);
                 });
                 expect(array).to.deep.equal(b);
@@ -280,8 +283,8 @@ describe('Binary Search Tree',
             function() {
                 createTree2();
                 var array = ['f', 'b', 'g', 'a', 'd', 'i'];
-                var b: any = [];
-                tree.levelTraversal(function(element: any) {
+                var b: T[] = [];
+                tree.levelTraversal(function(element) {
                     b.push(element);
                     if (element === 'i') {
                         return false;
@@ -294,8 +297,8 @@ describe('Binary Search Tree',
             function() {
                 createTree2();
                 var array = ['a', 'c', 'e', 'd', 'b', 'h', 'i', 'g', 'f'];
-                var b: any = [];
-                tree.postorderTraversal(function(element: any) {
+                var b: T[] = [];
+                tree.postorderTraversal(function(element) {
                     b.push(element);
                 });
                 expect(array).to.deep.equal(b);
@@ -305,8 +308,8 @@ describe('Binary Search Tree',
             function() {
                 createTree2();
                 var array = ['a', 'c', 'e', 'd', 'b'];
-                var b: any = [];
-                tree.postorderTraversal(function(element: any) {
+                var b: T[] = [];
+                tree.postorderTraversal(function(element) {
                     b.push(element);
                     if (element === 'b') {
                         return false;
@@ -319,8 +322,8 @@ describe('Binary Search Tree',
             function() {
                 createTree2();
                 var array = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
-                var b: any = [];
-                tree.forEach(function(element: any) {
+                var b: T[] = [];
+                tree.forEach(function(element) {
                     b.push(element);
                 });
                 expect(array).to.deep.equal(b);
@@ -330,8 +333,8 @@ describe('Binary Search Tree',
             function() {
                 createTree2();
                 var array = ['a', 'b', 'c', 'd'];
-                var b: any = [];
-                tree.forEach(function(element: any) {
+                var b: T[] = [];
+                tree.forEach(function(element) {
                     b.push(element);
                     if (element === 'd') {
                         return false;

@@ -55,7 +55,7 @@ export default class FactoryDictionary<K, V> extends Dictionary<K, V> {
      * if the key didn't exist yet.
      */
     setDefault(key: K, defaultValue: V): V {
-        const currentValue: V = super.getValue(key);
+        const currentValue: V | undefined = super.getValue(key);
 
         if (util.isUndefined(currentValue)) {
             this.setValue(key, defaultValue);
@@ -70,7 +70,7 @@ export default class FactoryDictionary<K, V> extends Dictionary<K, V> {
      * Returns the value to which this dictionary maps the specified key.
      * Returns a default value created by the factory passed in the constructor,
      * if this dictionary contains no mapping for this key. The missing key will
-     * automatically be added to the dictionary. 
+     * automatically be added to the dictionary.
      * @param {Object} key key whose associated value is to be returned.
      * @return {*} the value to which this dictionary maps the specified key or
      * a default value if the map contains no mapping for this key.

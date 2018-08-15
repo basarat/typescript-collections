@@ -4,8 +4,14 @@ import * as arrays from './arrays';
 
 import Dictionary from './Dictionary';
 
-export default class Set<T>{
-    private dictionary: Dictionary<T, any>;
+export default class Set<T> {
+
+    /**
+     * Dictionary key and value holds the elements in the set.
+     * @type {Object}
+     * @protected
+     */
+    protected dictionary: Dictionary<T, any>;
 
     /**
      * Creates an empty set.
@@ -22,7 +28,7 @@ export default class Set<T>{
      * @constructor
      * @param {function(Object):string=} toStringFunction optional function used
      * to convert elements to strings. If the elements aren't strings or if toString()
-     * is not appropriate, a custom function which receives a onject and returns a
+     * is not appropriate, a custom function which receives an object and returns a
      * unique string must be provided.
      */
     constructor(toStringFunction?: (item: T) => string) {
@@ -56,7 +62,7 @@ export default class Set<T>{
     }
 
     /**
-     * Performs an intersecion between this an another set.
+     * Performs an intersecion between this and another set.
      * Removes all values that are not present this set and the given set.
      * @param {collections.Set} otherSet other set.
      */
@@ -71,7 +77,7 @@ export default class Set<T>{
     }
 
     /**
-     * Performs a union between this an another set.
+     * Performs a union between this and another set.
      * Adds all values from the given set to this set.
      * @param {collections.Set} otherSet other set.
      */
@@ -84,7 +90,7 @@ export default class Set<T>{
     }
 
     /**
-     * Performs a difference between this an another set.
+     * Performs a difference between this and another set.
      * Removes from this set all the values that are present in the given set.
      * @param {collections.Set} otherSet other set.
      */
