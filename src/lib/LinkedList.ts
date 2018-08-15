@@ -27,7 +27,7 @@ export default class LinkedList<T> {
     * @type {number}
     * @private
     */
-    private nElements = 0;
+    private nElements: number = 0;
 
     /**
     * Creates an empty Linked List.
@@ -67,7 +67,7 @@ export default class LinkedList<T> {
             this.firstNode = newNode;
         } else {
             const prev = this.nodeAtIndex(index - 1);
-            if (prev == null) {
+            if (prev === null) {
                 return false;
             }
             newNode.next = prev.next;
@@ -205,7 +205,7 @@ export default class LinkedList<T> {
         while (currentNode !== null) {
             if (equalsF(currentNode.element, item)) {
 
-                if (previous == null) { // currentNode is the first node
+                if (previous === null) { // currentNode is the first node
                     this.firstNode = currentNode.next;
                     if (currentNode === this.lastNode) {
                         this.lastNode = null;
@@ -387,7 +387,7 @@ export default class LinkedList<T> {
             return this.lastNode;
         }
         let node = this.firstNode;
-        for (let i = 0; i < index && node != null; i++) {
+        for (let i = 0; i < index && node !== null; i++) {
             node = node.next;
         }
         return node;
