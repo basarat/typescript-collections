@@ -154,12 +154,12 @@ export default class Dictionary<K, V> {
     }
 
     /**
-    * Executes the provided function once for each key-value pair
-    * present in this dictionary.
-    * @param {function(Object,Object):*} callback function to execute, it is
-    * invoked with two arguments: key and value. To break the iteration you can
-    * optionally return false.
-    */
+     * Executes the provided function once for each key-value pair
+     * present in this dictionary.
+     * @param {function(Object,Object):*} callback function to execute, it is
+     * invoked with two arguments: key and value. To break the iteration you can
+     * optionally return false.
+     */
     forEach(callback: (key: K, value: V) => any): void {
         for (const name in this.table) {
             if (util.has(this.table, name)) {
@@ -184,9 +184,9 @@ export default class Dictionary<K, V> {
     }
 
     /**
-    * Removes all mappings from this dictionary.
-    * @this {collections.Dictionary}
-    */
+     * Removes all mappings from this dictionary.
+     * @this {collections.Dictionary}
+     */
     clear() {
         this.table = {};
         this.nElements = 0;

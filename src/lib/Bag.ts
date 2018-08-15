@@ -35,12 +35,12 @@ export default class Bag<T> {
 
 
     /**
-    * Adds nCopies of the specified object to this bag.
-    * @param {Object} element element to add.
-    * @param {number=} nCopies the number of copies to add, if this argument is
-    * undefined 1 copy is added.
-    * @return {boolean} true unless element is undefined.
-    */
+     * Adds nCopies of the specified object to this bag.
+     * @param {Object} element element to add.
+     * @param {number=} nCopies the number of copies to add, if this argument is
+     * undefined 1 copy is added.
+     * @return {boolean} true unless element is undefined.
+     */
     add(element: T, nCopies: number = 1): boolean {
 
         if (util.isUndefined(element) || nCopies <= 0) {
@@ -61,10 +61,10 @@ export default class Bag<T> {
     }
 
     /**
-    * Counts the number of copies of the specified object in this bag.
-    * @param {Object} element the object to search for..
-    * @return {number} the number of copies of the object, 0 if not found
-    */
+     * Counts the number of copies of the specified object in this bag.
+     * @param {Object} element the object to search for..
+     * @return {number} the number of copies of the object, 0 if not found
+     */
     count(element: T): number {
 
         if (!this.contains(element)) {
@@ -85,14 +85,14 @@ export default class Bag<T> {
     }
 
     /**
-    * Removes nCopies of the specified object to this bag.
-    * If the number of copies to remove is greater than the actual number
-    * of copies in the Bag, all copies are removed.
-    * @param {Object} element element to remove.
-    * @param {number=} nCopies the number of copies to remove, if this argument is
-    * undefined 1 copy is removed.
-    * @return {boolean} true if at least 1 element was removed.
-    */
+     * Removes nCopies of the specified object to this bag.
+     * If the number of copies to remove is greater than the actual number
+     * of copies in the Bag, all copies are removed.
+     * @param {Object} element element to remove.
+     * @param {number=} nCopies the number of copies to remove, if this argument is
+     * undefined 1 copy is removed.
+     * @return {boolean} true if at least 1 element was removed.
+     */
     remove(element: T, nCopies: number = 1) {
 
         if (util.isUndefined(element) || nCopies <= 0) {
