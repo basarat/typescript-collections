@@ -59,6 +59,7 @@
             "check-operator",
             "check-separator",
             "check-type"
-        ]
+        ],
+        "jsdoc-format": true
     }
 }

@@ -26,16 +26,16 @@ export default class MultiDictionary<K, V> {
      *
      * <pre>
      * function petToString(pet) {
-       *  return pet.name;
-       * }
+     *     return pet.name;
+     * }
      * </pre>
      * <p>If the values are custom objects a function to check equality between values
      * must be provided. Example:</p>
      *
      * <pre>
      * function petsAreEqualByAge(pet1,pet2) {
-       *  return pet1.age===pet2.age;
-       * }
+     *     return pet1.age === pet2.age;
+     * }
      * </pre>
      * @constructor
      * @param {function(Object):string=} toStrFunction optional function
@@ -53,13 +53,13 @@ export default class MultiDictionary<K, V> {
         this.allowDuplicate = allowDuplicateValues;
     }
     /**
-    * Returns an array holding the values to which this dictionary maps
-    * the specified key.
-    * Returns an empty array if this dictionary contains no mappings for this key.
-    * @param {Object} key key whose associated values are to be returned.
-    * @return {Array} an array holding the values to which this dictionary maps
-    * the specified key.
-    */
+     * Returns an array holding the values to which this dictionary maps
+     * the specified key.
+     * Returns an empty array if this dictionary contains no mappings for this key.
+     * @param {Object} key key whose associated values are to be returned.
+     * @return {Array} an array holding the values to which this dictionary maps
+     * the specified key.
+     */
     getValue(key: K): V[] {
         const values = this.dict.getValue(key);
         if (util.isUndefined(values)) {

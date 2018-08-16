@@ -10,41 +10,41 @@ export interface ILinkedListNode<T> {
 export default class LinkedList<T> {
 
     /**
-    * First node in the list
-    * @type {Object}
-    * @private
-    */
+     * First node in the list
+     * @type {Object}
+     * @private
+     */
     public firstNode: ILinkedListNode<T> | null = null;
     /**
-    * Last node in the list
-    * @type {Object}
-    * @private
-    */
+     * Last node in the list
+     * @type {Object}
+     * @private
+     */
     private lastNode: ILinkedListNode<T> | null = null;
 
     /**
-    * Number of elements in the list
-    * @type {number}
-    * @private
-    */
-    private nElements = 0;
+     * Number of elements in the list
+     * @type {number}
+     * @private
+     */
+    private nElements: number = 0;
 
     /**
-    * Creates an empty Linked List.
-    * @class A linked list is a data structure consisting of a group of nodes
-    * which together represent a sequence.
-    * @constructor
-    */
+     * Creates an empty Linked List.
+     * @class A linked list is a data structure consisting of a group of nodes
+     * which together represent a sequence.
+     * @constructor
+     */
     constructor() { }
 
     /**
-    * Adds an element to this list.
-    * @param {Object} item element to be added.
-    * @param {number=} index optional index to add the element. If no index is specified
-    * the element is added to the end of this list.
-    * @return {boolean} true if the element was added or false if the index is invalid
-    * or if the element is undefined.
-    */
+     * Adds an element to this list.
+     * @param {Object} item element to be added.
+     * @param {number=} index optional index to add the element. If no index is specified
+     * the element is added to the end of this list.
+     * @return {boolean} true if the element was added or false if the index is invalid
+     * or if the element is undefined.
+     */
     add(item: T, index?: number): boolean {
         if (util.isUndefined(index)) {
             index = this.nElements;
@@ -67,7 +67,7 @@ export default class LinkedList<T> {
             this.firstNode = newNode;
         } else {
             const prev = this.nodeAtIndex(index - 1);
-            if (prev == null) {
+            if (prev === null) {
                 return false;
             }
             newNode.next = prev.next;
@@ -78,10 +78,10 @@ export default class LinkedList<T> {
     }
 
     /**
-    * Returns the first element in this list.
-    * @return {*} the first element of the list or undefined if the list is
-    * empty.
-    */
+     * Returns the first element in this list.
+     * @return {*} the first element of the list or undefined if the list is
+     * empty.
+     */
     first(): T | undefined {
 
         if (this.firstNode !== null) {
@@ -91,10 +91,10 @@ export default class LinkedList<T> {
     }
 
     /**
-    * Returns the last element in this list.
-    * @return {*} the last element in the list or undefined if the list is
-    * empty.
-    */
+     * Returns the last element in this list.
+     * @return {*} the last element in the list or undefined if the list is
+     * empty.
+     */
     last(): T | undefined {
 
         if (this.lastNode !== null) {
@@ -158,23 +158,23 @@ export default class LinkedList<T> {
 
 
     /**
-       * Returns true if this list contains the specified element.
-       * <p>If the elements inside the list are
-       * not comparable with the === operator a custom equals function should be
-       * provided to perform searches, the function must receive two arguments and
-       * return true if they are equal, false otherwise. Example:</p>
-       *
-       * <pre>
-       * const petsAreEqualByName = function(pet1, pet2) {
-       *  return pet1.name === pet2.name;
-       * }
-       * </pre>
-       * @param {Object} item element to search for.
-       * @param {function(Object,Object):boolean=} equalsFunction Optional
-       * function used to check if two elements are equal.
-       * @return {boolean} true if this list contains the specified element, false
-       * otherwise.
-       */
+     * Returns true if this list contains the specified element.
+     * <p>If the elements inside the list are
+     * not comparable with the === operator a custom equals function should be
+     * provided to perform searches, the function must receive two arguments and
+     * return true if they are equal, false otherwise. Example:</p>
+     *
+     * <pre>
+     * const petsAreEqualByName = function(pet1, pet2) {
+     *  return pet1.name === pet2.name;
+     * }
+     * </pre>
+     * @param {Object} item element to search for.
+     * @param {function(Object,Object):boolean=} equalsFunction Optional
+     * function used to check if two elements are equal.
+     * @return {boolean} true if this list contains the specified element, false
+     * otherwise.
+     */
     contains(item: T, equalsFunction?: util.IEqualsFunction<T>): boolean {
         return (this.indexOf(item, equalsFunction) >= 0);
     }
@@ -205,7 +205,7 @@ export default class LinkedList<T> {
         while (currentNode !== null) {
             if (equalsF(currentNode.element, item)) {
 
-                if (previous == null) { // currentNode is the first node
+                if (previous === null) { // currentNode is the first node
                     this.firstNode = currentNode.next;
                     if (currentNode === this.lastNode) {
                         this.lastNode = null;
@@ -258,8 +258,8 @@ export default class LinkedList<T> {
     }
 
     /**
-    * @private
-    */
+     * @private
+     */
     private equalsAux(n1: ILinkedListNode<T> | null, n2: ILinkedListNode<T> | null, eqF: util.IEqualsFunction<T>): boolean {
         while (n1 !== null && n2 !== null) {
             if (!eqF(n1.element, n2.element)) {
@@ -387,7 +387,7 @@ export default class LinkedList<T> {
             return this.lastNode;
         }
         let node = this.firstNode;
-        for (let i = 0; i < index && node != null; i++) {
+        for (let i = 0; i < index && node !== null; i++) {
             node = node.next;
         }
         return node;

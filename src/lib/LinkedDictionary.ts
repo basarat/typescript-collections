@@ -112,9 +112,9 @@ export default class LinkedDictionary<K, V> extends Dictionary<K, V> {
     }
 
     /**
-    * Removes all mappings from this LinkedDictionary.
-    * @this {collections.LinkedDictionary}
-    */
+     * Removes all mappings from this LinkedDictionary.
+     * @this {collections.LinkedDictionary}
+     */
     clear() {
         super.clear();
         this.head.next = this.tail;
@@ -218,13 +218,13 @@ export default class LinkedDictionary<K, V> extends Dictionary<K, V> {
     }
 
     /**
-    * Executes the provided function once for each key-value pair
-    * present in this LinkedDictionary. It is done in the order of insertion
-    * into the LinkedDictionary
-    * @param {function(Object,Object):*} callback function to execute, it is
-    * invoked with two arguments: key and value. To break the iteration you can
-    * optionally return false.
-    */
+     * Executes the provided function once for each key-value pair
+     * present in this LinkedDictionary. It is done in the order of insertion
+     * into the LinkedDictionary
+     * @param {function(Object,Object):*} callback function to execute, it is
+     * invoked with two arguments: key and value. To break the iteration you can
+     * optionally return false.
+     */
     forEach(callback: (key: K, value: V) => any): void {
         let crawlNode = this.head.next;
         while (!isHeadOrTailLinkedDictionaryPair(crawlNode)) {

@@ -246,8 +246,8 @@ export default class BSTreeKV<K, V extends K> {
     }
 
     /**
-    * @private
-    */
+     * @private
+     */
     private searchNode(node: BSTreeNode<V> | null, element: K): BSTreeNode<V> | null {
         let cmp: number = 1;
         while (node !== null && cmp !== 0) {
@@ -262,8 +262,8 @@ export default class BSTreeKV<K, V extends K> {
     }
 
     /**
-    * @private
-    */
+     * @private
+     */
     private transplant(n1: BSTreeNode<V>, n2: BSTreeNode<V> | null): void {
         if (n1.parent === null) {
             this.root = n2;
@@ -278,8 +278,8 @@ export default class BSTreeKV<K, V extends K> {
     }
 
     /**
-    * @private
-    */
+     * @private
+     */
     private removeNode(node: BSTreeNode<V>): void {
         if (node.leftCh === null) {
             this.transplant(node, node.rightCh);
@@ -299,8 +299,8 @@ export default class BSTreeKV<K, V extends K> {
     }
 
     /**
-    * @private
-    */
+     * @private
+     */
     private inorderTraversalAux(node: BSTreeNode<V> | null, callback: util.ILoopFunction<V>, signal: { stop: boolean; }): void {
         if (node === null || signal.stop) {
             return;
@@ -317,8 +317,8 @@ export default class BSTreeKV<K, V extends K> {
     }
 
     /**
-    * @private
-    */
+     * @private
+     */
     private levelTraversalAux(node: BSTreeNode<V> | null, callback: util.ILoopFunction<V>) {
         const queue = new Queue<BSTreeNode<V>>();
         if (node !== null) {
@@ -340,8 +340,8 @@ export default class BSTreeKV<K, V extends K> {
     }
 
     /**
-    * @private
-    */
+     * @private
+     */
     private preorderTraversalAux(node: BSTreeNode<V> | null, callback: util.ILoopFunction<V>, signal: { stop: boolean; }) {
         if (node === null || signal.stop) {
             return;
@@ -357,8 +357,8 @@ export default class BSTreeKV<K, V extends K> {
         this.preorderTraversalAux(node.rightCh, callback, signal);
     }
     /**
-    * @private
-    */
+     * @private
+     */
     private postorderTraversalAux(node: BSTreeNode<V> | null, callback: util.ILoopFunction<V>, signal: { stop: boolean; }) {
         if (node === null || signal.stop) {
             return;
@@ -375,8 +375,8 @@ export default class BSTreeKV<K, V extends K> {
     }
 
     /**
-    * @private
-    */
+     * @private
+     */
     private minimumAux(node: BSTreeNode<V>): BSTreeNode<V>;
     private minimumAux(node: BSTreeNode<V> | null): BSTreeNode<V> | null;
     private minimumAux(node: BSTreeNode<V> | null): BSTreeNode<V> | null {
@@ -387,8 +387,8 @@ export default class BSTreeKV<K, V extends K> {
     }
 
     /**
-    * @private
-    */
+     * @private
+     */
     private maximumAux(node: BSTreeNode<V>): BSTreeNode<V>;
     private maximumAux(node: BSTreeNode<V> | null): BSTreeNode<V> | null;
     private maximumAux(node: BSTreeNode<V> | null): BSTreeNode<V> | null {
@@ -399,8 +399,8 @@ export default class BSTreeKV<K, V extends K> {
     }
 
     /**
-      * @private
-      */
+     * @private
+     */
     private heightAux(node: BSTreeNode<V> | null): number {
         if (node === null) {
             return -1;
@@ -440,8 +440,8 @@ export default class BSTreeKV<K, V extends K> {
     }
 
     /**
-    * @private
-    */
+     * @private
+     */
     private createNode(element: V): BSTreeNode<V> {
         return {
             element: element,
