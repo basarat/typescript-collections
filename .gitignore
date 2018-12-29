@@ -2,7 +2,6 @@
 node_modules
 /temp
 /coverage
-/dist
 /typings
 
 # Editor configuration
