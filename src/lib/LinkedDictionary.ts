@@ -37,7 +37,7 @@ class HeadOrTailLinkedDictionaryPair<K, V> implements IDictionaryPair<null, null
 
 function isHeadOrTailLinkedDictionaryPair<K, V>(p: HeadOrTailLinkedDictionaryPair<K, V> | LinkedDictionaryPair<K, V>)
         : p is HeadOrTailLinkedDictionaryPair<K, V> {
-    return p.next === null;
+    return !p.next;
 }
 
 export default class LinkedDictionary<K, V> extends Dictionary<K, V> {
