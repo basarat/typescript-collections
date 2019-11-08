@@ -4,9 +4,9 @@ import Set from './Set';
 
 export default class Bag<T> {
 
-    private toStrF: (item: T) => string;
-    private dictionary: Dictionary<T, any>;
-    private nElements: number;
+    protected toStrF: (item: T) => string;
+    protected dictionary: Dictionary<T, any>;
+    protected nElements: number;
 
     /**
      * Creates an empty bag.

@@ -8,9 +8,9 @@ export default class MultiDictionary<K, V> {
     // class MultiDictionary<K,V> extends Dictionary<K,Array<V>> {
     // Since we want to reuse the function name setValue and types in signature become incompatible
     // Therefore we are using composition instead of inheritance
-    private dict: Dictionary<K, Array<V>>;
-    private equalsF: util.IEqualsFunction<V>;
-    private allowDuplicate: boolean;
+    protected dict: Dictionary<K, Array<V>>;
+    protected equalsF: util.IEqualsFunction<V>;
+    protected allowDuplicate: boolean;
 
     /**
      * Creates an empty multi dictionary.

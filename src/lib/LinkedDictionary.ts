@@ -41,8 +41,8 @@ function isHeadOrTailLinkedDictionaryPair<K, V>(p: HeadOrTailLinkedDictionaryPai
 }
 
 export default class LinkedDictionary<K, V> extends Dictionary<K, V> {
-    private head: HeadOrTailLinkedDictionaryPair<K, V>; // Head Identifier of the list.  holds no Key or Value
-    private tail: HeadOrTailLinkedDictionaryPair<K, V>; // Tail Identifier of the list.  holds no Key or Value
+    protected head: HeadOrTailLinkedDictionaryPair<K, V>; // Head Identifier of the list.  holds no Key or Value
+    protected tail: HeadOrTailLinkedDictionaryPair<K, V>; // Tail Identifier of the list.  holds no Key or Value
 
     constructor(toStrFunction?: (key: K) => string) {
         super(toStrFunction);
@@ -57,7 +57,7 @@ export default class LinkedDictionary<K, V> extends Dictionary<K, V> {
      * neighbors, and moving 'this.tail' (the End of List indicator) that
      * to the end.
      */
-    private appendToTail(entry: LinkedDictionaryPair<K, V>) {
+    protected appendToTail(entry: LinkedDictionaryPair<K, V>) {
         const lastNode = this.tail.prev;
         lastNode.next = entry;
         entry.prev = lastNode;
@@ -68,7 +68,7 @@ export default class LinkedDictionary<K, V> extends Dictionary<K, V> {
     /**
      * Retrieves a linked dictionary from the table internally
      */
-    private getLinkedDictionaryPair(key: K): LinkedDictionaryPair<K, V> | undefined {
+    protected getLinkedDictionaryPair(key: K): LinkedDictionaryPair<K, V> | undefined {
         if (util.isUndefined(key)) {
             return undefined;
         }
@@ -126,7 +126,7 @@ export default class LinkedDictionary<K, V> extends Dictionary<K, V> {
      * It places the new value indexed by key into the table, but maintains
      * its place in the linked ordering.
      */
-    private replace(oldPair: LinkedDictionaryPair<K, V>, newPair: LinkedDictionaryPair<K, V>) {
+    protected replace(oldPair: LinkedDictionaryPair<K, V>, newPair: LinkedDictionaryPair<K, V>) {
         const k = '$' + this.toStr(newPair.key);
 
         // set the new Pair's links to existingPair's links

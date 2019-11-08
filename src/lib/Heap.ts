@@ -5,15 +5,15 @@ export default class Heap<T> {
     /**
      * Array used to store the elements of the heap.
      * @type {Array.<Object>}
-     * @private
+     * @protected
      */
-    private data: T[] = [];
+    protected data: T[] = [];
     /**
      * Function used to compare elements.
      * @type {function(Object,Object):number}
-     * @private
+     * @protected
      */
-    private compare: collections.ICompareFunction<T>;
+    protected compare: collections.ICompareFunction<T>;
     /**
      * Creates an empty Heap.
      * @class
@@ -66,9 +66,9 @@ export default class Heap<T> {
      * @param {number} nodeIndex The index of the node to get the left child
      * for.
      * @return {number} The index of the left child.
-     * @private
+     * @protected
      */
-    private leftChildIndex(nodeIndex: number): number {
+    protected leftChildIndex(nodeIndex: number): number {
         return (2 * nodeIndex) + 1;
     }
     /**
@@ -76,18 +76,18 @@ export default class Heap<T> {
      * @param {number} nodeIndex The index of the node to get the right child
      * for.
      * @return {number} The index of the right child.
-     * @private
+     * @protected
      */
-    private rightChildIndex(nodeIndex: number): number {
+    protected rightChildIndex(nodeIndex: number): number {
         return (2 * nodeIndex) + 2;
     }
     /**
      * Returns the index of the parent of the node at the given index.
      * @param {number} nodeIndex The index of the node to get the parent for.
      * @return {number} The index of the parent.
-     * @private
+     * @protected
      */
-    private parentIndex(nodeIndex: number): number {
+    protected parentIndex(nodeIndex: number): number {
         return Math.floor((nodeIndex - 1) / 2);
     }
     /**
@@ -96,9 +96,9 @@ export default class Heap<T> {
      * @param {number} rightChild right child index.
      * @return {number} the index with the minimum value or -1 if it doesn't
      * exists.
-     * @private
+     * @protected
      */
-    private minIndex(leftChild: number, rightChild: number): number {
+    protected minIndex(leftChild: number, rightChild: number): number {
 
         if (rightChild >= this.data.length) {
             if (leftChild >= this.data.length) {
@@ -117,9 +117,9 @@ export default class Heap<T> {
     /**
      * Moves the node at the given index up to its proper place in the heap.
      * @param {number} index The index of the node to move up.
-     * @private
+     * @protected
      */
-    private siftUp(index: number): void {
+    protected siftUp(index: number): void {
 
         let parent = this.parentIndex(index);
         while (index > 0 && this.compare(this.data[parent], this.data[index]) > 0) {
@@ -131,9 +131,9 @@ export default class Heap<T> {
     /**
      * Moves the node at the given index down to its proper place in the heap.
      * @param {number} nodeIndex The index of the node to move down.
-     * @private
+     * @protected
      */
-    private siftDown(nodeIndex: number): void {
+    protected siftDown(nodeIndex: number): void {
 
         //smaller child index
         let min = this.minIndex(this.leftChildIndex(nodeIndex),

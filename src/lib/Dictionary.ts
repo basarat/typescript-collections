@@ -12,7 +12,7 @@ export default class Dictionary<K, V> {
     /**
      * Object holding the key-value pairs.
      * @type {Object}
-     * @private
+     * @protected
      */
     protected table: { [key: string]: IDictionaryPair<K, V> };
     //: [key: K] will not work since indices can only by strings in javascript and typescript enforces this.
@@ -20,7 +20,7 @@ export default class Dictionary<K, V> {
     /**
      * Number of elements in the list.
      * @type {number}
-     * @private
+     * @protected
      */
     protected nElements: number;
 

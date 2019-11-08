@@ -3,7 +3,7 @@ import Heap from './Heap';
 
 export default class PriorityQueue<T> {
 
-    private heap: Heap<T>;
+    protected heap: Heap<T>;
     /**
      * Creates an empty priority queue.
      * @class <p>In a priority queue each element is associated with a "priority",

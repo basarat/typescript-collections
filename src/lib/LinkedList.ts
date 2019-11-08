@@ -12,22 +12,22 @@ export default class LinkedList<T> {
     /**
      * First node in the list
      * @type {Object}
-     * @private
+     * @protected
      */
     public firstNode: ILinkedListNode<T> | null = null;
     /**
      * Last node in the list
      * @type {Object}
-     * @private
+     * @protected
      */
-    private lastNode: ILinkedListNode<T> | null = null;
+    protected lastNode: ILinkedListNode<T> | null = null;
 
     /**
      * Number of elements in the list
      * @type {number}
-     * @private
+     * @protected
      */
-    private nElements: number = 0;
+    protected nElements: number = 0;
 
     /**
      * Creates an empty Linked List.
@@ -258,9 +258,9 @@ export default class LinkedList<T> {
     }
 
     /**
-     * @private
+     * @protected
      */
-    private equalsAux(n1: ILinkedListNode<T> | null, n2: ILinkedListNode<T> | null, eqF: util.IEqualsFunction<T>): boolean {
+    protected equalsAux(n1: ILinkedListNode<T> | null, n2: ILinkedListNode<T> | null, eqF: util.IEqualsFunction<T>): boolean {
         while (n1 !== null && n2 !== null) {
             if (!eqF(n1.element, n2.element)) {
                 return false;
@@ -376,9 +376,9 @@ export default class LinkedList<T> {
     }
 
     /**
-     * @private
+     * @protected
      */
-    private nodeAtIndex(index: number): ILinkedListNode<T> | null {
+    protected nodeAtIndex(index: number): ILinkedListNode<T> | null {
 
         if (index < 0 || index >= this.nElements) {
             return null;
@@ -394,9 +394,9 @@ export default class LinkedList<T> {
     }
 
     /**
-     * @private
+     * @protected
      */
-    private createNode(item: T): ILinkedListNode<T> {
+    protected createNode(item: T): ILinkedListNode<T> {
         return {
             element: item,
             next: null

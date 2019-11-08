@@ -227,7 +227,7 @@ export default class MultiRootTree {
         }
     }
 
-    private moveId(moveId: string, beforeId: string, direction: Direction) {
+    protected moveId(moveId: string, beforeId: string, direction: Direction) {
 
         let sourceId = moveId;
         const sourceRootIndex = this.findRootId(sourceId);
@@ -397,21 +397,21 @@ export default class MultiRootTree {
         }
     }
 
-    private swapArrayElements(arr: Array<any>, indexA: number, indexB: number) {
+    protected swapArrayElements(arr: Array<any>, indexA: number, indexB: number) {
         var temp = arr[indexA];
         arr[indexA] = arr[indexB];
         arr[indexB] = temp;
         return arr;
     }
 
-    private rootDeleteId(id: string) {
+    protected rootDeleteId(id: string) {
         let index = this.findRootId(id);
         if (index > -1) {
             this.rootDelete(index);
         }
     }
 
-    private nodeAndSubNodesDelete(nodeKey: string) {
+    protected nodeAndSubNodesDelete(nodeKey: string) {
         let toDeleteLater: Array<string> = [];
         for (let i = 0; i < this.nodes[nodeKey].length; i++) {
             let id = this.nodes[nodeKey][i];
@@ -425,7 +425,7 @@ export default class MultiRootTree {
         }
     }
 
-    private nodeRefrencesDelete(id: string) {
+    protected nodeRefrencesDelete(id: string) {
         for (let nodeKey in this.nodes) {
             if (this.nodes.hasOwnProperty(nodeKey)) {
                 for (let i = 0; i < this.nodes[nodeKey].length; i++) {
@@ -438,45 +438,45 @@ export default class MultiRootTree {
         }
     }
 
-    private nodeDelete(nodeKey: string) {
+    protected nodeDelete(nodeKey: string) {
         delete this.nodes[nodeKey];
     }
 
 
-    private findRootId(id: string): number {
+    protected findRootId(id: string): number {
         return this.rootIds.indexOf(id);
     }
 
-    private findNodeId(nodeKey: string, id: string): number {
+    protected findNodeId(nodeKey: string, id: string): number {
         return this.nodes[nodeKey].indexOf(id);
     }
 
-    private findNode(nodeKey: string) {
+    protected findNode(nodeKey: string) {
         return this.nodes[nodeKey];
     }
 
 
-    private nodeInsertAtStart(nodeKey: string, id: string) {
+    protected nodeInsertAtStart(nodeKey: string, id: string) {
         this.nodes[nodeKey].unshift(id);
     }
 
-    private nodeInsertAtEnd(nodeKey: string, id: string) {
+    protected nodeInsertAtEnd(nodeKey: string, id: string) {
         this.nodes[nodeKey].push(id);
     }
 
-    private rootDelete(index: number) {
+    protected rootDelete(index: number) {
         this.rootIds.splice(index, 1);
     }
 
-    private nodeDeleteAtIndex(nodeKey: string, index: number) {
+    protected nodeDeleteAtIndex(nodeKey: string, index: number) {
         this.nodes[nodeKey].splice(index, 1);
     }
 
-    private rootInsertAtStart(id: string) {
+    protected rootInsertAtStart(id: string) {
         this.rootIds.unshift(id);
     }
 
-    private rootInsertAtEnd(id: string) {
+    protected rootInsertAtEnd(id: string) {
         this.rootIds.push(id);
     }
 }

@@ -5,9 +5,9 @@ export default class Stack<T> {
     /**
      * List containing the elements.
      * @type collections.LinkedList
-     * @private
+     * @protected
      */
-    private list: LinkedList<T>;
+    protected list: LinkedList<T>;
     /**
      * Creates an empty Stack.
      * @class A Stack is a Last-In-First-Out (LIFO) data structure, the last

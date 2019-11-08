@@ -6,9 +6,9 @@ export default class Queue<T> {
     /**
      * List containing the elements.
      * @type collections.LinkedList
-     * @private
+     * @protected
      */
-    private list: LinkedList<T>;
+    protected list: LinkedList<T>;
 
     /**
      * Creates an empty queue.
