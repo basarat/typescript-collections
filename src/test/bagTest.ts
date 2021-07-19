@@ -246,4 +246,27 @@ describe('Bag',
                 });
                 expect(t).equals(1);
             });
+
+        it('Non-empety bags with the same number of each element are equal',
+            function() {
+                let bag2 = new collections.Bag();
+                for (var i = 0; i < 5; i++) {
+                    bag.add(i);
+                    bag2.add(i);
+                }
+                expect(bag.equals(bag2)).equals(true);
+            });
+
+        it('Empty bags are equal',
+            function() {
+                let bag2 = new collections.Bag();
+                expect(bag.equals(bag2)).equals(true);
+            });
+
+        it('Bags with zero coppies of an element are equal to bags without the element',
+            function() {
+                let bag2 = new collections.Bag();
+                bag2.add(1, 0);
+                expect(bag.equals(bag2)).equals(true);
+            });
     });
