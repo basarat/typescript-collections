@@ -191,4 +191,24 @@ export default class Bag<T> {
         this.dictionary.clear();
     }
 
+    /**
+     * Returns true if both bags are subsets of each other.
+     * @return {boolean} true if this bag is equal to the other.
+     */
+    equals(bag: Bag<T>): boolean {
+        // all elements in this are elements in bag
+        for (let element of this.dictionary.values()) {
+            if (this.count(element) !== bag.count(element)) {
+                return false;
+            }
+        }
+
+        // all elements in bag are elements in this
+        for (let element of bag.dictionary.values()) {
+            if (this.count(element) !== bag.count(element)) {
+                return false;
+            }
+        }
+    return true;
+    }
 }// End of bag
